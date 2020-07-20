@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TonDotnet", "src\TonDotnet\TonDotnet.csproj", "{D61297F9-DE59-41DA-A0CC-C843796FDC79}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TonDotnet.UnitTests", "src\TonDotnet.UnitTests\TonDotnet.UnitTests.csproj", "{002C7C4E-13D5-4BB9-A5D4-669A278580B2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D61297F9-DE59-41DA-A0CC-C843796FDC79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D61297F9-DE59-41DA-A0CC-C843796FDC79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D61297F9-DE59-41DA-A0CC-C843796FDC79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D61297F9-DE59-41DA-A0CC-C843796FDC79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{002C7C4E-13D5-4BB9-A5D4-669A278580B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{002C7C4E-13D5-4BB9-A5D4-669A278580B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{002C7C4E-13D5-4BB9-A5D4-669A278580B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{002C7C4E-13D5-4BB9-A5D4-669A278580B2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
