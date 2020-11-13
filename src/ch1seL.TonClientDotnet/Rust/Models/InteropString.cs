@@ -6,7 +6,7 @@ namespace TonDotnet.Rust.Models
     [StructLayout(LayoutKind.Sequential)]
     public struct InteropString
     {
-        public IntPtr Content;
+        public IntPtr Pointer;
         public int Length;
     }
 }

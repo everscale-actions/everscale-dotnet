@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TonDotnet", "src\TonDotnet\TonDotnet.csproj", "{D61297F9-DE59-41DA-A0CC-C843796FDC79}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonClientDotnet", "src\ch1seL.TonClientDotnet\ch1seL.TonClientDotnet.csproj", "{D61297F9-DE59-41DA-A0CC-C843796FDC79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TonDotnet.UnitTests", "src\TonDotnet.UnitTests\TonDotnet.UnitTests.csproj", "{002C7C4E-13D5-4BB9-A5D4-669A278580B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonClientDotnet.UnitTests", "src\ch1seL.TonClientDotnet.UnitTests\ch1seL.TonClientDotnet.UnitTests.csproj", "{002C7C4E-13D5-4BB9-A5D4-669A278580B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

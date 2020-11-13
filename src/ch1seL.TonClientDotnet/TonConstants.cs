@@ -14,6 +14,7 @@ namespace TonDotnet
 
         public class Networks
         {
+            public const string Localhost = "localhost";
             public const string Main = "main.ton.dev";
             public const string Test = "net.ton.dev";
         }

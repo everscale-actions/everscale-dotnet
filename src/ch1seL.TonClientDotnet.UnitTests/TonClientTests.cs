@@ -16,7 +16,7 @@ namespace TonDotnet.UnitTests
 
             var response = await client.Setup(new TonClientConfig
             {
-                BaseUrl = TonConstants.Networks.Test
+                BaseUrl = TonConstants.Networks.Localhost
             });
 
             response.Result.ToString().Should().BeEmpty();

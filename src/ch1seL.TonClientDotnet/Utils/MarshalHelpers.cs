@@ -17,7 +17,7 @@ namespace TonDotnet.Utils
 
             return new InteropString
             {
-                Content = pointer,
+                Pointer = pointer,
                 Length = bytes.Length
             };
         }
@@ -25,7 +25,7 @@ namespace TonDotnet.Utils
         public static string InteropStringToString(InteropString str)
         {
             var bytes = new byte[str.Length];
-            Marshal.Copy(str.Content, bytes, 0, str.Length);
+            Marshal.Copy(str.Pointer, bytes, 0, str.Length);
             var res = Encoding.UTF8.GetString(bytes);
             return string.IsNullOrEmpty(res) ? "null" : res;
         }

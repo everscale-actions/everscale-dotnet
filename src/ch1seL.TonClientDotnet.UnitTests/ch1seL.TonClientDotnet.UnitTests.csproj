@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
-
-        <IsPackable>false</IsPackable>
+        <TargetFramework>netcoreapp3.1</TargetFramework>        
+        <IsPackable>false</IsPackable>        
+        <RootNamespace>TonClientDotnet.UnitTests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -14,8 +14,8 @@
         <PackageReference Include="coverlet.collector" Version="1.2.0" />
     </ItemGroup>
 
-    <ItemGroup>      
-      <ProjectReference Include="..\TonDotnet\TonDotnet.csproj" />
+    <ItemGroup>
+      <ProjectReference Include="..\ch1seL.TonClientDotnet\ch1seL.TonClientDotnet.csproj" />
     </ItemGroup>
 
 </Project>
