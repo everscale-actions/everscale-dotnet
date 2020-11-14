@@ -28,6 +28,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj" />
+      <ProjectReference Include="..\ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj" />
     </ItemGroup>
 
     <ItemGroup>

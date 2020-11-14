@@ -4,7 +4,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.RustClient", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.RustClient.Tests", "src\ch1seL.TonNet.RustClient.Tests\ch1seL.TonNet.RustClient.Tests.csproj", "{002C7C4E-13D5-4BB9-A5D4-669A278580B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Abstract", "ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj", "{0C35DE26-D54A-41C5-915F-E9A4E0FDDA16}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.ClientGenerator", "src\ch1seL.TonNet.ClientGenerator\ch1seL.TonNet.ClientGenerator.csproj", "{99BF12E4-77BD-4ABB-8926-1747C0661E71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Abstract", "src\ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj", "{D076E181-E3BC-4C08-B59F-2EF648D9C5B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,10 +22,14 @@ Global
 		{002C7C4E-13D5-4BB9-A5D4-669A278580B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{002C7C4E-13D5-4BB9-A5D4-669A278580B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{002C7C4E-13D5-4BB9-A5D4-669A278580B2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0C35DE26-D54A-41C5-915F-E9A4E0FDDA16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C35DE26-D54A-41C5-915F-E9A4E0FDDA16}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C35DE26-D54A-41C5-915F-E9A4E0FDDA16}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C35DE26-D54A-41C5-915F-E9A4E0FDDA16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99BF12E4-77BD-4ABB-8926-1747C0661E71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99BF12E4-77BD-4ABB-8926-1747C0661E71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99BF12E4-77BD-4ABB-8926-1747C0661E71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99BF12E4-77BD-4ABB-8926-1747C0661E71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D076E181-E3BC-4C08-B59F-2EF648D9C5B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D076E181-E3BC-4C08-B59F-2EF648D9C5B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D076E181-E3BC-4C08-B59F-2EF648D9C5B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D076E181-E3BC-4C08-B59F-2EF648D9C5B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
