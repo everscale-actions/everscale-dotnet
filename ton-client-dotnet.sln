@@ -1,8 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonClientDotnet", "src\ch1seL.TonClientDotnet\ch1seL.TonClientDotnet.csproj", "{D61297F9-DE59-41DA-A0CC-C843796FDC79}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.RustClient", "src\ch1seL.TonNet.RustClient\ch1seL.TonNet.RustClient.csproj", "{D61297F9-DE59-41DA-A0CC-C843796FDC79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonClientDotnet.UnitTests", "src\ch1seL.TonClientDotnet.UnitTests\ch1seL.TonClientDotnet.UnitTests.csproj", "{002C7C4E-13D5-4BB9-A5D4-669A278580B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.RustClient.Tests", "src\ch1seL.TonNet.RustClient.Tests\ch1seL.TonNet.RustClient.Tests.csproj", "{002C7C4E-13D5-4BB9-A5D4-669A278580B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Abstract", "ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj", "{0C35DE26-D54A-41C5-915F-E9A4E0FDDA16}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +20,11 @@ Global
 		{002C7C4E-13D5-4BB9-A5D4-669A278580B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{002C7C4E-13D5-4BB9-A5D4-669A278580B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{002C7C4E-13D5-4BB9-A5D4-669A278580B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C35DE26-D54A-41C5-915F-E9A4E0FDDA16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C35DE26-D54A-41C5-915F-E9A4E0FDDA16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C35DE26-D54A-41C5-915F-E9A4E0FDDA16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C35DE26-D54A-41C5-915F-E9A4E0FDDA16}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 EndGlobal
