@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using ch1seL.TonNet.Abstract;
 
-namespace ch1seL.TonClientDotnet
+namespace ch1seL.TonNet.RustClient
 {
     internal class TonNetRastAdapter:ITonClientAdapter
     {

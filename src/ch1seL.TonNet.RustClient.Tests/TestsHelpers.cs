@@ -1,8 +1,8 @@
-﻿using ch1seL.TonClientDotnet.Models;
+﻿using ch1seL.TonNet.RustClient.Models;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 
-namespace ch1seL.TonClientDotnet.UnitTests
+namespace ch1seL.TonNet.RustClient.Tests
 {
     internal static class TestsHelpers{
         public static RustTonClientCore CreateTonClient()

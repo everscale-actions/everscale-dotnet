@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\src\ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj" />
+    </ItemGroup>
+
+</Project>

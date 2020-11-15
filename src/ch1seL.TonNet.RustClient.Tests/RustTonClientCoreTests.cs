@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Xunit;
 
-namespace ch1seL.TonClientDotnet.UnitTests
+namespace ch1seL.TonNet.RustClient.Tests
 {
     public class RustTonClientCoreTests
     {

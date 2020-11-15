@@ -1,16 +1,12 @@
-﻿using System.IO;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Model;
-using Model.Domain;
+﻿using System.Threading.Tasks;
 
-namespace Runner
+namespace ch1seL.TonNet.ClientGenerator
 {
     internal class Program
     {
         private static async Task Main(string[] args)
         {
-            Generator.Generator.GenerateModule();
+            await Generator.GenerateModule();
         }
     }
 }

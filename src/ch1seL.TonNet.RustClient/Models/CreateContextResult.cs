@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace ch1seL.TonClientDotnet.Models
+namespace ch1seL.TonNet.RustClient.Models
 {
     public class CreateContextResult
     {

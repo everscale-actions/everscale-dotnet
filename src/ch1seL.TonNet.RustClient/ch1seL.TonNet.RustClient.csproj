@@ -2,7 +2,6 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
-        <RootNamespace>ch1seL.TonClientDotnet</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup> 
@@ -27,9 +26,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj" />
       <ProjectReference Include="..\ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj" />
-    </ItemGroup>
+    </ItemGroup>w
 
     <ItemGroup>
         <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">

@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.ClientGenerat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Abstract", "src\ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj", "{D076E181-E3BC-4C08-B59F-2EF648D9C5B5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Client", "ch1seL.TonNet.Client\ch1seL.TonNet.Client.csproj", "{A4FEBA9A-9C36-4EA9-989C-F200D71F5CBA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{D076E181-E3BC-4C08-B59F-2EF648D9C5B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D076E181-E3BC-4C08-B59F-2EF648D9C5B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D076E181-E3BC-4C08-B59F-2EF648D9C5B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4FEBA9A-9C36-4EA9-989C-F200D71F5CBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4FEBA9A-9C36-4EA9-989C-F200D71F5CBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4FEBA9A-9C36-4EA9-989C-F200D71F5CBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4FEBA9A-9C36-4EA9-989C-F200D71F5CBA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection

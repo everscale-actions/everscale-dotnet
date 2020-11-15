@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ch1seL.TonClientDotnet
+namespace ch1seL.TonNet.RustClient
 {
     public class TonClientException : Exception
     {

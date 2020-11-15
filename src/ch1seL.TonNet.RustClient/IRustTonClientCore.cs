@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace ch1seL.TonClientDotnet
+namespace ch1seL.TonNet.RustClient
 {
     internal interface IRustTonClientCore
     {
