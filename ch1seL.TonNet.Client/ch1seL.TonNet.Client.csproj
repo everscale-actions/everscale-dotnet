@@ -8,4 +8,8 @@
       <ProjectReference Include="..\src\ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="System.Text.Json" Version="5.0.0" />
+    </ItemGroup>
+
 </Project>

@@ -1,22 +1,25 @@
-﻿using System;
+﻿using System.Linq;
 
 namespace ch1seL.TonNet.ClientGenerator.Helpers
 {
     internal static class StringUtils
     {
-        public static string ToCamelCase(string str)
+        public static string GetGenericParametersDeclaration(params string[] genericParameters)
         {
-            return $"{char.ToUpper(str[0])}{str.Substring(1)}";
+            genericParameters = genericParameters.Where(t => t != null).ToArray();
+
+            return genericParameters.Length != 0
+                ? $"<{string.Join(", ", genericParameters.Where(t => t != null))}>"
+                : null;
         }
 
-        public static string TypeFromRef(string refName)
+        public static string EscapeReserved(string name)
         {
-            if (!refName.Contains("."))
+            return name switch
             {
-                throw new ArgumentException("Should contains . separator", refName);
-            }
-                
-            return NamingConventions.CommonFormatterFormatter(refName.Split(".")[1]);
+                "params" => $"@{name}",
+                _ => name
+            };
         }
     }
 }

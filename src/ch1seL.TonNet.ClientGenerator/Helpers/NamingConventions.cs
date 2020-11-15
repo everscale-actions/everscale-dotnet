@@ -6,14 +6,17 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
     {
         private static readonly Regex ResultOfReplacer = new(@"ResultOf(?'name'\w+)", RegexOptions.Compiled);
         private static readonly Regex ParamsOfReplacer = new(@"ParamsOf(?'name'\w+)", RegexOptions.Compiled);
-        private static readonly Regex SnackCaseRegex = new(@"(_|^)(?'firstChar'\w)", RegexOptions.Compiled);
+        private static readonly Regex SnackCaseRegex = new(@"([_\s]|^)(?'firstChar'\w)", RegexOptions.Compiled);
 
-        public static string CommonFormatterFormatter(string name)
+        public static string Formatter(string name)
         {
+            if (name.Contains(".")) name = name.Split(".")[1];
+
+            name = StringUtils.EscapeReserved(name);
             name = ResultOfReplacer.Replace(name, match => $"{match.Groups["name"].Value}Response");
             name = ParamsOfReplacer.Replace(name, match => $"{match.Groups["name"].Value}Request");
             name = SnackCaseRegex.Replace(name, FirstCharToUpper);
-            
+
             return name;
         }
 
@@ -24,16 +27,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
         public static string EventFormatter(string moduleName)
         {
-            return SnackCaseRegex.Replace($"{moduleName}_event", FirstCharToUpper);
-        }
-
-        public static string EscapeReserved(string name)
-        {
-            return name switch
-            {
-                "params" => $"@{name}",
-                _ => name
-            };
+            return Formatter($"{moduleName}_event");
         }
     }
 }

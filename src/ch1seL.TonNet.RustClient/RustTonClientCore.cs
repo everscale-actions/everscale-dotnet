@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using ch1seL.TonNet.RustClient.Models;
 using ch1seL.TonNet.RustClient.RustInterop;
@@ -17,8 +18,8 @@ namespace ch1seL.TonNet.RustClient
 
         private readonly uint _contextNumber;
         private readonly TimeSpan _coreExecutionTimeOut = TimeSpan.FromMinutes(1);
-        private CallbackDelegate _callbackDelegate;
         private readonly ILogger<RustTonClientCore> _logger;
+        private CallbackDelegate _callbackDelegate;
 
         private uint _requestId;
 
@@ -26,7 +27,7 @@ namespace ch1seL.TonNet.RustClient
         {
             _logger = logger;
             var optionsJson = JsonSerializer.Serialize(options, JsonSerializerOptions);
-            
+
             _logger.LogTrace("Creating context: {options}", optionsJson);
             using var optionsInteropJson = optionsJson.ToInteropStringDisposable();
             IntPtr resultPtr = RustInteropInterface.tc_create_context(optionsInteropJson);
@@ -46,18 +47,18 @@ namespace ch1seL.TonNet.RustClient
             RustInteropInterface.tc_destroy_context(_contextNumber);
         }
 
-        public async Task<string> Request(string method, string paramsJson)
+        public async Task<string> Request(string method, string paramsJson, CancellationToken cancellationToken = default)
         {
             _requestId = _requestId == uint.MaxValue ? 0 : _requestId++;
             _logger.LogTrace("Init request {context}", _contextNumber);
-            
+
             var cts = new TaskCompletionSource<string>();
             _callbackDelegate = (requestId, responseInteropString, responseType, finished) =>
             {
                 var responseJson = responseInteropString.ToString();
-                
+
                 _logger.LogTrace("Got request response {context} {response}", _contextNumber, responseJson);
-                
+
                 switch ((ResponseType) responseType)
                 {
                     case ResponseType.Success:
@@ -74,14 +75,14 @@ namespace ch1seL.TonNet.RustClient
             };
 
             _logger.LogTrace("Sending request {context} {method} {request}", _contextNumber, method, paramsJson);
-            
+
             using var methodInteropString = method.ToInteropStringDisposable();
             using var paramsJsonInteropString = paramsJson.ToInteropStringDisposable();
             RustInteropInterface.tc_request(_contextNumber, methodInteropString, paramsJsonInteropString, _requestId, _callbackDelegate);
 
-            Task executeOrTimeout = await Task.WhenAny(cts.Task, Task.Delay(_coreExecutionTimeOut));
+            Task executeOrTimeout = await Task.WhenAny(cts.Task, Task.Delay(_coreExecutionTimeOut, cancellationToken));
             if (cts.Task == executeOrTimeout) return await cts.Task;
-            throw new TonClientException("Execution timeout expired");
+            throw new TonClientException("Execution timeout expired or cancellation request");
         }
     }
 }

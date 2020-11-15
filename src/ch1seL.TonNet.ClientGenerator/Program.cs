@@ -6,7 +6,7 @@ namespace ch1seL.TonNet.ClientGenerator
     {
         private static async Task Main(string[] args)
         {
-            await Generator.GenerateModule();
+            await Generator.GenerateClient();
         }
     }
 }

@@ -3,7 +3,7 @@ using ch1seL.TonNet.ClientGenerator.Models;
 
 namespace ch1seL.TonNet.ClientGenerator.Helpers
 {
-    static internal class ResultExtensions
+    internal static class ResultExtensions
     {
         public static string GetMethodReturnType(this Result result)
         {
@@ -17,9 +17,9 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
             switch (genericArg.Type)
             {
                 case GenericArgType.None:
-                    return "Task";
+                    return null;
                 case GenericArgType.Ref:
-                    return $"Task<{StringUtils.TypeFromRef(genericArg.RefName)}>";
+                    return NamingConventions.Formatter(genericArg.RefName);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(Type), genericArg.Type, "Unsupported generic type");
             }
