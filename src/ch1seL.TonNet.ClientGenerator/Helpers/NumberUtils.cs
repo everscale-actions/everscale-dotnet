@@ -9,8 +9,8 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
     {
         public static Dictionary<string, string> MapNumericTypes(IEnumerable<Module> module)
         {
-            return module.SelectMany(m=>m.Types).Where(t => t.Type == TypeType.Number)
-                .Select(t => new {typeName = NamingConventions.Formatter(t.Name), sharpType = ConvertToSharpNumeric(t.NumberType, t.NumberSize)})
+            return module.SelectMany(m => m.Types).Where(t => t.Type == TypeType.Number)
+                .Select(t => new {typeName = NamingConventions.Normalize(t.Name), sharpType = ConvertToSharpNumeric(t.NumberType, t.NumberSize)})
                 .ToDictionary(kv => kv.typeName, kv => kv.sharpType);
         }
 

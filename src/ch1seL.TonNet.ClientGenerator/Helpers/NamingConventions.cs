@@ -7,8 +7,9 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
         private static readonly Regex ResultOfReplacer = new(@"ResultOf(?'name'\w+)", RegexOptions.Compiled);
         private static readonly Regex ParamsOfReplacer = new(@"ParamsOf(?'name'\w+)", RegexOptions.Compiled);
         private static readonly Regex SnackCaseRegex = new(@"([_\s]|^)(?'firstChar'\w)", RegexOptions.Compiled);
+        private static readonly Regex FieldRegex = new(@"(^)(?'firstChar'\w)", RegexOptions.Compiled);
 
-        public static string Formatter(string name)
+        public static string Normalize(string name)
         {
             if (name.Contains(".")) name = name.Split(".")[1];
 
@@ -20,6 +21,27 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
             return name;
         }
 
+        public static string ToFieldName(string name)
+        {
+            name = Normalize(name);
+
+            return FieldRegex.Replace(name, match => $"_{match.Groups["firstChar"].Value.ToLowerInvariant()}");
+        }
+
+        public static string ToVarName(string name)
+        {
+            name = Normalize(name);
+
+            return FieldRegex.Replace(name, match => $"{match.Groups["firstChar"].Value.ToLowerInvariant()}");
+        }
+
+        public static string ToInterfaceName(string name)
+        {
+            name = Normalize(name);
+
+            return $"I{name}";
+        }
+
         private static string FirstCharToUpper(Match match)
         {
             return $"{match.Groups["firstChar"].Value.ToUpperInvariant()}";
@@ -27,7 +49,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
         public static string EventFormatter(string moduleName)
         {
-            return Formatter($"{moduleName}_event");
+            return Normalize($"{moduleName}_event");
         }
     }
 }

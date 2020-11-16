@@ -14,7 +14,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
         public static void CreateUnit(string unitName, Func<string, NamespaceDeclarationSyntax> nsFactory, string filePathFactory,
             params string[] usings)
         {
-            unitName = NamingConventions.Formatter(unitName);
+            unitName = NamingConventions.Normalize(unitName);
 
             CompilationUnitSyntax cu = SyntaxFactory.CompilationUnit();
             cu = cu.AddUsings(usings.OrderBy(s => s)

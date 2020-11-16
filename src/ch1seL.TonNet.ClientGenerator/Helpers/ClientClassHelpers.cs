@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using ch1seL.TonNet.ClientGenerator.Models;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
@@ -14,7 +15,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
             MemberDeclarationSyntax[] propertyDeclarationSyntaxes = tonApi.Modules.Select(m => m.Name)
                 .Select(moduleName =>
                 {
-                    var formattedName = NamingConventions.Formatter(moduleName);
+                    var formattedName = NamingConventions.Normalize(moduleName);
 
                     return PropertyDeclaration(IdentifierName($"I{formattedName}"), formattedName)
                         .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
@@ -35,21 +36,30 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
         public static NamespaceDeclarationSyntax CreateTonClientClass(string unitName, TonApi tonApi)
         {
             var propertyDeclarationSyntaxes = GetProperties(tonApi);
-
-            VariableDeclarationSyntax variableDeclaration = VariableDeclaration(ParseTypeName("ITonClientAdapter"))
-                .AddVariables(VariableDeclarator("_tonClientAdapter"));
+            var moduleNames = tonApi.Modules.Select(m => m.Name).ToArray();
+            
+            VariableDeclarationSyntax variableDeclaration = VariableDeclaration(ParseTypeName("IServiceProvider"))
+                .AddVariables(VariableDeclarator("_serviceProvider"));
             FieldDeclarationSyntax fieldDeclaration = FieldDeclaration(variableDeclaration)
-                .AddModifiers(Token(SyntaxKind.PrivateKeyword));
+                .AddModifiers(Token(SyntaxKind.PrivateKeyword), Token(SyntaxKind.ReadOnlyKeyword));
 
-            StatementSyntax statementSyntax = ParseStatement("_tonClientAdapter = tonClientAdapter;");
+            var statementSyntax =
+                new[]
+                    {
+                        ParseStatement("_serviceProvider = TonClientServiceProviderBuilder.BuildTonClientServiceProvider(serviceProvider);")
+                    }
+                    .Union(moduleNames
+                        .Select(m => ParseStatement($"{NamingConventions.Normalize(m)} = _serviceProvider.GetRequiredService<{NamingConventions.ToInterfaceName(m)}>();")))
+                    .ToArray();
+            
             ConstructorDeclarationSyntax constructorDeclaration = ConstructorDeclaration(unitName)
-                .AddParameterListParameters(
-                    Parameter(Identifier("tonClientAdapter")).WithType(IdentifierName("ITonClientAdapter")))
+                .AddParameterListParameters(Parameter(Identifier("serviceProvider = null")).WithType(IdentifierName("IServiceProvider")))
                 .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
                 .WithBody(Block(statementSyntax));
 
             ClassDeclarationSyntax item = ClassDeclaration(unitName)
                 .AddModifiers(Token(SyntaxKind.PublicKeyword))
+                .AddBaseListTypes(SimpleBaseType(IdentifierName("ITonClient")))
                 .AddMembers(fieldDeclaration)
                 .AddMembers(constructorDeclaration)
                 .AddMembers(propertyDeclarationSyntaxes);

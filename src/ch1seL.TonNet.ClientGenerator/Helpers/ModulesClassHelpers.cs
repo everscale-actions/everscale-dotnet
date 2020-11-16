@@ -28,7 +28,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
             if (withBody) modifiers.Add(Token(SyntaxKind.AsyncKeyword));
 
             MethodDeclarationSyntax method =
-                MethodDeclaration(ParseTypeName(responseDeclaration), NamingConventions.Formatter(function.Name))
+                MethodDeclaration(ParseTypeName(responseDeclaration), NamingConventions.Normalize(function.Name))
                     .AddParameterListParameters(parameters)
                     .AddParameterListParameters(Parameter(Identifier("cancellationToken"))
                         .WithType(IdentifierName(nameof(CancellationToken)))
@@ -71,6 +71,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
             switch (genericArg?.RefName)
             {
+                //todo: avoid this hardcode
                 case GenericRefNames.Request when string.Equals(module.Name, "net", StringComparison.OrdinalIgnoreCase):
                     callBackType = "object";
                     typeName = $"Action<{callBackType}>";
@@ -84,7 +85,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                     switch (param.Type)
                     {
                         case ParamType.Ref:
-                            typeName = NamingConventions.Formatter(param.RefName);
+                            typeName = NamingConventions.Normalize(param.RefName);
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -119,6 +120,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
             ClassDeclarationSyntax item = ClassDeclaration(unitName)
                 .AddModifiers(Token(SyntaxKind.PublicKeyword))
+                .AddBaseListTypes(SimpleBaseType(IdentifierName(NamingConventions.ToInterfaceName(unitName))))
                 .AddMembers(fieldDeclaration)
                 .AddMembers(constructorDeclaration)
                 .AddMembers(methods);
@@ -136,6 +138,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
             InterfaceDeclarationSyntax item = InterfaceDeclaration($"I{unitName}")
                 .AddModifiers(Token(SyntaxKind.PublicKeyword))
+                .AddBaseListTypes(SimpleBaseType(IdentifierName("ITonModule")))
                 .AddMembers(methods);
 
             return NamespaceDeclaration(IdentifierName(Generator.NameSpace))

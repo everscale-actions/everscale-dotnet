@@ -11,13 +11,11 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 {
     internal class ModelsClassHelpers
     {
-        private readonly IReadOnlyCollection<string> _moduleTypes;
-        private readonly IReadOnlyDictionary<string, string> _numberTypesMapping;
         private readonly string[] _allTypes;
+        private readonly IReadOnlyDictionary<string, string> _numberTypesMapping;
 
-        public ModelsClassHelpers(IReadOnlyCollection<string> moduleTypes, IReadOnlyDictionary<string, string> numberTypesMapping, string[] allTypes)
+        public ModelsClassHelpers(IReadOnlyDictionary<string, string> numberTypesMapping, string[] allTypes)
         {
-            _moduleTypes = moduleTypes;
             _numberTypesMapping = numberTypesMapping;
             _allTypes = allTypes;
         }
@@ -37,7 +35,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
         private static EnumDeclarationSyntax GenerateEnumOfConsts(TypeElement typeElement)
         {
-            return EnumDeclaration(Identifier(NamingConventions.Formatter(typeElement.Name)))
+            return EnumDeclaration(Identifier(NamingConventions.Normalize(typeElement.Name)))
                 .AddMembers(typeElement
                     .EnumConsts
                     .Select(e => EnumMemberDeclaration(e.Name))
@@ -59,13 +57,13 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                             var properties = new List<MemberDeclarationSyntax>();
                             properties.AddRange(subClass.StructFields.Select(sf =>
                             {
-                                var addPostfix = NamingConventions.Formatter(sf.Name) == NamingConventions.Formatter(subClass.Name);
+                                var addPostfix = NamingConventions.Normalize(sf.Name) == NamingConventions.Normalize(subClass.Name);
                                 return CreatePropertyGenericArgs(sf.Type, sf.Name, sf.RefName, sf.OptionalInner, addPostFix: addPostfix);
                             }));
-                            return (MemberDeclarationSyntax)ClassDeclaration(NamingConventions.Formatter(subClass.Name))
+                            return (MemberDeclarationSyntax) ClassDeclaration(NamingConventions.Normalize(subClass.Name))
                                 .AddModifiers(Token(SyntaxKind.PublicKeyword))
                                 .AddBaseListTypes(
-                                    SimpleBaseType(IdentifierName(NamingConventions.Formatter(typeElement.Name))))
+                                    SimpleBaseType(IdentifierName(NamingConventions.Normalize(typeElement.Name))))
                                 .AddMembers(properties.ToArray());
                         default:
                             throw new ArgumentOutOfRangeException(nameof(subClass.Type), subClass.Type, "EnumOfTypes doesn't support this type");
@@ -73,16 +71,17 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                 })
                 .ToArray();
 
-            return ClassDeclaration(NamingConventions.Formatter(typeElement.Name))
+            return ClassDeclaration(NamingConventions.Normalize(typeElement.Name))
                 .AddModifiers(Token(SyntaxKind.PublicKeyword), Token(SyntaxKind.AbstractKeyword))
                 .AddMembers(enumTypes);
         }
 
-        private MemberDeclarationSyntax CreatePropertyForRef(string typeName, string name, bool optional = false, bool nullable = false, bool addPostfix = false)
+        private MemberDeclarationSyntax CreatePropertyForRef(string typeName, string name, bool optional = false, bool nullable = false,
+            bool addPostfix = false)
         {
-            typeName = NamingConventions.Formatter(typeName);
+            typeName = NamingConventions.Normalize(typeName);
             typeName = !_allTypes.Contains(typeName) ? "object" : typeName;
-           
+
             typeName = _numberTypesMapping.ContainsKey(typeName)
                 ? _numberTypesMapping[typeName]
                 : typeName;
@@ -91,7 +90,8 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
         }
 
 
-        private MemberDeclarationSyntax CreatePropertyGenericArgs(GenericArgType type, string name, string refName, GenericArg optionalInner, bool optional = false, bool addPostFix = false)
+        private MemberDeclarationSyntax CreatePropertyGenericArgs(GenericArgType type, string name, string refName, GenericArg optionalInner,
+            bool optional = false, bool addPostFix = false)
         {
             return type switch
             {
@@ -109,7 +109,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
             var properties = typeElement.StructFields.Select(CreatePropertyStructFields).ToArray();
 
-            return ClassDeclaration(NamingConventions.Formatter(className))
+            return ClassDeclaration(NamingConventions.Normalize(className))
                 .AddModifiers(Token(SyntaxKind.PublicKeyword))
                 .AddMembers(properties);
         }
@@ -125,7 +125,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                 PurpleType.Ref => CreatePropertyForRef(sf.RefName, sf.Name),
                 PurpleType.String => CreatePropertyDeclaration("string", sf.Name),
                 PurpleType.Optional => CreateOptionalPropertyForPurple(sf.Name, sf.OptionalInner),
-                _ => throw new ArgumentOutOfRangeException(nameof(sf.Type), sf.Type,"Not supported type detected")
+                _ => throw new ArgumentOutOfRangeException(nameof(sf.Type), sf.Type, "Not supported type detected")
             };
         }
 
@@ -141,7 +141,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                 PurpleType.Ref => CreatePropertyForRef(optionalInner.RefName, name),
                 PurpleType.String => CreatePropertyDeclaration("string", name),
                 PurpleType.Optional => CreatePropertyForPurpleTypeOptionalOptional(name, optionalInner.OptionalInner),
-                _ => throw new ArgumentOutOfRangeException(nameof(optionalInner.Type), optionalInner.Type,"Not supported type detected")
+                _ => throw new ArgumentOutOfRangeException(nameof(optionalInner.Type), optionalInner.Type, "Not supported type detected")
             };
         }
 
@@ -154,11 +154,11 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                 PurpleType.Number => CreatePropertyDeclaration(NumberUtils.ConvertToSharpNumeric(optionalInner.NumberType, optionalInner.NumberSize), name,
                     true, true),
                 PurpleType.String => CreatePropertyDeclaration("string", name, true),
-                _ => throw new ArgumentOutOfRangeException(nameof(optionalInner.Type), optionalInner.Type,"Not supported type detected")
+                _ => throw new ArgumentOutOfRangeException(nameof(optionalInner.Type), optionalInner.Type, "Not supported type detected")
             };
         }
-        
-        private  MemberDeclarationSyntax CreatePropertyForPurpleArrayItem(string name, GenericArgType arrayType, string arrayRefName,
+
+        private MemberDeclarationSyntax CreatePropertyForPurpleArrayItem(string name, GenericArgType arrayType, string arrayRefName,
             GenericArg arrayItemOptionalInner, bool nullable = false)
         {
             if (arrayType == GenericArgType.Optional)
@@ -167,7 +167,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
             var typeName = arrayType switch
             {
-                GenericArgType.Ref => _allTypes.Contains(arrayRefName)?NamingConventions.Formatter(arrayRefName):"object",
+                GenericArgType.Ref => _allTypes.Contains(arrayRefName) ? NamingConventions.Normalize(arrayRefName) : "object",
                 GenericArgType.Boolean => "bool",
                 GenericArgType.String => "string",
                 _ => throw new ArgumentOutOfRangeException()

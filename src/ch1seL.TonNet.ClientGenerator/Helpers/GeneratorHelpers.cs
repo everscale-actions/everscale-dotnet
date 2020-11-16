@@ -8,7 +8,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
     internal static class GeneratorHelpers
     {
         public static PropertyDeclarationSyntax CreatePropertyDeclaration(string typeName, string name, bool optional = false, bool nullable = false,
-            bool addPostfix=false)
+            bool addPostfix = false)
         {
             nullable = optional || nullable;
 
@@ -32,7 +32,8 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                             Token(SyntaxKind.SemicolonToken))
                 }));
 
-            return PropertyDeclaration(IdentifierName($"{typeName}{(optional ? "?" : null)}"), NamingConventions.Formatter($"{name}{(addPostfix?"Accessor":null)}"))
+            return PropertyDeclaration(IdentifierName($"{typeName}{(optional ? "?" : null)}"),
+                    NamingConventions.Normalize($"{name}{(addPostfix ? "Accessor" : null)}"))
                 .AddAttributeLists(AttributeList(SeparatedList(attributes)))
                 .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
                 .WithAccessorList(accessorListSyntax);

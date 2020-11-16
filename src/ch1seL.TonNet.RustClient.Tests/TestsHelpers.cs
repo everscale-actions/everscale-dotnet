@@ -1,16 +1,12 @@
-﻿using ch1seL.TonNet.RustClient.Models;
-using Microsoft.Extensions.Logging.Abstractions;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Logging.Abstractions;
 
 namespace ch1seL.TonNet.RustClient.Tests
 {
-    internal static class TestsHelpers{
+    internal static class TestsHelpers
+    {
         public static RustTonClientCore CreateTonClient()
         {
-            return new(Options.Create(new TonClientOptions()
-            {
-                BaseUrl = "localhost"
-            }), NullLogger<RustTonClientCore>.Instance);
+            return new(null, NullLogger<RustTonClientCore>.Instance);
         }
     }
 }

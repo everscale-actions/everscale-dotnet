@@ -5,6 +5,9 @@ using ch1seL.TonNet.Abstract;
 
 namespace ch1seL.TonNet.RustClient
 {
+    /// <summary>
+    ///     must be a Singleton
+    /// </summary>
     internal class TonNetRustAdapter : ITonClientAdapter
     {
         private readonly IRustTonClientCore _rustTonClient;
@@ -16,7 +19,7 @@ namespace ch1seL.TonNet.RustClient
 
         public async Task Request<TRequest>(string method, TRequest request, CancellationToken cancellationToken = default)
         {
-            await _rustTonClient.Request<TRequest>(method, request, cancellationToken);
+            await _rustTonClient.Request(method, request, cancellationToken);
         }
 
         public async Task<TResponse> Request<TResponse>(string method, CancellationToken cancellationToken = default)
@@ -34,9 +37,10 @@ namespace ch1seL.TonNet.RustClient
             return await _rustTonClient.Request<TResponse, TEvent>(method, callback, cancellationToken);
         }
 
-        public async Task<TResponse> Request<TRequest, TResponse, TEvent>(string method, TRequest request, Action<TEvent> callback, CancellationToken cancellationToken = default)
+        public async Task<TResponse> Request<TRequest, TResponse, TEvent>(string method, TRequest request, Action<TEvent> callback,
+            CancellationToken cancellationToken = default)
         {
-            return await _rustTonClient.Request<TRequest, TResponse, TEvent>(method,request, callback, cancellationToken);
+            return await _rustTonClient.Request<TRequest, TResponse, TEvent>(method, request, callback, cancellationToken);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,7 +9,6 @@ using ch1seL.TonNet.RustClient.RustInterop;
 using ch1seL.TonNet.RustClient.RustInterop.Models;
 using ch1seL.TonNet.RustClient.Utils;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace ch1seL.TonNet.RustClient
 {
@@ -22,14 +20,14 @@ namespace ch1seL.TonNet.RustClient
 
         private readonly uint _contextNumber;
         private readonly TimeSpan _coreExecutionTimeOut = TimeSpan.FromMinutes(1);
+
+        private readonly IDictionary<uint, CallbackDelegate> _delegates = new ConcurrentDictionary<uint, CallbackDelegate>();
         private readonly ILogger<RustTonClientCore> _logger;
         private uint _requestId;
 
-        public RustTonClientCore(IOptions<TonClientOptions> options, ILogger<RustTonClientCore> logger)
+        public RustTonClientCore(string optionsJson, ILogger<RustTonClientCore> logger)
         {
             _logger = logger;
-            var optionsJson = JsonSerializer.Serialize(options, JsonSerializerOptions);
-
             _logger.LogTrace("Creating context: {options}", optionsJson);
             using var optionsInteropJson = optionsJson.ToInteropStringDisposable();
             IntPtr resultPtr = RustInteropInterface.tc_create_context(optionsInteropJson);
@@ -49,9 +47,8 @@ namespace ch1seL.TonNet.RustClient
             RustInteropInterface.tc_destroy_context(_contextNumber);
         }
 
-        private readonly IDictionary<uint, CallbackDelegate> _delegates = new ConcurrentDictionary<uint, CallbackDelegate>(); 
-        
-        public async Task<string> Request<TEvent>(string method, string paramsJson, Action<TEvent> callback=null, CancellationToken cancellationToken = default)
+        public async Task<string> Request<TEvent>(string method, string paramsJson, Action<TEvent> callback = null,
+            CancellationToken cancellationToken = default)
         {
             _requestId = _requestId == uint.MaxValue ? 0 : _requestId + 1;
             _logger.LogTrace("Init request {context} {requestId}", _contextNumber, _requestId);
@@ -67,7 +64,9 @@ namespace ch1seL.TonNet.RustClient
                 {
                     _logger.LogError("Request {requestId} not found in context {context}", requestId, _contextNumber);
                     cts.SetException(new TonClientException($"Request {requestId} not found in context {_contextNumber}"));
-                };
+                }
+
+                ;
                 if (finished) _delegates.Remove(requestId);
 
                 switch ((ResponseType) responseType)
@@ -86,6 +85,7 @@ namespace ch1seL.TonNet.RustClient
                         break;
                 }
             }
+
             _delegates.Add(_requestId, CallbackDelegate);
             try
             {

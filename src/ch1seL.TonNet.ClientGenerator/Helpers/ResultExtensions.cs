@@ -19,7 +19,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                 case GenericArgType.None:
                     return null;
                 case GenericArgType.Ref:
-                    return NamingConventions.Formatter(genericArg.RefName);
+                    return NamingConventions.Normalize(genericArg.RefName);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(Type), genericArg.Type, "Unsupported generic type");
             }
