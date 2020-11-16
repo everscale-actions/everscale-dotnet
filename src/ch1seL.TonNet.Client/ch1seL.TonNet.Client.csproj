@@ -5,8 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj" />
-      <ProjectReference Include="..\src\ch1seL.TonNet.RustClient\ch1seL.TonNet.RustClient.csproj" />
+      <ProjectReference Include="..\ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj" />
+      <ProjectReference Include="..\ch1seL.TonNet.RustClient\ch1seL.TonNet.RustClient.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -80,7 +80,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
             bool addPostfix = false)
         {
             typeName = NamingConventions.Normalize(typeName);
-            typeName = !_allTypes.Contains(typeName) ? "object" : typeName;
+            typeName = !_allTypes.Contains(typeName) ? "JsonElement" : typeName;
 
             typeName = _numberTypesMapping.ContainsKey(typeName)
                 ? _numberTypesMapping[typeName]
@@ -167,7 +167,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
             var typeName = arrayType switch
             {
-                GenericArgType.Ref => _allTypes.Contains(arrayRefName) ? NamingConventions.Normalize(arrayRefName) : "object",
+                GenericArgType.Ref => _allTypes.Contains(arrayRefName) ? NamingConventions.Normalize(arrayRefName) : "JsonElement",
                 GenericArgType.Boolean => "bool",
                 GenericArgType.String => "string",
                 _ => throw new ArgumentOutOfRangeException()

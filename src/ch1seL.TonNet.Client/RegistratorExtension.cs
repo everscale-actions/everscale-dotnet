@@ -13,7 +13,7 @@ namespace ch1seL.TonNet.Client
 {
     internal static class TonClientServiceProviderBuilder
     {
-        internal static IServiceProvider BuildTonClientServiceProvider(IServiceProvider serviceProvider = null)
+        internal static ServiceProvider BuildTonClientServiceProvider(IServiceProvider serviceProvider = null)
         {
             var serviceCollection = new ServiceCollection();
             return serviceCollection

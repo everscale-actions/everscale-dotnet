@@ -38,7 +38,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
             var propertyDeclarationSyntaxes = GetProperties(tonApi);
             var moduleNames = tonApi.Modules.Select(m => m.Name).ToArray();
             
-            VariableDeclarationSyntax variableDeclaration = VariableDeclaration(ParseTypeName("IServiceProvider"))
+            VariableDeclarationSyntax variableDeclaration = VariableDeclaration(ParseTypeName("ServiceProvider"))
                 .AddVariables(VariableDeclarator("_serviceProvider"));
             FieldDeclarationSyntax fieldDeclaration = FieldDeclaration(variableDeclaration)
                 .AddModifiers(Token(SyntaxKind.PrivateKeyword), Token(SyntaxKind.ReadOnlyKeyword));
@@ -52,6 +52,10 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                         .Select(m => ParseStatement($"{NamingConventions.Normalize(m)} = _serviceProvider.GetRequiredService<{NamingConventions.ToInterfaceName(m)}>();")))
                     .ToArray();
             
+            var disposeMethod = MethodDeclaration(ParseTypeName("void"), "Dispose")
+                .AddModifiers(Token(SyntaxKind.PublicKeyword))
+                .AddBodyStatements(ParseStatement("_serviceProvider?.Dispose();"));
+            
             ConstructorDeclarationSyntax constructorDeclaration = ConstructorDeclaration(unitName)
                 .AddParameterListParameters(Parameter(Identifier("serviceProvider = null")).WithType(IdentifierName("IServiceProvider")))
                 .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
@@ -59,10 +63,11 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
             ClassDeclarationSyntax item = ClassDeclaration(unitName)
                 .AddModifiers(Token(SyntaxKind.PublicKeyword))
-                .AddBaseListTypes(SimpleBaseType(IdentifierName("ITonClient")))
+                .AddBaseListTypes(SimpleBaseType(IdentifierName("ITonClient")),SimpleBaseType(IdentifierName("IDisposable")))
                 .AddMembers(fieldDeclaration)
                 .AddMembers(constructorDeclaration)
-                .AddMembers(propertyDeclarationSyntaxes);
+                .AddMembers(propertyDeclarationSyntaxes)
+                .AddMembers(disposeMethod);
 
             return NamespaceDeclaration(IdentifierName(Generator.NameSpace))
                 .AddMembers(item);

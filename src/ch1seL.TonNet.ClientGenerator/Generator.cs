@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Mime;
 using System.Text.Json;
 using System.Threading.Tasks;
 using ch1seL.TonNet.ClientGenerator.Helpers;
@@ -13,8 +15,8 @@ namespace ch1seL.TonNet.ClientGenerator
         private const string ApiFilePath = "Resources/api.json";
         public const string NameSpace = "ch1seL.TonNet.Client";
         public const string NameSpaceModels = "ch1seL.TonNet.Client.Models";
-        private const string OutputPath = @"C:\\Users\\ch1seL\\repos\\ton-actions\\ton-client-dotnet\\ch1seL.TonNet.Client\\Generated\\";
-        private static readonly string[] ModulesNamespaces = {"System", "System.Threading", "System.Threading.Tasks", "ch1seL.TonNet.Client.Models", "ch1seL.TonNet.Abstract"};
+        private static readonly string OutputPath = Path.Combine(Directory.GetCurrentDirectory(),"../ch1seL.TonNet.Client/Generated");
+        private static readonly string[] ModulesNamespaces = {"System", "System.Threading", "System.Threading.Tasks", "ch1seL.TonNet.Client.Models", "ch1seL.TonNet.Abstract", "ch1seL.TonNet.Client.Abstract"};
         private static readonly string[] ModelsNamespaces = {"System", "System.Numerics", "System.Text.Json", "System.Text.Json.Serialization"};
 
         public static async Task GenerateClient()
@@ -26,7 +28,7 @@ namespace ch1seL.TonNet.ClientGenerator
             UnitHelpers.CreateUnit("ITonClient", unitName => ClientClassHelpers.CreateTonClientInterface(unitName, tonApi),
                 Path.Combine(OutputPath, "ITonClient.cs"));
             UnitHelpers.CreateUnit("TonClient", unitName => ClientClassHelpers.CreateTonClientClass(unitName, tonApi), Path.Combine(OutputPath, "TonClient.cs"),
-                "ch1seL.TonNet.Abstract", "Microsoft.Extensions.DependencyInjection");
+                "System", "ch1seL.TonNet.Abstract", "Microsoft.Extensions.DependencyInjection");
 
             var allTypes = tonApi!.Modules
                 .SelectMany(m => m.Types)

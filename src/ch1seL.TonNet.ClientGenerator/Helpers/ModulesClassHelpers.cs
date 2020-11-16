@@ -117,7 +117,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                 .Functions
                 .Select(f => GetMethodDeclaration(module, f, true))
                 .ToArray();
-
+            
             ClassDeclarationSyntax item = ClassDeclaration(unitName)
                 .AddModifiers(Token(SyntaxKind.PublicKeyword))
                 .AddBaseListTypes(SimpleBaseType(IdentifierName(NamingConventions.ToInterfaceName(unitName))))
