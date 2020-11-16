@@ -1,0 +1,43 @@
+﻿<Project>
+    <ItemGroup>
+        <PackageReference Include="ch1seL.MSBuildGzTool" Version="1.0.9" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <IsWin Condition="$([MSBuild]::IsOSPlatform('Windows'))">true</IsWin>
+        <IsLinux Condition="$([MSBuild]::IsOSPlatform('Linux'))">true</IsLinux>
+        <IsOs Condition="$([MSBuild]::IsOSPlatform('OSX'))">true</IsOs>
+        
+        <LibPlatform Condition="'$(IsWin)' == 'true'">win32_dll</LibPlatform>
+        <LibPlatform Condition="'$(IsLinux)' == 'true'">darwin</LibPlatform>
+        <LibPlatform Condition="'$(IsOs)' == 'true'">linux</LibPlatform>
+        
+        <LibExtension Condition="'$(IsWin)' == 'true'">dll</LibExtension>
+        <LibExtension Condition="'$(IsLinux)' == 'true'">so</LibExtension>
+        <LibExtension Condition="'$(IsOs)' == 'true'">dylib</LibExtension>        
+    </PropertyGroup>
+    
+    <PropertyGroup>
+        <SDKVersionDenormalized>$([System.String]::Copy('$(SDKVersion)').Replace('.', '_'))</SDKVersionDenormalized>
+        <TonLibUrl>http://sdkbinaries-ws.tonlabs.io/tonclient_$(SDKVersionDenormalized)_$(LibPlatform).gz</TonLibUrl>
+        <TonLibLocalPath>$(MSBuildThisFileDirectory)tonclient.$(LibExtension)</TonLibLocalPath>
+    </PropertyGroup>
+    
+    <Target Name="DownloadContentFiles" BeforeTargets="_CopyFilesMarkedCopyLocal">
+        <DownloadFile SourceUrl="$(TonLibUrl)" DestinationFolder="$(MSBuildThisFileDirectory)" DestinationFileName="tonclient.gz">
+            <Output TaskParameter="DownloadedFile" ItemName="Content" />
+        </DownloadFile>        
+        <UnGzip SourceFile="$(MSBuildThisFileDirectory)tonclient.gz" DestinationFile="$(TonLibLocalPath)" />
+<!--        dotnet pack broken ??-->
+<!--        <Delete Files="$(MSBuildThisFileDirectory)tonclient.gz" />-->
+    </Target>
+
+    <ItemGroup>
+        <Content Include="$(TonLibLocalPath)">            
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>            
+            <Visible>false</Visible>
+        </Content>
+        <None Remove="tonclient.gz" />
+    </ItemGroup>
+    
+</Project>

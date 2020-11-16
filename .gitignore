@@ -363,3 +363,6 @@ FodyWeavers.xsd
 
 #rider ide files
 .idea
+
+tonclient.dll
+tonclient.gz

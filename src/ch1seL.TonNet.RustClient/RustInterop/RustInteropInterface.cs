@@ -6,7 +6,7 @@ namespace ch1seL.TonNet.RustClient.RustInterop
 {
     internal static class RustInteropInterface
     {
-        private const string TonClientLib = "tonclient_1_1_1_win32";
+        private const string TonClientLib = "tonclient";
 
         [DllImport(TonClientLib, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr tc_create_context(InteropStringDisposable config);
