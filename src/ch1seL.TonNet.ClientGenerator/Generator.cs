@@ -35,6 +35,8 @@ namespace ch1seL.TonNet.ClientGenerator
                 .SelectMany(m => m.Types)
                 .Select(t=>NamingConventions.Formatter(t.Name))
                 .ToArray();
+            
+            IReadOnlyDictionary<string, string> numberTypesMapping = NumberUtils.MapNumericTypes(tonApi!.Modules);
 
             foreach (Module module in tonApi!.Modules)
             {
@@ -43,8 +45,7 @@ namespace ch1seL.TonNet.ClientGenerator
                 UnitHelpers.CreateUnit(module.Name, unitName => ModulesClassHelpers.CreateTonModuleClass(unitName, module),
                     Path.Combine(OutputPath, nameof(TonApi.Modules), $"{NamingConventions.Formatter(module.Name)}.cs"),
                     ModulesNamespaces.Append("ch1seL.TonNet.Abstract").ToArray());
-
-                IReadOnlyDictionary<string, string> numberTypesMapping = NumberUtils.MapNumericTypes(module);
+                
                 IReadOnlyCollection<string> moduleTypes = module.Types.Select(t => NamingConventions.Formatter(t.Name)).ToArray();
                 var modelClassBuilder = new ModelsClassHelpers(moduleTypes, numberTypesMapping, allTypes);
                 

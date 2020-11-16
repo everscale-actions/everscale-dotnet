@@ -67,7 +67,6 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                                 .AddBaseListTypes(
                                     SimpleBaseType(IdentifierName(NamingConventions.Formatter(typeElement.Name))))
                                 .AddMembers(properties.ToArray());
-                            break;
                         default:
                             throw new ArgumentOutOfRangeException(nameof(subClass.Type), subClass.Type, "EnumOfTypes doesn't support this type");
                     }

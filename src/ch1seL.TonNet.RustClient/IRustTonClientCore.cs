@@ -1,10 +1,11 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ch1seL.TonNet.RustClient
 {
     internal interface IRustTonClientCore
     {
-        Task<string> Request(string method, string paramsJson, CancellationToken cancellationToken = default);
+        Task<string> Request<TEvent>(string method, string paramsJson, Action<TEvent> callback = null, CancellationToken cancellationToken = default);
     }
 }
