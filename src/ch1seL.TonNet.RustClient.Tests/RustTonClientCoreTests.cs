@@ -23,6 +23,7 @@ namespace ch1seL.TonNet.RustClient.Tests
         public async Task FactorizeReturnsCorrectOutput()
         {
             using RustTonClientCore client = TestsHelpers.CreateTonClient();
+            
             const string method = "crypto.factorize";
             var parameters = new
             {

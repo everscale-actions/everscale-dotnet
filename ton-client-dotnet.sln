@@ -16,6 +16,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{6187
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWorkerService", "samples\SampleWorkerService\SampleWorkerService.csproj", "{3ECAD1EB-3AA6-4035-AB31-18F9F74479C3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_targets", "_targets", "{DD278D8B-D9EC-4CF6-8D3A-DC34992DBB72}"
+ProjectSection(SolutionItems) = preProject
+	PackageInfo.targets = PackageInfo.targets
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
