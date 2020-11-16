@@ -1,0 +1,47 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <PackageReference Include="ch1seL.MSBuildGzTool" Version="1.0.9" />
+  </ItemGroup>
+  
+  <PropertyGroup>
+    <_IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</_IsWindows>
+    <_IsMacOS Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</_IsMacOS>
+    <_IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</_IsLinux>
+
+    <_NativeRuntime Condition=" '$(_NativeRuntime)' == '' And '$(_IsMacOS)' == 'true' And ('$(Prefer32Bit)' == 'false' Or '$(PlatformTarget)' == 'x64')">osx-x64</_NativeRuntime>
+    <_NativeRuntime Condition=" '$(_NativeRuntime)' == '' And '$(_IsLinux)' == 'true' And ('$(Prefer32Bit)' == 'false' Or '$(PlatformTarget)' == 'x64')">linux-x64</_NativeRuntime>
+    <_NativeRuntime Condition=" '$(_NativeRuntime)' == '' And '$(_IsWindows)' == 'true' And ('$(Prefer32Bit)' == 'false' Or '$(PlatformTarget)' == 'x64')">win-x64</_NativeRuntime>
+
+    <_NativeLibName Condition="'$(_NativeRuntime)' == 'win-x64'">tonclient.dll</_NativeLibName>
+    <_NativeLibName Condition="'$(_NativeRuntime)' == 'osx-x64'">libtonclient.dylib</_NativeLibName>
+    <_NativeLibName Condition="'$(_NativeRuntime)' == 'linux-x64'">libtonclient.so</_NativeLibName>
+
+    <_LibPlatform Condition="'$(_IsWindows)' == 'true'">win32_dll</_LibPlatform>
+    <_LibPlatform Condition="'$(_IsLinux)' == 'true'">linux</_LibPlatform>
+    <_LibPlatform Condition="'$(_IsMacOS)' == 'true'">darwin</_LibPlatform>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <SDKVersionDenormalized>$([System.String]::Copy('$(SDKVersion)').Replace('.', '_'))</SDKVersionDenormalized>
+    <TonLibUrl>http://sdkbinaries-ws.tonlabs.io/tonclient_$(SDKVersionDenormalized)_$(_LibPlatform).gz</TonLibUrl>
+  </PropertyGroup>
+
+  <Target Name="DownloadContentFiles" BeforeTargets="CoreCompile">
+    <DownloadFile SourceUrl="$(TonLibUrl)" DestinationFolder="$(MSBuildThisFileDirectory)" DestinationFileName="tonclient.gz">
+      <Output TaskParameter="DownloadedFile" ItemName="Content" />
+    </DownloadFile>
+    <MakeDir Directories="$(MSBuildThisFileDirectory)..\..\runtimes\$(_NativeRuntime)\native\" />
+    <UnGzip SourceFile="$(MSBuildThisFileDirectory)\tonclient.gz" DestinationFile="$(MSBuildThisFileDirectory)..\..\runtimes\$(_NativeRuntime)\native\$(_NativeLibName)" />
+    <!--        dotnet pack broken ??-->
+    <!--        <Delete Files="$(MSBuildThisFileDirectory)tonclient.gz" />-->
+  </Target>
+  
+  <ItemGroup>
+    <Content Condition="'$(_NativeRuntime)' != ''" Include="$(MSBuildThisFileDirectory)..\..\runtimes\$(_NativeRuntime)\native\$(_NativeLibName)">
+      <Link>%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Visible>False</Visible>
+    </Content>
+    <None Remove="$(MSBuildThisFileDirectory)tonclient.gz" />
+  </ItemGroup>
+</Project>

@@ -5,7 +5,7 @@
     </PropertyGroup>
     
     <Import Project="..\..\PackageInfo.targets" />
-    <Import Project="GetRustTonClient.targets" />
+    <Import Project="build\ch1seL.TonNet.RustClient.targets" />
     
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
@@ -30,6 +30,12 @@
         <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
             <_Parameter1>ch1seL.TonNet.Client</_Parameter1>
         </AssemblyAttribute>
-    </ItemGroup>    
-   
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="build\ch1seL.TonNet.RustClient.targets">
+        <Pack>true</Pack>
+        <PackagePath>build\ch1seL.TonNet.RustClient.targets</PackagePath>
+      </Content>
+    </ItemGroup>
 </Project>

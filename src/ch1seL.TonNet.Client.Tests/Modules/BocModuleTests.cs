@@ -26,7 +26,7 @@ namespace TonSdk.Tests.Modules
         }
         
         [Fact]
-        public async Task Should_Parse_Message()
+        public async Task ShouldParseMessage()
         {
             var request = new ParseRequest()
             {
