@@ -12,6 +12,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Client", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Client.Tests", "src\ch1seL.TonNet.Client.Tests\ch1seL.TonNet.Client.Tests.csproj", "{C2F964A9-8A1E-4CE9-955F-D8A9B4DF4030}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{6187011F-F7CB-4CE0-8A31-803667A9EE59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWorkerService", "samples\SampleWorkerService\SampleWorkerService.csproj", "{3ECAD1EB-3AA6-4035-AB31-18F9F74479C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,7 +46,12 @@ Global
 		{C2F964A9-8A1E-4CE9-955F-D8A9B4DF4030}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2F964A9-8A1E-4CE9-955F-D8A9B4DF4030}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2F964A9-8A1E-4CE9-955F-D8A9B4DF4030}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3ECAD1EB-3AA6-4035-AB31-18F9F74479C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3ECAD1EB-3AA6-4035-AB31-18F9F74479C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3ECAD1EB-3AA6-4035-AB31-18F9F74479C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3ECAD1EB-3AA6-4035-AB31-18F9F74479C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{3ECAD1EB-3AA6-4035-AB31-18F9F74479C3} = {6187011F-F7CB-4CE0-8A31-803667A9EE59}
 	EndGlobalSection
 EndGlobal

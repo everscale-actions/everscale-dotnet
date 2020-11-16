@@ -12,7 +12,8 @@ namespace ch1seL.TonNet.Client.Tests
         protected TonClientTestsBase(ITestOutputHelper outputHelper)
         {
             IServiceCollection services = new ServiceCollection()
-                .AddLogging(builder => builder.AddXUnit(outputHelper));
+                .AddLogging(builder => builder.AddXUnit(outputHelper)
+                    .AddFilter(level => level == LogLevel.Trace));
 
             TonClient = new TonClient(services.BuildServiceProvider());
         }

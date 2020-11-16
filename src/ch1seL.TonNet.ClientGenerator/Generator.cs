@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Mime;
 using System.Text.Json;
 using System.Threading.Tasks;
 using ch1seL.TonNet.ClientGenerator.Helpers;
@@ -15,8 +13,11 @@ namespace ch1seL.TonNet.ClientGenerator
         private const string ApiFilePath = "Resources/api.json";
         public const string NameSpace = "ch1seL.TonNet.Client";
         public const string NameSpaceModels = "ch1seL.TonNet.Client.Models";
-        private static readonly string OutputPath = Path.Combine(Directory.GetCurrentDirectory(),"../ch1seL.TonNet.Client/Generated");
-        private static readonly string[] ModulesNamespaces = {"System", "System.Threading", "System.Threading.Tasks", "ch1seL.TonNet.Client.Models", "ch1seL.TonNet.Abstract", "ch1seL.TonNet.Client.Abstract"};
+        private static readonly string OutputPath = Path.Combine(Directory.GetCurrentDirectory(), "../ch1seL.TonNet.Client/Generated");
+
+        private static readonly string[] ModulesNamespaces =
+            {"System", "System.Threading", "System.Threading.Tasks", "ch1seL.TonNet.Client.Models", "ch1seL.TonNet.Abstract", "ch1seL.TonNet.Client.Abstract"};
+
         private static readonly string[] ModelsNamespaces = {"System", "System.Numerics", "System.Text.Json", "System.Text.Json.Serialization"};
 
         public static async Task GenerateClient()

@@ -28,14 +28,16 @@ namespace ch1seL.TonNet.RustClient
         public RustTonClientCore(string optionsJson, ILogger<RustTonClientCore> logger)
         {
             _logger = logger;
-            _logger.LogTrace("Creating context: {options}", optionsJson);
+            _logger.LogTrace("Creating context with options: {options}", optionsJson);
             using var optionsInteropJson = optionsJson.ToInteropStringDisposable();
             IntPtr resultPtr = RustInteropInterface.tc_create_context(optionsInteropJson);
+            
             _logger.LogTrace("Reading context creation result");
             InteropString resultInterop = RustInteropInterface.tc_read_string(resultPtr);
             RustInteropInterface.tc_destroy_string(resultPtr);
             var resultJson = resultInterop.ToString();
             var createContextResult = JsonSerializer.Deserialize<CreateContextResult>(resultJson, JsonSerializerOptions);
+            
             _logger.LogTrace("Context creation result: {result}", createContextResult);
             if (createContextResult.Error != null) throw new TonClientException(createContextResult.Error);
             _contextNumber = createContextResult.ContextNumber;
@@ -47,26 +49,24 @@ namespace ch1seL.TonNet.RustClient
             RustInteropInterface.tc_destroy_context(_contextNumber);
         }
 
-        public async Task<string> Request<TEvent>(string method, string paramsJson, Action<TEvent> callback = null,
+        public async Task<string> Request<TEvent>(string method, string requestJson, Action<TEvent> callback = null,
             CancellationToken cancellationToken = default)
         {
             _requestId = _requestId == uint.MaxValue ? 0 : _requestId + 1;
-            _logger.LogTrace("Init request {context} {requestId}", _contextNumber, _requestId);
 
             var cts = new TaskCompletionSource<string>();
 
             void CallbackDelegate(uint requestId, InteropString responseInteropString, uint responseType, bool finished)
             {
                 var responseJson = responseInteropString.ToString();
-                _logger.LogTrace("Got request response {context} {requestId} {responseType} {response}", _contextNumber, requestId, responseType, responseJson);
+                _logger.LogTrace("Got request response type:{responseType} body:{response}", ((ResponseType)responseType).ToString(), responseJson);
 
                 if (!_delegates.ContainsKey(requestId))
                 {
-                    _logger.LogError("Request {requestId} not found in context {context}", requestId, _contextNumber);
+                    _logger.LogError("RequestId was not found in this context");
                     cts.SetException(new TonClientException($"Request {requestId} not found in context {_contextNumber}"));
                 }
 
-                ;
                 if (finished) _delegates.Remove(requestId);
 
                 switch ((ResponseType) responseType)
@@ -80,7 +80,8 @@ namespace ch1seL.TonNet.RustClient
                         cts.SetException(new TonClientException(responseJson));
                         break;
                     default:
-                        callback?.Invoke(JsonSerializer.Deserialize<TEvent>(paramsJson, JsonSerializerOptions));
+                        _logger.LogError($"Sending callback by request:{requestId}");
+                        callback?.Invoke(JsonSerializer.Deserialize<TEvent>(requestJson, JsonSerializerOptions));
                         cts.SetResult(null);
                         break;
                 }
@@ -89,9 +90,9 @@ namespace ch1seL.TonNet.RustClient
             _delegates.Add(_requestId, CallbackDelegate);
             try
             {
-                _logger.LogTrace("Sending request {context} {method} {request}", _contextNumber, method, paramsJson);
+                _logger.LogTrace("Sending request method:{method} request:{request}", method, requestJson);
                 using var methodInteropString = method.ToInteropStringDisposable();
-                using var paramsJsonInteropString = paramsJson.ToInteropStringDisposable();
+                using var paramsJsonInteropString = requestJson.ToInteropStringDisposable();
                 RustInteropInterface.tc_request(_contextNumber, methodInteropString, paramsJsonInteropString, _requestId, CallbackDelegate);
             }
             catch
