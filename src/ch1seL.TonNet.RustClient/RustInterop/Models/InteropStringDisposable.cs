@@ -6,13 +6,13 @@ namespace ch1seL.TonNet.RustClient.RustInterop.Models
 {
     //we have to use separate disposable struct to avoid use unmanaged shared resources
     [StructLayout(LayoutKind.Sequential)]
-    public struct InteropStringDisposable: IDisposable
+    public struct InteropStringDisposable : IDisposable
     {
         private IntPtr Pointer;
         private uint Length;
-         
+
         private bool _disposed;
-        
+
         public static InteropStringDisposable CreateAndAlloc(string str)
         {
             str ??= string.Empty;
@@ -22,7 +22,7 @@ namespace ch1seL.TonNet.RustClient.RustInterop.Models
             return new InteropStringDisposable
             {
                 Pointer = pointer,
-                Length = (uint) bytes.Length,
+                Length = (uint) bytes.Length
             };
         }
 

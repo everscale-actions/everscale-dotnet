@@ -21,6 +21,7 @@ namespace ch1seL.TonNet.RustClient.RustInterop
         public static extern void tc_destroy_string(IntPtr str);
 
         [DllImport(TonClientLib, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void tc_request(uint context, InteropStringDisposable function, InteropStringDisposable parameters, uint requestId, CallbackDelegate callbackPointer);
+        public static extern void tc_request(uint context, InteropStringDisposable function, InteropStringDisposable parameters, uint requestId,
+            CallbackDelegate callbackPointer);
     }
 }

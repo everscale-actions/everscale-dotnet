@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ch1seL.TonNet.Client;
@@ -27,7 +25,7 @@ namespace SampleWorkerService
             _logger.LogInformation("Ton client version: {version}", version.Version);
             BuildInfoResponse buildInfo = await _tonClient.Client.BuildInfo(stoppingToken);
             _logger.LogInformation("Ton build number: {buildNumber}", buildInfo.BuildNumber);
-            
+
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);

@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.Client.Tests;
 using FluentAssertions;
@@ -10,29 +9,31 @@ namespace TonSdk.Tests.Modules
 {
     public class BocTests : TonClientTestsBase
     {
-        public BocTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
+        public BocTests(ITestOutputHelper outputHelper) : base(outputHelper)
+        {
+        }
 
         [Fact]
         public async Task GetBocHash()
         {
-            var request = new GetBocHashRequest()
+            var request = new GetBocHashRequest
             {
                 Boc = "te6ccgEBAQEAWAAAq2n+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE/zMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzSsG8DgAAAAAjuOu9NAL7BxYpA"
             };
-            
+
             GetBocHashResponse response = await TonClient.Boc.GetBocHash(request);
 
             response.Hash.Should().Be("dfd47194f3058ee058bfbfad3ea40cbbd9ad17ca77cd0904d4d9f18a48c2fbca");
         }
-        
+
         [Fact]
         public async Task ShouldParseMessage()
         {
-            var request = new ParseRequest()
+            var request = new ParseRequest
             {
                 Boc = "te6ccgEBAQEAWAAAq2n+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE/zMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzSsG8DgAAAAAjuOu9NAL7BxYpA"
             };
-            
+
             ParseResponse response = await TonClient.Boc.ParseMessage(request);
 
             response.Parsed.GetProperty("id").GetString().Should().Be("dfd47194f3058ee058bfbfad3ea40cbbd9ad17ca77cd0904d4d9f18a48c2fbca");

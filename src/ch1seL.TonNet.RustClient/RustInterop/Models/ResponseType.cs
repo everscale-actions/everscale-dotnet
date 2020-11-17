@@ -5,6 +5,6 @@
         Success = 0,
         Error = 1,
         Nop = 2,
-        Custom = 100,
+        Custom = 100
     }
 }

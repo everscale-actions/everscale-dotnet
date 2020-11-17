@@ -19,7 +19,7 @@ namespace ch1seL.TonNet.RustClient.Tests
 
             act.Should().NotThrow();
         }
-        
+
         [Fact]
         public async Task TestClosure()
         {
@@ -29,7 +29,7 @@ namespace ch1seL.TonNet.RustClient.Tests
                 {
                     return Task.WhenAll(Enumerable.Repeat(0, 10000)
                         // ReSharper disable once AccessToDisposedClosure
-                        .Select(_ => client.Request("client.version", null)));    
+                        .Select(_ => client.Request("client.version", null)));
                 }
             };
 
@@ -41,11 +41,11 @@ namespace ch1seL.TonNet.RustClient.Tests
         public async Task FactorizeReturnsCorrectOutput()
         {
             using RustTonClientCore client = TestsHelpers.CreateTonClient();
-            
+
             const string method = "crypto.factorize";
             var parameters = new
             {
-                    composite = "17ED48941A08F981"
+                composite = "17ED48941A08F981"
             };
             var response = await client.Request(method, JsonSerializer.Serialize(parameters, RustTonClientCore.JsonSerializerOptions));
 

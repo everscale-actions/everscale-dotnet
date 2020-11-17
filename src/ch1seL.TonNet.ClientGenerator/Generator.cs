@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using ch1seL.TonNet.ClientGenerator.Helpers;
 using ch1seL.TonNet.ClientGenerator.Models;
@@ -20,19 +21,21 @@ namespace ch1seL.TonNet.ClientGenerator
 
         private static readonly string[] ModelsNamespaces = {"System", "System.Numerics", "System.Text.Json", "System.Text.Json.Serialization"};
 
+        public static readonly JsonSerializerOptions Options = new() {Converters = {new JsonStringEnumConverterWithAttributeSupport()}};
+
         public static async Task GenerateClient()
         {
             if (Directory.Exists(OutputPath)) Directory.Delete(OutputPath, true);
-            
-            
-            var tonApi = await JsonSerializer.DeserializeAsync<TonApi>(File.OpenRead(ApiFilePath), TonModelSerializationOptions.Options);
+
+
+            var tonApi = await JsonSerializer.DeserializeAsync<TonApi>(File.OpenRead(ApiFilePath), Options);
 
             //Create ITonClient
-            UnitHelpers.CreateUnit("ITonClient", unitName => 
-                    ClientClassHelpers.CreateTonClientInterface(unitName, tonApi), Path.Combine(OutputPath, "ITonClient.cs"));
-            
+            UnitHelpers.CreateUnit("ITonClient", unitName =>
+                ClientClassHelpers.CreateTonClientInterface(unitName, tonApi), Path.Combine(OutputPath, "ITonClient.cs"));
+
             //Create TonClient
-            UnitHelpers.CreateUnit("TonClient", unitName => 
+            UnitHelpers.CreateUnit("TonClient", unitName =>
                     ClientClassHelpers.CreateTonClientClass(unitName, tonApi), Path.Combine(OutputPath, "TonClient.cs"),
                 "System", "Microsoft.Extensions.DependencyInjection");
 
@@ -49,12 +52,12 @@ namespace ch1seL.TonNet.ClientGenerator
                 //Create Interface for Modules
                 UnitHelpers.CreateUnit(module.Name, unitName => ModulesClassHelpers.CreateTonModuleInterface(unitName, module),
                     Path.Combine(OutputPath, nameof(TonApi.Modules), $"I{NamingConventions.Normalize(module.Name)}.cs"), ModulesNamespaces);
-             
+
                 //Create Modules
                 UnitHelpers.CreateUnit(module.Name, unitName => ModulesClassHelpers.CreateTonModuleClass(unitName, module),
                     Path.Combine(OutputPath, nameof(TonApi.Modules), $"{NamingConventions.Normalize(module.Name)}.cs"),
                     ModulesNamespaces.ToArray());
-                
+
                 //Create classes for each module
                 var modelClassBuilder = new ModelsClassHelpers(numberTypesMapping, allTypes);
                 foreach (TypeElement typeElement in module.Types.Where(t => t.Type != TypeType.None && t.Type != TypeType.Number))

@@ -14,7 +14,7 @@ namespace ch1seL.TonNet.Client
     internal static class TonClientServiceProviderBuilder
     {
         /// <summary>
-        /// Build TON Client personal service provider to hide all internal logic from user
+        ///     Build TON Client personal service provider to hide all internal logic from user
         /// </summary>
         /// <param name="serviceProvider">User service provider</param>
         /// <returns>Created personal provider</returns>

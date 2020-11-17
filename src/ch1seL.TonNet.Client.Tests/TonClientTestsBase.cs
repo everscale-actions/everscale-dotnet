@@ -5,10 +5,8 @@ using Xunit.Abstractions;
 
 namespace ch1seL.TonNet.Client.Tests
 {
-    public abstract class TonClientTestsBase:IDisposable
+    public abstract class TonClientTestsBase : IDisposable
     {
-        protected TonClient TonClient { get; }
-        
         protected TonClientTestsBase(ITestOutputHelper outputHelper)
         {
             IServiceCollection services = new ServiceCollection()
@@ -17,6 +15,8 @@ namespace ch1seL.TonNet.Client.Tests
 
             TonClient = new TonClient(services.BuildServiceProvider());
         }
+
+        protected TonClient TonClient { get; }
 
         public void Dispose()
         {

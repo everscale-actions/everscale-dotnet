@@ -90,7 +90,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                 ? _numberTypesMapping[typeName]
                 : typeName;
 
-            return CreatePropertyDeclaration(typeName, name, description, optional: optional, nullable: nullable, addPostfix: addPostfix);
+            return CreatePropertyDeclaration(typeName, name, description, optional, nullable, addPostfix);
         }
 
 
@@ -100,10 +100,10 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
         {
             return type switch
             {
-                GenericArgType.Boolean => CreatePropertyDeclaration("bool", name, description, optional: optional, addPostfix: addPostFix),
+                GenericArgType.Boolean => CreatePropertyDeclaration("bool", name, description, optional, addPostfix: addPostFix),
                 GenericArgType.Ref => CreatePropertyForRef(refName, name, description, addPostfix: addPostFix),
                 GenericArgType.String => CreatePropertyDeclaration("string", name, description, addPostfix: addPostFix),
-                GenericArgType.Optional => CreatePropertyGenericArgs(optionalInner.Type, name, optionalInner.RefName, null, description, optional: addPostFix),
+                GenericArgType.Optional => CreatePropertyGenericArgs(optionalInner.Type, name, optionalInner.RefName, null, description, addPostFix),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
@@ -124,7 +124,8 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
         {
             return sf.Type switch
             {
-                PurpleType.Array => CreatePropertyForPurpleArrayItem(sf.Name, sf.ArrayItem.Type, sf.ArrayItem.RefName, sf.ArrayItem.OptionalInner, sf.Description),
+                PurpleType.Array => CreatePropertyForPurpleArrayItem(sf.Name, sf.ArrayItem.Type, sf.ArrayItem.RefName, sf.ArrayItem.OptionalInner,
+                    sf.Description),
                 PurpleType.BigInt => CreatePropertyDeclaration("BigInteger", sf.Name, sf.Description),
                 PurpleType.Boolean => CreatePropertyDeclaration("bool", sf.Name, sf.Description),
                 PurpleType.Number => CreatePropertyDeclaration(NumberUtils.ConvertToSharpNumeric(sf.NumberType, sf.NumberSize), sf.Name, sf.Description),
@@ -139,10 +140,12 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
         {
             return optionalInner.Type switch
             {
-                PurpleType.Array => CreatePropertyForPurpleArrayItem(name, optionalInner.ArrayItem.Type, optionalInner.ArrayItem.RefName, null, description, true),
-                PurpleType.BigInt => CreatePropertyDeclaration("BigInteger", name, description, optional: true, nullable: true),
-                PurpleType.Boolean => CreatePropertyDeclaration("bool", name, description, optional: true, nullable: true),
-                PurpleType.Number => CreatePropertyDeclaration(NumberUtils.ConvertToSharpNumeric(optionalInner.NumberType, optionalInner.NumberSize), name, description, optional: true),
+                PurpleType.Array => CreatePropertyForPurpleArrayItem(name, optionalInner.ArrayItem.Type, optionalInner.ArrayItem.RefName, null, description,
+                    true),
+                PurpleType.BigInt => CreatePropertyDeclaration("BigInteger", name, description, true, true),
+                PurpleType.Boolean => CreatePropertyDeclaration("bool", name, description, true, true),
+                PurpleType.Number => CreatePropertyDeclaration(NumberUtils.ConvertToSharpNumeric(optionalInner.NumberType, optionalInner.NumberSize), name,
+                    description, true),
                 PurpleType.Ref => CreatePropertyForRef(optionalInner.RefName, name, description),
                 PurpleType.String => CreatePropertyDeclaration("string", name, description),
                 PurpleType.Optional => CreatePropertyForPurpleTypeOptionalOptional(name, optionalInner.OptionalInner, description),
@@ -155,11 +158,12 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
         {
             return optionalInner.Type switch
             {
-                PurpleType.BigInt => CreatePropertyDeclaration("BigInteger", name, description, optional: true, nullable: true),
-                PurpleType.Boolean => CreatePropertyDeclaration("bool", name, description, optional: true, nullable: true),
-                PurpleType.Number => CreatePropertyDeclaration(NumberUtils.ConvertToSharpNumeric(optionalInner.NumberType, optionalInner.NumberSize), name, description,
-                    optional: true, nullable: true),
-                PurpleType.String => CreatePropertyDeclaration("string", name, description, optional: true),
+                PurpleType.BigInt => CreatePropertyDeclaration("BigInteger", name, description, true, true),
+                PurpleType.Boolean => CreatePropertyDeclaration("bool", name, description, true, true),
+                PurpleType.Number => CreatePropertyDeclaration(NumberUtils.ConvertToSharpNumeric(optionalInner.NumberType, optionalInner.NumberSize), name,
+                    description,
+                    true, true),
+                PurpleType.String => CreatePropertyDeclaration("string", name, description, true),
                 _ => throw new ArgumentOutOfRangeException(nameof(optionalInner.Type), optionalInner.Type, "Not supported type detected")
             };
         }

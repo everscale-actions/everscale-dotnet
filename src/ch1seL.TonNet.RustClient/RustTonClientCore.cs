@@ -15,8 +15,7 @@ namespace ch1seL.TonNet.RustClient
     //todo: must be singleton
     internal class RustTonClientCore : IRustTonClientCore, IDisposable
     {
-        public static readonly JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions
-            {IgnoreNullValues = true, MaxDepth = int.MaxValue};
+        public static readonly JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions {IgnoreNullValues = true, MaxDepth = int.MaxValue};
 
         private readonly uint _contextNumber;
         private readonly TimeSpan _coreExecutionTimeOut = TimeSpan.FromMinutes(1);
@@ -44,19 +43,17 @@ namespace ch1seL.TonNet.RustClient
             _contextNumber = createContextResult?.ContextNumber ?? throw new NullReferenceException("Context creation result is null");
         }
 
-        private async Task WaitForDelegates()
+        public void Dispose()
         {
-            while (true)
-            {
-                await Task.Delay(TimeSpan.FromSeconds(1));
+            _logger.LogTrace("Disposing context {context}", _contextNumber);
 
-                lock (_dictLock)
-                {
-                    if (_delegatesDict.Count == 0) return;
-                    
-                    _logger.LogWarning("Some delegates not finished: {count}", _delegatesDict.Count);
-                }
-            }
+            // some questionable logic here to wait all handler finished work
+            Task waitForDelegatesFinishedTask = WaitForDelegates();
+            Task res = Task.WhenAny(waitForDelegatesFinishedTask, Task.Delay(TimeSpan.FromSeconds(30))).GetAwaiter().GetResult();
+            if (res != waitForDelegatesFinishedTask) throw new TonClientException("Delegates didn't finish in time");
+
+            RustInteropInterface.tc_destroy_context(_contextNumber);
+            _logger.LogTrace("Context {context} disposed", _contextNumber);
         }
 
         public async Task<string> Request<TEvent>(string method, string requestJson, Action<TEvent> callback = null,
@@ -113,6 +110,7 @@ namespace ch1seL.TonNet.RustClient
             {
                 _delegatesDict.Add(_requestId, callbackDelegate);
             }
+
             try
             {
                 _logger.LogTrace("Sending request method:{method} request:{request}", method, requestJson);
@@ -131,28 +129,27 @@ namespace ch1seL.TonNet.RustClient
             throw new TonClientException("Execution timeout expired or cancellation request");
         }
 
+        private async Task WaitForDelegates()
+        {
+            while (true)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(1));
+
+                lock (_dictLock)
+                {
+                    if (_delegatesDict.Count == 0) return;
+
+                    _logger.LogWarning("Some delegates not finished: {count}", _delegatesDict.Count);
+                }
+            }
+        }
+
         private void RemoveDelegateFromDict<TEvent>(uint requestId)
         {
             lock (_dictLock)
             {
                 _delegatesDict.Remove(requestId);
             }
-        }
-
-        public void Dispose()
-        {
-            _logger.LogTrace("Disposing context {context}", _contextNumber);
-            
-            // some questionable logic here to wait all handler finished work
-            Task waitForDelegatesFinishedTask = WaitForDelegates();
-            Task res = Task.WhenAny(waitForDelegatesFinishedTask, Task.Delay(TimeSpan.FromSeconds(30))).GetAwaiter().GetResult();
-            if (res != waitForDelegatesFinishedTask)
-            {
-                throw new TonClientException("Delegates didn't finish in time");
-            }
-            
-            RustInteropInterface.tc_destroy_context(_contextNumber);
-            _logger.LogTrace("Context {context} disposed", _contextNumber);
         }
     }
 }
