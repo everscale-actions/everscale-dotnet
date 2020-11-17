@@ -45,24 +45,6 @@ jobs:
     - name: Pack
       run: dotnet pack -v normal -c Release --no-restore --no-build --include-symbols --include-source -p:PackageVersion=$GITHUB_RUN_ID -o pack
 
-    - name: Publish Sample Site
-      run: dotnet publish -c Release --no-restore --no-build samples/WebApplication -o publish
-
-    - name: Rewrite base href
-      uses: SteveSandersonMS/ghaction-rewrite-base-href@v1
-      with:
-        html_path: publish/wwwroot/index.html
-        base_href: /${{ env.PROJECT_NAME }}/
-    
-    - name: Deploy to Github Pages
-      uses: JamesIves/github-pages-deploy-action@releases/v3
-      with:
-        ACCESS_TOKEN: $GITHUB_TOKEN
-        BASE_BRANCH: master
-        BRANCH: gh-pages
-        FOLDER: publish/wwwroot
-        SINGLE_COMMIT: true
-
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
