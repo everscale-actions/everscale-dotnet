@@ -27,7 +27,7 @@ namespace ch1seL.TonNet.ClientGenerator
             if (Directory.Exists(OutputPath)) Directory.Delete(OutputPath, true);
 
             UnitHelpers.CreateUnit("ITonClient", unitName => ClientClassHelpers.CreateTonClientInterface(unitName, tonApi),
-                Path.Combine(OutputPath, "ITonClient.cs"));
+                Path.Combine(OutputPath, "ITonClient.cs"), "System");
             UnitHelpers.CreateUnit("TonClient", unitName => ClientClassHelpers.CreateTonClientClass(unitName, tonApi), Path.Combine(OutputPath, "TonClient.cs"),
                 "System", "ch1seL.TonNet.Abstract", "Microsoft.Extensions.DependencyInjection");
 
