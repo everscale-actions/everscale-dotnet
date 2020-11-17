@@ -16,14 +16,14 @@ namespace ch1seL.TonNet.RustClient
     internal class RustTonClientCore : IRustTonClientCore, IDisposable
     {
         public static readonly JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions {IgnoreNullValues = true, MaxDepth = int.MaxValue};
-
         private readonly uint _contextNumber;
         private readonly TimeSpan _coreExecutionTimeOut = TimeSpan.FromMinutes(1);
         private readonly IDictionary<uint, CallbackDelegate> _delegatesDict = new Dictionary<uint, CallbackDelegate>();
-
         private readonly object _dictLock = new object();
         private readonly ILogger<RustTonClientCore> _logger;
+
         private uint _requestId;
+
 
         public RustTonClientCore(string optionsJson, ILogger<RustTonClientCore> logger)
         {
@@ -52,10 +52,8 @@ namespace ch1seL.TonNet.RustClient
         {
             _logger.LogTrace("Disposing context {context}", _contextNumber);
 
-            // some questionable logic here to wait all handler finished work
-            Task waitForDelegatesFinishedTask = WaitForDelegates();
-            Task res = Task.WhenAny(waitForDelegatesFinishedTask, Task.Delay(TimeSpan.FromSeconds(30))).GetAwaiter().GetResult();
-            if (res != waitForDelegatesFinishedTask) throw new TonClientException("Delegates didn't finish in time", new TimeoutException("task time"));
+            if (!WaitForDelegates().GetAwaiter().GetResult())
+                throw new TonClientException("Delegates didn't finish during the allotted time", new TimeoutException());
 
             RustInteropInterface.tc_destroy_context(_contextNumber);
             _logger.LogTrace("Context {context} disposed", _contextNumber);
@@ -138,19 +136,25 @@ namespace ch1seL.TonNet.RustClient
             throw new TonClientException("Execution timeout expired or cancellation request");
         }
 
-        private async Task WaitForDelegates()
+        private async Task<bool> WaitForDelegates()
         {
             //todo: use cts instead of Task.WaitAny  
-            //var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             while (true)
             {
-                await Task.Delay(TimeSpan.FromSeconds(1));
+                try
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(1), cts.Token);
+                }
+                catch (TaskCanceledException)
+                {
+                    return false;
+                }
 
                 lock (_dictLock)
                 {
-                    if (_delegatesDict.Count == 0) return;
-
-                    _logger.LogWarning("Some delegates not finished: {count}", _delegatesDict.Count);
+                    if (_delegatesDict.Count == 0) return true;
+                    _logger.LogWarning("Some delegates not finished: {count} wait...", _delegatesDict.Count);
                 }
             }
         }
