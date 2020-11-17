@@ -11,7 +11,7 @@ This client was automatically generated from api.json https://github.com/tonlabs
 ## Add Nuget Package to your project
 
 ```
-dotnet add ch1seL.TonNet.Client
+dotnet add package ch1seL.TonNet.Client
 ```
 
 ## Register in DI  
