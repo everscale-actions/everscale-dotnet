@@ -1,6 +1,7 @@
 ﻿# ch1seL.TonNet.RustClient
 
-Target: netstandard2.1
+TargetFramework: netstandard2.1
+
 
 There are two base classes RustTonClientCore and TonNetRustAdapter in this library
 

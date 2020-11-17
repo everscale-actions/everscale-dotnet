@@ -1,5 +1,7 @@
 ﻿# ClientGenerator
 
+TargetFramework: net5.0
+
 This is tool generate Ton Client .NET 
 
 
