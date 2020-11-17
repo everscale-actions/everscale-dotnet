@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using ch1seL.TonNet.ClientGenerator.Models;
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
@@ -10,15 +9,15 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 {
     internal static class ClientClassHelpers
     {
-        public static MemberDeclarationSyntax[] GetProperties(TonApi tonApi)
+        private static MemberDeclarationSyntax[] GetProperties(TonApi tonApi)
         {
-            MemberDeclarationSyntax[] propertyDeclarationSyntaxes = tonApi.Modules.Select(m => m.Name)
-                .Select(moduleName =>
+            MemberDeclarationSyntax[] propertyDeclarationSyntaxes = tonApi.Modules
+                .Select(module =>
                 {
-                    var formattedName = NamingConventions.Normalize(moduleName);
+                    var formattedName = NamingConventions.Normalize(module.Name);
 
                     return PropertyDeclaration(IdentifierName($"I{formattedName}"), formattedName)
-                        .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
+                        .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword).WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(module.Description))))
                         .WithAccessorList(
                             AccessorList(
                                 List(new[]
@@ -37,7 +36,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
         {
             var propertyDeclarationSyntaxes = GetProperties(tonApi);
             var moduleNames = tonApi.Modules.Select(m => m.Name).ToArray();
-            
+
             VariableDeclarationSyntax variableDeclaration = VariableDeclaration(ParseTypeName("ServiceProvider"))
                 .AddVariables(VariableDeclarator("_serviceProvider"));
             FieldDeclarationSyntax fieldDeclaration = FieldDeclaration(variableDeclaration)
@@ -49,13 +48,14 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                         ParseStatement("_serviceProvider = TonClientServiceProviderBuilder.BuildTonClientServiceProvider(serviceProvider);")
                     }
                     .Union(moduleNames
-                        .Select(m => ParseStatement($"{NamingConventions.Normalize(m)} = _serviceProvider.GetRequiredService<{NamingConventions.ToInterfaceName(m)}>();")))
+                        .Select(m => ParseStatement(
+                            $"{NamingConventions.Normalize(m)} = _serviceProvider.GetRequiredService<{NamingConventions.ToInterfaceName(m)}>();")))
                     .ToArray();
-            
-            var disposeMethod = MethodDeclaration(ParseTypeName("void"), "Dispose")
+
+            MethodDeclarationSyntax disposeMethod = MethodDeclaration(ParseTypeName("void"), "Dispose")
                 .AddModifiers(Token(SyntaxKind.PublicKeyword))
                 .AddBodyStatements(ParseStatement("_serviceProvider?.Dispose();"));
-            
+
             ConstructorDeclarationSyntax constructorDeclaration = ConstructorDeclaration(unitName)
                 .AddParameterListParameters(Parameter(Identifier("serviceProvider = null")).WithType(IdentifierName("IServiceProvider")))
                 .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
@@ -63,7 +63,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
             ClassDeclarationSyntax item = ClassDeclaration(unitName)
                 .AddModifiers(Token(SyntaxKind.PublicKeyword))
-                .AddBaseListTypes(SimpleBaseType(IdentifierName("ITonClient")),SimpleBaseType(IdentifierName("IDisposable")))
+                .AddBaseListTypes(SimpleBaseType(IdentifierName("ITonClient")), SimpleBaseType(IdentifierName("IDisposable")))
                 .AddMembers(fieldDeclaration)
                 .AddMembers(constructorDeclaration)
                 .AddMembers(propertyDeclarationSyntaxes)

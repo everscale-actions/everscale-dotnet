@@ -5,10 +5,20 @@ using System.Text.Json.Serialization;
 
 namespace ch1seL.TonNet.Client.Models
 {
+    /// <summary>
+    /// Not described yet..
+    /// </summary>
     public class VerifySignatureRequest
     {
+        /// <summary>
+        ///  Signed data that must be verified encoded in `base64`.
+        /// </summary>
         [JsonPropertyName("signed")]
         public string Signed { get; set; }
+
+        /// <summary>
+        ///  Signer's public key - 64 symbols hex string
+        /// </summary>
         [JsonPropertyName("public")]
         public string Public { get; set; }
     }

@@ -9,6 +9,9 @@ namespace ch1seL.TonNet.Client
 {
     public interface IUtils : ITonModule
     {
+        /// <summary>
+        ///  Converts address from any TON format to any TON format
+        /// </summary>
         public Task<ConvertAddressResponse> ConvertAddress(ConvertAddressRequest @params, CancellationToken cancellationToken = default);
     }
 }

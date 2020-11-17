@@ -5,8 +5,14 @@ using System.Text.Json.Serialization;
 
 namespace ch1seL.TonNet.Client.Models
 {
+    /// <summary>
+    /// Not described yet..
+    /// </summary>
     public class QueryCollectionResponse
     {
+        /// <summary>
+        ///  Objects that match the provided criteria
+        /// </summary>
         [JsonPropertyName("result")]
         public JsonElement[] Result { get; set; }
     }

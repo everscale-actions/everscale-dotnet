@@ -5,8 +5,14 @@ using System.Text.Json.Serialization;
 
 namespace ch1seL.TonNet.Client.Models
 {
+    /// <summary>
+    /// Not described yet..
+    /// </summary>
     public class NaclSignOpenResponse
     {
+        /// <summary>
+        ///  Unsigned data, encoded in `base64`.
+        /// </summary>
         [JsonPropertyName("unsigned")]
         public string Unsigned { get; set; }
     }

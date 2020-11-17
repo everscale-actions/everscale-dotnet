@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 {
     internal static class ModulesClassHelpers
     {
-        public static MemberDeclarationSyntax GetMethodDeclaration(Module module, Function function, bool withBody)
+        private static MemberDeclarationSyntax GetMethodDeclaration(Module module, Function function, bool withBody)
         {
             string callBackType = null;
 
@@ -24,7 +24,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                 .Select(param => GetMethodParameter(module, param, out callBackType))
                 .ToArray();
 
-            var modifiers = new List<SyntaxToken> {Token(SyntaxKind.PublicKeyword)};
+            var modifiers = new List<SyntaxToken> {Token(SyntaxKind.PublicKeyword).WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(function.Description))};
             if (withBody) modifiers.Add(Token(SyntaxKind.AsyncKeyword));
 
             MethodDeclarationSyntax method =
@@ -64,7 +64,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
             return method.WithSemicolonToken(Token(SyntaxKind.SemicolonToken));
         }
 
-        public static ParameterSyntax GetMethodParameter(Module module, Param param, out string callBackType)
+        private static ParameterSyntax GetMethodParameter(Module module, Param param, out string callBackType)
         {
             GenericArg genericArg = param.GenericArgs?[0];
             string typeName;
@@ -117,7 +117,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                 .Functions
                 .Select(f => GetMethodDeclaration(module, f, true))
                 .ToArray();
-            
+
             ClassDeclarationSyntax item = ClassDeclaration(unitName)
                 .AddModifiers(Token(SyntaxKind.PublicKeyword))
                 .AddBaseListTypes(SimpleBaseType(IdentifierName(NamingConventions.ToInterfaceName(unitName))))

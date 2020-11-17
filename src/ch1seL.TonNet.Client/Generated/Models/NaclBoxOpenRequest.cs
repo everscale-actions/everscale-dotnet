@@ -5,14 +5,32 @@ using System.Text.Json.Serialization;
 
 namespace ch1seL.TonNet.Client.Models
 {
+    /// <summary>
+    /// Not described yet..
+    /// </summary>
     public class NaclBoxOpenRequest
     {
+        /// <summary>
+        ///  Data that must be decrypted. Encoded with `base64`.
+        /// </summary>
         [JsonPropertyName("encrypted")]
         public string Encrypted { get; set; }
+
+        /// <summary>
+        /// Not described yet..
+        /// </summary>
         [JsonPropertyName("nonce")]
         public string Nonce { get; set; }
+
+        /// <summary>
+        ///  Sender's public key - unprefixed 0-padded to 64 symbols hex string 
+        /// </summary>
         [JsonPropertyName("their_public")]
         public string TheirPublic { get; set; }
+
+        /// <summary>
+        ///  Receiver's private key - unprefixed 0-padded to 64 symbols hex string 
+        /// </summary>
         [JsonPropertyName("secret")]
         public string Secret { get; set; }
     }

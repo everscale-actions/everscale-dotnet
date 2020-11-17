@@ -5,8 +5,14 @@ using System.Text.Json.Serialization;
 
 namespace ch1seL.TonNet.Client.Models
 {
+    /// <summary>
+    /// Not described yet..
+    /// </summary>
     public class GenerateRandomBytesRequest
     {
+        /// <summary>
+        ///  Size of random byte array.
+        /// </summary>
         [JsonPropertyName("length")]
         public uint Length { get; set; }
     }

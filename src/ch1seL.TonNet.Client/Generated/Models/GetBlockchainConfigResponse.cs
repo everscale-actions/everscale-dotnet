@@ -5,8 +5,14 @@ using System.Text.Json.Serialization;
 
 namespace ch1seL.TonNet.Client.Models
 {
+    /// <summary>
+    /// Not described yet..
+    /// </summary>
     public class GetBlockchainConfigResponse
     {
+        /// <summary>
+        ///  Blockchain config BOC encoded as base64
+        /// </summary>
         [JsonPropertyName("config_boc")]
         public string ConfigBoc { get; set; }
     }

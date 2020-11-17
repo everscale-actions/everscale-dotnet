@@ -5,8 +5,14 @@ using System.Text.Json.Serialization;
 
 namespace ch1seL.TonNet.Client.Models
 {
+    /// <summary>
+    /// Not described yet..
+    /// </summary>
     public class TonCrc16Response
     {
+        /// <summary>
+        ///  Calculated CRC for input data.
+        /// </summary>
         [JsonPropertyName("crc")]
         public ushort Crc { get; set; }
     }
