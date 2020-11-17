@@ -27,11 +27,11 @@ namespace ch1seL.TonNet.RustClient.Tests
             const string method = "crypto.factorize";
             var parameters = new
             {
-                    composite = "6FFAD60473B3"
+                    composite = "17ED48941A08F981"
             };
             var response = await client.Request(method, JsonSerializer.Serialize(parameters, RustTonClientCore.JsonSerializerOptions));
 
-            response.Should().Be("{\"factors\":[\"3\",\"25539CAC2691\"]}");
+            response.Should().Be("{\"factors\":[\"494C553B\",\"53911073\"]}");
         }
 
         [Fact]
