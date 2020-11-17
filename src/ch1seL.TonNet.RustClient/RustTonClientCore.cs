@@ -34,13 +34,13 @@ namespace ch1seL.TonNet.RustClient
             
             _logger.LogTrace("Reading context creation result");
             InteropString resultInterop = RustInteropInterface.tc_read_string(resultPtr);
-            RustInteropInterface.tc_destroy_string(resultPtr);
             var resultJson = resultInterop.ToString();
-            var createContextResult = JsonSerializer.Deserialize<CreateContextResult>(resultJson, JsonSerializerOptions);
+            RustInteropInterface.tc_destroy_string(resultPtr);
+            _logger.LogTrace("Got context creation result: {result}", resultJson);
             
-            _logger.LogTrace("Context creation result: {result}", createContextResult);
-            if (createContextResult.Error != null) throw new TonClientException(createContextResult.Error);
-            _contextNumber = createContextResult.ContextNumber;
+            var createContextResult = JsonSerializer.Deserialize<CreateContextResult>(resultJson, JsonSerializerOptions);
+            if (createContextResult?.Error != null) throw new TonClientException(createContextResult.Error);
+            _contextNumber = createContextResult?.ContextNumber ?? throw new NullReferenceException("Context creation result is null");
         }
 
         public void Dispose()
