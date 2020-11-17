@@ -12,11 +12,11 @@
     <_NativeLibName Condition="'$(_NativeRuntime)' == 'linux-x64'">libtonclient.so</_NativeLibName>
     <_NativeLibName Condition="'$(_NativeRuntime)' == 'osx-x64'">libtonclient.dylib</_NativeLibName>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <Content Condition="'$(_NativeRuntime)' != ''" Include="$(MSBuildThisFileDirectory)..\runtimes\$(_NativeRuntime)\native\$(_NativeLibName)">
+      <Link>lib\$(_NativeLibName)</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Visible>false</Visible>
     </Content>
   </ItemGroup>
   

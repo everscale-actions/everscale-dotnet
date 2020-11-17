@@ -30,28 +30,36 @@
   <Target Name="DownloadContentFiles" BeforeTargets="CoreCompile">
     <MakeDir Directories="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\" />    
     <DownloadFile SourceUrl="$(_TonLibDownloadUrlWin)" DestinationFolder="$(MSBuildThisFileDirectory)..\downloads\" DestinationFileName="tonclient_win32_dll.gz">
-      <Output TaskParameter="DownloadedFile" ItemName="Content" />
+      <Output TaskParameter="DownloadedFile" ItemName="None" />
     </DownloadFile>    
     <UnGzip SourceFile="$(MSBuildThisFileDirectory)..\downloads\tonclient_win32_dll.gz" DestinationFile="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\tonclient.dll" />
     
     <MakeDir Directories="$(MSBuildThisFileDirectory)..\runtimes\linux-x64\native\" />    
     <DownloadFile SourceUrl="$(_TonLibDownloadUrlLinux)" DestinationFolder="$(MSBuildThisFileDirectory)..\downloads\" DestinationFileName="tonclient_linux.gz">
-      <Output TaskParameter="DownloadedFile" ItemName="Content" />
+      <Output TaskParameter="DownloadedFile" ItemName="None" />
     </DownloadFile>
     <UnGzip SourceFile="$(MSBuildThisFileDirectory)..\downloads\tonclient_linux.gz" DestinationFile="$(MSBuildThisFileDirectory)..\runtimes\linux-x64\native\libtonclient.so" />
     
     <MakeDir Directories="$(MSBuildThisFileDirectory)..\runtimes\osx-x64\native\" />    
     <DownloadFile SourceUrl="$(_TonLibDownloadUrlMacOS)" DestinationFolder="$(MSBuildThisFileDirectory)..\downloads\" DestinationFileName="tonclient_darwin.gz">
-      <Output TaskParameter="DownloadedFile" ItemName="Content" />
+      <Output TaskParameter="DownloadedFile" ItemName="None" />
     </DownloadFile>
     <UnGzip SourceFile="$(MSBuildThisFileDirectory)..\downloads\tonclient_darwin.gz" DestinationFile="$(MSBuildThisFileDirectory)..\runtimes\osx-x64\native\libtonclient.dylib" />
   </Target>
-
+  
   <ItemGroup>
-    <Content Condition="'$(_NativeRuntime)' != ''" Include="$(MSBuildThisFileDirectory)..\runtimes\$(_NativeRuntime)\native\$(_NativeLibName)">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Include="$(MSBuildThisFileDirectory)..\downloads">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <Visible>false</Visible>
-    </Content>
+    </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Condition="'$(_NativeRuntime)' != ''" Include="$(MSBuildThisFileDirectory)..\runtimes\$(_NativeRuntime)\native\$(_NativeLibName)">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Link>$(_NativeLibName)</Link>
+      <Visible>false</Visible>
+    </None>
   </ItemGroup>
   
 </Project>
