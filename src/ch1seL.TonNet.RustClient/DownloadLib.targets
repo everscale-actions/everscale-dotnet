@@ -1,0 +1,57 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <PackageReference Include="ch1seL.MSBuildGzTool" Version="1.0.9" />
+  </ItemGroup>
+  
+  <PropertyGroup>
+    <_IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</_IsWindows>
+    <_IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</_IsLinux>
+    <_IsMacOS Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</_IsMacOS>
+
+    <_NativeRuntime Condition=" '$(_NativeRuntime)' == '' And '$(_IsWindows)' == 'true' And ('$(Prefer32Bit)' == 'false' Or '$(PlatformTarget)' == 'x64')">win-x64</_NativeRuntime>
+    <_NativeRuntime Condition=" '$(_NativeRuntime)' == '' And '$(_IsLinux)' == 'true' And ('$(Prefer32Bit)' == 'false' Or '$(PlatformTarget)' == 'x64')">linux-x64</_NativeRuntime>
+    <_NativeRuntime Condition=" '$(_NativeRuntime)' == '' And '$(_IsMacOS)' == 'true' And ('$(Prefer32Bit)' == 'false' Or '$(PlatformTarget)' == 'x64')">osx-x64</_NativeRuntime>
+
+    <_NativeLibName Condition="'$(_NativeRuntime)' == 'win-x64'">tonclient.dll</_NativeLibName>
+    <_NativeLibName Condition="'$(_NativeRuntime)' == 'linux-x64'">libtonclient.so</_NativeLibName>
+    <_NativeLibName Condition="'$(_NativeRuntime)' == 'osx-x64'">libtonclient.dylib</_NativeLibName>
+
+    <_LibPlatform Condition="'$(_IsWindows)' == 'true'">win32_dll</_LibPlatform>
+    <_LibPlatform Condition="'$(_IsLinux)' == 'true'">linux</_LibPlatform>
+    <_LibPlatform Condition="'$(_IsMacOS)' == 'true'">darwin</_LibPlatform>
+
+    <_SDKVersionDenormalized>$([System.String]::Copy('$(SDKVersion)').Replace('.', '_'))</_SDKVersionDenormalized>
+    
+    <_TonLibDownloadUrlWin>http://sdkbinaries-ws.tonlabs.io/tonclient_$(_SDKVersionDenormalized)_win32_dll.gz</_TonLibDownloadUrlWin>
+    <_TonLibDownloadUrlLinux>http://sdkbinaries-ws.tonlabs.io/tonclient_$(_SDKVersionDenormalized)_linux.gz</_TonLibDownloadUrlLinux>
+    <_TonLibDownloadUrlMacOS>http://sdkbinaries-ws.tonlabs.io/tonclient_$(_SDKVersionDenormalized)_darwin.gz</_TonLibDownloadUrlMacOS>
+  </PropertyGroup>
+
+  <Target Name="DownloadContentFiles" BeforeTargets="CoreCompile">
+    <MakeDir Directories="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\" />    
+    <DownloadFile SourceUrl="$(_TonLibDownloadUrlWin)" DestinationFolder="$(MSBuildThisFileDirectory)..\downloads\" DestinationFileName="tonclient_win32_dll.gz">
+      <Output TaskParameter="DownloadedFile" ItemName="Content" />
+    </DownloadFile>    
+    <UnGzip SourceFile="$(MSBuildThisFileDirectory)..\downloads\tonclient_win32_dll.gz" DestinationFile="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\tonclient.dll" />
+    
+    <MakeDir Directories="$(MSBuildThisFileDirectory)..\runtimes\linux-x64\native\" />    
+    <DownloadFile SourceUrl="$(_TonLibDownloadUrlLinux)" DestinationFolder="$(MSBuildThisFileDirectory)..\downloads\" DestinationFileName="tonclient_linux.gz">
+      <Output TaskParameter="DownloadedFile" ItemName="Content" />
+    </DownloadFile>
+    <UnGzip SourceFile="$(MSBuildThisFileDirectory)..\downloads\tonclient_linux.gz" DestinationFile="$(MSBuildThisFileDirectory)..\runtimes\linux-x64\native\libtonclient.so" />
+    
+    <MakeDir Directories="$(MSBuildThisFileDirectory)..\runtimes\osx-x64\native\" />    
+    <DownloadFile SourceUrl="$(_TonLibDownloadUrlMacOS)" DestinationFolder="$(MSBuildThisFileDirectory)..\downloads\" DestinationFileName="tonclient_darwin.gz">
+      <Output TaskParameter="DownloadedFile" ItemName="Content" />
+    </DownloadFile>
+    <UnGzip SourceFile="$(MSBuildThisFileDirectory)..\downloads\tonclient_darwin.gz" DestinationFile="$(MSBuildThisFileDirectory)..\runtimes\osx-x64\native\libtonclient.dylib" />
+  </Target>
+
+  <ItemGroup>
+    <Content Condition="'$(_NativeRuntime)' != ''" Include="$(MSBuildThisFileDirectory)..\runtimes\$(_NativeRuntime)\native\$(_NativeLibName)">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Visible>false</Visible>
+    </Content>
+  </ItemGroup>
+  
+</Project>

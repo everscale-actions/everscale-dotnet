@@ -5,16 +5,15 @@
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
-
+    
     <ItemGroup>
       <ProjectReference Include="..\ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj" />
       <ProjectReference Include="..\ch1seL.TonNet.RustClient\ch1seL.TonNet.RustClient.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
-      <PackageReference Include="System.Text.Json" Version="5.0.0" />
+        <PackageReference Include="System.Text.Json" Version="5.0.0" />
     </ItemGroup>
 
     <ItemGroup>

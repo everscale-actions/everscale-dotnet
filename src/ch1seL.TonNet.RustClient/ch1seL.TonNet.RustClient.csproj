@@ -5,7 +5,7 @@
     </PropertyGroup>
     
     <Import Project="..\..\PackageInfo.targets" />
-    <Import Project="build\ch1seL.TonNet.RustClient.targets" />
+    <Import Project="DownloadLib.targets" />
     
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
@@ -33,9 +33,32 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="build\ch1seL.TonNet.RustClient.targets">
-        <Pack>true</Pack>
-        <PackagePath>build\ch1seL.TonNet.RustClient.targets</PackagePath>
-      </Content>
+        <Content Include="build\ch1seL.TonNet.RustClient.targets">
+            <Pack>true</Pack>
+            <PackagePath>build\ch1seL.TonNet.RustClient.targets</PackagePath>
+        </Content>
+        <Content Include="..\runtimes\win-x64\native\tonclient.dll">
+            <Pack>true</Pack>
+            <PackagePath>runtimes\win-x64\native\tonclient.dll</PackagePath>
+            <Link>runtimes\win-x64\native\tonclient.dll</Link>
+        </Content>
+        <Content Include="..\runtimes\linux-x64\native\libtonclient.so">
+            <Pack>true</Pack>
+            <PackagePath>runtimes\linux-x64\native\libtonclient.so</PackagePath>
+            <Link>runtimes\linux-x64\native\libtonclient.so</Link>
+        </Content>
+        <Content Include="..\runtimes\osx-x64\native\libtonclient.dylib">
+            <Pack>true</Pack>
+            <PackagePath>runtimes\osx-x64\native\libtonclient.dylib</PackagePath>
+            <Link>runtimes\osx-x64\native\libtonclient.dylib</Link>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="lib" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="lib\tonclient.dll" />
     </ItemGroup>
 </Project>

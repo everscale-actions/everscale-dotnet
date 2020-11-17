@@ -1,13 +1,15 @@
 <Project>
     <PropertyGroup>
         <Authors>Alexander Salamatov</Authors>
+        <Organization>ton-actions</Organization>
+        <Owner>ch1seL</Owner>
         <Copyright>Copyright 2020 (c) Alexander Salamatov. All rights reserved.</Copyright>
         
         <Description>Free TON Client for .NET</Description>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         
-        <PackageTags>FREETON;TON;Blazor;Razor;Components;CSharp;Wasm</PackageTags>
+        <PackageTags>FREETON;TON;CSharp;dotnet;net5</PackageTags>
         <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/ton-actions/ton-client-dotnet</PackageProjectUrl>
         <PackageIcon>icon.png</PackageIcon>
