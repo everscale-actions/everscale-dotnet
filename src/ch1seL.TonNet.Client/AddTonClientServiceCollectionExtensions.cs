@@ -1,8 +1,10 @@
 ﻿using System;
+using ch1seL.TonNet.Client;
 using ch1seL.TonNet.Client.Models;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ch1seL.TonNet.Client
+// ReSharper disable once CheckNamespace
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class AddTonClientServiceCollectionExtensions
     {

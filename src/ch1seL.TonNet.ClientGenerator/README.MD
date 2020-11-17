@@ -1,18 +1,20 @@
 ﻿# ClientGenerator
 
-This is tool generate Ton Client .net 
+This is tool generate Ton Client .NET 
+
 
 ## Using
 
-```
-dotnet run
-```
+- Copy api.json to Resources/api.json
+
+- Run: `dotnet run`
+
 
 ## Result
 
-TonClient class with Models in folder ../ch1seL.TonNet.Client/Generated
+TonClient and Models classes in folder ../ch1seL.TonNet.Client/Generated will be overriden
+
 
 ## Roadmap 
 
-- Generate Models folder from api.json
 - Build-in running to generate client during the build

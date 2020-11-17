@@ -79,7 +79,6 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
             InterfaceDeclarationSyntax item = InterfaceDeclaration(unitName)
                 .AddModifiers(Token(SyntaxKind.PublicKeyword))
-                .AddBaseListTypes(SimpleBaseType(IdentifierName("IDisposable")))
                 .AddMembers(propertyDeclarationSyntaxes);
 
             return NamespaceDeclaration(IdentifierName(Generator.NameSpace))

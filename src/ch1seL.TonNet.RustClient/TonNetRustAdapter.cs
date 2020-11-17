@@ -6,7 +6,7 @@ using ch1seL.TonNet.Abstract;
 namespace ch1seL.TonNet.RustClient
 {
     /// <summary>
-    ///     must be a Singleton
+    ///  Rust adapter. Uses extensions method of RustTonClientCore
     /// </summary>
     internal class TonNetRustAdapter : ITonClientAdapter
     {

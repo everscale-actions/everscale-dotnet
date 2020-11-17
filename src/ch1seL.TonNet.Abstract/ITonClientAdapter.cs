@@ -4,6 +4,10 @@ using System.Threading.Tasks;
 
 namespace ch1seL.TonNet.Abstract
 {
+    /// <summary>
+    /// The most importantly interface. It provide all that needed to clients implementation
+    /// </summary>
+    /// There are big plans for this interface
     public interface ITonClientAdapter
     {
         Task Request<TRequest>(string method, TRequest request, CancellationToken cancellationToken = default);

@@ -1,8 +1,6 @@
-using System;
-
 namespace ch1seL.TonNet.Client
 {
-    public interface ITonClient : IDisposable
+    public interface ITonClient
     {
         public IClient Client { get; }
         public ICrypto Crypto { get; }

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -17,6 +18,23 @@ namespace ch1seL.TonNet.RustClient.Tests
             });
 
             act.Should().NotThrow();
+        }
+        
+        [Fact]
+        public async Task TestClosure()
+        {
+            RustTonClientCore client = TestsHelpers.CreateTonClient();
+            Func<Task> act = () =>
+            {
+                {
+                    return Task.WhenAll(Enumerable.Repeat(0, 10000)
+                        // ReSharper disable once AccessToDisposedClosure
+                        .Select(_ => client.Request("client.version", null)));    
+                }
+            };
+
+            await act.Should().NotThrowAsync();
+            client.Dispose();
         }
 
         [Fact]
