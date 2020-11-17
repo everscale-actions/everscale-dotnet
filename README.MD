@@ -55,7 +55,7 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-## or you configure options by appsettings.json or another configuration provider
+## or configure options by appsettings.json or another configuration provider
 
 https://docs.microsoft.com/en-us/dotnet/core/extensions/configuration-providers
 
