@@ -1,3 +1,5 @@
+![Main workflow](https://github.com/ton-actions/ton-client-dotnet/workflows/Main%20workflow/badge.svg)
+
 # Free TON .NET Client 
 
 Free TON is modern and fast crypto network. Lets do this network convenient both for users and developers!
