@@ -29,6 +29,9 @@
         <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
             <_Parameter1>ch1seL.TonNet.Client</_Parameter1>
         </AssemblyAttribute>
+        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+            <_Parameter1>DynamicProxyGenAssembly2</_Parameter1>
+        </AssemblyAttribute>
     </ItemGroup>
 
     <Import Project="DownloadLib.targets" />
@@ -50,9 +53,13 @@
             <Link>lib\libtonclient.dylib</Link>
         </Content>
         <Content Include="ch1seL.TonNet.RustClient.targets">
-          <Pack>true</Pack>
-          <PackagePath>build\ch1seL.TonNet.RustClient.targets</PackagePath>
+            <Pack>true</Pack>
+            <PackagePath>build\ch1seL.TonNet.RustClient.targets</PackagePath>
         </Content>
     </ItemGroup>
-    
+
+    <ItemGroup>
+        <Compile Remove="Utils\TonClientExceptionExtensions.cs"/>
+    </ItemGroup>
+
 </Project>

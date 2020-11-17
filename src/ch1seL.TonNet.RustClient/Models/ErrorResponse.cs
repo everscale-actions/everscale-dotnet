@@ -1,10 +1,9 @@
-using System.Text.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace ch1seL.TonNet.RustClient.Models
 {
     public class ErrorResponse
     {
-        // todo: decompose it 
-        public JsonElement Error { get; set; }
+        [JsonPropertyName("error")] public RustClientError Error { get; set; }
     }
 }

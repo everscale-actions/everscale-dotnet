@@ -1,12 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ch1seL.TonNet.Abstract
 {
-    // todo: seems like needed separate class for general classes  
+    // todo: seems like have to be moved to another lib?
     public class TonClientException : Exception
     {
-        public TonClientException(string message, Exception inner = null) : base(message, inner)
+        public TonClientException(string message = null, Exception inner = null) : base(message, inner)
         {
+        }
+
+        public int Code { get; private set; }
+
+        public static TonClientException CreateExceptionWithCodeWithData(int code, IDictionary<string, object> data = null, string message = null,
+            Exception inner = null)
+        {
+            var exception = new TonClientException(message, inner) {Code = code};
+            if (data == null) return exception;
+
+            foreach ((var key, object value) in data) exception.Data.Add(key, value);
+            return exception;
         }
     }
 }
