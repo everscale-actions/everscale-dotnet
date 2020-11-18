@@ -1,12 +1,11 @@
 ﻿using System.Text.Json;
 using System.Threading.Tasks;
 using ch1seL.TonNet.Client.Models;
-using ch1seL.TonNet.Serialization;
 using FluentAssertions;
 using TestsShared;
 using Xunit;
 
-namespace ch1seL.TonNet.Client.Tests
+namespace ch1seL.TonNet.Serialization.Tests
 {
     public class SerializationTests
     {

@@ -14,7 +14,7 @@ namespace ch1seL.TonNet.Client.Extensions
 
             ResultOfNaclSignDetached result = await tonClient.Crypto.NaclSignDetached(new ParamsOfNaclSign
             {
-                Secret = pair.Secret,
+                Secret = keys.Secret,
                 Unsigned = data
             });
 

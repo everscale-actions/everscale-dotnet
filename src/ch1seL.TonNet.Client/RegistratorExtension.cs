@@ -15,6 +15,7 @@ namespace ch1seL.TonNet.Client
         /// <summary>
         ///     Build TON Client personal service provider to hide all internal logic from user
         /// </summary>
+        /// <param name="loggerFactory"></param>
         /// <param name="serviceProvider">User service provider</param>
         /// <returns>Created personal provider</returns>
         internal static ServiceProvider BuildTonClientServiceProvider(IServiceProvider serviceProvider = null)
