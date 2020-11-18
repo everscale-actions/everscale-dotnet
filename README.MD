@@ -34,7 +34,7 @@ public class YourTonService {
     }
     
     public string GetTonSecretPhase() {
-        var mnemonic = await _tonClient.Crypto.MnemonicFromRandom(new MnemonicFromRandomRequest());
+        var mnemonic = await _tonClient.Crypto.MnemonicFromRandom(new ParamsOfMnemonicFromRandom());
         return mnemonic.Phrase;
     }
 }
