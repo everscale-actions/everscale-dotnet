@@ -11,22 +11,22 @@ namespace ch1seL.TonNet.Client.Models
     /// </summary>
     public abstract class ProcessingEvent
     {
-        [JsonDiscriminator("WillFetchFirstBlock")]
         /// <summary>
         /// <para> Notifies the app that the current shard block will be fetched</para>
         /// <para> from the network.</para>
         /// <para> Fetched block will be used later in waiting phase.</para>
         /// </summary>
+        [JsonDiscriminator("WillFetchFirstBlock")]
         public class WillFetchFirstBlock : ProcessingEvent
         {
         }
 
-        [JsonDiscriminator("FetchFirstBlockFailed")]
         /// <summary>
         /// <para> Notifies the app that the client has failed to fetch current</para>
         /// <para> shard block.</para>
         /// <para> Message processing has finished.</para>
         /// </summary>
+        [JsonDiscriminator("FetchFirstBlockFailed")]
         public class FetchFirstBlockFailed : ProcessingEvent
         {
             /// <summary>
@@ -38,11 +38,11 @@ namespace ch1seL.TonNet.Client.Models
             public ClientError Error { get; set; }
         }
 
-        [JsonDiscriminator("WillSend")]
         /// <summary>
         /// <para> Notifies the app that the message will be sent to the</para>
         /// <para> network.</para>
         /// </summary>
+        [JsonDiscriminator("WillSend")]
         public class WillSend : ProcessingEvent
         {
             /// <summary>
@@ -67,10 +67,10 @@ namespace ch1seL.TonNet.Client.Models
             public string Message { get; set; }
         }
 
-        [JsonDiscriminator("DidSend")]
         /// <summary>
         ///  Notifies the app that the message was sent to the network.
         /// </summary>
+        [JsonDiscriminator("DidSend")]
         public class DidSend : ProcessingEvent
         {
             /// <summary>
@@ -92,7 +92,6 @@ namespace ch1seL.TonNet.Client.Models
             public string Message { get; set; }
         }
 
-        [JsonDiscriminator("SendFailed")]
         /// <summary>
         /// <para> Notifies the app that the sending operation was failed with</para>
         /// <para> network error.</para>
@@ -100,6 +99,7 @@ namespace ch1seL.TonNet.Client.Models
         /// <para> phase because the message possibly has been delivered to the</para>
         /// <para> node.</para>
         /// </summary>
+        [JsonDiscriminator("SendFailed")]
         public class SendFailed : ProcessingEvent
         {
             /// <summary>
@@ -143,13 +143,13 @@ namespace ch1seL.TonNet.Client.Models
             public ClientError Error { get; set; }
         }
 
-        [JsonDiscriminator("WillFetchNextBlock")]
         /// <summary>
         /// <para> Notifies the app that the next shard block will be fetched</para>
         /// <para> from the network.</para>
         /// <para> Event can occurs more than one time due to block walking</para>
         /// <para> procedure.</para>
         /// </summary>
+        [JsonDiscriminator("WillFetchNextBlock")]
         public class WillFetchNextBlock : ProcessingEvent
         {
             /// <summary>
@@ -180,12 +180,12 @@ namespace ch1seL.TonNet.Client.Models
             public string Message { get; set; }
         }
 
-        [JsonDiscriminator("FetchNextBlockFailed")]
         /// <summary>
         /// <para> Notifies the app that the next block can't be fetched due to</para>
         /// <para> error.</para>
         /// <para> Processing will be continued after `network_resume_timeout`.</para>
         /// </summary>
+        [JsonDiscriminator("FetchNextBlockFailed")]
         public class FetchNextBlockFailed : ProcessingEvent
         {
             /// <summary>
@@ -221,13 +221,13 @@ namespace ch1seL.TonNet.Client.Models
             public ClientError Error { get; set; }
         }
 
-        [JsonDiscriminator("MessageExpired")]
         /// <summary>
         /// <para> Notifies the app that the message was expired.</para>
         /// <para> Event occurs for contracts which ABI includes header "expire"</para>
         /// <para> Processing will be continued from encoding phase after</para>
         /// <para> `expiration_retries_timeout`.</para>
         /// </summary>
+        [JsonDiscriminator("MessageExpired")]
         public class MessageExpired : ProcessingEvent
         {
             /// <summary>

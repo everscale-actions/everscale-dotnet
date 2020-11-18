@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ch1seL.TonNet.ClientGenerator.Models;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
@@ -62,9 +63,13 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                                 return CreatePropertyGenericArgs(sf.Type, sf.Name, sf.RefName, sf.OptionalInner, subClass.Description, addPostFix: addPostfix);
                             }));
                             return (MemberDeclarationSyntax) ClassDeclaration(NamingConventions.Normalize(subClass.Name))
-                                .AddAttributeLists(AttributeList(SeparatedList(new[] {Attribute(IdentifierName($"JsonDiscriminator(\"{subClass.Name}\")"))})))
-                                .AddModifiers(Token(SyntaxKind.PublicKeyword)
-                                    .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(subClass.Description)))
+                                .AddAttributeLists(AttributeList(
+                                    SeparatedList(
+                                        new[]
+                                        {
+                                            Attribute(IdentifierName($"JsonDiscriminator(\"{subClass.Name}\")"))
+                                        }))).WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(subClass.Description))
+                                .AddModifiers(Token(SyntaxKind.PublicKeyword))
                                 .AddBaseListTypes(
                                     SimpleBaseType(IdentifierName(NamingConventions.Normalize(typeElement.Name))))
                                 .AddMembers(properties.ToArray());

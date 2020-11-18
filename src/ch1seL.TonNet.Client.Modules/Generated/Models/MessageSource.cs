@@ -11,10 +11,10 @@ namespace ch1seL.TonNet.Client.Models
     /// </summary>
     public abstract class MessageSource
     {
-        [JsonDiscriminator("Encoded")]
         /// <summary>
         /// Not described yet..
         /// </summary>
+        [JsonDiscriminator("Encoded")]
         public class Encoded : MessageSource
         {
             /// <summary>

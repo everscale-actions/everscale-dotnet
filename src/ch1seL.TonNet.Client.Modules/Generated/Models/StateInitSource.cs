@@ -11,10 +11,10 @@ namespace ch1seL.TonNet.Client.Models
     /// </summary>
     public abstract class StateInitSource
     {
-        [JsonDiscriminator("Message")]
         /// <summary>
         ///  Deploy message.
         /// </summary>
+        [JsonDiscriminator("Message")]
         public class Message : StateInitSource
         {
             /// <summary>
@@ -24,10 +24,10 @@ namespace ch1seL.TonNet.Client.Models
             public MessageSource Source { get; set; }
         }
 
-        [JsonDiscriminator("StateInit")]
         /// <summary>
         ///  State init data.
         /// </summary>
+        [JsonDiscriminator("StateInit")]
         public class StateInit : StateInitSource
         {
             /// <summary>
@@ -49,10 +49,10 @@ namespace ch1seL.TonNet.Client.Models
             public string Library { get; set; }
         }
 
-        [JsonDiscriminator("Tvc")]
         /// <summary>
         ///  Content of the TVC file. Encoded in `base64`.
         /// </summary>
+        [JsonDiscriminator("Tvc")]
         public class Tvc : StateInitSource
         {
             /// <summary>

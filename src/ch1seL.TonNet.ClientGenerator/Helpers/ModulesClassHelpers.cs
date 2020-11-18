@@ -74,11 +74,11 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                 //todo: avoid this hardcode
                 case GenericRefNames.Request when string.Equals(module.Name, "net", StringComparison.OrdinalIgnoreCase):
                     callBackType = "object";
-                    typeName = $"Action<{callBackType}>";
+                    typeName = $"Action<{callBackType}, uint>";
                     break;
                 case GenericRefNames.Request:
                     callBackType = NamingConventions.EventFormatter(module.Name);
-                    typeName = $"Action<{callBackType}>";
+                    typeName = $"Action<{callBackType}, uint>";
                     break;
                 default:
                     callBackType = null;

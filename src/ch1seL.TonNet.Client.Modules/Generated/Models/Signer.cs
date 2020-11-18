@@ -11,19 +11,19 @@ namespace ch1seL.TonNet.Client.Models
     /// </summary>
     public abstract class Signer
     {
-        [JsonDiscriminator("None")]
         /// <summary>
         ///  No keys are provided. Creates an unsigned message. 
         /// </summary>
+        [JsonDiscriminator("None")]
         public class None : Signer
         {
         }
 
-        [JsonDiscriminator("External")]
         /// <summary>
         /// <para> Only public key is provided in unprefixed hex string format to generate unsigned message </para>
         /// <para> and `data_to_sign` which can be signed later.  </para>
         /// </summary>
+        [JsonDiscriminator("External")]
         public class External : Signer
         {
             /// <summary>
@@ -34,10 +34,10 @@ namespace ch1seL.TonNet.Client.Models
             public string PublicKey { get; set; }
         }
 
-        [JsonDiscriminator("Keys")]
         /// <summary>
         ///  Key pair is provided for signing
         /// </summary>
+        [JsonDiscriminator("Keys")]
         public class Keys : Signer
         {
             /// <summary>
@@ -47,11 +47,11 @@ namespace ch1seL.TonNet.Client.Models
             public KeyPair KeysAccessor { get; set; }
         }
 
-        [JsonDiscriminator("SigningBox")]
         /// <summary>
         /// <para> Signing Box interface is provided for signing, allows Dapps to sign messages using external APIs,</para>
         /// <para> such as HSM, cold wallet, etc.</para>
         /// </summary>
+        [JsonDiscriminator("SigningBox")]
         public class SigningBox : Signer
         {
             /// <summary>

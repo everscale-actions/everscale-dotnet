@@ -11,28 +11,28 @@ namespace ch1seL.TonNet.Client.Models
     /// </summary>
     public abstract class AccountForExecutor
     {
-        [JsonDiscriminator("None")]
         /// <summary>
         /// <para> Non-existing account to run a creation internal message.</para>
         /// <para> Should be used with `skip_transaction_check = true` if the message has no deploy data</para>
         /// <para> since transactions on the uninitialized account are always aborted</para>
         /// </summary>
+        [JsonDiscriminator("None")]
         public class None : AccountForExecutor
         {
         }
 
-        [JsonDiscriminator("Uninit")]
         /// <summary>
         ///  Emulate uninitialized account to run deploy message
         /// </summary>
+        [JsonDiscriminator("Uninit")]
         public class Uninit : AccountForExecutor
         {
         }
 
-        [JsonDiscriminator("Account")]
         /// <summary>
         ///  Account state to run message
         /// </summary>
+        [JsonDiscriminator("Account")]
         public class Account : AccountForExecutor
         {
             /// <summary>

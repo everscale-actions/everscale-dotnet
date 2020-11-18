@@ -11,26 +11,26 @@ namespace ch1seL.TonNet.Client.Models
     /// </summary>
     public abstract class AddressStringFormat
     {
-        [JsonDiscriminator("AccountId")]
         /// <summary>
         /// Not described yet..
         /// </summary>
+        [JsonDiscriminator("AccountId")]
         public class AccountId : AddressStringFormat
         {
         }
 
-        [JsonDiscriminator("Hex")]
         /// <summary>
         /// Not described yet..
         /// </summary>
+        [JsonDiscriminator("Hex")]
         public class Hex : AddressStringFormat
         {
         }
 
-        [JsonDiscriminator("Base64")]
         /// <summary>
         /// Not described yet..
         /// </summary>
+        [JsonDiscriminator("Base64")]
         public class Base64 : AddressStringFormat
         {
             /// <summary>

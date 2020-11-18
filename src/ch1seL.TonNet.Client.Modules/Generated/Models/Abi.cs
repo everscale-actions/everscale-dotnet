@@ -11,10 +11,10 @@ namespace ch1seL.TonNet.Client.Models
     /// </summary>
     public abstract class Abi
     {
-        [JsonDiscriminator("Contract")]
         /// <summary>
         /// Not described yet..
         /// </summary>
+        [JsonDiscriminator("Contract")]
         public class Contract : Abi
         {
             /// <summary>
@@ -24,10 +24,10 @@ namespace ch1seL.TonNet.Client.Models
             public AbiContract Value { get; set; }
         }
 
-        [JsonDiscriminator("Json")]
         /// <summary>
         /// Not described yet..
         /// </summary>
+        [JsonDiscriminator("Json")]
         public class Json : Abi
         {
             /// <summary>
@@ -37,10 +37,10 @@ namespace ch1seL.TonNet.Client.Models
             public string Value { get; set; }
         }
 
-        [JsonDiscriminator("Handle")]
         /// <summary>
         /// Not described yet..
         /// </summary>
+        [JsonDiscriminator("Handle")]
         public class Handle : Abi
         {
             /// <summary>
@@ -50,10 +50,10 @@ namespace ch1seL.TonNet.Client.Models
             public uint Value { get; set; }
         }
 
-        [JsonDiscriminator("Serialized")]
         /// <summary>
         /// Not described yet..
         /// </summary>
+        [JsonDiscriminator("Serialized")]
         public class Serialized : Abi
         {
             /// <summary>

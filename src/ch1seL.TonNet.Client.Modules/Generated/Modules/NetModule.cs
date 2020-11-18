@@ -56,7 +56,7 @@ namespace ch1seL.TonNet.Client
         /// <para> that satisfies the `filter` conditions.</para>
         /// <para> The projection fields are limited to `result` fields.</para>
         /// </summary>
-        public async Task<ResultOfSubscribeCollection> SubscribeCollection(ParamsOfSubscribeCollection @params, Action<object> callback, CancellationToken cancellationToken = default)
+        public async Task<ResultOfSubscribeCollection> SubscribeCollection(ParamsOfSubscribeCollection @params, Action<object, uint> callback, CancellationToken cancellationToken = default)
         {
             return await _tonClientAdapter.Request<ParamsOfSubscribeCollection, ResultOfSubscribeCollection, object>("net.subscribe_collection", @params, callback, cancellationToken);
         }
