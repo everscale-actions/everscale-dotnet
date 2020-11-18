@@ -14,6 +14,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
             if (name.Contains(".")) name = name.Split(".")[1];
 
             name = StringUtils.EscapeReserved(name);
+            // I prefer Request, Response postfix instead ParamsOf and ResultOf prefixes but well, then maybe for now just leave it.
             // name = ResultOfReplacer.Replace(name, match => $"{match.Groups["name"].Value}Response");
             // name = ParamsOfReplacer.Replace(name, match => $"{match.Groups["name"].Value}Request");
             name = SnackCaseRegex.Replace(name, FirstCharToUpper);
