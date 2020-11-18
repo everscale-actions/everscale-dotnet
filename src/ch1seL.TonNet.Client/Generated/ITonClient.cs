@@ -5,44 +5,44 @@ namespace ch1seL.TonNet.Client
         /// <summary>
         ///  Provides information about library.
         /// </summary>
-        public IClient Client { get; }
+        public IClientModule Client { get; }
 
         /// <summary>
         ///  Crypto functions.
         /// </summary>
-        public ICrypto Crypto { get; }
+        public ICryptoModule Crypto { get; }
 
         /// <summary>
         /// <para> Provides message encoding and decoding according to the ABI</para>
         /// <para> specification.</para>
         /// </summary>
-        public IAbi Abi { get; }
+        public IAbiModule Abi { get; }
 
         /// <summary>
         ///  BOC manipulation module.
         /// </summary>
-        public IBoc Boc { get; }
+        public IBocModule Boc { get; }
 
         /// <summary>
         /// <para> Message processing module.</para>
         /// <para> This module incorporates functions related to complex message</para>
         /// <para> processing scenarios.</para>
         /// </summary>
-        public IProcessing Processing { get; }
+        public IProcessingModule Processing { get; }
 
         /// <summary>
         ///  Misc utility Functions.
         /// </summary>
-        public IUtils Utils { get; }
+        public IUtilsModule Utils { get; }
 
         /// <summary>
         /// Not described yet..
         /// </summary>
-        public ITvm Tvm { get; }
+        public ITvmModule Tvm { get; }
 
         /// <summary>
         ///  Network access.
         /// </summary>
-        public INet Net { get; }
+        public INetModule Net { get; }
     }
 }

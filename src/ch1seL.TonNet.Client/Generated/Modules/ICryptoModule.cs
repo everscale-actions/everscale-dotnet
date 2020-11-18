@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ch1seL.TonNet.Client
 {
-    public interface ICrypto : ITonModule
+    public interface ICryptoModule : ITonModule
     {
         /// <summary>
         /// <para> Performs prime factorization – decomposition of a composite number</para>

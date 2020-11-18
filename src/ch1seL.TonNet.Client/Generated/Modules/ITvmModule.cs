@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ch1seL.TonNet.Client
 {
-    public interface ITvm : ITonModule
+    public interface ITvmModule : ITonModule
     {
         /// <summary>
         /// Not described yet..

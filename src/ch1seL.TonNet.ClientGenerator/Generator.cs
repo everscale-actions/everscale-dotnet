@@ -51,11 +51,11 @@ namespace ch1seL.TonNet.ClientGenerator
             {
                 //Create Interface for Modules
                 UnitHelpers.CreateUnit(module.Name, unitName => ModulesClassHelpers.CreateTonModuleInterface(unitName, module),
-                    Path.Combine(OutputPath, nameof(TonApi.Modules), $"I{NamingConventions.Normalize(module.Name)}.cs"), ModulesNamespaces);
+                    Path.Combine(OutputPath, nameof(TonApi.Modules), $"I{NamingConventions.Normalize(module.Name)}Module.cs"), ModulesNamespaces);
 
                 //Create Modules
                 UnitHelpers.CreateUnit(module.Name, unitName => ModulesClassHelpers.CreateTonModuleClass(unitName, module),
-                    Path.Combine(OutputPath, nameof(TonApi.Modules), $"{NamingConventions.Normalize(module.Name)}.cs"),
+                    Path.Combine(OutputPath, nameof(TonApi.Modules), $"{NamingConventions.Normalize(module.Name)}Module.cs"),
                     ModulesNamespaces.ToArray());
 
                 //Create classes for each module

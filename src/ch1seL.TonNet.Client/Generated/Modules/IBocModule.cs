@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ch1seL.TonNet.Client
 {
-    public interface IBoc : ITonModule
+    public interface IBocModule : ITonModule
     {
         /// <summary>
         /// <para> Parses message boc into a JSON </para>

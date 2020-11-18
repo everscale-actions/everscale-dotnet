@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ch1seL.TonNet.Client
 {
-    public interface IUtils : ITonModule
+    public interface IUtilsModule : ITonModule
     {
         /// <summary>
         ///  Converts address from any TON format to any TON format

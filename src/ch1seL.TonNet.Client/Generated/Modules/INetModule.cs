@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ch1seL.TonNet.Client
 {
-    public interface INet : ITonModule
+    public interface INetModule : ITonModule
     {
         /// <summary>
         /// <para> Queries collection data</para>

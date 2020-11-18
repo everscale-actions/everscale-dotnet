@@ -100,6 +100,8 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
         public static NamespaceDeclarationSyntax CreateTonModuleClass(string unitName, Module module)
         {
+            var moduleName = $"{unitName}Module";
+
             StatementSyntax statementSyntax = ParseStatement("_tonClientAdapter = tonClientAdapter;");
 
             VariableDeclarationSyntax variableDeclaration = VariableDeclaration(ParseTypeName("ITonClientAdapter"))
@@ -107,7 +109,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
             FieldDeclarationSyntax fieldDeclaration = FieldDeclaration(variableDeclaration)
                 .AddModifiers(Token(SyntaxKind.PrivateKeyword), Token(SyntaxKind.ReadOnlyKeyword));
 
-            ConstructorDeclarationSyntax constructorDeclaration = ConstructorDeclaration(unitName)
+            ConstructorDeclarationSyntax constructorDeclaration = ConstructorDeclaration(moduleName)
                 .AddParameterListParameters(
                     Parameter(Identifier("tonClientAdapter")).WithType(IdentifierName("ITonClientAdapter")))
                 .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
@@ -118,9 +120,9 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                 .Select(f => GetMethodDeclaration(module, f, true))
                 .ToArray();
 
-            ClassDeclarationSyntax item = ClassDeclaration(unitName)
+            ClassDeclarationSyntax item = ClassDeclaration(moduleName)
                 .AddModifiers(Token(SyntaxKind.PublicKeyword))
-                .AddBaseListTypes(SimpleBaseType(IdentifierName(NamingConventions.ToInterfaceName(unitName))))
+                .AddBaseListTypes(SimpleBaseType(IdentifierName(NamingConventions.ToInterfaceName(moduleName))))
                 .AddMembers(fieldDeclaration)
                 .AddMembers(constructorDeclaration)
                 .AddMembers(methods);
@@ -131,12 +133,14 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
         public static NamespaceDeclarationSyntax CreateTonModuleInterface(string unitName, Module module)
         {
+            var moduleName = $"{unitName}Module";
+
             var methods = module
                 .Functions
                 .Select(function => GetMethodDeclaration(module, function, false))
                 .ToArray();
 
-            InterfaceDeclarationSyntax item = InterfaceDeclaration($"I{unitName}")
+            InterfaceDeclarationSyntax item = InterfaceDeclaration($"I{moduleName}")
                 .AddModifiers(Token(SyntaxKind.PublicKeyword))
                 .AddBaseListTypes(SimpleBaseType(IdentifierName("ITonModule")))
                 .AddMembers(methods);

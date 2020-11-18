@@ -7,25 +7,15 @@ using System.Threading.Tasks;
 
 namespace ch1seL.TonNet.Client
 {
-    public class Processing : IProcessing
+    public interface IProcessingModule : ITonModule
     {
-        private readonly ITonClientAdapter _tonClientAdapter;
-
-        public Processing(ITonClientAdapter tonClientAdapter)
-        {
-            _tonClientAdapter = tonClientAdapter;
-        }
-
         /// <summary>
         /// <para> Sends message to the network</para>
         /// <para> </para>
         /// <para> Sends message to the network and returns the last generated shard block of the destination account</para>
         /// <para> before the message was sent. It will be required later for message processing.</para>
         /// </summary>
-        public async Task<SendMessageResponse> SendMessage(SendMessageRequest @params, Action<ProcessingEvent> callback, CancellationToken cancellationToken = default)
-        {
-            return await _tonClientAdapter.Request<SendMessageRequest, SendMessageResponse, ProcessingEvent>("processing.send_message", @params, callback, cancellationToken);
-        }
+        public Task<SendMessageResponse> SendMessage(SendMessageRequest @params, Action<ProcessingEvent> callback, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para> Performs monitoring of the network for the result transaction</para>
@@ -53,10 +43,7 @@ namespace ch1seL.TonNet.Client
         /// <para> - If maximum block gen time is reached and no result transaction is found, </para>
         /// <para> the processing will exit with an error.</para>
         /// </summary>
-        public async Task<ProcessMessageResponse> WaitForTransaction(WaitForTransactionRequest @params, Action<ProcessingEvent> callback, CancellationToken cancellationToken = default)
-        {
-            return await _tonClientAdapter.Request<WaitForTransactionRequest, ProcessMessageResponse, ProcessingEvent>("processing.wait_for_transaction", @params, callback, cancellationToken);
-        }
+        public Task<ProcessMessageResponse> WaitForTransaction(WaitForTransactionRequest @params, Action<ProcessingEvent> callback, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para> Creates message, sends it to the network and monitors its processing.</para>
@@ -81,9 +68,6 @@ namespace ch1seL.TonNet.Client
         /// <para> If contract's ABI does not include "expire" header</para>
         /// <para> then, if no transaction is found within the network timeout (see config parameter ), exits with error.</para>
         /// </summary>
-        public async Task<ProcessMessageResponse> ProcessMessage(ProcessMessageRequest @params, Action<ProcessingEvent> request, CancellationToken cancellationToken = default)
-        {
-            return await _tonClientAdapter.Request<ProcessMessageRequest, ProcessMessageResponse, ProcessingEvent>("processing.process_message", @params, request, cancellationToken);
-        }
+        public Task<ProcessMessageResponse> ProcessMessage(ProcessMessageRequest @params, Action<ProcessingEvent> request, CancellationToken cancellationToken = default);
     }
 }

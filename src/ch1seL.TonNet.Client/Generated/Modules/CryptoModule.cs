@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace ch1seL.TonNet.Client
 {
-    public class Crypto : ICrypto
+    public class CryptoModule : ICryptoModule
     {
         private readonly ITonClientAdapter _tonClientAdapter;
 
-        public Crypto(ITonClientAdapter tonClientAdapter)
+        public CryptoModule(ITonClientAdapter tonClientAdapter)
         {
             _tonClientAdapter = tonClientAdapter;
         }

@@ -9,51 +9,51 @@ namespace ch1seL.TonNet.Client
 
         public TonClient(IServiceProvider serviceProvider = null)
         {
-            _serviceProvider = TonClientServiceProviderBuilder.BuildTonClientServiceProvider(serviceProvider); Client = _serviceProvider.GetRequiredService<IClient>(); Crypto = _serviceProvider.GetRequiredService<ICrypto>(); Abi = _serviceProvider.GetRequiredService<IAbi>(); Boc = _serviceProvider.GetRequiredService<IBoc>(); Processing = _serviceProvider.GetRequiredService<IProcessing>(); Utils = _serviceProvider.GetRequiredService<IUtils>(); Tvm = _serviceProvider.GetRequiredService<ITvm>(); Net = _serviceProvider.GetRequiredService<INet>();
+            _serviceProvider = TonClientServiceProviderBuilder.BuildTonClientServiceProvider(serviceProvider); Client = _serviceProvider.GetRequiredService<IClientModule>(); Crypto = _serviceProvider.GetRequiredService<ICryptoModule>(); Abi = _serviceProvider.GetRequiredService<IAbiModule>(); Boc = _serviceProvider.GetRequiredService<IBocModule>(); Processing = _serviceProvider.GetRequiredService<IProcessingModule>(); Utils = _serviceProvider.GetRequiredService<IUtilsModule>(); Tvm = _serviceProvider.GetRequiredService<ITvmModule>(); Net = _serviceProvider.GetRequiredService<INetModule>();
         }
 
         /// <summary>
         ///  Provides information about library.
         /// </summary>
-        public IClient Client { get; }
+        public IClientModule Client { get; }
 
         /// <summary>
         ///  Crypto functions.
         /// </summary>
-        public ICrypto Crypto { get; }
+        public ICryptoModule Crypto { get; }
 
         /// <summary>
         /// <para> Provides message encoding and decoding according to the ABI</para>
         /// <para> specification.</para>
         /// </summary>
-        public IAbi Abi { get; }
+        public IAbiModule Abi { get; }
 
         /// <summary>
         ///  BOC manipulation module.
         /// </summary>
-        public IBoc Boc { get; }
+        public IBocModule Boc { get; }
 
         /// <summary>
         /// <para> Message processing module.</para>
         /// <para> This module incorporates functions related to complex message</para>
         /// <para> processing scenarios.</para>
         /// </summary>
-        public IProcessing Processing { get; }
+        public IProcessingModule Processing { get; }
 
         /// <summary>
         ///  Misc utility Functions.
         /// </summary>
-        public IUtils Utils { get; }
+        public IUtilsModule Utils { get; }
 
         /// <summary>
         /// Not described yet..
         /// </summary>
-        public ITvm Tvm { get; }
+        public ITvmModule Tvm { get; }
 
         /// <summary>
         ///  Network access.
         /// </summary>
-        public INet Net { get; }
+        public INetModule Net { get; }
 
         public void Dispose()
         {

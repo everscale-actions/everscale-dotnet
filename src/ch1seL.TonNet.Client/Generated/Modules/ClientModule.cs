@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace ch1seL.TonNet.Client
 {
-    public class Client : IClient
+    public class ClientModule : IClientModule
     {
         private readonly ITonClientAdapter _tonClientAdapter;
 
-        public Client(ITonClientAdapter tonClientAdapter)
+        public ClientModule(ITonClientAdapter tonClientAdapter)
         {
             _tonClientAdapter = tonClientAdapter;
         }

@@ -16,7 +16,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                 {
                     var formattedName = NamingConventions.Normalize(module.Name);
 
-                    return PropertyDeclaration(IdentifierName($"I{formattedName}"), formattedName)
+                    return PropertyDeclaration(IdentifierName($"I{formattedName}Module"), formattedName)
                         .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword).WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(module.Description))))
                         .WithAccessorList(
                             AccessorList(
@@ -49,7 +49,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                     }
                     .Union(moduleNames
                         .Select(m => ParseStatement(
-                            $"{NamingConventions.Normalize(m)} = _serviceProvider.GetRequiredService<{NamingConventions.ToInterfaceName(m)}>();")))
+                            $"{NamingConventions.Normalize(m)} = _serviceProvider.GetRequiredService<{NamingConventions.ToInterfaceName(m)}Module>();")))
                     .ToArray();
 
             MethodDeclarationSyntax disposeMethod = MethodDeclaration(ParseTypeName("void"), "Dispose")

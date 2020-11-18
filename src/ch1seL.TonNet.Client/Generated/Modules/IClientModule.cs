@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ch1seL.TonNet.Client
 {
-    public interface IClient : ITonModule
+    public interface IClientModule : ITonModule
     {
         /// <summary>
         ///  Returns Core Library API reference
