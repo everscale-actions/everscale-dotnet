@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using ch1seL.TonNet.Serialization;
 using FluentAssertions;
 using Xunit;
 
@@ -47,7 +48,7 @@ namespace ch1seL.TonNet.RustClient.Tests
             {
                 composite = "17ED48941A08F981"
             };
-            var response = await client.Request(method, JsonSerializer.Serialize(parameters, RustTonClientCore.JsonSerializerOptions));
+            var response = await client.Request(method, JsonSerializer.Serialize(parameters, JsonOptionsProvider.JsonSerializerOptions));
 
             response.Should().Be("{\"factors\":[\"494C553B\",\"53911073\"]}");
         }

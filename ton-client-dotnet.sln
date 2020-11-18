@@ -21,6 +21,14 @@ ProjectSection(SolutionItems) = preProject
 	PackageInfo.targets = PackageInfo.targets
 EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Serialization", "src\ch1seL.TonNet.Serialization\ch1seL.TonNet.Serialization.csproj", "{5D76F927-6D5D-4B4A-9DF3-CFFC0D4B585A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Client.Modules", "src\ch1seL.TonNet.Client.Modules\ch1seL.TonNet.Client.Modules.csproj", "{44169AA0-B38A-4DF9-93C3-5743C4D9B1E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Serialization.Tests", "src\ch1seL.TonNet.Serialization.Tests\ch1seL.TonNet.Serialization.Tests.csproj", "{1C6E23C8-5006-4E07-A905-F6C569C76019}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.TestsShared", "src\ch1seL.TonNet.TestsShared\ch1seL.TonNet.TestsShared.csproj", "{92A0EFA1-8ED9-44B0-8BF8-459C47805B3C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +63,22 @@ Global
 		{3ECAD1EB-3AA6-4035-AB31-18F9F74479C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3ECAD1EB-3AA6-4035-AB31-18F9F74479C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3ECAD1EB-3AA6-4035-AB31-18F9F74479C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D76F927-6D5D-4B4A-9DF3-CFFC0D4B585A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D76F927-6D5D-4B4A-9DF3-CFFC0D4B585A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D76F927-6D5D-4B4A-9DF3-CFFC0D4B585A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D76F927-6D5D-4B4A-9DF3-CFFC0D4B585A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44169AA0-B38A-4DF9-93C3-5743C4D9B1E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44169AA0-B38A-4DF9-93C3-5743C4D9B1E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44169AA0-B38A-4DF9-93C3-5743C4D9B1E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44169AA0-B38A-4DF9-93C3-5743C4D9B1E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C6E23C8-5006-4E07-A905-F6C569C76019}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C6E23C8-5006-4E07-A905-F6C569C76019}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C6E23C8-5006-4E07-A905-F6C569C76019}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C6E23C8-5006-4E07-A905-F6C569C76019}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92A0EFA1-8ED9-44B0-8BF8-459C47805B3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92A0EFA1-8ED9-44B0-8BF8-459C47805B3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92A0EFA1-8ED9-44B0-8BF8-459C47805B3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92A0EFA1-8ED9-44B0-8BF8-459C47805B3C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3ECAD1EB-3AA6-4035-AB31-18F9F74479C3} = {6187011F-F7CB-4CE0-8A31-803667A9EE59}

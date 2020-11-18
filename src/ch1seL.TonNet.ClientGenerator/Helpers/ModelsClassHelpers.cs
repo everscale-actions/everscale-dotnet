@@ -62,6 +62,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                                 return CreatePropertyGenericArgs(sf.Type, sf.Name, sf.RefName, sf.OptionalInner, subClass.Description, addPostFix: addPostfix);
                             }));
                             return (MemberDeclarationSyntax) ClassDeclaration(NamingConventions.Normalize(subClass.Name))
+                                .AddAttributeLists(AttributeList(SeparatedList(new[] {Attribute(IdentifierName($"JsonDiscriminator(\"{subClass.Name}\")"))})))
                                 .AddModifiers(Token(SyntaxKind.PublicKeyword)
                                     .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(subClass.Description)))
                                 .AddBaseListTypes(
@@ -84,7 +85,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
             bool addPostfix = false)
         {
             typeName = NamingConventions.Normalize(typeName);
-            typeName = !_allTypes.Contains(typeName) ? "JsonElement" : typeName;
+            typeName = _allTypes.Contains(typeName) ? typeName : "JsonElement?";
 
             typeName = _numberTypesMapping.ContainsKey(typeName)
                 ? _numberTypesMapping[typeName]
@@ -126,7 +127,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
             {
                 PurpleType.Array => CreatePropertyForPurpleArrayItem(sf.Name, sf.ArrayItem.Type, sf.ArrayItem.RefName, sf.ArrayItem.OptionalInner,
                     sf.Description),
-                PurpleType.BigInt => CreatePropertyDeclaration("BigInteger", sf.Name, sf.Description),
+                PurpleType.BigInt => CreatePropertyDeclaration("ulong", sf.Name, sf.Description),
                 PurpleType.Boolean => CreatePropertyDeclaration("bool", sf.Name, sf.Description),
                 PurpleType.Number => CreatePropertyDeclaration(NumberUtils.ConvertToSharpNumeric(sf.NumberType, sf.NumberSize), sf.Name, sf.Description),
                 PurpleType.Ref => CreatePropertyForRef(sf.RefName, sf.Name, sf.Description),
@@ -142,7 +143,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
             {
                 PurpleType.Array => CreatePropertyForPurpleArrayItem(name, optionalInner.ArrayItem.Type, optionalInner.ArrayItem.RefName, null, description,
                     true),
-                PurpleType.BigInt => CreatePropertyDeclaration("BigInteger", name, description, true, true),
+                PurpleType.BigInt => CreatePropertyDeclaration("ulong", name, description, true, true),
                 PurpleType.Boolean => CreatePropertyDeclaration("bool", name, description, true, true),
                 PurpleType.Number => CreatePropertyDeclaration(NumberUtils.ConvertToSharpNumeric(optionalInner.NumberType, optionalInner.NumberSize), name,
                     description, true),
@@ -158,7 +159,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
         {
             return optionalInner.Type switch
             {
-                PurpleType.BigInt => CreatePropertyDeclaration("BigInteger", name, description, true, true),
+                PurpleType.BigInt => CreatePropertyDeclaration("ulong", name, description, true, true),
                 PurpleType.Boolean => CreatePropertyDeclaration("bool", name, description, true, true),
                 PurpleType.Number => CreatePropertyDeclaration(NumberUtils.ConvertToSharpNumeric(optionalInner.NumberType, optionalInner.NumberSize), name,
                     description,
@@ -177,7 +178,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
             var typeName = arrayType switch
             {
-                GenericArgType.Ref => _allTypes.Contains(arrayRefName) ? NamingConventions.Normalize(arrayRefName) : "JsonElement",
+                GenericArgType.Ref => _allTypes.Contains(arrayRefName) ? NamingConventions.Normalize(arrayRefName) : "JsonElement?",
                 GenericArgType.Boolean => "bool",
                 GenericArgType.String => "string",
                 _ => throw new ArgumentOutOfRangeException()

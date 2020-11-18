@@ -35,9 +35,9 @@ namespace ch1seL.TonNet.Client.Tests.Modules
 
             ParseResponse response = await TonClient.Boc.ParseMessage(request);
 
-            response.Parsed.GetProperty("id").GetString().Should().Be("dfd47194f3058ee058bfbfad3ea40cbbd9ad17ca77cd0904d4d9f18a48c2fbca");
-            response.Parsed.GetProperty("src").GetString().Should().Be("-1:0000000000000000000000000000000000000000000000000000000000000000");
-            response.Parsed.GetProperty("dst").GetString().Should().Be("-1:3333333333333333333333333333333333333333333333333333333333333333");
+            response.Parsed?.GetProperty("id").GetString().Should().Be("dfd47194f3058ee058bfbfad3ea40cbbd9ad17ca77cd0904d4d9f18a48c2fbca");
+            response.Parsed?.GetProperty("src").GetString().Should().Be("-1:0000000000000000000000000000000000000000000000000000000000000000");
+            response.Parsed?.GetProperty("dst").GetString().Should().Be("-1:3333333333333333333333333333333333333333333333333333333333333333");
         }
 
         [Fact]
@@ -51,9 +51,9 @@ namespace ch1seL.TonNet.Client.Tests.Modules
 
             ParseResponse response = await TonClient.Boc.ParseAccount(request);
 
-            response.Parsed.GetProperty("id").GetString().Should().Be("0:2bb4a0e8391e7ea8877f4825064924bd41ce110fce97e939d3323999e1efbb13");
-            response.Parsed.GetProperty("last_trans_lt").GetString().Should().Be("0x20eadff7e03");
-            response.Parsed.GetProperty("balance").GetString().Should().Be("0x958a26eb8e7a18d");
+            response.Parsed?.GetProperty("id").GetString().Should().Be("0:2bb4a0e8391e7ea8877f4825064924bd41ce110fce97e939d3323999e1efbb13");
+            response.Parsed?.GetProperty("last_trans_lt").GetString().Should().Be("0x20eadff7e03");
+            response.Parsed?.GetProperty("balance").GetString().Should().Be("0x958a26eb8e7a18d");
         }
 
         [Fact]
@@ -67,9 +67,9 @@ namespace ch1seL.TonNet.Client.Tests.Modules
 
             ParseResponse response = await TonClient.Boc.ParseTransaction(request);
 
-            response.Parsed.GetProperty("id").GetString().Should().Be("d6315dbb2a741a2765da250bea4a186adf942469369c703c57c2050e2d6e9fe3");
-            response.Parsed.GetProperty("lt").GetString().Should().Be("0x20eb89b8e81");
-            response.Parsed.GetProperty("now").GetInt32().Should().Be(1600186476);
+            response.Parsed?.GetProperty("id").GetString().Should().Be("d6315dbb2a741a2765da250bea4a186adf942469369c703c57c2050e2d6e9fe3");
+            response.Parsed?.GetProperty("lt").GetString().Should().Be("0x20eb89b8e81");
+            response.Parsed?.GetProperty("now").GetInt32().Should().Be(1600186476);
         }
 
         [Fact]
@@ -83,9 +83,9 @@ namespace ch1seL.TonNet.Client.Tests.Modules
 
             ParseResponse response = await TonClient.Boc.ParseBlock(request);
 
-            response.Parsed.GetProperty("id").GetString().Should().Be("048f59d5d652459939ea5c5e7b291155205696b71e0c556f641df69e70e1e725");
-            response.Parsed.GetProperty("seq_no").GetInt32().Should().Be(4296363);
-            response.Parsed.GetProperty("gen_utime").GetInt32().Should().Be(1600234696);
+            response.Parsed?.GetProperty("id").GetString().Should().Be("048f59d5d652459939ea5c5e7b291155205696b71e0c556f641df69e70e1e725");
+            response.Parsed?.GetProperty("seq_no").GetInt32().Should().Be(4296363);
+            response.Parsed?.GetProperty("gen_utime").GetInt32().Should().Be(1600234696);
         }
 
         [Fact]
@@ -101,9 +101,9 @@ namespace ch1seL.TonNet.Client.Tests.Modules
 
             ParseResponse response = await TonClient.Boc.ParseShardstate(request);
 
-            response.Parsed.GetProperty("id").GetString().Should().Be("zerostate:-1");
-            response.Parsed.GetProperty("workchain_id").GetInt32().Should().Be(-1);
-            response.Parsed.GetProperty("seq_no").GetInt32().Should().Be(0);
+            response.Parsed?.GetProperty("id").GetString().Should().Be("zerostate:-1");
+            response.Parsed?.GetProperty("workchain_id").GetInt32().Should().Be(-1);
+            response.Parsed?.GetProperty("seq_no").GetInt32().Should().Be(0);
         }
 
         [Fact]

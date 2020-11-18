@@ -9,11 +9,13 @@ namespace ch1seL.TonNet.Client
     {
         internal static IServiceCollection AddServicesAsTransient(this IServiceCollection services, Type inheritableInterfaceType)
         {
-            IReadOnlyList<Type> registrationTypes = inheritableInterfaceType
-                .Assembly
-                .GetTypes()
-                .Where(t => inheritableInterfaceType.IsAssignableFrom(t) && t != inheritableInterfaceType)
-                .ToArray();
+            IReadOnlyList<Type> registrationTypes =
+                AppDomain
+                    .CurrentDomain
+                    .GetAssemblies()
+                    .SelectMany(a => a.GetTypes())
+                    .Where(t => inheritableInterfaceType.IsAssignableFrom(t) && t != inheritableInterfaceType)
+                    .ToArray();
 
             var concretesAndInterfaces = registrationTypes.Where(t => !t.IsAbstract)
                 .Select(t => new

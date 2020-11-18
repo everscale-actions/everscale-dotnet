@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Text.Json;
 using ch1seL.TonNet.Abstract;
-using ch1seL.TonNet.Client.Abstract;
 using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.RustClient;
 using Microsoft.Extensions.DependencyInjection;

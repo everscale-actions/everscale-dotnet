@@ -8,6 +8,7 @@ using ch1seL.TonNet.RustClient.Models;
 using ch1seL.TonNet.RustClient.RustInterop;
 using ch1seL.TonNet.RustClient.RustInterop.Models;
 using ch1seL.TonNet.RustClient.Utils;
+using ch1seL.TonNet.Serialization;
 using Microsoft.Extensions.Logging;
 
 namespace ch1seL.TonNet.RustClient
@@ -15,7 +16,6 @@ namespace ch1seL.TonNet.RustClient
     //todo: must be singleton
     internal class RustTonClientCore : IRustTonClientCore, IDisposable
     {
-        public static readonly JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions {IgnoreNullValues = true, MaxDepth = int.MaxValue};
         private readonly uint _contextNumber;
         private readonly TimeSpan _coreExecutionTimeOut = TimeSpan.FromMinutes(1);
         private readonly IDictionary<uint, CallbackDelegate> _delegatesDict = new Dictionary<uint, CallbackDelegate>();
@@ -38,7 +38,7 @@ namespace ch1seL.TonNet.RustClient
             RustInteropInterface.tc_destroy_string(resultPtr);
             _logger.LogTrace("Got context creation result: {result}", resultJson);
 
-            var createContextResult = JsonSerializer.Deserialize<CreateContextResponse>(resultJson, JsonSerializerOptions);
+            var createContextResult = JsonSerializer.Deserialize<CreateContextResponse>(resultJson, JsonOptionsProvider.JsonSerializerOptions);
             if (createContextResult?.ContextNumber == null)
                 throw new TonClientException($"Raw result: {resultJson}", new NullReferenceException("Result of context creation or context number is null"));
             RustClientError error = createContextResult.Error;
@@ -100,7 +100,7 @@ namespace ch1seL.TonNet.RustClient
                         _logger.LogTrace($"Sending callback {typeof(TEvent).Name} by request:{requestId}");
                         try
                         {
-                            callback?.Invoke(JsonSerializer.Deserialize<TEvent>(requestJson, JsonSerializerOptions));
+                            callback?.Invoke(JsonSerializer.Deserialize<TEvent>(requestJson, JsonOptionsProvider.JsonSerializerOptions));
                         }
                         catch (Exception ex)
                         {
