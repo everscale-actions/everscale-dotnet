@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Serialization
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.TestsShared", "src\ch1seL.TonNet.TestsShared\ch1seL.TonNet.TestsShared.csproj", "{92A0EFA1-8ED9-44B0-8BF8-459C47805B3C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{D2AD0D49-D487-4214-AF76-5AB6D64C8E3F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,5 +84,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3ECAD1EB-3AA6-4035-AB31-18F9F74479C3} = {6187011F-F7CB-4CE0-8A31-803667A9EE59}
+		{99BF12E4-77BD-4ABB-8926-1747C0661E71} = {D2AD0D49-D487-4214-AF76-5AB6D64C8E3F}
 	EndGlobalSection
 EndGlobal
