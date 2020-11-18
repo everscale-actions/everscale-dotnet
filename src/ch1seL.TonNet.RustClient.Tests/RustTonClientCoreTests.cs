@@ -60,7 +60,7 @@ namespace ch1seL.TonNet.RustClient.Tests
 
             var response = await client.Request("client.version", null);
 
-            response.Should().Be("{\"version\":\"1.1.1\"}");
+            response.Should().MatchRegex(@"{""version"":""\d.\d\.\d""}");
         }
     }
 }
