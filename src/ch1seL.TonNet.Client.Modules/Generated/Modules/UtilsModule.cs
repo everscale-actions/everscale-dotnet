@@ -18,9 +18,9 @@ namespace ch1seL.TonNet.Client
         /// <summary>
         ///  Converts address from any TON format to any TON format
         /// </summary>
-        public async Task<ConvertAddressResponse> ConvertAddress(ConvertAddressRequest @params, CancellationToken cancellationToken = default)
+        public async Task<ResultOfConvertAddress> ConvertAddress(ParamsOfConvertAddress @params, CancellationToken cancellationToken = default)
         {
-            return await _tonClientAdapter.Request<ConvertAddressRequest, ConvertAddressResponse>("utils.convert_address", @params, cancellationToken);
+            return await _tonClientAdapter.Request<ParamsOfConvertAddress, ResultOfConvertAddress>("utils.convert_address", @params, cancellationToken);
         }
     }
 }

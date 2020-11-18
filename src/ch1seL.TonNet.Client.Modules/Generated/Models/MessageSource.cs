@@ -34,6 +34,6 @@ namespace ch1seL.TonNet.Client.Models
         /// Not described yet..
         /// </summary>
         [JsonPropertyName("EncodingParams")]
-        public EncodeMessageRequest EncodingParams { get; set; }
+        public ParamsOfEncodeMessage EncodingParams { get; set; }
     }
 }

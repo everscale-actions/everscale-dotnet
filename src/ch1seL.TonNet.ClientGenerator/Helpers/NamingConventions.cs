@@ -14,8 +14,8 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
             if (name.Contains(".")) name = name.Split(".")[1];
 
             name = StringUtils.EscapeReserved(name);
-            name = ResultOfReplacer.Replace(name, match => $"{match.Groups["name"].Value}Response");
-            name = ParamsOfReplacer.Replace(name, match => $"{match.Groups["name"].Value}Request");
+            // name = ResultOfReplacer.Replace(name, match => $"{match.Groups["name"].Value}Response");
+            // name = ParamsOfReplacer.Replace(name, match => $"{match.Groups["name"].Value}Request");
             name = SnackCaseRegex.Replace(name, FirstCharToUpper);
 
             return name;

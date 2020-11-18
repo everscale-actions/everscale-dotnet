@@ -25,7 +25,7 @@ namespace ch1seL.TonNet.Client.Tests
         {
             TestPackage package = await TestPackage.GetPackage("Events", 2);
 
-            var messageRequest = new EncodeMessageRequest
+            var messageRequest = new ParamsOfEncodeMessage
             {
                 Abi = package.Abi,
                 DeploySet = new DeploySet

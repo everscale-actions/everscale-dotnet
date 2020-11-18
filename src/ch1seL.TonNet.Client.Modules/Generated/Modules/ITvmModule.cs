@@ -11,16 +11,16 @@ namespace ch1seL.TonNet.Client
         /// <summary>
         /// Not described yet..
         /// </summary>
-        public Task<RunExecutorResponse> RunExecutor(RunExecutorRequest @params, CancellationToken cancellationToken = default);
+        public Task<ResultOfRunExecutor> RunExecutor(ParamsOfRunExecutor @params, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Not described yet..
         /// </summary>
-        public Task<RunTvmResponse> RunTvm(RunTvmRequest @params, CancellationToken cancellationToken = default);
+        public Task<ResultOfRunTvm> RunTvm(ParamsOfRunTvm @params, CancellationToken cancellationToken = default);
 
         /// <summary>
         ///  Executes getmethod and returns data from TVM stack
         /// </summary>
-        public Task<RunGetResponse> RunGet(RunGetRequest @params, CancellationToken cancellationToken = default);
+        public Task<ResultOfRunGet> RunGet(ParamsOfRunGet @params, CancellationToken cancellationToken = default);
     }
 }

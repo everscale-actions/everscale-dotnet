@@ -7,20 +7,22 @@ namespace ch1seL.TonNet.Client.Tests
 {
     public abstract class TonClientTestsBase : IDisposable
     {
+        private readonly TonClient _tonClient;
+
         protected TonClientTestsBase(ITestOutputHelper outputHelper)
         {
             IServiceCollection services = new ServiceCollection()
                 .AddLogging(builder => builder.AddXUnit(outputHelper)
                     .AddFilter(level => level == LogLevel.Trace));
 
-            TonClient = new TonClient(services.BuildServiceProvider());
+            _tonClient = new TonClient(services.BuildServiceProvider());
         }
 
-        protected TonClient TonClient { get; }
+        protected ITonClient TonClient => _tonClient;
 
         public void Dispose()
         {
-            TonClient?.Dispose();
+            _tonClient?.Dispose();
         }
     }
 }

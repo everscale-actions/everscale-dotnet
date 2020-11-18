@@ -21,16 +21,16 @@ namespace SampleWorkerService
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            VersionResponse version = await _tonClient.Client.Version(stoppingToken);
+            ResultOfVersion version = await _tonClient.Client.Version(stoppingToken);
             _logger.LogInformation("Ton client version: {version}", version.Version);
-            BuildInfoResponse buildInfo = await _tonClient.Client.BuildInfo(stoppingToken);
+            ResultOfBuildInfo buildInfo = await _tonClient.Client.BuildInfo(stoppingToken);
             _logger.LogInformation("Ton build number: {buildNumber}", buildInfo.BuildNumber);
 
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
 
-                MnemonicFromRandomResponse mnemonic = await _tonClient.Crypto.MnemonicFromRandom(new MnemonicFromRandomRequest(), stoppingToken);
+                ResultOfMnemonicFromRandom mnemonic = await _tonClient.Crypto.MnemonicFromRandom(new ParamsOfMnemonicFromRandom(), stoppingToken);
                 _logger.LogInformation("Generated mnemonic phrase: {mnemonic}", mnemonic.Phrase);
 
                 await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken);

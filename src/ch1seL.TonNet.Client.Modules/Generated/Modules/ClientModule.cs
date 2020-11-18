@@ -18,25 +18,25 @@ namespace ch1seL.TonNet.Client
         /// <summary>
         ///  Returns Core Library API reference
         /// </summary>
-        public async Task<GetApiReferenceResponse> GetApiReference(CancellationToken cancellationToken = default)
+        public async Task<ResultOfGetApiReference> GetApiReference(CancellationToken cancellationToken = default)
         {
-            return await _tonClientAdapter.Request<GetApiReferenceResponse>("client.get_api_reference", cancellationToken);
+            return await _tonClientAdapter.Request<ResultOfGetApiReference>("client.get_api_reference", cancellationToken);
         }
 
         /// <summary>
         ///  Returns Core Library version
         /// </summary>
-        public async Task<VersionResponse> Version(CancellationToken cancellationToken = default)
+        public async Task<ResultOfVersion> Version(CancellationToken cancellationToken = default)
         {
-            return await _tonClientAdapter.Request<VersionResponse>("client.version", cancellationToken);
+            return await _tonClientAdapter.Request<ResultOfVersion>("client.version", cancellationToken);
         }
 
         /// <summary>
         ///  Returns detailed information about this build.
         /// </summary>
-        public async Task<BuildInfoResponse> BuildInfo(CancellationToken cancellationToken = default)
+        public async Task<ResultOfBuildInfo> BuildInfo(CancellationToken cancellationToken = default)
         {
-            return await _tonClientAdapter.Request<BuildInfoResponse>("client.build_info", cancellationToken);
+            return await _tonClientAdapter.Request<ResultOfBuildInfo>("client.build_info", cancellationToken);
         }
     }
 }

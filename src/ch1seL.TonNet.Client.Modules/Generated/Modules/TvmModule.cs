@@ -18,25 +18,25 @@ namespace ch1seL.TonNet.Client
         /// <summary>
         /// Not described yet..
         /// </summary>
-        public async Task<RunExecutorResponse> RunExecutor(RunExecutorRequest @params, CancellationToken cancellationToken = default)
+        public async Task<ResultOfRunExecutor> RunExecutor(ParamsOfRunExecutor @params, CancellationToken cancellationToken = default)
         {
-            return await _tonClientAdapter.Request<RunExecutorRequest, RunExecutorResponse>("tvm.run_executor", @params, cancellationToken);
+            return await _tonClientAdapter.Request<ParamsOfRunExecutor, ResultOfRunExecutor>("tvm.run_executor", @params, cancellationToken);
         }
 
         /// <summary>
         /// Not described yet..
         /// </summary>
-        public async Task<RunTvmResponse> RunTvm(RunTvmRequest @params, CancellationToken cancellationToken = default)
+        public async Task<ResultOfRunTvm> RunTvm(ParamsOfRunTvm @params, CancellationToken cancellationToken = default)
         {
-            return await _tonClientAdapter.Request<RunTvmRequest, RunTvmResponse>("tvm.run_tvm", @params, cancellationToken);
+            return await _tonClientAdapter.Request<ParamsOfRunTvm, ResultOfRunTvm>("tvm.run_tvm", @params, cancellationToken);
         }
 
         /// <summary>
         ///  Executes getmethod and returns data from TVM stack
         /// </summary>
-        public async Task<RunGetResponse> RunGet(RunGetRequest @params, CancellationToken cancellationToken = default)
+        public async Task<ResultOfRunGet> RunGet(ParamsOfRunGet @params, CancellationToken cancellationToken = default)
         {
-            return await _tonClientAdapter.Request<RunGetRequest, RunGetResponse>("tvm.run_get", @params, cancellationToken);
+            return await _tonClientAdapter.Request<ParamsOfRunGet, ResultOfRunGet>("tvm.run_get", @params, cancellationToken);
         }
     }
 }

@@ -20,9 +20,9 @@ namespace ch1seL.TonNet.Client
         /// <para> </para>
         /// <para> JSON structure is compatible with GraphQL API message object</para>
         /// </summary>
-        public async Task<ParseResponse> ParseMessage(ParseRequest @params, CancellationToken cancellationToken = default)
+        public async Task<ResultOfParse> ParseMessage(ParamsOfParse @params, CancellationToken cancellationToken = default)
         {
-            return await _tonClientAdapter.Request<ParseRequest, ParseResponse>("boc.parse_message", @params, cancellationToken);
+            return await _tonClientAdapter.Request<ParamsOfParse, ResultOfParse>("boc.parse_message", @params, cancellationToken);
         }
 
         /// <summary>
@@ -30,9 +30,9 @@ namespace ch1seL.TonNet.Client
         /// <para> </para>
         /// <para> JSON structure is compatible with GraphQL API transaction object</para>
         /// </summary>
-        public async Task<ParseResponse> ParseTransaction(ParseRequest @params, CancellationToken cancellationToken = default)
+        public async Task<ResultOfParse> ParseTransaction(ParamsOfParse @params, CancellationToken cancellationToken = default)
         {
-            return await _tonClientAdapter.Request<ParseRequest, ParseResponse>("boc.parse_transaction", @params, cancellationToken);
+            return await _tonClientAdapter.Request<ParamsOfParse, ResultOfParse>("boc.parse_transaction", @params, cancellationToken);
         }
 
         /// <summary>
@@ -40,9 +40,9 @@ namespace ch1seL.TonNet.Client
         /// <para> </para>
         /// <para> JSON structure is compatible with GraphQL API account object</para>
         /// </summary>
-        public async Task<ParseResponse> ParseAccount(ParseRequest @params, CancellationToken cancellationToken = default)
+        public async Task<ResultOfParse> ParseAccount(ParamsOfParse @params, CancellationToken cancellationToken = default)
         {
-            return await _tonClientAdapter.Request<ParseRequest, ParseResponse>("boc.parse_account", @params, cancellationToken);
+            return await _tonClientAdapter.Request<ParamsOfParse, ResultOfParse>("boc.parse_account", @params, cancellationToken);
         }
 
         /// <summary>
@@ -50,9 +50,9 @@ namespace ch1seL.TonNet.Client
         /// <para> </para>
         /// <para> JSON structure is compatible with GraphQL API block object</para>
         /// </summary>
-        public async Task<ParseResponse> ParseBlock(ParseRequest @params, CancellationToken cancellationToken = default)
+        public async Task<ResultOfParse> ParseBlock(ParamsOfParse @params, CancellationToken cancellationToken = default)
         {
-            return await _tonClientAdapter.Request<ParseRequest, ParseResponse>("boc.parse_block", @params, cancellationToken);
+            return await _tonClientAdapter.Request<ParamsOfParse, ResultOfParse>("boc.parse_block", @params, cancellationToken);
         }
 
         /// <summary>
@@ -60,25 +60,25 @@ namespace ch1seL.TonNet.Client
         /// <para> </para>
         /// <para> JSON structure is compatible with GraphQL API shardstate object</para>
         /// </summary>
-        public async Task<ParseResponse> ParseShardstate(ParseShardstateRequest @params, CancellationToken cancellationToken = default)
+        public async Task<ResultOfParse> ParseShardstate(ParamsOfParseShardstate @params, CancellationToken cancellationToken = default)
         {
-            return await _tonClientAdapter.Request<ParseShardstateRequest, ParseResponse>("boc.parse_shardstate", @params, cancellationToken);
+            return await _tonClientAdapter.Request<ParamsOfParseShardstate, ResultOfParse>("boc.parse_shardstate", @params, cancellationToken);
         }
 
         /// <summary>
         /// Not described yet..
         /// </summary>
-        public async Task<GetBlockchainConfigResponse> GetBlockchainConfig(GetBlockchainConfigRequest @params, CancellationToken cancellationToken = default)
+        public async Task<ResultOfGetBlockchainConfig> GetBlockchainConfig(ParamsOfGetBlockchainConfig @params, CancellationToken cancellationToken = default)
         {
-            return await _tonClientAdapter.Request<GetBlockchainConfigRequest, GetBlockchainConfigResponse>("boc.get_blockchain_config", @params, cancellationToken);
+            return await _tonClientAdapter.Request<ParamsOfGetBlockchainConfig, ResultOfGetBlockchainConfig>("boc.get_blockchain_config", @params, cancellationToken);
         }
 
         /// <summary>
         ///  Calculates BOC root hash
         /// </summary>
-        public async Task<GetBocHashResponse> GetBocHash(GetBocHashRequest @params, CancellationToken cancellationToken = default)
+        public async Task<ResultOfGetBocHash> GetBocHash(ParamsOfGetBocHash @params, CancellationToken cancellationToken = default)
         {
-            return await _tonClientAdapter.Request<GetBocHashRequest, GetBocHashResponse>("boc.get_boc_hash", @params, cancellationToken);
+            return await _tonClientAdapter.Request<ParamsOfGetBocHash, ResultOfGetBocHash>("boc.get_boc_hash", @params, cancellationToken);
         }
     }
 }

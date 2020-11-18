@@ -18,17 +18,17 @@ namespace ch1seL.TonNet.Client
         /// <summary>
         ///  Encodes message body according to ABI function call.
         /// </summary>
-        public async Task<EncodeMessageBodyResponse> EncodeMessageBody(EncodeMessageBodyRequest @params, CancellationToken cancellationToken = default)
+        public async Task<ResultOfEncodeMessageBody> EncodeMessageBody(ParamsOfEncodeMessageBody @params, CancellationToken cancellationToken = default)
         {
-            return await _tonClientAdapter.Request<EncodeMessageBodyRequest, EncodeMessageBodyResponse>("abi.encode_message_body", @params, cancellationToken);
+            return await _tonClientAdapter.Request<ParamsOfEncodeMessageBody, ResultOfEncodeMessageBody>("abi.encode_message_body", @params, cancellationToken);
         }
 
         /// <summary>
         /// Not described yet..
         /// </summary>
-        public async Task<AttachSignatureToMessageBodyResponse> AttachSignatureToMessageBody(AttachSignatureToMessageBodyRequest @params, CancellationToken cancellationToken = default)
+        public async Task<ResultOfAttachSignatureToMessageBody> AttachSignatureToMessageBody(ParamsOfAttachSignatureToMessageBody @params, CancellationToken cancellationToken = default)
         {
-            return await _tonClientAdapter.Request<AttachSignatureToMessageBodyRequest, AttachSignatureToMessageBodyResponse>("abi.attach_signature_to_message_body", @params, cancellationToken);
+            return await _tonClientAdapter.Request<ParamsOfAttachSignatureToMessageBody, ResultOfAttachSignatureToMessageBody>("abi.attach_signature_to_message_body", @params, cancellationToken);
         }
 
         /// <summary>
@@ -50,34 +50,34 @@ namespace ch1seL.TonNet.Client
         /// <para> without private key disclosure to SDK. For instance, in case of using a cold wallet or HSM,</para>
         /// <para> when application calls some API to sign data.</para>
         /// </summary>
-        public async Task<EncodeMessageResponse> EncodeMessage(EncodeMessageRequest @params, CancellationToken cancellationToken = default)
+        public async Task<ResultOfEncodeMessage> EncodeMessage(ParamsOfEncodeMessage @params, CancellationToken cancellationToken = default)
         {
-            return await _tonClientAdapter.Request<EncodeMessageRequest, EncodeMessageResponse>("abi.encode_message", @params, cancellationToken);
+            return await _tonClientAdapter.Request<ParamsOfEncodeMessage, ResultOfEncodeMessage>("abi.encode_message", @params, cancellationToken);
         }
 
         /// <summary>
         /// <para> Combines `hex`-encoded `signature` with `base64`-encoded `unsigned_message`.</para>
         /// <para> Returns signed message encoded in `base64`.</para>
         /// </summary>
-        public async Task<AttachSignatureResponse> AttachSignature(AttachSignatureRequest @params, CancellationToken cancellationToken = default)
+        public async Task<ResultOfAttachSignature> AttachSignature(ParamsOfAttachSignature @params, CancellationToken cancellationToken = default)
         {
-            return await _tonClientAdapter.Request<AttachSignatureRequest, AttachSignatureResponse>("abi.attach_signature", @params, cancellationToken);
+            return await _tonClientAdapter.Request<ParamsOfAttachSignature, ResultOfAttachSignature>("abi.attach_signature", @params, cancellationToken);
         }
 
         /// <summary>
         ///  Decodes message body using provided message BOC and ABI.
         /// </summary>
-        public async Task<DecodedMessageBody> DecodeMessage(DecodeMessageRequest @params, CancellationToken cancellationToken = default)
+        public async Task<DecodedMessageBody> DecodeMessage(ParamsOfDecodeMessage @params, CancellationToken cancellationToken = default)
         {
-            return await _tonClientAdapter.Request<DecodeMessageRequest, DecodedMessageBody>("abi.decode_message", @params, cancellationToken);
+            return await _tonClientAdapter.Request<ParamsOfDecodeMessage, DecodedMessageBody>("abi.decode_message", @params, cancellationToken);
         }
 
         /// <summary>
         ///  Decodes message body using provided body BOC and ABI.
         /// </summary>
-        public async Task<DecodedMessageBody> DecodeMessageBody(DecodeMessageBodyRequest @params, CancellationToken cancellationToken = default)
+        public async Task<DecodedMessageBody> DecodeMessageBody(ParamsOfDecodeMessageBody @params, CancellationToken cancellationToken = default)
         {
-            return await _tonClientAdapter.Request<DecodeMessageBodyRequest, DecodedMessageBody>("abi.decode_message_body", @params, cancellationToken);
+            return await _tonClientAdapter.Request<ParamsOfDecodeMessageBody, DecodedMessageBody>("abi.decode_message_body", @params, cancellationToken);
         }
 
         /// <summary>
@@ -87,9 +87,9 @@ namespace ch1seL.TonNet.Client
         /// <para> 1. BOC of code, BOC of data, BOC of library</para>
         /// <para> 2. TVC (string in `base64`), keys, init params</para>
         /// </summary>
-        public async Task<EncodeAccountResponse> EncodeAccount(EncodeAccountRequest @params, CancellationToken cancellationToken = default)
+        public async Task<ResultOfEncodeAccount> EncodeAccount(ParamsOfEncodeAccount @params, CancellationToken cancellationToken = default)
         {
-            return await _tonClientAdapter.Request<EncodeAccountRequest, EncodeAccountResponse>("abi.encode_account", @params, cancellationToken);
+            return await _tonClientAdapter.Request<ParamsOfEncodeAccount, ResultOfEncodeAccount>("abi.encode_account", @params, cancellationToken);
         }
     }
 }

@@ -11,12 +11,12 @@ namespace ch1seL.TonNet.Client
         /// <summary>
         ///  Encodes message body according to ABI function call.
         /// </summary>
-        public Task<EncodeMessageBodyResponse> EncodeMessageBody(EncodeMessageBodyRequest @params, CancellationToken cancellationToken = default);
+        public Task<ResultOfEncodeMessageBody> EncodeMessageBody(ParamsOfEncodeMessageBody @params, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Not described yet..
         /// </summary>
-        public Task<AttachSignatureToMessageBodyResponse> AttachSignatureToMessageBody(AttachSignatureToMessageBodyRequest @params, CancellationToken cancellationToken = default);
+        public Task<ResultOfAttachSignatureToMessageBody> AttachSignatureToMessageBody(ParamsOfAttachSignatureToMessageBody @params, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para> Encodes an ABI-compatible message</para>
@@ -37,23 +37,23 @@ namespace ch1seL.TonNet.Client
         /// <para> without private key disclosure to SDK. For instance, in case of using a cold wallet or HSM,</para>
         /// <para> when application calls some API to sign data.</para>
         /// </summary>
-        public Task<EncodeMessageResponse> EncodeMessage(EncodeMessageRequest @params, CancellationToken cancellationToken = default);
+        public Task<ResultOfEncodeMessage> EncodeMessage(ParamsOfEncodeMessage @params, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para> Combines `hex`-encoded `signature` with `base64`-encoded `unsigned_message`.</para>
         /// <para> Returns signed message encoded in `base64`.</para>
         /// </summary>
-        public Task<AttachSignatureResponse> AttachSignature(AttachSignatureRequest @params, CancellationToken cancellationToken = default);
+        public Task<ResultOfAttachSignature> AttachSignature(ParamsOfAttachSignature @params, CancellationToken cancellationToken = default);
 
         /// <summary>
         ///  Decodes message body using provided message BOC and ABI.
         /// </summary>
-        public Task<DecodedMessageBody> DecodeMessage(DecodeMessageRequest @params, CancellationToken cancellationToken = default);
+        public Task<DecodedMessageBody> DecodeMessage(ParamsOfDecodeMessage @params, CancellationToken cancellationToken = default);
 
         /// <summary>
         ///  Decodes message body using provided body BOC and ABI.
         /// </summary>
-        public Task<DecodedMessageBody> DecodeMessageBody(DecodeMessageBodyRequest @params, CancellationToken cancellationToken = default);
+        public Task<DecodedMessageBody> DecodeMessageBody(ParamsOfDecodeMessageBody @params, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para> Creates account state BOC</para>
@@ -62,6 +62,6 @@ namespace ch1seL.TonNet.Client
         /// <para> 1. BOC of code, BOC of data, BOC of library</para>
         /// <para> 2. TVC (string in `base64`), keys, init params</para>
         /// </summary>
-        public Task<EncodeAccountResponse> EncodeAccount(EncodeAccountRequest @params, CancellationToken cancellationToken = default);
+        public Task<ResultOfEncodeAccount> EncodeAccount(ParamsOfEncodeAccount @params, CancellationToken cancellationToken = default);
     }
 }

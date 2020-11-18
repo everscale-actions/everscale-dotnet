@@ -21,9 +21,9 @@ namespace ch1seL.TonNet.Client
         /// <para> limits the number of returned records and orders them.</para>
         /// <para> The projection fields are limited to `result` fields</para>
         /// </summary>
-        public async Task<QueryCollectionResponse> QueryCollection(QueryCollectionRequest @params, CancellationToken cancellationToken = default)
+        public async Task<ResultOfQueryCollection> QueryCollection(ParamsOfQueryCollection @params, CancellationToken cancellationToken = default)
         {
-            return await _tonClientAdapter.Request<QueryCollectionRequest, QueryCollectionResponse>("net.query_collection", @params, cancellationToken);
+            return await _tonClientAdapter.Request<ParamsOfQueryCollection, ResultOfQueryCollection>("net.query_collection", @params, cancellationToken);
         }
 
         /// <summary>
@@ -35,18 +35,18 @@ namespace ch1seL.TonNet.Client
         /// <para> and returns it.</para>
         /// <para> The projection fields are limited to `result` fields</para>
         /// </summary>
-        public async Task<WaitForCollectionResponse> WaitForCollection(WaitForCollectionRequest @params, CancellationToken cancellationToken = default)
+        public async Task<ResultOfWaitForCollection> WaitForCollection(ParamsOfWaitForCollection @params, CancellationToken cancellationToken = default)
         {
-            return await _tonClientAdapter.Request<WaitForCollectionRequest, WaitForCollectionResponse>("net.wait_for_collection", @params, cancellationToken);
+            return await _tonClientAdapter.Request<ParamsOfWaitForCollection, ResultOfWaitForCollection>("net.wait_for_collection", @params, cancellationToken);
         }
 
         /// <summary>
         /// <para> Cancels a subscription</para>
         /// <para> Cancels a subscription specified by its handle.</para>
         /// </summary>
-        public async Task Unsubscribe(SubscribeCollectionResponse @params, CancellationToken cancellationToken = default)
+        public async Task Unsubscribe(ResultOfSubscribeCollection @params, CancellationToken cancellationToken = default)
         {
-            await _tonClientAdapter.Request<SubscribeCollectionResponse>("net.unsubscribe", @params, cancellationToken);
+            await _tonClientAdapter.Request<ResultOfSubscribeCollection>("net.unsubscribe", @params, cancellationToken);
         }
 
         /// <summary>
@@ -56,9 +56,9 @@ namespace ch1seL.TonNet.Client
         /// <para> that satisfies the `filter` conditions.</para>
         /// <para> The projection fields are limited to `result` fields.</para>
         /// </summary>
-        public async Task<SubscribeCollectionResponse> SubscribeCollection(SubscribeCollectionRequest @params, Action<object> callback, CancellationToken cancellationToken = default)
+        public async Task<ResultOfSubscribeCollection> SubscribeCollection(ParamsOfSubscribeCollection @params, Action<object> callback, CancellationToken cancellationToken = default)
         {
-            return await _tonClientAdapter.Request<SubscribeCollectionRequest, SubscribeCollectionResponse, object>("net.subscribe_collection", @params, callback, cancellationToken);
+            return await _tonClientAdapter.Request<ParamsOfSubscribeCollection, ResultOfSubscribeCollection, object>("net.subscribe_collection", @params, callback, cancellationToken);
         }
     }
 }
