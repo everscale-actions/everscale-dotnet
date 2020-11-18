@@ -69,7 +69,7 @@ namespace ch1seL.TonNet.Serialization.Tests
             var accountForExecutorNone = new AccountForExecutor.None();
 
             var signerNoneJson = JsonSerializer.Serialize(signerNone, JsonOptionsProvider.JsonSerializerOptions);
-            var accountForExecutorNoneJson = JsonSerializer.Serialize(signerNone, JsonOptionsProvider.JsonSerializerOptions);
+            var accountForExecutorNoneJson = JsonSerializer.Serialize(accountForExecutorNone, JsonOptionsProvider.JsonSerializerOptions);
 
             signerNoneJson.Should().Be(accountForExecutorNoneJson);
         }
