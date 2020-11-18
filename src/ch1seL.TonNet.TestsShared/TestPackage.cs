@@ -35,6 +35,15 @@ namespace TestsShared
             return new TestPackage(abi, tvc);
         }
 
+        public static async Task<Abi> GetAbi(string name, int version)
+        {
+            var getAbiContractTask = GetAbiContract(name, version);
+
+            AbiContract abiContract = await GetAbiContract(name, version);
+
+            return new Abi.Contract {Value = abiContract};
+        }
+
         private static async Task<AbiContract> GetAbiContract(string name, int version)
         {
             var filePath = string.Format(AbiPath, name, version);

@@ -13,9 +13,9 @@ namespace ch1seL.TonNet.Abstract
         Task Request<TRequest>(string method, TRequest request, CancellationToken cancellationToken = default);
         Task<TResponse> Request<TResponse>(string method, CancellationToken cancellationToken = default);
         Task<TResponse> Request<TRequest, TResponse>(string method, TRequest request, CancellationToken cancellationToken = default);
-        Task<TResponse> Request<TResponse, TEvent>(string method, Action<TEvent> callback, CancellationToken cancellationToken = default);
+        Task<TResponse> Request<TResponse, TEvent>(string method, Action<TEvent, uint> callback, CancellationToken cancellationToken = default);
 
-        Task<TResponse> Request<TRequest, TResponse, TEvent>(string method, TRequest request, Action<TEvent> callback,
+        Task<TResponse> Request<TRequest, TResponse, TEvent>(string method, TRequest request, Action<TEvent, uint> callback,
             CancellationToken cancellationToken = default);
     }
 }

@@ -32,12 +32,12 @@ namespace ch1seL.TonNet.RustClient
             return await _rustTonClient.Request<TRequest, TResponse>(method, request, cancellationToken);
         }
 
-        public async Task<TResponse> Request<TResponse, TEvent>(string method, Action<TEvent> callback, CancellationToken cancellationToken = default)
+        public async Task<TResponse> Request<TResponse, TEvent>(string method, Action<TEvent, uint> callback, CancellationToken cancellationToken = default)
         {
             return await _rustTonClient.Request<TResponse, TEvent>(method, callback, cancellationToken);
         }
 
-        public async Task<TResponse> Request<TRequest, TResponse, TEvent>(string method, TRequest request, Action<TEvent> callback,
+        public async Task<TResponse> Request<TRequest, TResponse, TEvent>(string method, TRequest request, Action<TEvent, uint> callback,
             CancellationToken cancellationToken = default)
         {
             return await _rustTonClient.Request<TRequest, TResponse, TEvent>(method, request, callback, cancellationToken);

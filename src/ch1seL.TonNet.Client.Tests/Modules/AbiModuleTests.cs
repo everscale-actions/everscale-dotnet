@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using ch1seL.TonNet.Client.Extensions;
 using ch1seL.TonNet.Client.Models;
 using FluentAssertions;
 using TestsShared;

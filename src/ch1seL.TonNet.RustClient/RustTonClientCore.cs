@@ -59,7 +59,7 @@ namespace ch1seL.TonNet.RustClient
             _logger.LogTrace("Context {context} disposed", _contextNumber);
         }
 
-        public async Task<string> Request<TEvent>(string method, string requestJson, Action<TEvent> callback = null,
+        public async Task<string> Request<TEvent>(string method, string requestJson, Action<TEvent, uint> callback = null,
             CancellationToken cancellationToken = default)
         {
             _requestId = _requestId == uint.MaxValue ? 0 : _requestId + 1;
@@ -74,18 +74,17 @@ namespace ch1seL.TonNet.RustClient
                 lock (_dictLock)
                 {
                     if (!_delegatesDict.ContainsKey(requestId))
-                    {
                         _logger.LogError("RequestId was not found in this context");
-                        cts.SetException(new TonClientException($"Request {requestId} not found in context {_contextNumber}"));
-                    }
+                    // cts.SetException(new TonClientException($"Request {requestId} not found in context {_contextNumber}"));
                 }
 
                 switch ((ResponseType) responseType)
                 {
                     case ResponseType.Success:
-                    case ResponseType.Nop when finished:
                         RemoveDelegateFromDict(requestId);
                         cts.SetResult(responseJson);
+                        break;
+                    case ResponseType.Nop:
                         break;
                     case ResponseType.Error:
                         RemoveDelegateFromDict(requestId);
@@ -99,14 +98,13 @@ namespace ch1seL.TonNet.RustClient
                         _logger.LogTrace($"Sending callback {typeof(TEvent).Name} by request:{requestId}");
                         try
                         {
-                            callback?.Invoke(JsonSerializer.Deserialize<TEvent>(requestJson, JsonOptionsProvider.JsonSerializerOptions));
+                            callback?.Invoke(JsonSerializer.Deserialize<TEvent>(requestJson, JsonOptionsProvider.JsonSerializerOptions), responseType);
                         }
                         catch (Exception ex)
                         {
                             cts.SetException(new TonClientException("Callback invoke exception", ex));
                         }
 
-                        cts.SetResult(null);
                         break;
                 }
             });

@@ -29,11 +29,12 @@ namespace ch1seL.TonNet.Client
                 {
                     NetworkConfig networkOptions = provider.GetRequiredService<IOptions<NetworkConfig>>().Value;
                     var logger = provider.GetRequiredService<ILogger<RustTonClientCore>>();
-                    return new RustTonClientCore(JsonSerializer.Serialize(networkOptions), logger);
+                    return new RustTonClientCore(JsonSerializer.Serialize(new {network = networkOptions}), logger);
                 })
                 .AddServicesAsTransient(typeof(ITonModule))
+                .AddOptions()
                 .AddSingleton(serviceProvider?.GetService<IOptions<NetworkConfig>>() ??
-                              new OptionsWrapper<NetworkConfig>(new NetworkConfig {ServerAddress = "http://localhost/"}))
+                              new OptionsWrapper<NetworkConfig>(new NetworkConfig {ServerAddress = "http://localhost"}))
                 .BuildServiceProvider();
         }
     }

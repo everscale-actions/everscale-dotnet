@@ -8,12 +8,15 @@ namespace ch1seL.TonNet.Client.Tests
     {
         private readonly ServiceProvider _serviceProvider;
 
-        protected TonClientTestsBase(ITestOutputHelper testOutputHelper)
+        protected TonClientTestsBase(ITestOutputHelper testOutputHelper, bool localhostNode = false)
         {
             _serviceProvider = new ServiceCollection()
                 .AddLogging(builder => builder.AddXUnit(testOutputHelper)
                     .AddFilter(level => level == LogLevel.Trace))
-                .AddSingleton<ITonClient, TonClient>()
+                .AddTonClient(config =>
+                {
+                    if (localhostNode) config.ServerAddress = "http://localhost";
+                })
                 .BuildServiceProvider();
 
             TonClient = _serviceProvider.GetRequiredService<ITonClient>();

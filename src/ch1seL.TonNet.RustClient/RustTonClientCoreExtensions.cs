@@ -41,7 +41,7 @@ namespace ch1seL.TonNet.RustClient
         }
 
         internal static async Task<TResponse> Request<TRequest, TResponse, TEvent>(this IRustTonClientCore rustTonClientCore, string method, TRequest request,
-            Action<TEvent> callback, CancellationToken cancellationToken = default)
+            Action<TEvent, uint> callback, CancellationToken cancellationToken = default)
         {
             var paramsJson = JsonSerializer.Serialize(request, JsonOptionsProvider.JsonSerializerOptions);
 
@@ -50,7 +50,8 @@ namespace ch1seL.TonNet.RustClient
             return JsonSerializer.Deserialize<TResponse>(responseJson, JsonOptionsProvider.JsonSerializerOptions);
         }
 
-        internal static async Task<TResponse> Request<TResponse, TEvent>(this IRustTonClientCore rustTonClientCore, string method, Action<TEvent> callback,
+        internal static async Task<TResponse> Request<TResponse, TEvent>(this IRustTonClientCore rustTonClientCore, string method,
+            Action<TEvent, uint> callback,
             CancellationToken cancellationToken = default)
         {
             var responseJson = await rustTonClientCore.Request(method, string.Empty, callback, cancellationToken);
@@ -59,7 +60,7 @@ namespace ch1seL.TonNet.RustClient
         }
 
         internal static async Task Request<TRequest, TEvent>(this IRustTonClientCore rustTonClientCore, string method, TRequest request,
-            Action<TEvent> callback,
+            Action<TEvent, uint> callback,
             CancellationToken cancellationToken = default)
         {
             var paramsJson = JsonSerializer.Serialize(request, JsonOptionsProvider.JsonSerializerOptions);
