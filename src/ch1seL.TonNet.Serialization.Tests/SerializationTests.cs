@@ -63,7 +63,7 @@ namespace ch1seL.TonNet.Serialization.Tests
         }
 
         [Fact]
-        public void NoneFieldWork()
+        public void DoubleNoneField()
         {
             var signerNone = new Signer.None();
             var accountForExecutorNone = new AccountForExecutor.None();
