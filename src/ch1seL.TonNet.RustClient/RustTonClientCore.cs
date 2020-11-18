@@ -89,11 +89,10 @@ namespace ch1seL.TonNet.RustClient
                         break;
                     case ResponseType.Error:
                         RemoveDelegateFromDict(requestId);
-                        var errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseJson);
-                        RustClientError error = errorResponse?.Error;
-                        TonClientException exception = error == null
+                        var errorResponse = JsonSerializer.Deserialize<RustClientError>(responseJson);
+                        TonClientException exception = errorResponse == null
                             ? new TonClientException($"Raw result: {responseJson}", new NullReferenceException("Result of error response is null"))
-                            : TonClientException.CreateExceptionWithCodeWithData(error.Code, error.Data, error.Message);
+                            : TonClientException.CreateExceptionWithCodeWithData(errorResponse.Code, errorResponse.Data, errorResponse.Message);
                         cts.SetException(exception);
                         break;
                     default:
