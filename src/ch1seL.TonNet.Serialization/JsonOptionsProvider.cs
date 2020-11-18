@@ -16,7 +16,11 @@ namespace ch1seL.TonNet.Serialization
 
         private static JsonSerializerOptions CreateJsonSerializerOptions()
         {
-            var options = new JsonSerializerOptions {WriteIndented = true};
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                Converters = {new JsonStringEnumConverter()}
+            };
 
             options.SetupExtensions();
             DiscriminatorConventionRegistry registry = options.GetDiscriminatorConventionRegistry();

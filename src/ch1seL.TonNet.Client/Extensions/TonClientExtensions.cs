@@ -5,7 +5,7 @@ namespace ch1seL.TonNet.Client.Extensions
 {
     public static class TonClientExtensions
     {
-        public static async Task<string> NaclSignDetachedFromSecretKey(this ITonClient tonClient, KeyPair pair, string data)
+        public static async Task<string> SignDetached(this ITonClient tonClient, KeyPair pair, string data)
         {
             KeyPair keys = await tonClient.Crypto.NaclSignKeypairFromSecretKey(new ParamsOfNaclSignKeyPairFromSecret
             {
