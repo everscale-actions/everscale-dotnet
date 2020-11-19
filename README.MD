@@ -90,3 +90,27 @@ public void ConfigureServices(IServiceCollection services)
 ## Logging
 
 Fully compatible with https://docs.microsoft.com/en-us/dotnet/core/extensions/logging 
+
+## Anonymous type extensions
+
+There are a few properties with type JsonElement in data models. 
+This client provide methods to easy convert this properties to Anonymous prototype.
+
+Simple example.:
+```
+ResultOfParse parseResult = await tonClient.Boc.ParseMessage(new ParamsOfParse
+{
+    Boc = "te6ccgEBAQEAWAAAq2n+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE/zMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzSsG8DgAAAAAjuOu9NAL7BxYpA"
+});
+var parsedPrototype = new {type = default(int), id = default(string)};
+var parsedMessage = parseResult.Parsed!.Value.ToAnonymous(parsedPrototype);
+
+_logger.LogInformation("Parsed message id: {id} type: {type}", parsedMessage.id, parsedMessage.type);
+```
+
+#### Enjoy!
+
+#### My Coffee Surf address:
+ton://surf/0:9b487d68e4f029ab6d92640892d99d1c549ae69b198df414e905350559a165bf
+
+https://ton.surf

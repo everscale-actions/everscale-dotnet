@@ -1,5 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.Serialization;
 using TestsShared;
@@ -49,27 +48,21 @@ namespace ch1seL.TonNet.Client.Tests
 
             foreach (var outMessage in resultOfProcessMessage.OutMessages)
             {
-                ResultOfParse parsed = await tonClient.Boc.ParseMessage(new ParamsOfParse
+                ResultOfParse parseResult = await tonClient.Boc.ParseMessage(new ParamsOfParse
                 {
                     Boc = outMessage
                 });
-
-                var message = parsed.Parsed!.Value.ToObject<TestsMessage>();
-                if (message.Type == 0)
+                var parsedPrototype = new {type = default(int), id = default(string)};
+                var parsedMessage = parseResult.Parsed!.Value.ToAnonymous(parsedPrototype);
+                
+                if (parsedMessage.type == 0)
                     await tonClient.Net.WaitForCollection(new ParamsOfWaitForCollection
                     {
                         Collection = "transactions",
-                        Filter = new {in_msg = new {eq = message.Id}}.ToJsonElement(),
+                        Filter = new {in_msg = new {eq = parsedMessage.id}}.ToJsonElement(),
                         Result = "id"
                     });
             }
         }
-    }
-
-    public class TestsMessage
-    {
-        [JsonPropertyName("type")] public int Type { get; set; }
-
-        [JsonPropertyName("id")] public string Id { get; set; }
     }
 }

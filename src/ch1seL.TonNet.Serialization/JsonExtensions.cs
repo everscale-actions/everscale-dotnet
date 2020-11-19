@@ -6,6 +6,17 @@ namespace ch1seL.TonNet.Serialization
 {
     public static class JsonExtensions
     {
+        public static T ToAnonymous<T>(this JsonElement element, T protorype)
+        {
+            var bufferWriter = new ArrayBufferWriter<byte>();
+            using (var writer = new Utf8JsonWriter(bufferWriter))
+            {
+                element.WriteTo(writer);
+            }
+
+            return JsonSerializer.Deserialize<T>(bufferWriter.WrittenSpan, JsonOptionsProvider.JsonSerializerOptions);
+        }
+        
         public static T ToObject<T>(this JsonElement element)
         {
             var bufferWriter = new ArrayBufferWriter<byte>();
