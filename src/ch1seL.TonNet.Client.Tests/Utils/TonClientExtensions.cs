@@ -3,7 +3,7 @@ using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.Serialization;
 using TestsShared;
 
-namespace ch1seL.TonNet.Client.Tests
+namespace ch1seL.TonNet.Client.Tests.Utils
 {
     public static class TonClientExtensions
     {
