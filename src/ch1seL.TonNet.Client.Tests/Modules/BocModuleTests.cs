@@ -6,10 +6,10 @@ using Xunit.Abstractions;
 
 namespace ch1seL.TonNet.Client.Tests.Modules
 {
-    public class BocTests : IClassFixture<TonClientTestsFixture>
+    public class BocModuleTests : IClassFixture<TonClientTestsFixture>
     {
         private readonly ITonClient _tonClient;
-        public BocTests(TonClientTestsFixture fixture, ITestOutputHelper outputHelper)
+        public BocModuleTests(TonClientTestsFixture fixture, ITestOutputHelper outputHelper)
         {
             _tonClient = fixture.CreateClient(outputHelper);
         }
