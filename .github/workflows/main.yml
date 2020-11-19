@@ -39,6 +39,9 @@ jobs:
     - name: Build
       run: dotnet build -c Release --no-restore -v n
 
+    - name: Run Node SE
+      run: docker run -d --name tonlab-node -p5555:80 tonlabs/local-node      
+
     - name: Test
       run: dotnet test -c Release --no-restore --no-build
 

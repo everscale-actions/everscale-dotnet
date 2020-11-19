@@ -15,7 +15,7 @@ namespace ch1seL.TonNet.Client.Tests
                     .AddFilter(level => level == LogLevel.Trace))
                 .AddTonClient(config =>
                 {
-                    if (localhostNode) config.ServerAddress = "http://localhost";
+                    if (localhostNode) config.ServerAddress = "http://localhost:5555";
                 })
                 .BuildServiceProvider();
 
