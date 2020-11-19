@@ -3,6 +3,7 @@ using System.Text.Json;
 using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.RustClient;
+using ch1seL.TonNet.Serialization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -28,8 +29,13 @@ namespace ch1seL.TonNet.Client
                 .AddSingleton<IRustTonClientCore>(provider =>
                 {
                     NetworkConfig networkOptions = provider.GetRequiredService<IOptions<NetworkConfig>>().Value;
+                    // workaround cause field is not marked as nullable in TON SDK
+                    networkOptions.ServerAddress ??= string.Empty;
+                    var optionsJson = JsonSerializer.Serialize(new {network = networkOptions}, JsonOptionsProvider.JsonSerializerOptions);
+                    
                     var logger = provider.GetRequiredService<ILogger<RustTonClientCore>>();
-                    return new RustTonClientCore(JsonSerializer.Serialize(new {network = networkOptions}), logger);
+                    
+                    return new RustTonClientCore(optionsJson, logger);
                 })
                 .AddServicesAsTransient(typeof(ITonModule))
                 .AddOptions()

@@ -6,16 +6,18 @@ using Xunit.Abstractions;
 
 namespace ch1seL.TonNet.Client.Tests.Modules
 {
-    public class UtilsModuleTests : TonClientTestsBase
+    public class UtilsModuleTests : IClassFixture<TonClientTestsFixture>
     {
-        public UtilsModuleTests(ITestOutputHelper outputHelper) : base(outputHelper)
+        private readonly ITonClient _tonClient;
+        public UtilsModuleTests(TonClientTestsFixture fixture, ITestOutputHelper outputHelper)
         {
+            _tonClient = fixture.CreateClient(outputHelper);
         }
 
         [Fact]
         public async Task ConvertAddress()
         {
-            ResultOfConvertAddress result = await TonClient.Utils.ConvertAddress(new ParamsOfConvertAddress
+            ResultOfConvertAddress result = await _tonClient.Utils.ConvertAddress(new ParamsOfConvertAddress
             {
                 Address = "fcb91a3a3816d0f7b8c2c76108b8a9bc5a6b7a55bd79f8ab101c52db29232260",
                 OutputFormat = new AddressStringFormat.Hex()
@@ -27,7 +29,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         [Fact]
         public async Task ConvertAddressHex()
         {
-            ResultOfConvertAddress result = await TonClient.Utils.ConvertAddress(new ParamsOfConvertAddress
+            ResultOfConvertAddress result = await _tonClient.Utils.ConvertAddress(new ParamsOfConvertAddress
             {
                 Address = "fcb91a3a3816d0f7b8c2c76108b8a9bc5a6b7a55bd79f8ab101c52db29232260",
                 OutputFormat = new AddressStringFormat.AccountId()
@@ -39,7 +41,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         [Fact]
         public async Task ConvertAddressBase64()
         {
-            ResultOfConvertAddress result = await TonClient.Utils.ConvertAddress(new ParamsOfConvertAddress
+            ResultOfConvertAddress result = await _tonClient.Utils.ConvertAddress(new ParamsOfConvertAddress
             {
                 Address = "-1:fcb91a3a3816d0f7b8c2c76108b8a9bc5a6b7a55bd79f8ab101c52db29232260",
                 OutputFormat = new AddressStringFormat.Base64
@@ -56,7 +58,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         [Fact]
         public async Task ConvertAddressBase64_2()
         {
-            ResultOfConvertAddress result = await TonClient.Utils.ConvertAddress(new ParamsOfConvertAddress
+            ResultOfConvertAddress result = await _tonClient.Utils.ConvertAddress(new ParamsOfConvertAddress
             {
                 Address = "Uf/8uRo6OBbQ97jCx2EIuKm8Wmt6Vb15+KsQHFLbKSMiYG+9",
                 OutputFormat = new AddressStringFormat.Base64
@@ -73,7 +75,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         [Fact]
         public async Task ConvertAddressHexToHex()
         {
-            ResultOfConvertAddress result = await TonClient.Utils.ConvertAddress(new ParamsOfConvertAddress
+            ResultOfConvertAddress result = await _tonClient.Utils.ConvertAddress(new ParamsOfConvertAddress
             {
                 Address = "kf_8uRo6OBbQ97jCx2EIuKm8Wmt6Vb15-KsQHFLbKSMiYIny",
                 OutputFormat = new AddressStringFormat.Hex()

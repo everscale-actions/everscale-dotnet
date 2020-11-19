@@ -10,33 +10,33 @@ using Xunit.Abstractions;
 
 namespace ch1seL.TonNet.Client.Tests.Modules
 {
-    public class AbiModuleTests : TonClientTestsBase
+    public class AbiModuleTests : IClassFixture<TonClientTestsFixture>
     {
+        private readonly ITonClient _tonClient;
+        public AbiModuleTests(TonClientTestsFixture fixture, ITestOutputHelper outputHelper)
+        {
+            _tonClient = fixture.CreateClient(outputHelper);
+        }
+        
         private const uint Expire = 1599458404;
         private const ulong Time = 1599458364291;
         private static readonly TestPackage Package = TestPackage.GetPackage("Events", 2).GetAwaiter().GetResult();
-
         private static readonly KeyPair Keys = new()
         {
             Public = "4c7c408ff1ddebb8d6405ee979c716a14fdd6cc08124107a61d3c25597099499",
             Secret = "cc8929d635719612a9478b9cd17675a39cfad52d8959e8a177389b8c0b9122a7"
         };
-
         private static readonly JsonElement ZeroIdElement = JsonDocument.Parse("{ \"id\": 0 }").RootElement;
-
-        public AbiModuleTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
-        {
-        }
 
         [Fact]
         public async Task AttachSignature()
         {
-            var signature = await TonClient.SignDetached(Keys, "KCGM36iTYuCYynk+Jnemis+mcwi3RFCke95i7l96s4Q=");
+            var signature = await _tonClient.SignDetached(Keys, "KCGM36iTYuCYynk+Jnemis+mcwi3RFCke95i7l96s4Q=");
 
             signature.Should()
                 .Be("6272357bccb601db2b821cb0f5f564ab519212d242cf31961fe9a3c50a30b236012618296b4f769355c0e9567cd25b366f3c037435c498c82e5305622adbc70e");
 
-            ResultOfAttachSignature signed = await TonClient.Abi.AttachSignature(new ParamsOfAttachSignature
+            ResultOfAttachSignature signed = await _tonClient.Abi.AttachSignature(new ParamsOfAttachSignature
             {
                 Abi = Package.Abi,
                 PublicKey = Keys.Public,
@@ -54,12 +54,12 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         //hmm useless?? see AttachSignature
         public async Task AttachSignature2()
         {
-            var signature = await TonClient.SignDetached(Keys, "i4Hs3PB12QA9UBFbOIpkG3JerHHqjm4LgvF4MA7TDsY=");
+            var signature = await _tonClient.SignDetached(Keys, "i4Hs3PB12QA9UBFbOIpkG3JerHHqjm4LgvF4MA7TDsY=");
 
             signature.Should()
                 .Be("5bbfb7f184f2cb5f019400b9cd497eeaa41f3d5885619e9f7d4fab8dd695f4b3a02159a1422996c1dd7d1be67898bc79c6adba6c65a18101ac5f0a2a2bb8910b");
 
-            ResultOfAttachSignature signed = await TonClient.Abi.AttachSignature(new ParamsOfAttachSignature
+            ResultOfAttachSignature signed = await _tonClient.Abi.AttachSignature(new ParamsOfAttachSignature
             {
                 Abi = Package.Abi,
                 PublicKey = Keys.Public,
@@ -77,7 +77,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         [ClassData(typeof(EncodeMessageTestsData))]
         public async Task EncodeMessageTests(ParamsOfEncodeMessage @params, string expectedMessage, string expectedDataToSign)
         {
-            ResultOfEncodeMessage actual = await TonClient.Abi.EncodeMessage(@params);
+            ResultOfEncodeMessage actual = await _tonClient.Abi.EncodeMessage(@params);
 
             actual.Message.Should().Be(expectedMessage);
             actual.DataToSign.Should().Be(expectedDataToSign);
@@ -87,7 +87,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         [Fact]
         public async Task DecodeMessageWithInput()
         {
-            DecodedMessageBody result = await TonClient.Abi.DecodeMessage(new ParamsOfDecodeMessage
+            DecodedMessageBody result = await _tonClient.Abi.DecodeMessage(new ParamsOfDecodeMessage
             {
                 Abi = Package.Abi,
                 Message =
@@ -106,7 +106,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         [Fact]
         public async Task DecodeMessageWithEvent()
         {
-            DecodedMessageBody result = await TonClient.Abi.DecodeMessage(new ParamsOfDecodeMessage
+            DecodedMessageBody result = await _tonClient.Abi.DecodeMessage(new ParamsOfDecodeMessage
             {
                 Abi = Package.Abi,
                 Message =
@@ -123,7 +123,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         [Fact]
         public async Task DecodeMessageWithBody()
         {
-            DecodedMessageBody result = await TonClient.Abi.DecodeMessageBody(new ParamsOfDecodeMessageBody
+            DecodedMessageBody result = await _tonClient.Abi.DecodeMessageBody(new ParamsOfDecodeMessageBody
             {
                 Abi = Package.Abi,
                 Body =

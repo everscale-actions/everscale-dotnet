@@ -8,18 +8,20 @@ using Xunit.Abstractions;
 
 namespace ch1seL.TonNet.Client.Tests.Modules
 {
-    public class ProcessModuleTests : TonClientTestsBase
+    public class ProcessModuleTests : IClassFixture<TonClientTestsFixture>
     {
-        public ProcessModuleTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper, true)
+        private readonly ITonClient _tonClient;
+        public ProcessModuleTests(TonClientTestsFixture fixture, ITestOutputHelper outputHelper)
         {
+            _tonClient = fixture.CreateClient(outputHelper,true);
         }
 
         [Fact]
         public async Task WaitMessage()
         {
             TestPackage eventsPackage = await TestPackage.GetPackage("Events", 2);
-            KeyPair keys = await TonClient.Crypto.GenerateRandomSignKeys();
-            ResultOfEncodeMessage encoded = await TonClient.Abi.EncodeMessage(new ParamsOfEncodeMessage
+            KeyPair keys = await _tonClient.Crypto.GenerateRandomSignKeys();
+            ResultOfEncodeMessage encoded = await _tonClient.Abi.EncodeMessage(new ParamsOfEncodeMessage
             {
                 Abi = eventsPackage.Abi,
                 DeploySet = new DeploySet
@@ -40,7 +42,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 }
             });
 
-            await TonClient.SendGramsFromLocalGiver(encoded.Address);
+            await _tonClient.SendGramsFromLocalGiver(encoded.Address);
 
             var events = new List<ProcessingEvent>();
 
@@ -51,14 +53,14 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 events.Add(@event);
             }
 
-            ResultOfSendMessage result = await TonClient.Processing.SendMessage(new ParamsOfSendMessage
+            ResultOfSendMessage result = await _tonClient.Processing.SendMessage(new ParamsOfSendMessage
             {
                 Message = encoded.Message,
                 Abi = eventsPackage.Abi,
                 SendEvents = true
             }, ProcessingCallback);
 
-            ResultOfProcessMessage output = await TonClient.Processing.WaitForTransaction(new ParamsOfWaitForTransaction
+            ResultOfProcessMessage output = await _tonClient.Processing.WaitForTransaction(new ParamsOfWaitForTransaction
             {
                 Message = encoded.Message,
                 ShardBlockId = result.ShardBlockId,
