@@ -22,7 +22,7 @@ namespace ch1seL.TonNet.Client.Tests
                 {
                     if (localhostNode)
                     {
-                        // TON_NODE_SE_URL can be use for testing in github ci
+                        // TON_SERVER_ADDRESS can be use for testing in github ci
                         config.ServerAddress = Environment.GetEnvironmentVariable("TON_SERVER_ADDRESS") ?? "http://localhost";
                     }
                 })
