@@ -33,14 +33,14 @@ jobs:
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
+    - name: Run Node SE
+      run: docker run -d --name tonlab-node -p5555:80 tonlabs/local-node
+
     - name: Restore
       run: dotnet restore
 
     - name: Build
       run: dotnet build -c Release --no-restore -v n
-
-    - name: Run Node SE
-      run: docker run -d --name tonlab-node -p5555:80 tonlabs/local-node      
 
     - name: Test
       env:
