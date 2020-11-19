@@ -43,6 +43,8 @@ jobs:
       run: docker run -d --name tonlab-node -p5555:80 tonlabs/local-node      
 
     - name: Test
+      env:
+        TON_SERVER_ADDRESS: http://localhost:5555
       run: dotnet test -c Release --no-restore --no-build
 
     - name: Pack

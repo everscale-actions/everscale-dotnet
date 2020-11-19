@@ -10,14 +10,18 @@ namespace ch1seL.TonNet.Client.Tests
         private ServiceProvider _serviceProvider;
         private ITonClient _tonClient;
 
-        public ITonClient CreateClient(ITestOutputHelper output, bool localhostNode=false)
+        public ITonClient CreateClient(ITestOutputHelper output, bool localhostNode = false)
         {
             _serviceProvider = new ServiceCollection()
                 .AddLogging(builder => builder.AddXUnit(output)
                     .AddFilter(level => level == LogLevel.Trace))
                 .AddTonClient(config =>
                 {
-                    if (localhostNode) config.ServerAddress = "http://localhost";
+                    if (localhostNode)
+                    {
+                        // TON_NODE_SE_URL can be use for testing in github ci
+                        config.ServerAddress = Environment.GetEnvironmentVariable("TON_SERVER_ADDRESS") ?? "http://localhost";
+                    }
                 })
                 .BuildServiceProvider();
 
