@@ -21,12 +21,12 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         [Fact]
         public async Task WaitMessage()
         {
+            //arrange
             TestPackage eventsPackage = await TestPackage.GetPackage("Events", 2);
             KeyPair keys = await _tonClient.Crypto.GenerateRandomSignKeys();
             ResultOfEncodeMessage encoded = await _tonClient.Abi.EncodeMessage(new ParamsOfEncodeMessage
             {
-                Abi = eventsPackage.Abi,
-                DeploySet = new DeploySet
+                Abi = eventsPackage.Abi, DeploySet = new DeploySet
                 {
                     Tvc = eventsPackage.Tvc
                 },
@@ -62,6 +62,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 SendEvents = true
             }, ProcessingCallback);
 
+            //act
             ResultOfProcessMessage waitForTransactionResult = await _tonClient.Processing.WaitForTransaction(new ParamsOfWaitForTransaction
             {
                 Message = encoded.Message,
@@ -70,7 +71,12 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 Abi = eventsPackage.Abi
             }, ProcessingCallback);
 
-
+            //assert
+            waitForTransactionResult.OutMessages.Should().BeEmpty();
+            waitForTransactionResult.Decoded.OutMessages.Should().BeEmpty();
+            waitForTransactionResult.Decoded.Output.Should().BeNull();
+            
+            events.Count.Should().BeGreaterOrEqualTo(4);
             events[0].Should().BeOfType<ProcessingEvent.WillFetchFirstBlock>();
             events[1].Should().BeOfType<ProcessingEvent.WillSend>();
             events[2].Should().BeOfType<ProcessingEvent.DidSend>();
