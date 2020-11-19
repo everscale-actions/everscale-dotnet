@@ -45,9 +45,9 @@ namespace ch1seL.TonNet.Client.Tests
                 SendEvents = false
             };
 
-            ResultOfProcessMessage runResult = await tonClient.Processing.ProcessMessage(processMessageParams, null);
+            ResultOfProcessMessage resultOfProcessMessage = await tonClient.Processing.ProcessMessage(processMessageParams, null);
 
-            foreach (var outMessage in runResult.OutMessages)
+            foreach (var outMessage in resultOfProcessMessage.OutMessages)
             {
                 ResultOfParse parsed = await tonClient.Boc.ParseMessage(new ParamsOfParse
                 {

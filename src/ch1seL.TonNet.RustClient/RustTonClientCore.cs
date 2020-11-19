@@ -67,47 +67,47 @@ namespace ch1seL.TonNet.RustClient
             var callbackDelegate = new CallbackDelegate((requestId, responseInteropString, responseType, finished) =>
             {
                 var responseJson = responseInteropString.ToString();
-                _logger.LogTrace("Got request response type:{responseType} body:{response}", ((ResponseType) responseType).ToString(), responseJson);
+                _logger.LogTrace("Got request response context:{context} request:{requestId} type:{responseType} body:{response}",
+                    _contextNumber, requestId, ((ResponseType) responseType).ToString(), responseJson);
 
                 lock (_dictLock)
                 {
                     if (!_delegatesDict.ContainsKey(requestId))
-                        _logger.LogError("RequestId was not found in this context");
-                    // cts.SetException(new TonClientException($"Request {requestId} not found in context {_contextNumber}"));
+                    {
+                        _logger.LogTrace("Request {requestId} was not found in this context {_contextNumber}", requestId, _contextNumber);
+                        return;
+                    }
+
+                    if (finished) RemoveDelegateFromDict(requestId);
                 }
 
                 switch ((ResponseType) responseType)
                 {
                     case ResponseType.Success:
-                        RemoveDelegateFromDict(requestId);
                         cts.SetResult(responseJson);
                         break;
-                    case ResponseType.Nop:
-                        break;
                     case ResponseType.Error:
-                        RemoveDelegateFromDict(requestId);
-                        var errorResponse = JsonSerializer.Deserialize<RustClientError>(responseJson);
-                        TonClientException exception = errorResponse == null
-                            ? new TonClientException($"Raw result: {responseJson}", new NullReferenceException("Result of error response is null"))
-                            : TonClientException.CreateExceptionWithCodeWithData(errorResponse.Code, errorResponse.Data, errorResponse.Message);
+                        TonClientException exception = GetTonClientExceptionByResponse(responseJson);
                         cts.SetException(exception);
                         break;
+                    // do nothing
+                    case ResponseType.Nop:
+                        break;
+                    // responseType>=100 
                     default:
-                        _logger.LogTrace($"Sending callback {typeof(TEvent).Name} by request:{requestId}");
+                        _logger.LogTrace("Sending callback context:{context} request:{requestId} {type}", _contextNumber, requestId, typeof(TEvent));
                         try
                         {
                             callback?.Invoke(TonEventSerializer.Deserialize<TEvent>(responseJson), responseType);
                         }
                         catch (Exception ex)
                         {
-                            cts.SetException(new TonClientException("Callback invoke exception", ex));
+                            cts.SetException(new TonClientException($"Callback invoke exception context:{_contextNumber} request:{requestId}", ex));
                         }
-
                         break;
                 }
             });
-
-
+            
             lock (_dictLock)
             {
                 _delegatesDict.Add(_requestId, callbackDelegate);
@@ -129,6 +129,25 @@ namespace ch1seL.TonNet.RustClient
             Task executeOrTimeout = await Task.WhenAny(cts.Task, Task.Delay(_coreExecutionTimeOut, cancellationToken));
             if (cts.Task == executeOrTimeout) return await cts.Task;
             throw new TonClientException("Execution timeout expired or cancellation request");
+        }
+
+        private static TonClientException GetTonClientExceptionByResponse(string responseJson)
+        {
+            RustClientError errorResponse = null;
+            Exception innerException = null;
+            try
+            {
+                errorResponse = JsonSerializer.Deserialize<RustClientError>(responseJson, JsonOptionsProvider.JsonSerializerOptions);
+            }
+            catch (Exception e)
+            {
+                innerException = e;
+            }
+
+            TonClientException exception = errorResponse == null
+                ? new TonClientException($"Raw result: {responseJson}", innerException ?? new NullReferenceException("Result of error response is null"))
+                : TonClientException.CreateExceptionWithCodeWithData(errorResponse.Code, errorResponse.Data, errorResponse.Message);
+            return exception;
         }
 
         private async Task<bool> WaitForDelegates()

@@ -17,7 +17,7 @@ namespace ch1seL.TonNet.Client.Tests
         {
             _serviceProvider = new ServiceCollection()
                 .AddLogging(builder => builder.AddXUnit(output)
-                    .AddFilter(level => level == LogLevel.Trace))
+                    .SetMinimumLevel(LogLevel.Trace))
                 .AddTonClient(config =>
                 {
                     if (localhostNode)

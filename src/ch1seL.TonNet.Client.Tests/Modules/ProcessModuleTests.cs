@@ -11,9 +11,10 @@ namespace ch1seL.TonNet.Client.Tests.Modules
     public class ProcessModuleTests : IClassFixture<TonClientTestsFixture>
     {
         private readonly ITonClient _tonClient;
+
         public ProcessModuleTests(TonClientTestsFixture fixture, ITestOutputHelper outputHelper)
         {
-            _tonClient = fixture.CreateClient(outputHelper,true);
+            _tonClient = fixture.CreateClient(outputHelper, true);
         }
 
         [Fact]
@@ -53,17 +54,17 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 events.Add(@event);
             }
 
-            ResultOfSendMessage result = await _tonClient.Processing.SendMessage(new ParamsOfSendMessage
+            ResultOfSendMessage sendMessageResult = await _tonClient.Processing.SendMessage(new ParamsOfSendMessage
             {
                 Message = encoded.Message,
                 Abi = eventsPackage.Abi,
                 SendEvents = true
             }, ProcessingCallback);
 
-            ResultOfProcessMessage output = await _tonClient.Processing.WaitForTransaction(new ParamsOfWaitForTransaction
+            ResultOfProcessMessage waitForTransactionResult = await _tonClient.Processing.WaitForTransaction(new ParamsOfWaitForTransaction
             {
                 Message = encoded.Message,
-                ShardBlockId = result.ShardBlockId,
+                ShardBlockId = sendMessageResult.ShardBlockId,
                 SendEvents = true,
                 Abi = eventsPackage.Abi
             }, ProcessingCallback);
