@@ -115,7 +115,7 @@ namespace ch1seL.TonNet.RustClient
 
             try
             {
-                _logger.LogTrace("Sending request method:{method} request:{request}", method, requestJson);
+                _logger.LogTrace("Sending request: context:{context} request:{request} method:{method} request:{request}", _contextNumber, _requestId, method, requestJson);
                 using var methodInteropString = method.ToInteropStringDisposable();
                 using var paramsJsonInteropString = requestJson.ToInteropStringDisposable();
                 RustInteropInterface.tc_request(_contextNumber, methodInteropString, paramsJsonInteropString, _requestId, callbackDelegate);
