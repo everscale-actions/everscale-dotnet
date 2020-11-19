@@ -22,7 +22,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         public async Task WaitMessage()
         {
             //arrange
-            TestPackage eventsPackage = await TestPackage.GetPackage("Events", 2);
+            PackageHelpers eventsPackage = await PackageHelpers.GetPackage("Events", 2);
             KeyPair keys = await _tonClient.Crypto.GenerateRandomSignKeys();
             ResultOfEncodeMessage encoded = await _tonClient.Abi.EncodeMessage(new ParamsOfEncodeMessage
             {

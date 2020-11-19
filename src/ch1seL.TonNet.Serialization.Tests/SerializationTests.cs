@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Serialization.Tests
         [Fact]
         public async Task SerializeAbi()
         {
-            TestPackage package = await TestPackage.GetPackage("Events", 2);
+            PackageHelpers package = await PackageHelpers.GetPackage("Events", 2);
 
             var json = JsonSerializer.Serialize(package, JsonOptionsProvider.JsonSerializerOptions);
 
@@ -22,7 +22,7 @@ namespace ch1seL.TonNet.Serialization.Tests
         [Fact]
         public async Task SerializeEncodeMessageRequest()
         {
-            TestPackage package = await TestPackage.GetPackage("Events", 2);
+            PackageHelpers package = await PackageHelpers.GetPackage("Events", 2);
 
             var messageRequest = new ParamsOfEncodeMessage
             {

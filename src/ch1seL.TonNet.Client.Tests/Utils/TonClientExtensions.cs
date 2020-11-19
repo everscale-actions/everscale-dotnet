@@ -27,7 +27,7 @@ namespace ch1seL.TonNet.Client.Tests.Utils
 
         public static async Task SendGramsFromLocalGiver(this ITonClient tonClient, string account, ulong? value = 100000000)
         {
-            Abi giverAbi = await TestPackage.GetAbi("Giver", 1);
+            Abi giverAbi = await PackageHelpers.GetAbi("Giver", 1);
             var processMessageParams = new ParamsOfProcessMessage
             {
                 MessageEncodeParams = new ParamsOfEncodeMessage

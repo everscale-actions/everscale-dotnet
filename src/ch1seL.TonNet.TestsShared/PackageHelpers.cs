@@ -7,12 +7,12 @@ using ch1seL.TonNet.Serialization;
 
 namespace TestsShared
 {
-    internal class TestPackage
+    internal class PackageHelpers
     {
         private const string AbiPath = "_contracts/abi_v{1}/{0}.abi.json";
         private const string TvcPath = "_contracts/abi_v{1}/{0}.tvc";
 
-        private TestPackage(Abi abi, string tvc)
+        private PackageHelpers(Abi abi, string tvc)
         {
             Abi = abi;
             Tvc = tvc;
@@ -21,7 +21,7 @@ namespace TestsShared
         public Abi Abi { get; }
         public string Tvc { get; }
 
-        public static async Task<TestPackage> GetPackage(string name, int version)
+        public static async Task<PackageHelpers> GetPackage(string name, int version)
         {
             var getAbiContractTask = GetAbiContract(name, version);
             var getTvcTask = GetTvc(name, version);
@@ -32,7 +32,7 @@ namespace TestsShared
             var tvc = await GetTvc(name, version);
 
             var abi = new Abi.Contract {Value = abiContract};
-            return new TestPackage(abi, tvc);
+            return new PackageHelpers(abi, tvc);
         }
 
         public static async Task<Abi> GetAbi(string name, int version)

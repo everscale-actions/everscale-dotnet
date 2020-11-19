@@ -21,7 +21,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         
         private const uint Expire = 1599458404;
         private const ulong Time = 1599458364291;
-        private static readonly TestPackage Package = TestPackage.GetPackage("Events", 2).GetAwaiter().GetResult();
+        private static readonly PackageHelpers Package = PackageHelpers.GetPackage("Events", 2).GetAwaiter().GetResult();
         private static readonly KeyPair Keys = new()
         {
             Public = "4c7c408ff1ddebb8d6405ee979c716a14fdd6cc08124107a61d3c25597099499",
