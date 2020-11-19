@@ -4,7 +4,10 @@
 
 Free TON is modern and fast crypto network. Lets do this network convenient both for users and developers!
 
-This client was automatically generated from api.json https://github.com/tonlabs/TON-SDK/blob/master/tools/api.json and fully support method provided in SDK documentation https://github.com/tonlabs/TON-SDK/tree/master/docs
+- This client was automatically generated from api.json https://github.com/tonlabs/TON-SDK/blob/master/tools/api.json 
+- Fully supported methods provided in SDK documentation https://github.com/tonlabs/TON-SDK/tree/master/docs
+- No Newtonsoft and another third-party libs required
+
 
 # Quick start 
 
@@ -85,7 +88,3 @@ public void ConfigureServices(IServiceCollection services)
 ## Logging
 
 Fully compatible with https://docs.microsoft.com/en-us/dotnet/core/extensions/logging 
-
-
-
-
