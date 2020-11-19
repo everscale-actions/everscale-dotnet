@@ -6,9 +6,9 @@ namespace ch1seL.TonNet.Serialization
 {
     public static class TonEventSerializer
     {
-        public static TNested DeserializeEvent<TNested>(string json)
+        public static TEvent Deserialize<TEvent>(string json)
         {
-            var nestedTypes = typeof(TNested).GetNestedTypes();
+            var nestedTypes = typeof(TEvent).GetNestedTypes();
 
             JsonElement jsonElement = JsonDocument.Parse(json).RootElement;
             var nestedTypeName = jsonElement.GetProperty("type").GetString();
@@ -17,7 +17,7 @@ namespace ch1seL.TonNet.Serialization
 
             return type == null
                 ? default
-                : (TNested) JsonSerializer.Deserialize(json, type);
+                : (TEvent) JsonSerializer.Deserialize(json, type);
         }
     }
 }
