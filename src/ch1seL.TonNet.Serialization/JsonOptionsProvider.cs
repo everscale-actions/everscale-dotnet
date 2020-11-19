@@ -19,6 +19,7 @@ namespace ch1seL.TonNet.Serialization
             var options = new JsonSerializerOptions
             {
                 WriteIndented = true,
+                IgnoreNullValues = true,
                 Converters = {new JsonStringEnumConverter()}
             };
 

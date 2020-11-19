@@ -14,7 +14,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         {
         }
 
-        [Fact(Skip = "WORK IN PROGRESS")]
+        [Fact]
         public async Task WaitMessage()
         {
             TestPackage eventsPackage = await TestPackage.GetPackage("Events", 2);
@@ -58,7 +58,6 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 SendEvents = true
             }, ProcessingCallback);
 
-
             ResultOfProcessMessage output = await TonClient.Processing.WaitForTransaction(new ParamsOfWaitForTransaction
             {
                 Message = encoded.Message,
@@ -67,21 +66,11 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 Abi = eventsPackage.Abi
             }, ProcessingCallback);
 
-            output.Decoded.Output.Should().NotBeNull();
-            output.Decoded.OutMessages.Should().NotBeNull();
 
-            using List<ProcessingEvent>.Enumerator enumerator = events.GetEnumerator();
-            Assert.True(enumerator.MoveNext());
-            Assert.IsType<ProcessingEvent.WillFetchFirstBlock>(enumerator.Current);
-            Assert.True(enumerator.MoveNext());
-            Assert.IsType<ProcessingEvent.WillSend>(enumerator.Current);
-            Assert.True(enumerator.MoveNext());
-            Assert.IsType<ProcessingEvent.DidSend>(enumerator.Current);
-            Assert.True(enumerator.MoveNext());
-            do
-            {
-                Assert.IsType<ProcessingEvent.WillFetchNextBlock>(enumerator.Current);
-            } while (enumerator.MoveNext());
+            events[0].Should().BeOfType<ProcessingEvent.WillFetchFirstBlock>();
+            events[1].Should().BeOfType<ProcessingEvent.WillSend>();
+            events[2].Should().BeOfType<ProcessingEvent.DidSend>();
+            events.GetRange(3, events.Count - 3).Should().AllBeOfType<ProcessingEvent.WillFetchNextBlock>();
         }
     }
 }

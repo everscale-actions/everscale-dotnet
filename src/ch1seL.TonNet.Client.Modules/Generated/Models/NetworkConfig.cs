@@ -15,7 +15,7 @@ namespace ch1seL.TonNet.Client.Models
         /// Not described yet..
         /// </summary>
         [JsonPropertyName("server_address")]
-        public string ServerAddress { get; set; }
+        public string ServerAddress { get; set; } = string.Empty;
 
         /// <summary>
         /// Not described yet..
@@ -51,6 +51,7 @@ namespace ch1seL.TonNet.Client.Models
         /// Not described yet..
         /// </summary>
         [JsonPropertyName("access_key")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string AccessKey { get; set; }
     }
 }

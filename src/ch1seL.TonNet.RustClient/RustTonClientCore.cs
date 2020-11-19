@@ -98,7 +98,7 @@ namespace ch1seL.TonNet.RustClient
                         _logger.LogTrace($"Sending callback {typeof(TEvent).Name} by request:{requestId}");
                         try
                         {
-                            callback?.Invoke(JsonSerializer.Deserialize<TEvent>(requestJson, JsonOptionsProvider.JsonSerializerOptions), responseType);
+                            callback?.Invoke(TonEventSerializer.DeserializeEvent<TEvent>(responseJson), responseType);
                         }
                         catch (Exception ex)
                         {
