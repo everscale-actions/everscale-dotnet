@@ -21,9 +21,7 @@ namespace ch1seL.TonNet.RustClient
         private readonly IDictionary<uint, CallbackDelegate> _delegatesDict = new Dictionary<uint, CallbackDelegate>();
         private readonly object _dictLock = new object();
         private readonly ILogger<RustTonClientCore> _logger;
-
         private uint _requestId;
-
 
         public RustTonClientCore(string optionsJson, ILogger<RustTonClientCore> logger)
         {
