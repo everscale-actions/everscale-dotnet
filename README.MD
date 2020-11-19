@@ -3,6 +3,7 @@
 
 # Free TON .NET Client 
 
+
 Free TON is modern and fast crypto network. Lets do this network convenient both for users and developers!
 
 - This client was automatically generated from api.json https://github.com/tonlabs/TON-SDK/blob/master/tools/api.json 
@@ -97,7 +98,8 @@ Fully compatible with https://docs.microsoft.com/en-us/dotnet/core/extensions/lo
 There are a few properties with type JsonElement in data models. 
 This client provide methods to easy convert this properties to Anonymous prototype.
 
-Simple example.:
+### Simple example:
+
 ```
 ResultOfParse parseResult = await tonClient.Boc.ParseMessage(new ParamsOfParse
 {
@@ -109,9 +111,19 @@ var parsedMessage = parseResult.Parsed!.Value.ToAnonymous(parsedPrototype);
 _logger.LogInformation("Parsed message id: {id} type: {type}", parsedMessage.id, parsedMessage.type);
 ```
 
+### From anonymous type example:
+
+```
+await tonClient.Net.WaitForCollection(new ParamsOfWaitForCollection
+{
+    Collection = "transactions",
+    Filter = new {in_msg = new {eq = parsedMessage.id}}.ToJsonElement(),
+    Result = "id"
+});
+```
+
 #### Enjoy!
 
-#### My Coffee Surf address:
+> My Coffee Surf address:
 ton://surf/0:9b487d68e4f029ab6d92640892d99d1c549ae69b198df414e905350559a165bf
-
-https://ton.surf
+> https://ton.surf
