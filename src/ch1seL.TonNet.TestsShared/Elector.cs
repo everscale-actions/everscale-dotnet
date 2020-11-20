@@ -19,7 +19,7 @@ namespace ch1seL.TonNet.TestsShared
 
         private static Elector GetElector()
         {
-            using FileStream fileStream = File.OpenRead(@"_contracts\elector.json");
+            using FileStream fileStream = File.OpenRead(Path.Join("_contracts","elector.json"));
             JsonDocument jsonDoc = JsonDocument.Parse(fileStream);
             return jsonDoc.RootElement.ToObject<Elector>();
         }
