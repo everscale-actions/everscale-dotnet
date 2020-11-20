@@ -8,11 +8,12 @@ namespace ch1seL.TonNet.Serialization
     {
         public static TEvent Deserialize<TEvent>(string json)
         {
-            var nestedTypes = typeof(TEvent).GetNestedTypes();
+            // hack: there is untyped event in net module
+            if (typeof(TEvent) == typeof(JsonElement)) return (TEvent) (object) JsonDocument.Parse(json).RootElement;
 
+            var nestedTypes = typeof(TEvent).GetNestedTypes();
             JsonElement jsonElement = JsonDocument.Parse(json).RootElement;
             var nestedTypeName = jsonElement.GetProperty("type").GetString();
-
             Type type = nestedTypes.FirstOrDefault(t => t.Name == nestedTypeName);
 
             return type == null

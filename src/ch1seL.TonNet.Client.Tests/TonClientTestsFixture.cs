@@ -1,4 +1,5 @@
-﻿using ch1seL.TonNet.TestsShared;
+﻿using System.Collections.Generic;
+using ch1seL.TonNet.TestsShared;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Xunit.Abstractions;
@@ -10,12 +11,11 @@ namespace ch1seL.TonNet.Client.Tests
         // todo: waiting for sdk release 1.2.0
         //: IDisposable
     {
-        private ServiceProvider _serviceProvider;
-        private ITonClient _tonClient;
+        private readonly List<ServiceProvider> _serviceProviders = new();
 
         public ITonClient CreateClient(ITestOutputHelper output, bool localhostNode = false)
         {
-            _serviceProvider = new ServiceCollection()
+            ServiceProvider serviceProvider = new ServiceCollection()
                 .AddLogging(builder => builder.AddXUnit(output)
                     .SetMinimumLevel(LogLevel.Trace))
                 .AddTonClient(config =>
@@ -26,14 +26,14 @@ namespace ch1seL.TonNet.Client.Tests
                     }
                 })
                 .BuildServiceProvider();
-
-            _tonClient = _serviceProvider.GetRequiredService<ITonClient>();
-            return _tonClient;
+            
+            _serviceProviders.Add(serviceProvider);
+            return serviceProvider.GetRequiredService<ITonClient>();
         }
 
         public void Dispose()
         {
-            _serviceProvider?.Dispose();
+            _serviceProviders?.ForEach(sp=>sp?.Dispose());
         }
     }
 }

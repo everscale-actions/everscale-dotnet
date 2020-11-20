@@ -73,7 +73,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
             {
                 //todo: avoid this hardcode
                 case GenericRefNames.Request when string.Equals(module.Name, "net", StringComparison.OrdinalIgnoreCase):
-                    callBackType = "object";
+                    callBackType = "JsonElement";
                     typeName = $"Action<{callBackType}, uint>";
                     break;
                 case GenericRefNames.Request:

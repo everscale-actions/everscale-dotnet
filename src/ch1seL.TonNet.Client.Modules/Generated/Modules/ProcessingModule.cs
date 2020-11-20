@@ -1,6 +1,7 @@
 using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.Client.Models;
 using System;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 

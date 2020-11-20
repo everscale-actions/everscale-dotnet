@@ -1,6 +1,7 @@
 using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.Client.Models;
 using System;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -56,9 +57,9 @@ namespace ch1seL.TonNet.Client
         /// <para> that satisfies the `filter` conditions.</para>
         /// <para> The projection fields are limited to `result` fields.</para>
         /// </summary>
-        public async Task<ResultOfSubscribeCollection> SubscribeCollection(ParamsOfSubscribeCollection @params, Action<object, uint> callback, CancellationToken cancellationToken = default)
+        public async Task<ResultOfSubscribeCollection> SubscribeCollection(ParamsOfSubscribeCollection @params, Action<JsonElement, uint> callback, CancellationToken cancellationToken = default)
         {
-            return await _tonClientAdapter.Request<ParamsOfSubscribeCollection, ResultOfSubscribeCollection, object>("net.subscribe_collection", @params, callback, cancellationToken);
+            return await _tonClientAdapter.Request<ParamsOfSubscribeCollection, ResultOfSubscribeCollection, JsonElement>("net.subscribe_collection", @params, callback, cancellationToken);
         }
     }
 }

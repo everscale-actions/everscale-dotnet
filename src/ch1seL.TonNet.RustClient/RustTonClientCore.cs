@@ -96,18 +96,11 @@ namespace ch1seL.TonNet.RustClient
                     // responseType>=100 
                     default:
                         _logger.LogTrace("Sending callback context:{context} request:{requestId} {type}", _contextNumber, requestId, typeof(TEvent));
-                        try
-                        {
-                            callback?.Invoke(TonEventSerializer.Deserialize<TEvent>(responseJson), responseType);
-                        }
-                        catch (Exception ex)
-                        {
-                            cts.SetException(new TonClientException($"Callback invoke exception context:{_contextNumber} request:{requestId}", ex));
-                        }
+                        callback?.Invoke(TonEventSerializer.Deserialize<TEvent>(responseJson), responseType);
                         break;
                 }
             });
-            
+
             lock (_dictLock)
             {
                 _delegatesDict.Add(_requestId, callbackDelegate);
@@ -115,7 +108,8 @@ namespace ch1seL.TonNet.RustClient
 
             try
             {
-                _logger.LogTrace("Sending request: context:{context} request:{request} method:{method} request:{request}", _contextNumber, _requestId, method, requestJson);
+                _logger.LogTrace("Sending request: context:{context} request:{request} method:{method} request:{request}", _contextNumber, _requestId, method,
+                    requestJson);
                 using var methodInteropString = method.ToInteropStringDisposable();
                 using var paramsJsonInteropString = requestJson.ToInteropStringDisposable();
                 RustInteropInterface.tc_request(_contextNumber, methodInteropString, paramsJsonInteropString, _requestId, callbackDelegate);

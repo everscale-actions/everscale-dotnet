@@ -18,7 +18,7 @@ namespace ch1seL.TonNet.ClientGenerator
         private static readonly string OutputPathModules = Path.Combine(Directory.GetCurrentDirectory(), "../ch1seL.TonNet.Client.Modules/Generated");
 
         private static readonly string[] ModulesNamespaces =
-            {"System", "System.Threading", "System.Threading.Tasks", "ch1seL.TonNet.Client.Models", "ch1seL.TonNet.Abstract"};
+            {"System", "System.Text.Json", "System.Threading", "System.Threading.Tasks", "ch1seL.TonNet.Client.Models", "ch1seL.TonNet.Abstract"};
 
         private static readonly string[] ModelsNamespaces =
             {"System", "System.Numerics", "System.Text.Json", "System.Text.Json.Serialization", "Dahomey.Json.Attributes"};
