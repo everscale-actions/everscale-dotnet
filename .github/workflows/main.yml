@@ -44,7 +44,7 @@ jobs:
 
     - name: Test
       env:
-        TON_SERVER_ADDRESS: http://localhost:5555
+        TON_NETWORK_ADDRESS: http://localhost:5555
       run: dotnet test -c Release --no-restore --no-build
 
     - name: Pack
