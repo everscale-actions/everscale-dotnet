@@ -96,9 +96,9 @@ Fully compatible with https://docs.microsoft.com/en-us/dotnet/core/extensions/lo
 ## Anonymous type extensions
 
 There are a few properties with type JsonElement in data models. 
-This client provide methods to easy convert this properties to Anonymous prototype.
+And this client provide methods to easy convert this properties to/from Anonymous prototype.
 
-### Simple example:
+### Convert to anonymous type example:
 
 ```
 ResultOfParse parseResult = await tonClient.Boc.ParseMessage(new ParamsOfParse
@@ -111,7 +111,7 @@ var parsedMessage = parseResult.Parsed!.Value.ToAnonymous(parsedPrototype);
 _logger.LogInformation("Parsed message id: {id} type: {type}", parsedMessage.id, parsedMessage.type);
 ```
 
-### From anonymous type example:
+### Convert from anonymous type example:
 
 ```
 await tonClient.Net.WaitForCollection(new ParamsOfWaitForCollection
@@ -122,8 +122,15 @@ await tonClient.Net.WaitForCollection(new ParamsOfWaitForCollection
 });
 ```
 
-#### Enjoy!
+## Sample 
 
-> My Coffee Surf address:
-ton://surf/0:9b487d68e4f029ab6d92640892d99d1c549ae69b198df414e905350559a165bf
-> https://ton.surf
+#### Service that generate and out to console random mnemonic phrase:
+
+https://github.com/ton-actions/ton-client-dotnet/tree/master/samples/SampleWorkerService
+
+***Enjoy!***
+
+>My Coffee Surf address:
+>>ton://surf/0:9b487d68e4f029ab6d92640892d99d1c549ae69b198df414e905350559a165bf
+
+>https://ton.surf
