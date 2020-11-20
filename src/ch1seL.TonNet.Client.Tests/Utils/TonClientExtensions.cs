@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.Serialization;
-using TestsShared;
+using ch1seL.TonNet.TestsShared;
 
 namespace ch1seL.TonNet.Client.Tests.Utils
 {
@@ -25,7 +25,7 @@ namespace ch1seL.TonNet.Client.Tests.Utils
             return result.Signature;
         }
 
-        public static async Task SendGramsFromLocalGiver(this ITonClient tonClient, string account, ulong? value = 100000000)
+        public static async Task SendGramsFromLocalGiver(this ITonClient tonClient, string account)
         {
             Abi giverAbi = await PackageHelpers.GetAbi("Giver", 1);
             var processMessageParams = new ParamsOfProcessMessage
@@ -37,7 +37,7 @@ namespace ch1seL.TonNet.Client.Tests.Utils
                     CallSet = new CallSet
                     {
                         FunctionName = "sendGrams",
-                        Input = new {dest = account, amount = value}.ToJsonElement()
+                        Input = new {dest = account, amount = 100000000}.ToJsonElement()
                     },
                     Signer = new Signer.None()
                 },

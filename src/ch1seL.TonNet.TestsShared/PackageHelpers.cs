@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.Serialization;
 
-namespace TestsShared
+namespace ch1seL.TonNet.TestsShared
 {
     internal class PackageHelpers
     {
@@ -21,8 +21,10 @@ namespace TestsShared
         public Abi Abi { get; }
         public string Tvc { get; }
 
-        public static async Task<PackageHelpers> GetPackage(string name, int version)
+        public static async Task<PackageHelpers> GetPackage(string name, int? abiVersion = null)
         {
+            var version = abiVersion ?? TestsEnvironment.CurrentAbiVersion;
+            
             var getAbiContractTask = GetAbiContract(name, version);
             var getTvcTask = GetTvc(name, version);
             // do it parallel 
@@ -35,8 +37,10 @@ namespace TestsShared
             return new PackageHelpers(abi, tvc);
         }
 
-        public static async Task<Abi> GetAbi(string name, int version)
+        public static async Task<Abi> GetAbi(string name, int? abiVersion = null)
         {
+            var version = abiVersion ?? TestsEnvironment.CurrentAbiVersion;
+            
             var getAbiContractTask = GetAbiContract(name, version);
 
             AbiContract abiContract = await GetAbiContract(name, version);
@@ -44,16 +48,20 @@ namespace TestsShared
             return new Abi.Contract {Value = abiContract};
         }
 
-        private static async Task<AbiContract> GetAbiContract(string name, int version)
+        private static async Task<AbiContract> GetAbiContract(string name, int? abiVersion = null)
         {
+            var version = abiVersion ?? TestsEnvironment.CurrentAbiVersion;
+            
             var filePath = string.Format(AbiPath, name, version);
             var fileInfo = new FileInfo(filePath);
             await using FileStream fs = fileInfo.OpenRead();
             return await JsonSerializer.DeserializeAsync<AbiContract>(fs, JsonOptionsProvider.JsonSerializerOptions);
         }
 
-        private static async Task<string> GetTvc(string name, int version)
+        private static async Task<string> GetTvc(string name, int? abiVersion = null)
         {
+            var version = abiVersion ?? TestsEnvironment.CurrentAbiVersion;
+            
             var filePath = string.Format(TvcPath, name, version);
             var bytes = await File.ReadAllBytesAsync(filePath);
             return Convert.ToBase64String(bytes);

@@ -1,8 +1,8 @@
 ﻿using System.Text.Json;
 using System.Threading.Tasks;
 using ch1seL.TonNet.Client.Models;
+using ch1seL.TonNet.TestsShared;
 using FluentAssertions;
-using TestsShared;
 using Xunit;
 
 namespace ch1seL.TonNet.Serialization.Tests
@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Serialization.Tests
         [Fact]
         public async Task SerializeAbi()
         {
-            PackageHelpers package = await PackageHelpers.GetPackage("Events", 2);
+            PackageHelpers package = await PackageHelpers.GetPackage("Events");
 
             var json = JsonSerializer.Serialize(package, JsonOptionsProvider.JsonSerializerOptions);
 
@@ -22,7 +22,7 @@ namespace ch1seL.TonNet.Serialization.Tests
         [Fact]
         public async Task SerializeEncodeMessageRequest()
         {
-            PackageHelpers package = await PackageHelpers.GetPackage("Events", 2);
+            PackageHelpers package = await PackageHelpers.GetPackage("Events");
 
             var messageRequest = new ParamsOfEncodeMessage
             {

@@ -2,7 +2,6 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
-        <RootNamespace>TestsShared</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

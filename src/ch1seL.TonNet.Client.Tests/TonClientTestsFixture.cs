@@ -1,4 +1,4 @@
-﻿using System;
+﻿using ch1seL.TonNet.TestsShared;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Xunit.Abstractions;
@@ -22,8 +22,7 @@ namespace ch1seL.TonNet.Client.Tests
                 {
                     if (localhostNode)
                     {
-                        // TON_SERVER_ADDRESS can be use for testing in github ci
-                        config.ServerAddress = Environment.GetEnvironmentVariable("TON_SERVER_ADDRESS") ?? "http://localhost";
+                        config.ServerAddress = TestsEnvironment.TonNetworkAddress;
                     }
                 })
                 .BuildServiceProvider();

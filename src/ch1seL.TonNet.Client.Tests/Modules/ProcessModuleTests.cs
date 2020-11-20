@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.Client.Tests.Utils;
+using ch1seL.TonNet.TestsShared;
 using FluentAssertions;
-using TestsShared;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -22,7 +22,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         public async Task WaitMessage()
         {
             //arrange
-            PackageHelpers eventsPackage = await PackageHelpers.GetPackage("Events", 2);
+            PackageHelpers eventsPackage = await PackageHelpers.GetPackage("Events");
             KeyPair keys = await _tonClient.Crypto.GenerateRandomSignKeys();
             ResultOfEncodeMessage encoded = await _tonClient.Abi.EncodeMessage(new ParamsOfEncodeMessage
             {
