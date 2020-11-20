@@ -23,6 +23,9 @@ jobs:
     name: Build, test and pack
     runs-on: ubuntu-latest
     steps:
+    - name: Run Node SE
+      run: docker run -d --name tonlab-node -p5555:80 tonlabs/local-node
+
     - name: Checkout
       uses: actions/checkout@v2
 
@@ -32,10 +35,7 @@ jobs:
         dotnet-version: ${{ env.NETCORE_VERSION }}
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
-    - name: Run Node SE
-      run: docker run -d --name tonlab-node -p5555:80 tonlabs/local-node
-
+        
     - name: Restore
       run: dotnet restore
 
