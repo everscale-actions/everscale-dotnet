@@ -6,12 +6,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="_contracts\**" CopyToOutputDirectory="PreserveNewest"/>
+        <None Include="_contracts\**" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\ch1seL.TonNet.Client.Modules\ch1seL.TonNet.Client.Modules.csproj"/>
-        <ProjectReference Include="..\ch1seL.TonNet.Serialization\ch1seL.TonNet.Serialization.csproj"/>
+        <ProjectReference Include="..\ch1seL.TonNet.Client.Modules\ch1seL.TonNet.Client.Modules.csproj" />
+        <ProjectReference Include="..\ch1seL.TonNet.Serialization\ch1seL.TonNet.Serialization.csproj" />
     </ItemGroup>
 
     <ItemGroup>
