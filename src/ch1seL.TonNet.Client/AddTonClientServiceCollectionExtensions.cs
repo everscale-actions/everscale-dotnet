@@ -1,17 +1,28 @@
 ﻿using System;
 using ch1seL.TonNet.Client;
 using ch1seL.TonNet.Client.Models;
+using ch1seL.TonNet.Client.PackageManager;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static class AddTonClientServiceCollectionExtensions
     {
-        public static IServiceCollection AddTonClient(this IServiceCollection serviceCollection, Action<NetworkConfig> configureOptions = null)
+        /// <summary>
+        ///     Provide ITonClient and ITonPackageManager in DI
+        /// </summary>
+        /// <param name="serviceCollection"></param>
+        /// <param name="configureNetworkOptions">Configure network <see cref="NetworkConfig" /> https://docs.ton.dev/86757ecb2/p/5328db-tonclient/t/31a659</param>
+        /// <param name="configurePackageManagerOptions">Configure package manager, contracts path and etc. <see cref="PackageManagerOptions" /></param>
+        /// <returns></returns>
+        public static IServiceCollection AddTonClient(this IServiceCollection serviceCollection, Action<NetworkConfig> configureNetworkOptions = null,
+            Action<PackageManagerOptions> configurePackageManagerOptions = null)
         {
             return serviceCollection
                 .AddTransient<ITonClient, TonClient>()
-                .Configure<NetworkConfig>(options => configureOptions?.Invoke(options));
+                .AddTransient<ITonPackageManager, FilePackageManager>()
+                .Configure<NetworkConfig>(options => configureNetworkOptions?.Invoke(options))
+                .Configure<PackageManagerOptions>(options => configurePackageManagerOptions?.Invoke(options));
         }
     }
 }

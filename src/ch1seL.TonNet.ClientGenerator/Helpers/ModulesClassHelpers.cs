@@ -14,22 +14,50 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
     {
         private static MemberDeclarationSyntax GetMethodDeclaration(Module module, Function function, bool withBody)
         {
-            string callBackType = null;
-
             var responseType = function.Result.GetMethodReturnType();
             var responseDeclaration = responseType == null ? "Task" : $"Task<{responseType}>";
 
-            var parameters = function.Params
-                .Where(p => !p.IsClientContextParam())
-                .Select(param => GetMethodParameter(module, param, out callBackType))
-                .ToArray();
+            // request parameter
+            var requestParam = function.Params.Length >= 2
+                ? new
+                {
+                    name = StringUtils.EscapeReserved(function.Params[1].Name.GetEnumMemberValueOrString()),
+                    type = NamingConventions.Normalize(function.Params[1].RefName)
+                }
+                : null;
 
+            //callback parameter
+            var callbackParam = function.Params.Length >= 3
+                ? new {
+                        name = StringUtils.EscapeReserved(function.Params[2].Name.GetEnumMemberValueOrString()),
+                        nameWithNull = $"{StringUtils.EscapeReserved(function.Params[2].Name.GetEnumMemberValueOrString())} = null",
+                        type = string.Equals(module.Name, "net", StringComparison.OrdinalIgnoreCase)
+                            ? "JsonElement"
+                            : NamingConventions.EventFormatter(module.Name)
+                    }
+                : null;
+            
             var modifiers = new List<SyntaxToken> {Token(SyntaxKind.PublicKeyword).WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(function.Description))};
             if (withBody) modifiers.Add(Token(SyntaxKind.AsyncKeyword));
 
+            var @params = new List<ParameterSyntax>();
+            var methodDeclarationParams = new List<ParameterSyntax>();
+            if (requestParam != null)
+            {
+                ParameterSyntax param = Parameter(Identifier(requestParam.name)).WithType(IdentifierName(requestParam.type));
+                methodDeclarationParams.Add(param);
+                @params.Add(param);
+            }
+
+            if (callbackParam != null)
+            {
+                methodDeclarationParams.Add(Parameter(Identifier(callbackParam.nameWithNull)).WithType(IdentifierName($"Action<{callbackParam.type},uint>")));   
+                @params.Add(Parameter(Identifier(callbackParam.name)).WithType(IdentifierName($"Action<{callbackParam.type},uint>")));
+            }
+            
             MethodDeclarationSyntax method =
                 MethodDeclaration(ParseTypeName(responseDeclaration), NamingConventions.Normalize(function.Name))
-                    .AddParameterListParameters(parameters)
+                    .AddParameterListParameters(methodDeclarationParams.ToArray())
                     .AddParameterListParameters(Parameter(Identifier("cancellationToken"))
                         .WithType(IdentifierName(nameof(CancellationToken)))
                         .WithDefault(EqualsValueClause(IdentifierName("default"))))
@@ -42,12 +70,12 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                     Argument(IdentifierName($"\"{module.Name}.{function.Name}\""))
                 };
                 arguments.AddRange(
-                    parameters
+                    @params
                         .Select(p => Argument(IdentifierName(p.Identifier.Text))));
                 arguments.Add(Argument(IdentifierName("cancellationToken")));
 
                 var genericParametersDeclaration =
-                    StringUtils.GetGenericParametersDeclaration(parameters.FirstOrDefault()?.Type?.ToString(), responseType, callBackType);
+                    StringUtils.GetGenericParametersDeclaration(@params.FirstOrDefault()?.Type?.ToString(), responseType, callbackParam?.type);
 
                 AwaitExpressionSyntax awaitExpression = AwaitExpression(
                     InvocationExpression(IdentifierName($"_tonClientAdapter.Request{genericParametersDeclaration}"))
@@ -64,38 +92,9 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
             return method.WithSemicolonToken(Token(SyntaxKind.SemicolonToken));
         }
 
-        private static ParameterSyntax GetMethodParameter(Module module, Param param, out string callBackType)
+        private static string GetCallbackActionType(string callBackType)
         {
-            GenericArg genericArg = param.GenericArgs?[0];
-            string typeName;
-
-            switch (genericArg?.RefName)
-            {
-                //todo: avoid this hardcode
-                case GenericRefNames.Request when string.Equals(module.Name, "net", StringComparison.OrdinalIgnoreCase):
-                    callBackType = "JsonElement";
-                    typeName = $"Action<{callBackType}, uint>";
-                    break;
-                case GenericRefNames.Request:
-                    callBackType = NamingConventions.EventFormatter(module.Name);
-                    typeName = $"Action<{callBackType}, uint>";
-                    break;
-                default:
-                    callBackType = null;
-                    switch (param.Type)
-                    {
-                        case ParamType.Ref:
-                            typeName = NamingConventions.Normalize(param.RefName);
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-
-                    break;
-            }
-
-            return Parameter(Identifier(StringUtils.EscapeReserved(param.Name.GetEnumMemberValueOrString())))
-                .WithType(IdentifierName(typeName));
+            return $"Action<{callBackType}, uint>";
         }
 
         public static NamespaceDeclarationSyntax CreateTonModuleClass(string unitName, Module module)

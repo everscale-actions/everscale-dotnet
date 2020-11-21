@@ -2,6 +2,7 @@
 using System.Text.Json;
 using System.Threading.Tasks;
 using ch1seL.TonNet.Client.Models;
+using ch1seL.TonNet.Client.PackageManager;
 using ch1seL.TonNet.Client.Tests.Utils;
 using ch1seL.TonNet.Serialization;
 using ch1seL.TonNet.TestsShared;
@@ -15,8 +16,8 @@ namespace ch1seL.TonNet.Client.Tests.Modules
     {
         private const string SubscribeParamsPubkey = "0x2222222222222222222222222222222222222222222222222222222222222222";
         private readonly Lazy<Task<string>> _electorEncodedLazy;
-        private readonly PackageHelpers _subscriptionPackage = PackageHelpers.GetPackage("Subscription").GetAwaiter().GetResult();
         private readonly ITonClient _tonClient;
+
         public TvmModuleTests(TonClientTestsFixture fixture, ITestOutputHelper outputHelper)
         {
             _tonClient = fixture.CreateClient(outputHelper, true);
@@ -138,13 +139,11 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         public async Task RunAccountUninit()
         {
             KeyPair keys = await _tonClient.Crypto.GenerateRandomSignKeys();
-            PackageHelpers helloPackage = await PackageHelpers.GetPackage("Hello");
-
             ResultOfEncodeMessage message = await _tonClient.Abi.EncodeMessage(new ParamsOfEncodeMessage
             {
-                Abi = helloPackage.Abi,
+                Abi = TestsEnv.Packages.Hello.Abi,
                 CallSet = new CallSet {FunctionName = "constructor"},
-                DeploySet = new DeploySet {Tvc = helloPackage.Tvc},
+                DeploySet = new DeploySet {Tvc = TestsEnv.Packages.Hello.Tvc},
                 Signer = new Signer.Keys {KeysAccessor = keys}
             });
 
@@ -177,22 +176,22 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             KeyPair keys = await _tonClient.Crypto.GenerateRandomSignKeys();
             const string walletAddress = "0:2222222222222222222222222222222222222222222222222222222222222222";
 
-            ParamsOfEncodeMessage encodeMessageParams = GetParamsOfEncodeMessage(_subscriptionPackage, walletAddress, keys);
+            ParamsOfEncodeMessage encodeMessageParams = GetParamsOfEncodeMessage(TestsEnv.Packages.Subscription, walletAddress, keys);
             ResultOfEncodeMessage address = await _tonClient.DeployWithGiver(encodeMessageParams);
             var fetchAccount = await FetchAccount(address.Address);
             var account = fetchAccount.Get<string>("boc");
 
-            ResultOfEncodeMessage message = await GetSubscribeMessage(address.Address, subscribeParams.ToJsonElement(), _subscriptionPackage, keys);
+            ResultOfEncodeMessage message = await GetSubscribeMessage(address.Address, subscribeParams.ToJsonElement(), TestsEnv.Packages.Subscription, keys);
 
             // run
-            var runResult = await run(message, _subscriptionPackage.Abi, account);
+            var runResult = await run(message, TestsEnv.Packages.Subscription.Abi, account);
 
 
-            var getSubscriptionMessage = await GetSubscriptionEncodedMessage(address, _subscriptionPackage, subscribeParams.subscriptionId, keys);
+            var getSubscriptionMessage = await GetSubscriptionEncodedMessage(address, TestsEnv.Packages.Subscription, subscribeParams.subscriptionId, keys);
 
             ResultOfRunTvm result = await _tonClient.Tvm.RunTvm(new ParamsOfRunTvm
             {
-                Abi = _subscriptionPackage.Abi,
+                Abi = TestsEnv.Packages.Subscription.Abi,
                 Account = runResult,
                 Message = getSubscriptionMessage
             });
@@ -200,9 +199,9 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             return result.Decoded.Output.Get<JsonElement>("value0").Get<string>("pubkey");
         }
 
-        private static ParamsOfEncodeMessage GetParamsOfEncodeMessage(PackageHelpers subscriptionPackage, string walletAddress, KeyPair keys)
+        private static ParamsOfEncodeMessage GetParamsOfEncodeMessage(Package subscriptionPackage, string walletAddress, KeyPair keys)
         {
-            return new ParamsOfEncodeMessage()
+            return new ParamsOfEncodeMessage
             {
                 Abi = subscriptionPackage.Abi,
                 DeploySet = new DeploySet {Tvc = subscriptionPackage.Tvc},
@@ -211,7 +210,8 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             };
         }
 
-        private async Task<ResultOfEncodeMessage> GetSubscribeMessage(string address, JsonElement subscribeParams, PackageHelpers subscriptionPackage,
+        private async Task<ResultOfEncodeMessage> GetSubscribeMessage(string address, JsonElement subscribeParams,
+            Package subscriptionPackage,
             KeyPair keys)
         {
             ResultOfEncodeMessage subscribeEncodedMessage = await _tonClient.Abi.EncodeMessage(new ParamsOfEncodeMessage
@@ -231,7 +231,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             return subscribeEncodedMessage;
         }
 
-        private async Task<string> GetSubscriptionEncodedMessage(ResultOfEncodeMessage encodedMessage, PackageHelpers subscriptionPackage,
+        private async Task<string> GetSubscriptionEncodedMessage(ResultOfEncodeMessage encodedMessage, Package subscriptionPackage,
             string subscriptionId, KeyPair keys)
         {
             ResultOfEncodeMessage getSubscriptionMessage = await _tonClient.Abi.EncodeMessage(new ParamsOfEncodeMessage

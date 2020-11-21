@@ -15,7 +15,7 @@ namespace ch1seL.TonNet.Client
         /// <para> Sends message to the network and returns the last generated shard block of the destination account</para>
         /// <para> before the message was sent. It will be required later for message processing.</para>
         /// </summary>
-        public Task<ResultOfSendMessage> SendMessage(ParamsOfSendMessage @params, Action<ProcessingEvent, uint> callback, CancellationToken cancellationToken = default);
+        public Task<ResultOfSendMessage> SendMessage(ParamsOfSendMessage @params, Action<ProcessingEvent,uint> callback = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para> Performs monitoring of the network for the result transaction</para>
@@ -43,7 +43,7 @@ namespace ch1seL.TonNet.Client
         /// <para> - If maximum block gen time is reached and no result transaction is found, </para>
         /// <para> the processing will exit with an error.</para>
         /// </summary>
-        public Task<ResultOfProcessMessage> WaitForTransaction(ParamsOfWaitForTransaction @params, Action<ProcessingEvent, uint> callback, CancellationToken cancellationToken = default);
+        public Task<ResultOfProcessMessage> WaitForTransaction(ParamsOfWaitForTransaction @params, Action<ProcessingEvent,uint> callback = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para> Creates message, sends it to the network and monitors its processing.</para>
@@ -68,6 +68,6 @@ namespace ch1seL.TonNet.Client
         /// <para> If contract's ABI does not include "expire" header</para>
         /// <para> then, if no transaction is found within the network timeout (see config parameter ), exits with error.</para>
         /// </summary>
-        public Task<ResultOfProcessMessage> ProcessMessage(ParamsOfProcessMessage @params, Action<ProcessingEvent, uint> request, CancellationToken cancellationToken = default);
+        public Task<ResultOfProcessMessage> ProcessMessage(ParamsOfProcessMessage @params, Action<ProcessingEvent,uint> request = null, CancellationToken cancellationToken = default);
     }
 }

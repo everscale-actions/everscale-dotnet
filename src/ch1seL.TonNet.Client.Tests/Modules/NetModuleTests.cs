@@ -96,12 +96,11 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         public async Task SubscribeForTransactionsWithAddresses()
         {
             KeyPair keys = await _tonClient.Crypto.GenerateRandomSignKeys();
-            PackageHelpers package = await PackageHelpers.GetPackage("Hello");
 
             var deployParams = new ParamsOfEncodeMessage
             {
-                Abi = package.Abi,
-                DeploySet = new DeploySet {Tvc = package.Tvc},
+                Abi = TestsEnv.Packages.Hello.Abi,
+                DeploySet = new DeploySet {Tvc = TestsEnv.Packages.Hello.Tvc},
                 Signer = new Signer.Keys {KeysAccessor = keys},
                 CallSet = new CallSet {FunctionName = "constructor"}
             };

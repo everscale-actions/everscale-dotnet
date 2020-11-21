@@ -13,6 +13,8 @@ namespace ch1seL.TonNet.Client
 {
     internal static class TonClientServiceProviderBuilder
     {
+        private const string DefaultServerAddress = "main.ton.dev";
+
         /// <summary>
         ///     Build TON Client personal service provider to hide all internal logic from user
         /// </summary>
@@ -30,17 +32,17 @@ namespace ch1seL.TonNet.Client
                 {
                     NetworkConfig networkOptions = provider.GetRequiredService<IOptions<NetworkConfig>>().Value;
                     // workaround cause field is not marked as nullable in TON SDK
-                    networkOptions.ServerAddress ??= string.Empty;
+                    // setup main net as default
+                    networkOptions.ServerAddress ??= DefaultServerAddress;
                     var optionsJson = JsonSerializer.Serialize(new {network = networkOptions}, JsonOptionsProvider.JsonSerializerOptions);
-                    
                     var logger = provider.GetRequiredService<ILogger<RustTonClientCore>>();
-                    
+
                     return new RustTonClientCore(optionsJson, logger);
                 })
                 .AddServicesAsTransient(typeof(ITonModule))
                 .AddOptions()
                 .AddSingleton(serviceProvider?.GetService<IOptions<NetworkConfig>>() ??
-                              new OptionsWrapper<NetworkConfig>(new NetworkConfig {ServerAddress = "http://localhost"}))
+                              new OptionsWrapper<NetworkConfig>(new NetworkConfig {ServerAddress = DefaultServerAddress}))
                 .BuildServiceProvider();
         }
     }

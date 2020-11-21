@@ -13,21 +13,22 @@ namespace ch1seL.TonNet.Client.Tests.Modules
 {
     public class AbiModuleTests : IClassFixture<TonClientTestsFixture>
     {
-        private readonly ITonClient _tonClient;
-        public AbiModuleTests(TonClientTestsFixture fixture, ITestOutputHelper outputHelper)
-        {
-            _tonClient = fixture.CreateClient(outputHelper);
-        }
-        
         private const uint Expire = 1599458404;
         private const ulong Time = 1599458364291;
-        private static readonly PackageHelpers Package = PackageHelpers.GetPackage("Events").GetAwaiter().GetResult();
-        private static readonly KeyPair Keys = new()
+
+        private static readonly KeyPair Keys = new KeyPair
         {
             Public = "4c7c408ff1ddebb8d6405ee979c716a14fdd6cc08124107a61d3c25597099499",
             Secret = "cc8929d635719612a9478b9cd17675a39cfad52d8959e8a177389b8c0b9122a7"
         };
+
         private static readonly JsonElement ZeroIdElement = JsonDocument.Parse("{ \"id\": 0 }").RootElement;
+        private readonly ITonClient _tonClient;
+
+        public AbiModuleTests(TonClientTestsFixture fixture, ITestOutputHelper outputHelper)
+        {
+            _tonClient = fixture.CreateClient(outputHelper);
+        }
 
         [Fact]
         public async Task AttachSignature()
@@ -39,7 +40,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
 
             ResultOfAttachSignature signed = await _tonClient.Abi.AttachSignature(new ParamsOfAttachSignature
             {
-                Abi = Package.Abi,
+                Abi = TestsEnv.Packages.Events.Abi,
                 PublicKey = Keys.Public,
                 Message =
                     "te6ccgECFwEAA2gAAqeIAAt9aqvShfTon7Lei1PVOhUEkEEZQkhDKPgNyzeTL6YSEZTHxAj/Hd67jWQF7peccWoU/dbMCBJBB6YdPCVZcJlJkAAAF0ZyXLg19VzGRotV8/gGAQEBwAICA88gBQMBAd4EAAPQIABB2mPiBH+O713GsgL3S844tQp+62YECSCD0w6eEqy4TKTMAib/APSkICLAAZL0oOGK7VNYMPShCQcBCvSkIPShCAAAAgEgDAoByP9/Ie1E0CDXScIBjhDT/9M/0wDRf/hh+Gb4Y/hijhj0BXABgED0DvK91wv/+GJw+GNw+GZ/+GHi0wABjh2BAgDXGCD5AQHTAAGU0/8DAZMC+ELiIPhl+RDyqJXTAAHyeuLTPwELAGqOHvhDIbkgnzAg+COBA+iogggbd0Cgud6S+GPggDTyNNjTHwH4I7zyudMfAfAB+EdukvI83gIBIBINAgEgDw4AvbqLVfP/hBbo417UTQINdJwgGOENP/0z/TANF/+GH4Zvhj+GKOGPQFcAGAQPQO8r3XC//4YnD4Y3D4Zn/4YeLe+Ebyc3H4ZtH4APhCyMv/+EPPCz/4Rs8LAMntVH/4Z4AgEgERAA5biABrW/CC3Rwn2omhp/+mf6YBov/ww/DN8Mfwxb30gyupo6H0gb+j8IpA3SRg4b3whXXlwMnwAZGT9ghBkZ8KEZ0aCBAfQAAAAAAAAAAAAAAAAACBni2TAgEB9gBh8IWRl//wh54Wf/CNnhYBk9qo//DPAAxbmTwqLfCC3Rwn2omhp/+mf6YBov/ww/DN8Mfwxb2uG/8rqaOhp/+/o/ABkRe4AAAAAAAAAAAAAAAAIZ4tnwOfI48sYvRDnhf/kuP2AGHwhZGX//CHnhZ/8I2eFgGT2qj/8M8AIBSBYTAQm4t8WCUBQB/PhBbo4T7UTQ0//TP9MA0X/4Yfhm+GP4Yt7XDf+V1NHQ0//f0fgAyIvcAAAAAAAAAAAAAAAAEM8Wz4HPkceWMXohzwv/yXH7AMiL3AAAAAAAAAAAAAAAABDPFs+Bz5JW+LBKIc8L/8lx+wAw+ELIy//4Q88LP/hGzwsAye1UfxUABPhnAHLccCLQ1gIx0gAw3CHHAJLyO+Ah1w0fkvI84VMRkvI74cEEIoIQ/////byxkvI84AHwAfhHbpLyPN4=",
@@ -62,7 +63,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
 
             ResultOfAttachSignature signed = await _tonClient.Abi.AttachSignature(new ParamsOfAttachSignature
             {
-                Abi = Package.Abi,
+                Abi = TestsEnv.Packages.Events.Abi,
                 PublicKey = Keys.Public,
                 Message =
                     "te6ccgEBAgEAeAABpYgAC31qq9KF9Oifst6LU9U6FQSQQRlCSEMo+A3LN5MvphIFMfECP8d3ruNZAXul5xxahT91swIEkEHph08JVlwmUmQAAAXRnJcuDX1XMZBW+LBKAQBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
@@ -90,7 +91,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         {
             DecodedMessageBody result = await _tonClient.Abi.DecodeMessage(new ParamsOfDecodeMessage
             {
-                Abi = Package.Abi,
+                Abi = TestsEnv.Packages.Events.Abi,
                 Message =
                     "te6ccgEBAwEAvAABRYgAC31qq9KF9Oifst6LU9U6FQSQQRlCSEMo+A3LN5MvphIMAQHhrd/b+MJ5Za+AygBc5qS/dVIPnqxCsM9PvqfVxutK+lnQEKzQoRTLYO6+jfM8TF4841bdNjLQwIDWL4UVFdxIhdMfECP8d3ruNZAXul5xxahT91swIEkEHph08JVlwmUmQAAAXRnJcuDX1XMZBW+LBKACAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
             });
@@ -109,7 +110,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         {
             DecodedMessageBody result = await _tonClient.Abi.DecodeMessage(new ParamsOfDecodeMessage
             {
-                Abi = Package.Abi,
+                Abi = TestsEnv.Packages.Events.Abi,
                 Message =
                     "te6ccgEBAQEAVQAApeACvg5/pmQpY4m61HmJ0ne+zjHJu3MNG8rJxUDLbHKBu/AAAAAAAAAMJL6z6ro48sYvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA"
             });
@@ -126,7 +127,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         {
             DecodedMessageBody result = await _tonClient.Abi.DecodeMessageBody(new ParamsOfDecodeMessageBody
             {
-                Abi = Package.Abi,
+                Abi = TestsEnv.Packages.Events.Abi,
                 Body =
                     "te6ccgEBAgEAlgAB4a3f2/jCeWWvgMoAXOakv3VSD56sQrDPT76n1cbrSvpZ0BCs0KEUy2Duvo3zPExePONW3TYy0MCA1i+FFRXcSIXTHxAj/Hd67jWQF7peccWoU/dbMCBJBB6YdPCVZcJlJkAAAF0ZyXLg19VzGQVviwSgAQBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
                 IsInternal = false
@@ -144,14 +145,14 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         private class EncodeMessageTestsData : IEnumerable<object[]>
         {
             // ReSharper disable once RedundantEmptyObjectCreationArgumentList
-            private readonly List<object[]> _data = new()
+            private readonly List<object[]> _data = new List<object[]>()
             {
                 new object[]
                 {
                     new ParamsOfEncodeMessage
                     {
-                        Abi = Package.Abi,
-                        DeploySet = new DeploySet {Tvc = Package.Tvc},
+                        Abi = TestsEnv.Packages.Events.Abi,
+                        DeploySet = new DeploySet {Tvc = TestsEnv.Packages.Events.Tvc},
                         CallSet = new CallSet
                         {
                             FunctionName = "constructor",
@@ -169,8 +170,8 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 {
                     new ParamsOfEncodeMessage
                     {
-                        Abi = Package.Abi,
-                        DeploySet = new DeploySet {Tvc = Package.Tvc},
+                        Abi = TestsEnv.Packages.Events.Abi,
+                        DeploySet = new DeploySet {Tvc = TestsEnv.Packages.Events.Tvc},
                         CallSet = new CallSet
                         {
                             FunctionName = "constructor",
@@ -192,7 +193,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 {
                     new ParamsOfEncodeMessage
                     {
-                        Abi = Package.Abi,
+                        Abi = TestsEnv.Packages.Events.Abi,
                         Address = "0:05beb555e942fa744fd96f45a9ea9d0a8248208ca12421947c06e59bc997d309",
                         CallSet = new CallSet
                         {
@@ -216,7 +217,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 {
                     new ParamsOfEncodeMessage
                     {
-                        Abi = Package.Abi,
+                        Abi = TestsEnv.Packages.Events.Abi,
                         Address = "0:05beb555e942fa744fd96f45a9ea9d0a8248208ca12421947c06e59bc997d309",
                         CallSet = new CallSet
                         {
@@ -240,7 +241,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 {
                     new ParamsOfEncodeMessage
                     {
-                        Abi = Package.Abi,
+                        Abi = TestsEnv.Packages.Events.Abi,
                         Address = "0:05beb555e942fa744fd96f45a9ea9d0a8248208ca12421947c06e59bc997d309",
                         CallSet = new CallSet
                         {

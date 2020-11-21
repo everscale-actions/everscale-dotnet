@@ -22,6 +22,7 @@ dotnet add package ch1seL.TonNet.Client
 ```
 
 ## Register in DI  
+**Be careful!** ServerAddress is "main.ton.dev" as default
 
 ```
 public void ConfigureServices(IServiceCollection services)
@@ -47,26 +48,42 @@ public class YourTonService {
 }
 ```
 
+## IPackageManager interface
+
+There is easy option to load contracts abi and tvm info from files in this client.
+
+Now available following async methods:
+```
+Task<Package> LoadPackage(string name); // Package entity just contains Abi and Tvc
+Task<Abi> LoadAbi(string name);
+Task<string> LoadTvc(string name);
+```
+Default contracts path is `_contracts`
+
 ## Advanced client configuration
 
-see configuration parameters here https://github.com/tonlabs/TON-SDK/blob/master/docs/mod_client.md#NetworkConfig
+See configuration parameters here https://github.com/tonlabs/TON-SDK/blob/master/docs/mod_client.md#NetworkConfig
+
 
 ```
 public void ConfigureServices(IServiceCollection services)
 {
-    services.AddTonClient(config =>
-        {
-            config.ServerAddress = "net.ton.dev"; // or http://localhost
-            config.NetworkRetriesCount = 5;
-        });
+    services.AddTonClient(networkConfig =>
+    {
+        networkConfig.ServerAddress = "net.ton.dev"; // or http://localhost, main.ton.dev is default
+        networkConfig.NetworkRetriesCount = 5;
+    }, packageManagerConfig =>
+    {
+        packageManagerConfig.PackagesPath = "packages"; // path to abi.json and tvc files, _contracts is default
+    });  
 }
 ```
 
-## or configure options by appsettings.json or another configuration provider
+### or configure options by appsettings.json or another configuration provider
 
 https://docs.microsoft.com/en-us/dotnet/core/extensions/configuration-providers
 
-### example for appsettings.json 
+#### Example for appsettings.json 
 ```
 {
   "NetworkConfig": {
@@ -77,6 +94,9 @@ https://docs.microsoft.com/en-us/dotnet/core/extensions/configuration-providers
     "wait_for_timeout": 100,
     "out_of_sync_threshold": 5000,
     "access_key": "YourAccessKey"
+  },
+  "PackageManager":{
+    "PackagesPath": "path_to_contracts"
   }
 }
 ```
@@ -85,6 +105,7 @@ https://docs.microsoft.com/en-us/dotnet/core/extensions/configuration-providers
 public void ConfigureServices(IServiceCollection services)
 {
     services.Configure<NetworkConfig>(Configuration.GetSection("NetworkConfig"));
+    services.Configure<PackageManagerOptions>(Configuration.GetSection("PackageManager"));
     services.AddTonClient();
 }
 ```

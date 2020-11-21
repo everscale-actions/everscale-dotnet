@@ -11,29 +11,28 @@ namespace ch1seL.TonNet.Client.Tests
         // todo: waiting for sdk release 1.2.0
         //: IDisposable
     {
-        private readonly List<ServiceProvider> _serviceProviders = new();
+        private readonly List<ServiceProvider> _serviceProviders = new List<ServiceProvider>();
 
-        public ITonClient CreateClient(ITestOutputHelper output, bool localhostNode = false)
+        public ITonClient CreateClient(ITestOutputHelper output, bool useNodeSe = false)
         {
             ServiceProvider serviceProvider = new ServiceCollection()
                 .AddLogging(builder => builder.AddXUnit(output)
                     .SetMinimumLevel(LogLevel.Trace))
                 .AddTonClient(config =>
                 {
-                    if (localhostNode)
-                    {
-                        config.ServerAddress = TestsEnvironment.TonNetworkAddress;
-                    }
+                    //as default tests don't use any server by some integration tests require Node SE
+                    //if useNodeSe is true we use http://localhost or TON_NETWORK_ADDRESS env if provided  
+                    config.ServerAddress = useNodeSe ? TestsEnv.TonNetworkAddress : string.Empty;
                 })
                 .BuildServiceProvider();
-            
+
             _serviceProviders.Add(serviceProvider);
             return serviceProvider.GetRequiredService<ITonClient>();
         }
 
         public void Dispose()
         {
-            _serviceProviders?.ForEach(sp=>sp?.Dispose());
+            _serviceProviders?.ForEach(sp => sp?.Dispose());
         }
     }
 }

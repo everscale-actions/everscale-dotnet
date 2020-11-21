@@ -29,20 +29,17 @@ namespace ch1seL.TonNet.Client.Tests.Utils
         ///     send 100000000 tons to account
         /// </summary>
         /// <param name="tonClient"></param>
-        /// <param name="account">
-        ///     the giver sends money to himself by default/param>
-        ///     <returns></returns>
+        /// <param name="account">the giver sends money to himself by default</param>
         public static async Task SendGramsFromLocalGiver(this ITonClient tonClient, string account = null)
         {
             account ??= LocalGiverAddress;
 
-            Abi giverAbi = await PackageHelpers.GetAbi("Giver", 1);
             var processMessageParams = new ParamsOfProcessMessage
             {
                 MessageEncodeParams = new ParamsOfEncodeMessage
                 {
                     Address = LocalGiverAddress,
-                    Abi = giverAbi,
+                    Abi = TestsEnv.Packages.GiverAbiV1,
                     CallSet = new CallSet
                     {
                         FunctionName = "sendGrams",
@@ -52,7 +49,6 @@ namespace ch1seL.TonNet.Client.Tests.Utils
                 },
                 SendEvents = false
             };
-
             ResultOfProcessMessage resultOfProcessMessage = await tonClient.Processing.ProcessMessage(processMessageParams, null);
 
             foreach (var outMessage in resultOfProcessMessage.OutMessages)

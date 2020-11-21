@@ -41,6 +41,6 @@ namespace ch1seL.TonNet.Client
         /// <para> that satisfies the `filter` conditions.</para>
         /// <para> The projection fields are limited to `result` fields.</para>
         /// </summary>
-        public Task<ResultOfSubscribeCollection> SubscribeCollection(ParamsOfSubscribeCollection @params, Action<JsonElement, uint> callback, CancellationToken cancellationToken = default);
+        public Task<ResultOfSubscribeCollection> SubscribeCollection(ParamsOfSubscribeCollection @params, Action<JsonElement,uint> callback = null, CancellationToken cancellationToken = default);
     }
 }

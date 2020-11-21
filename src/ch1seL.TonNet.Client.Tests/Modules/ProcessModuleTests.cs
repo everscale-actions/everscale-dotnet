@@ -22,13 +22,12 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         public async Task WaitMessage()
         {
             //arrange
-            PackageHelpers eventsPackage = await PackageHelpers.GetPackage("Events");
             KeyPair keys = await _tonClient.Crypto.GenerateRandomSignKeys();
             ResultOfEncodeMessage encoded = await _tonClient.Abi.EncodeMessage(new ParamsOfEncodeMessage
             {
-                Abi = eventsPackage.Abi, DeploySet = new DeploySet
+                Abi = TestsEnv.Packages.Events.Abi, DeploySet = new DeploySet
                 {
-                    Tvc = eventsPackage.Tvc
+                    Tvc = TestsEnv.Packages.Events.Tvc
                 },
                 CallSet = new CallSet
                 {
@@ -58,7 +57,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             ResultOfSendMessage sendMessageResult = await _tonClient.Processing.SendMessage(new ParamsOfSendMessage
             {
                 Message = encoded.Message,
-                Abi = eventsPackage.Abi,
+                Abi = TestsEnv.Packages.Events.Abi,
                 SendEvents = true
             }, ProcessingCallback);
 
@@ -68,14 +67,14 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 Message = encoded.Message,
                 ShardBlockId = sendMessageResult.ShardBlockId,
                 SendEvents = true,
-                Abi = eventsPackage.Abi
+                Abi = TestsEnv.Packages.Events.Abi
             }, ProcessingCallback);
 
             //assert
             waitForTransactionResult.OutMessages.Should().BeEmpty();
             waitForTransactionResult.Decoded.OutMessages.Should().BeEmpty();
             waitForTransactionResult.Decoded.Output.Should().BeNull();
-            
+
             events.Count.Should().BeGreaterOrEqualTo(4);
             events[0].Should().BeOfType<ProcessingEvent.WillFetchFirstBlock>();
             events[1].Should().BeOfType<ProcessingEvent.WillSend>();
