@@ -13,7 +13,6 @@ using Microsoft.Extensions.Logging;
 
 namespace ch1seL.TonNet.RustClient
 {
-    //todo: must be singleton
     internal class RustTonClientCore : IRustTonClientCore, IDisposable
     {
         private readonly uint _contextNumber;
@@ -139,7 +138,7 @@ namespace ch1seL.TonNet.RustClient
             }
 
             TonClientException exception = errorResponse == null
-                ? new TonClientException($"Raw result: {responseJson}", innerException ?? new NullReferenceException("Result of error response is null"))
+                ? new TonClientException($"Raw result: {responseJson}", innerException ?? new NullReferenceException("Result of error response is null or not valid"))
                 : TonClientException.CreateExceptionWithCodeWithData(errorResponse.Code, errorResponse.Data, errorResponse.Message);
             return exception;
         }
