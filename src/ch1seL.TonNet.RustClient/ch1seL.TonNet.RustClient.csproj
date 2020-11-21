@@ -4,7 +4,7 @@
 
     <PropertyGroup>
 <!--     this sdk core lib will be downloaded during the build -->
-        <SDKVersion>1.1.1</SDKVersion>
+        <SDKVersion>1.1.2</SDKVersion>
     </PropertyGroup>
 
     <PropertyGroup>
