@@ -14,7 +14,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Client.Tests"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{6187011F-F7CB-4CE0-8A31-803667A9EE59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWorkerService", "samples\SampleWorkerService\SampleWorkerService.csproj", "{3ECAD1EB-3AA6-4035-AB31-18F9F74479C3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageSenderService", "samples\MessageSenderService\MessageSenderService.csproj", "{3ECAD1EB-3AA6-4035-AB31-18F9F74479C3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_targets", "_targets", "{DD278D8B-D9EC-4CF6-8D3A-DC34992DBB72}"
 ProjectSection(SolutionItems) = preProject
@@ -32,6 +32,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{D2AD0D49-D487-4214-AF76-5AB6D64C8E3F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{26096843-5ED8-41E9-A080-1E8C2A20FE00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Utils", "src\ch1seL.TonNet.Utils\ch1seL.TonNet.Utils.csproj", "{D57BFEF7-1A79-459F-B8EE-161DAB0D9A57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageReceiverService", "samples\MessageReceiverService\MessageReceiverService.csproj", "{96BA5142-3359-441B-A3DB-3D182F68C69F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +87,14 @@ Global
 		{92A0EFA1-8ED9-44B0-8BF8-459C47805B3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92A0EFA1-8ED9-44B0-8BF8-459C47805B3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92A0EFA1-8ED9-44B0-8BF8-459C47805B3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D57BFEF7-1A79-459F-B8EE-161DAB0D9A57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D57BFEF7-1A79-459F-B8EE-161DAB0D9A57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D57BFEF7-1A79-459F-B8EE-161DAB0D9A57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D57BFEF7-1A79-459F-B8EE-161DAB0D9A57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96BA5142-3359-441B-A3DB-3D182F68C69F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96BA5142-3359-441B-A3DB-3D182F68C69F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96BA5142-3359-441B-A3DB-3D182F68C69F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96BA5142-3359-441B-A3DB-3D182F68C69F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3ECAD1EB-3AA6-4035-AB31-18F9F74479C3} = {6187011F-F7CB-4CE0-8A31-803667A9EE59}
@@ -91,5 +103,6 @@ Global
 		{002C7C4E-13D5-4BB9-A5D4-669A278580B2} = {26096843-5ED8-41E9-A080-1E8C2A20FE00}
 		{1C6E23C8-5006-4E07-A905-F6C569C76019} = {26096843-5ED8-41E9-A080-1E8C2A20FE00}
 		{92A0EFA1-8ED9-44B0-8BF8-459C47805B3C} = {26096843-5ED8-41E9-A080-1E8C2A20FE00}
+		{96BA5142-3359-441B-A3DB-3D182F68C69F} = {6187011F-F7CB-4CE0-8A31-803667A9EE59}
 	EndGlobalSection
 EndGlobal

@@ -145,14 +145,13 @@ await tonClient.Net.WaitForCollection(new ParamsOfWaitForCollection
 });
 ```
 
-## Sample 
+## Samples
 
-#### Service that generate and out to console random mnemonic phrase:
-
-https://github.com/ton-actions/ton-client-dotnet/tree/master/samples/SampleWorkerService
+https://github.com/ton-actions/ton-client-dotnet/tree/master/samples/
 
 ***Enjoy!***
 
+---
 >My Coffee Surf address:
 >>ton://surf/0:9b487d68e4f029ab6d92640892d99d1c549ae69b198df414e905350559a165bf
 
