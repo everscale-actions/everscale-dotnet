@@ -86,6 +86,8 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 Result = "id now"
             });
 
+            await Task.Delay(TimeSpan.FromSeconds(1));
+
             await _tonClient.SendGramsFromLocalGiver();
 
             ResultOfWaitForCollection result = await request;
