@@ -21,21 +21,20 @@ namespace ch1seL.TonNet.RustClient.Tests
             act.Should().NotThrow();
         }
 
-        [Fact]
-        public async Task TestClosure()
+        [Fact(Timeout = 10000, Skip = "WAITING FOR 1.2.0 RELEASE https://t.me/ton_sdk/4249")]
+        public async Task TonClientDisposing()
         {
-            RustTonClientCore client = TestsHelpers.CreateTonClient();
-            Func<Task> act = () =>
+            Func<Task> act = async () =>
             {
-                {
-                    return Task.WhenAll(Enumerable.Repeat(0, 10000)
+                RustTonClientCore client = TestsHelpers.CreateTonClient();
+                await Task.WhenAll(Enumerable.Repeat(0, 1000)
                         // ReSharper disable once AccessToDisposedClosure
-                        .Select(_ => client.Request("client.version", null)));
-                }
+                        .Select(_ => client.Request("client.get_api_reference", null)));
+
+                client.Dispose();
             };
 
             await act.Should().NotThrowAsync();
-            client.Dispose();
         }
 
         [Fact]

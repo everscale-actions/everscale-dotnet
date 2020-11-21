@@ -24,12 +24,13 @@ namespace ch1seL.TonNet.Client.Tests
             _serviceProvider?.Dispose();
         }
 
-        [Fact(Timeout = 1000, Skip = "WAITING FOR 1.2.0 RELEASE")]
-        public void TonClientDisposingWell()
+        [Fact(Timeout = 1000, Skip = "WAITING FOR 1.2.0 RELEASE https://t.me/ton_sdk/4249")]
+        public void TonClientDisposing()
         {
             var act = new Func<Task>(async () =>
             {
                 var tonClient = new TonClient(_serviceProvider);
+                
                 await tonClient.Client.GetApiReference();
 
                 tonClient.Dispose();
