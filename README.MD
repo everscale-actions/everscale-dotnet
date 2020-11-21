@@ -104,8 +104,10 @@ https://docs.microsoft.com/en-us/dotnet/core/extensions/configuration-providers
 ```
 public void ConfigureServices(IServiceCollection services)
 {
-    services.Configure<NetworkConfig>(Configuration.GetSection("NetworkConfig"));
-    services.Configure<PackageManagerOptions>(Configuration.GetSection("PackageManager"));
+    services
+        .Configure<NetworkConfig>(Configuration.GetSection("NetworkConfig"))
+        .Configure<PackageManagerOptions>(Configuration.GetSection("PackageManager"));
+
     services.AddTonClient();
 }
 ```
