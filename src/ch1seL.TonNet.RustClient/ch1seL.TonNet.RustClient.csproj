@@ -62,5 +62,9 @@
             <PackagePath>build\ch1seL.TonNet.RustClient.targets</PackagePath>
         </Content>
     </ItemGroup>
+    
+    <ItemGroup>
+      <Compile Remove="RustTonClientCoreExtensions.cs" />
+    </ItemGroup>
 
 </Project>
