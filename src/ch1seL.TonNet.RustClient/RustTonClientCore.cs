@@ -66,14 +66,14 @@ namespace ch1seL.TonNet.RustClient
             var callbackDelegate = new CallbackDelegate((requestId, responseInteropString, responseType, finished) =>
             {
                 var responseJson = responseInteropString.ToString();
-                _logger.LogTrace("Got request response context:{context} request:{requestId} type:{responseType} body:{response}",
-                    _contextNumber, requestId, ((ResponseType) responseType).ToString(), responseJson);
+                _logger.LogTrace("Got request response context:{context} request:{request} type:{responseType} finished:{finished} body:{body}",
+                    _contextNumber, requestId, ((ResponseType) responseType).ToString(), finished, responseJson);
 
                 lock (_dictLock)
                 {
                     if (!_delegatesDict.ContainsKey(requestId))
                     {
-                        _logger.LogTrace("Request {requestId} was not found in this context {_contextNumber}", requestId, _contextNumber);
+                        _logger.LogWarning("Request {request} was not found in this context {context}", requestId, _contextNumber);
                         return;
                     }
 
@@ -94,7 +94,7 @@ namespace ch1seL.TonNet.RustClient
                         break;
                     // responseType>=100 
                     default:
-                        _logger.LogTrace("Sending callback context:{context} request:{requestId} {type}", _contextNumber, requestId, typeof(TEvent));
+                        _logger.LogTrace("Sending callback context:{context} request:{request} eventType:{eventType} body:{body}", _contextNumber, requestId, typeof(TEvent), responseJson);
                         callback?.Invoke(TonEventSerializer.Deserialize<TEvent>(responseJson), responseType);
                         break;
                 }
@@ -107,7 +107,7 @@ namespace ch1seL.TonNet.RustClient
 
             try
             {
-                _logger.LogTrace("Sending request: context:{context} request:{request} method:{method} request:{request}", _contextNumber, _requestId, method,
+                _logger.LogTrace("Sending request: context:{context} request:{request} method:{method} body:{body}", _contextNumber, _requestId, method,
                     requestJson);
                 using var methodInteropString = method.ToInteropStringDisposable();
                 using var paramsJsonInteropString = requestJson.ToInteropStringDisposable();
@@ -121,7 +121,10 @@ namespace ch1seL.TonNet.RustClient
 
             Task executeOrTimeout = await Task.WhenAny(cts.Task, Task.Delay(_coreExecutionTimeOut, cancellationToken));
             if (cts.Task == executeOrTimeout) return await cts.Task;
-            throw new TonClientException("Execution timeout expired or cancellation request");
+            
+            // log error with ids and throw TonClientException
+            _logger.LogError("Request execution timeout expired or cancellation requested. Context:{context} request:{request}", _contextNumber, _requestId);
+            throw new TonClientException("Execution timeout expired or cancellation requested");
         }
 
         private static TonClientException GetTonClientExceptionByResponse(string responseJson)
