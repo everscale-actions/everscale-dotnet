@@ -67,30 +67,23 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         [Fact]
         public async Task RunExecutor()
         {
-            var result = await TestRunMessage(async (message, abi, account) =>
+            async Task<string> Run(ResultOfEncodeMessage message, Abi abi, string account)
             {
                 //arrange
                 ResultOfParse parsed = await _tonClient.Boc.ParseAccount(new ParamsOfParse {Boc = account});
                 var originalBalance = parsed.Parsed.Get<string>("balance");
 
                 //act
-                ResultOfRunExecutor resultOfRun = await _tonClient.Tvm.RunExecutor(new ParamsOfRunExecutor
-                {
-                    Message = message.Message,
-                    Abi = abi,
-                    Account = new AccountForExecutor.Account
-                    {
-                        Boc = account,
-                        UnlimitedBalance = true
-                    }
-                });
+                ResultOfRunExecutor resultOfRun = await _tonClient.Tvm.RunExecutor(new ParamsOfRunExecutor {Message = message.Message, Abi = abi, Account = new AccountForExecutor.Account {Boc = account, UnlimitedBalance = true}});
 
                 // check that run with unlimited balance doesn't affect the contract balance
                 parsed = await _tonClient.Boc.ParseAccount(new ParamsOfParse {Boc = resultOfRun.Account});
                 parsed.Parsed.Get<string>("balance").Should().Be(originalBalance);
 
                 return resultOfRun.Account;
-            });
+            }
+
+            var result = await TestRunMessage(Run);
 
             result.Should().Be(SubscribeParamsPubkey);
         }
@@ -98,17 +91,14 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         [Fact]
         public async Task RunTvm()
         {
-            var result = await TestRunMessage(async (message, abi, account) =>
+            async Task<string> Run(ResultOfEncodeMessage message, Abi abi, string account)
             {
-                ResultOfRunTvm resultOfRunTvm = await _tonClient.Tvm.RunTvm(new ParamsOfRunTvm
-                {
-                    Message = message.Message,
-                    Abi = abi,
-                    Account = account
-                });
+                ResultOfRunTvm resultOfRunTvm = await _tonClient.Tvm.RunTvm(new ParamsOfRunTvm {Message = message.Message, Abi = abi, Account = account});
 
                 return resultOfRunTvm.Account;
-            });
+            }
+
+            var result = await TestRunMessage(Run);
 
             result.Should().Be(SubscribeParamsPubkey);
         }
@@ -185,7 +175,6 @@ namespace ch1seL.TonNet.Client.Tests.Modules
 
             // run
             var runResult = await run(message, TestsEnv.Packages.Subscription.Abi, account);
-
 
             var getSubscriptionMessage = await GetSubscriptionEncodedMessage(address, TestsEnv.Packages.Subscription, subscribeParams.subscriptionId, keys);
 
