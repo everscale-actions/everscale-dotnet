@@ -17,9 +17,6 @@ namespace ch1seL.TonNet.Serialization
             var options = new JsonSerializerOptions
             {
                 MaxDepth = int.MaxValue,
-#if DEBUG
-                WriteIndented = true,
-#endif
                 Converters = {new JsonStringEnumConverter()}
             };
 
