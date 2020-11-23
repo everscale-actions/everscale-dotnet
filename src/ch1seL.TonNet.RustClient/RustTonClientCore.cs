@@ -140,11 +140,10 @@ namespace ch1seL.TonNet.RustClient
                 innerException = e;
             }
 
-            TonClientException exception = errorResponse == null
+            return errorResponse == null
                 ? new TonClientException($"Raw result: {responseJson}",
                     innerException ?? new NullReferenceException("Result of error response is null or not valid"))
                 : TonClientException.CreateExceptionWithCodeWithData(errorResponse.Code, errorResponse.Data, errorResponse.Message);
-            return exception;
         }
 
         private async Task<bool> WaitForDelegates()

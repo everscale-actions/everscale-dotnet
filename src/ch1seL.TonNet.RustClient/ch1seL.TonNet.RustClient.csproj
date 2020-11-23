@@ -63,8 +63,4 @@
         </Content>
     </ItemGroup>
     
-    <ItemGroup>
-      <Compile Remove="RustTonClientCoreExtensions.cs" />
-    </ItemGroup>
-
 </Project>
