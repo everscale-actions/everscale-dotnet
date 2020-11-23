@@ -8,7 +8,7 @@ using ch1seL.TonNet.Serialization;
 namespace ch1seL.TonNet.RustClient
 {
     /// <summary>
-    ///     Rust adapter. Uses extensions method of RustTonClientCore
+    ///     Rust adapter. Uses RustTonClientCore to get serialized responses by serialized requests from TON SDK
     /// </summary>
     public class TonNetRustAdapter : ITonClientAdapter
     {
@@ -21,14 +21,14 @@ namespace ch1seL.TonNet.RustClient
 
         public async Task<TResponse> Request<TResponse>(string method, CancellationToken cancellationToken = default)
         {
-            var responseJson = await _rustTonClient.Request<string>(method, string.Empty, null, cancellationToken);
+            var responseJson = await _rustTonClient.Request(method, string.Empty, null, cancellationToken);
 
             return JsonSerializer.Deserialize<TResponse>(responseJson, JsonOptionsProvider.JsonSerializerOptions);
         }
 
         public async Task<TResponse> Request<TResponse, TEvent>(string method, Action<TEvent, uint> callback, CancellationToken cancellationToken = default)
         {
-            var responseJson = await _rustTonClient.Request(method, string.Empty, callback, cancellationToken);
+            var responseJson = await _rustTonClient.Request(method, string.Empty, DeserializeCallback(callback), cancellationToken);
 
             return JsonSerializer.Deserialize<TResponse>(responseJson, JsonOptionsProvider.JsonSerializerOptions);
         }
@@ -37,14 +37,14 @@ namespace ch1seL.TonNet.RustClient
         {
             var requestJson = JsonSerializer.Serialize(request, JsonOptionsProvider.JsonSerializerOptions);
 
-            await _rustTonClient.Request<string>(method, requestJson, null, cancellationToken);
+            await _rustTonClient.Request(method, requestJson, null, cancellationToken);
         }
 
         public async Task<TResponse> Request<TRequest, TResponse>(string method, TRequest request, CancellationToken cancellationToken = default)
         {
             var requestJson = JsonSerializer.Serialize(request, JsonOptionsProvider.JsonSerializerOptions);
 
-            var responseJson = await _rustTonClient.Request<string>(method, requestJson, null, cancellationToken);
+            var responseJson = await _rustTonClient.Request(method, requestJson, null, cancellationToken);
 
             return JsonSerializer.Deserialize<TResponse>(responseJson, JsonOptionsProvider.JsonSerializerOptions);
         }
@@ -54,9 +54,14 @@ namespace ch1seL.TonNet.RustClient
         {
             var requestJson = JsonSerializer.Serialize(request, JsonOptionsProvider.JsonSerializerOptions);
 
-            var responseJson = await _rustTonClient.Request(method, requestJson, callback, cancellationToken);
+            var responseJson = await _rustTonClient.Request(method, requestJson, DeserializeCallback(callback), cancellationToken);
 
             return JsonSerializer.Deserialize<TResponse>(responseJson, JsonOptionsProvider.JsonSerializerOptions);
+        }
+
+        private static Action<string, uint> DeserializeCallback<TEvent>(Action<TEvent, uint> callback)
+        {
+            return (callbackResponseJson, responseType) => { callback?.Invoke(TonEventSerializer.Deserialize<TEvent>(callbackResponseJson), responseType); };
         }
     }
 }

@@ -28,8 +28,8 @@ namespace ch1seL.TonNet.RustClient.Tests
             {
                 RustTonClientCore client = TestsHelpers.CreateTonClient();
                 await Task.WhenAll(Enumerable.Repeat(0, 1000)
-                        // ReSharper disable once AccessToDisposedClosure
-                        .Select(_ => client.Request<string>("client.get_api_reference", null)));
+                    // ReSharper disable once AccessToDisposedClosure
+                    .Select(_ => client.Request("client.get_api_reference", null)));
 
                 client.Dispose();
             };
@@ -47,7 +47,7 @@ namespace ch1seL.TonNet.RustClient.Tests
             {
                 composite = "17ED48941A08F981"
             };
-            var response = await client.Request<string>(method, JsonSerializer.Serialize(parameters, JsonOptionsProvider.JsonSerializerOptions));
+            var response = await client.Request(method, JsonSerializer.Serialize(parameters, JsonOptionsProvider.JsonSerializerOptions));
 
             response.Should().Be("{\"factors\":[\"494C553B\",\"53911073\"]}");
         }
@@ -57,7 +57,7 @@ namespace ch1seL.TonNet.RustClient.Tests
         {
             using RustTonClientCore client = TestsHelpers.CreateTonClient();
 
-            var response = await client.Request<string>("client.version", null);
+            var response = await client.Request("client.version", null);
 
             response.Should().MatchRegex(@"{""version"":""\d.\d\.\d""}");
         }

@@ -56,7 +56,7 @@ namespace ch1seL.TonNet.RustClient
             _logger.LogTrace("Context {context} disposed", _contextNumber);
         }
 
-        public async Task<string> Request<TEvent>(string method, string requestJson, Action<TEvent, uint> callback = null,
+        public async Task<string> Request(string method, string requestJson, Action<string, uint> callback = null,
             CancellationToken cancellationToken = default)
         {
             _requestId = _requestId == uint.MaxValue ? 0 : _requestId + 1;
@@ -94,8 +94,8 @@ namespace ch1seL.TonNet.RustClient
                         break;
                     // responseType>=100 
                     default:
-                        _logger.LogTrace("Sending callback context:{context} request:{request} eventType:{eventType} body:{body}", _contextNumber, requestId, typeof(TEvent), responseJson);
-                        callback?.Invoke(TonEventSerializer.Deserialize<TEvent>(responseJson), responseType);
+                        _logger.LogTrace("Sending callback context:{context} request:{request} body:{body}", _contextNumber, requestId, responseJson);
+                        callback?.Invoke(responseJson, responseType);
                         break;
                 }
             });
@@ -121,7 +121,7 @@ namespace ch1seL.TonNet.RustClient
 
             Task executeOrTimeout = await Task.WhenAny(cts.Task, Task.Delay(_coreExecutionTimeOut, cancellationToken));
             if (cts.Task == executeOrTimeout) return await cts.Task;
-            
+
             // log error with ids and throw TonClientException
             _logger.LogError("Request execution timeout expired or cancellation requested. Context:{context} request:{request}", _contextNumber, _requestId);
             throw new TonClientException("Execution timeout expired or cancellation requested");
@@ -141,7 +141,8 @@ namespace ch1seL.TonNet.RustClient
             }
 
             TonClientException exception = errorResponse == null
-                ? new TonClientException($"Raw result: {responseJson}", innerException ?? new NullReferenceException("Result of error response is null or not valid"))
+                ? new TonClientException($"Raw result: {responseJson}",
+                    innerException ?? new NullReferenceException("Result of error response is null or not valid"))
                 : TonClientException.CreateExceptionWithCodeWithData(errorResponse.Code, errorResponse.Data, errorResponse.Message);
             return exception;
         }
