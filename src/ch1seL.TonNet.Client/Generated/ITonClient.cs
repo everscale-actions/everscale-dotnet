@@ -1,3 +1,5 @@
+using ch1seL.TonNet.Client.Modules;
+
 namespace ch1seL.TonNet.Client
 {
     public interface ITonClient
