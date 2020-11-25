@@ -5,7 +5,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ch1seL.TonNet.Client
+namespace ch1seL.TonNet.Client.Modules
 {
     public interface IAbiModule : ITonModule
     {

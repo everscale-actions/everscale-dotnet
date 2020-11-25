@@ -13,9 +13,11 @@ This is tool generate Ton Client .NET
 
 ## Result
 
-- Modules and Models will placed in ../ch1seL.TonNet.Client.Modules/Generated
+- Modules will be placed in ../../src/ch1seL.TonNet.Client.Modules/Generated
+
+- Models  will be placed in ../../src/ch1seL.TonNet.Client.Models/Generated
   
-- TonClient will placed in ../ch1seL.TonNet.Client/Generated will be overriden
+- TonClient will be placed in ../../src/ch1seL.TonNet.Client/Generated will be overriden
 
 ## Roadmap 
 

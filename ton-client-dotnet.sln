@@ -4,8 +4,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.RustAdapter",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.RustClient.Tests", "src\ch1seL.TonNet.RustClient.Tests\ch1seL.TonNet.RustClient.Tests.csproj", "{002C7C4E-13D5-4BB9-A5D4-669A278580B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.ClientGenerator", "src\ch1seL.TonNet.ClientGenerator\ch1seL.TonNet.ClientGenerator.csproj", "{99BF12E4-77BD-4ABB-8926-1747C0661E71}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Abstract", "src\ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj", "{D076E181-E3BC-4C08-B59F-2EF648D9C5B5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Client", "src\ch1seL.TonNet.Client\ch1seL.TonNet.Client.csproj", "{FE34D05D-2956-43D4-9E06-103AA2FACB00}"
@@ -23,7 +21,7 @@ EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Serialization", "src\ch1seL.TonNet.Serialization\ch1seL.TonNet.Serialization.csproj", "{5D76F927-6D5D-4B4A-9DF3-CFFC0D4B585A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Client.Modules", "src\ch1seL.TonNet.Client.Modules\ch1seL.TonNet.Client.Modules.csproj", "{44169AA0-B38A-4DF9-93C3-5743C4D9B1E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Client.Models", "src\ch1seL.TonNet.Client.Models\ch1seL.TonNet.Client.Models.csproj", "{44169AA0-B38A-4DF9-93C3-5743C4D9B1E1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Serialization.Tests", "src\ch1seL.TonNet.Serialization.Tests\ch1seL.TonNet.Serialization.Tests.csproj", "{1C6E23C8-5006-4E07-A905-F6C569C76019}"
 EndProject
@@ -36,6 +34,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Utils", "src\ch1seL.TonNet.Utils\ch1seL.TonNet.Utils.csproj", "{D57BFEF7-1A79-459F-B8EE-161DAB0D9A57}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageReceiverService", "samples\MessageReceiverService\MessageReceiverService.csproj", "{96BA5142-3359-441B-A3DB-3D182F68C69F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientGenerator", "tools\ClientGenerator\ClientGenerator.csproj", "{1E3D732C-83C0-4F2C-ABE6-2DEB18DE2299}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Client.Modules", "src\ch1seL.TonNet.Client.Modules\ch1seL.TonNet.Client.Modules.csproj", "{9E876ECE-E4BB-47FD-B642-060A5368BA67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,10 +53,6 @@ Global
 		{002C7C4E-13D5-4BB9-A5D4-669A278580B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{002C7C4E-13D5-4BB9-A5D4-669A278580B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{002C7C4E-13D5-4BB9-A5D4-669A278580B2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{99BF12E4-77BD-4ABB-8926-1747C0661E71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{99BF12E4-77BD-4ABB-8926-1747C0661E71}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{99BF12E4-77BD-4ABB-8926-1747C0661E71}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{99BF12E4-77BD-4ABB-8926-1747C0661E71}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D076E181-E3BC-4C08-B59F-2EF648D9C5B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D076E181-E3BC-4C08-B59F-2EF648D9C5B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D076E181-E3BC-4C08-B59F-2EF648D9C5B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -95,14 +93,22 @@ Global
 		{96BA5142-3359-441B-A3DB-3D182F68C69F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96BA5142-3359-441B-A3DB-3D182F68C69F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96BA5142-3359-441B-A3DB-3D182F68C69F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E3D732C-83C0-4F2C-ABE6-2DEB18DE2299}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E3D732C-83C0-4F2C-ABE6-2DEB18DE2299}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E3D732C-83C0-4F2C-ABE6-2DEB18DE2299}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E3D732C-83C0-4F2C-ABE6-2DEB18DE2299}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E876ECE-E4BB-47FD-B642-060A5368BA67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E876ECE-E4BB-47FD-B642-060A5368BA67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E876ECE-E4BB-47FD-B642-060A5368BA67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E876ECE-E4BB-47FD-B642-060A5368BA67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3ECAD1EB-3AA6-4035-AB31-18F9F74479C3} = {6187011F-F7CB-4CE0-8A31-803667A9EE59}
-		{99BF12E4-77BD-4ABB-8926-1747C0661E71} = {D2AD0D49-D487-4214-AF76-5AB6D64C8E3F}
 		{C2F964A9-8A1E-4CE9-955F-D8A9B4DF4030} = {26096843-5ED8-41E9-A080-1E8C2A20FE00}
 		{002C7C4E-13D5-4BB9-A5D4-669A278580B2} = {26096843-5ED8-41E9-A080-1E8C2A20FE00}
 		{1C6E23C8-5006-4E07-A905-F6C569C76019} = {26096843-5ED8-41E9-A080-1E8C2A20FE00}
 		{92A0EFA1-8ED9-44B0-8BF8-459C47805B3C} = {26096843-5ED8-41E9-A080-1E8C2A20FE00}
 		{96BA5142-3359-441B-A3DB-3D182F68C69F} = {6187011F-F7CB-4CE0-8A31-803667A9EE59}
+		{1E3D732C-83C0-4F2C-ABE6-2DEB18DE2299} = {D2AD0D49-D487-4214-AF76-5AB6D64C8E3F}
 	EndGlobalSection
 EndGlobal

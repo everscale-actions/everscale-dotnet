@@ -8,8 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj" />
-      <ProjectReference Include="..\ch1seL.TonNet.Client.Models\ch1seL.TonNet.Client.Models.csproj" />
+        <PackageReference Include="Dahomey.Json" Version="1.10.2" />
+        <PackageReference Include="System.Text.Json" Version="5.0.0" />
     </ItemGroup>
 
 </Project>

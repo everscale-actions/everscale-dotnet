@@ -28,15 +28,16 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
             //callback parameter
             var callbackParam = function.Params.Length >= 3
-                ? new {
-                        name = StringUtils.EscapeReserved(function.Params[2].Name.GetEnumMemberValueOrString()),
-                        nameWithNull = $"{StringUtils.EscapeReserved(function.Params[2].Name.GetEnumMemberValueOrString())} = null",
-                        type = string.Equals(module.Name, "net", StringComparison.OrdinalIgnoreCase)
-                            ? "JsonElement"
-                            : NamingConventions.EventFormatter(module.Name)
-                    }
+                ? new
+                {
+                    name = StringUtils.EscapeReserved(function.Params[2].Name.GetEnumMemberValueOrString()),
+                    nameWithNull = $"{StringUtils.EscapeReserved(function.Params[2].Name.GetEnumMemberValueOrString())} = null",
+                    type = string.Equals(module.Name, "net", StringComparison.OrdinalIgnoreCase)
+                        ? "JsonElement"
+                        : NamingConventions.EventFormatter(module.Name)
+                }
                 : null;
-            
+
             var modifiers = new List<SyntaxToken> {Token(SyntaxKind.PublicKeyword).WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(function.Description))};
             if (withBody) modifiers.Add(Token(SyntaxKind.AsyncKeyword));
 
@@ -51,10 +52,10 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
             if (callbackParam != null)
             {
-                methodDeclarationParams.Add(Parameter(Identifier(callbackParam.nameWithNull)).WithType(IdentifierName($"Action<{callbackParam.type},uint>")));   
+                methodDeclarationParams.Add(Parameter(Identifier(callbackParam.nameWithNull)).WithType(IdentifierName($"Action<{callbackParam.type},uint>")));
                 @params.Add(Parameter(Identifier(callbackParam.name)).WithType(IdentifierName($"Action<{callbackParam.type},uint>")));
             }
-            
+
             MethodDeclarationSyntax method =
                 MethodDeclaration(ParseTypeName(responseDeclaration), NamingConventions.Normalize(function.Name))
                     .AddParameterListParameters(methodDeclarationParams.ToArray())
@@ -126,7 +127,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                 .AddMembers(constructorDeclaration)
                 .AddMembers(methods);
 
-            return NamespaceDeclaration(IdentifierName(Generator.NameSpace))
+            return NamespaceDeclaration(IdentifierName(Generator.NameSpaceModules))
                 .AddMembers(item);
         }
 
@@ -144,7 +145,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                 .AddBaseListTypes(SimpleBaseType(IdentifierName("ITonModule")))
                 .AddMembers(methods);
 
-            return NamespaceDeclaration(IdentifierName(Generator.NameSpace))
+            return NamespaceDeclaration(IdentifierName(Generator.NameSpaceModules))
                 .AddMembers(item);
         }
     }
