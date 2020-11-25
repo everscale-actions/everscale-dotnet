@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace ch1seL.TonNet.RustClient.RustInterop.Models
+namespace ch1seL.TonNet.RustAdapter.RustInterop.Models
 {
     [StructLayout(LayoutKind.Sequential)]
     [SuppressMessage("ReSharper", "FieldCanBeMadeReadOnly.Local")]

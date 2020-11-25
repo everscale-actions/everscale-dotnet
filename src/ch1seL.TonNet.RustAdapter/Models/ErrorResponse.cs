@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace ch1seL.TonNet.RustClient.Models
+namespace ch1seL.TonNet.RustAdapter.Models
 {
     public class ErrorResponse
     {

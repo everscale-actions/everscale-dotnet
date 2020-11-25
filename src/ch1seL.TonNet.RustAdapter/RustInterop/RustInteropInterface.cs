@@ -1,8 +1,8 @@
 using System;
 using System.Runtime.InteropServices;
-using ch1seL.TonNet.RustClient.RustInterop.Models;
+using ch1seL.TonNet.RustAdapter.RustInterop.Models;
 
-namespace ch1seL.TonNet.RustClient.RustInterop
+namespace ch1seL.TonNet.RustAdapter.RustInterop
 {
     internal static class RustInteropInterface
     {

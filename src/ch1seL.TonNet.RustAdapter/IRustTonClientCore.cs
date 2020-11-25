@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ch1seL.TonNet.RustClient
+namespace ch1seL.TonNet.RustAdapter
 {
     public interface IRustTonClientCore
     {

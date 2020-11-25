@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace ch1seL.TonNet.RustClient.RustInterop.Models
+namespace ch1seL.TonNet.RustAdapter.RustInterop.Models
 {
     //we have to use separate disposable struct to avoid use unmanaged shared resources
     [StructLayout(LayoutKind.Sequential)]

@@ -1,4 +1,4 @@
-﻿namespace ch1seL.TonNet.RustClient.RustInterop.Models
+﻿namespace ch1seL.TonNet.RustAdapter.RustInterop.Models
 {
     public enum ResponseType
     {

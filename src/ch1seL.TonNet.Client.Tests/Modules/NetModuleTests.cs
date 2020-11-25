@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.Client.Tests.Utils;
-using ch1seL.TonNet.RustClient.RustInterop.Models;
+using ch1seL.TonNet.RustAdapter.RustInterop.Models;
 using ch1seL.TonNet.Serialization;
 using ch1seL.TonNet.TestsShared;
 using FluentAssertions;

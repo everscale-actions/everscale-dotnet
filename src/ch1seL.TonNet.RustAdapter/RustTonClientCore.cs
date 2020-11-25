@@ -4,14 +4,14 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using ch1seL.TonNet.Abstract;
-using ch1seL.TonNet.RustClient.Models;
-using ch1seL.TonNet.RustClient.RustInterop;
-using ch1seL.TonNet.RustClient.RustInterop.Models;
-using ch1seL.TonNet.RustClient.Utils;
+using ch1seL.TonNet.RustAdapter.Models;
+using ch1seL.TonNet.RustAdapter.RustInterop;
+using ch1seL.TonNet.RustAdapter.RustInterop.Models;
+using ch1seL.TonNet.RustAdapter.Utils;
 using ch1seL.TonNet.Serialization;
 using Microsoft.Extensions.Logging;
 
-namespace ch1seL.TonNet.RustClient
+namespace ch1seL.TonNet.RustAdapter
 {
     internal class RustTonClientCore : IRustTonClientCore, IDisposable
     {

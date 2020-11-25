@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.Serialization;
 
-namespace ch1seL.TonNet.RustClient
+namespace ch1seL.TonNet.RustAdapter
 {
     /// <summary>
     ///     Rust adapter. Uses RustTonClientCore to get serialized responses by serialized requests from TON SDK

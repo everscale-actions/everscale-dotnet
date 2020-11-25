@@ -21,8 +21,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ch1seL.TonNet.RustClient\ch1seL.TonNet.RustClient.csproj" />
-      <ProjectReference Include="..\ch1seL.TonNet.Serialization\ch1seL.TonNet.Serialization.csproj"/>
+        <ProjectReference Include="..\ch1seL.TonNet.RustAdapter\ch1seL.TonNet.RustAdapter.csproj"/>
+        <ProjectReference Include="..\ch1seL.TonNet.Serialization\ch1seL.TonNet.Serialization.csproj"/>
     </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using ch1seL.TonNet.RustAdapter;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
 namespace ch1seL.TonNet.RustClient.Tests
@@ -7,7 +8,7 @@ namespace ch1seL.TonNet.RustClient.Tests
     {
         public static RustTonClientCore CreateTonClient(ILogger<RustTonClientCore> logger = null)
         {
-            return new(null, logger ?? NullLogger<RustTonClientCore>.Instance);
+            return new RustTonClientCore(null, logger ?? NullLogger<RustTonClientCore>.Instance);
         }
     }
 }

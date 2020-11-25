@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using ch1seL.TonNet.RustAdapter;
 using ch1seL.TonNet.Serialization;
 using FluentAssertions;
 using Xunit;

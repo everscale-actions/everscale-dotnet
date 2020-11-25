@@ -2,7 +2,7 @@
 using System.Text.Json;
 using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.Client.Models;
-using ch1seL.TonNet.RustClient;
+using ch1seL.TonNet.RustAdapter;
 using ch1seL.TonNet.Serialization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
