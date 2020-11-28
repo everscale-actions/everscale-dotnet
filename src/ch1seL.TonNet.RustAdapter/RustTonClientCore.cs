@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ch1seL.TonNet.RustAdapter
 {
-    internal class RustTonClientCore : IRustTonClientCore, IDisposable
+    internal sealed class RustTonClientCore : IRustTonClientCore, IDisposable
     {
         private readonly uint _contextNumber;
         private readonly TimeSpan _coreExecutionTimeOut = TimeSpan.FromMinutes(1);
@@ -47,12 +47,17 @@ namespace ch1seL.TonNet.RustAdapter
         //todo: try to convert this method to IAsyncDispose
         public void Dispose()
         {
-            _logger.LogTrace("Disposing context {context}", _contextNumber);
-
-            if (!WaitForDelegates().GetAwaiter().GetResult())
-                throw new TonClientException("Delegates didn't finish during the allotted time", new TimeoutException());
-
+            var waitDelegatesResult = WaitForDelegates().GetAwaiter().GetResult();
             RustInteropInterface.tc_destroy_context(_contextNumber);
+            if (!waitDelegatesResult)
+            {
+                _logger.LogError("Delegates didn't finish during the allotted time. Force clean...");
+                lock (_dictLock)
+                {
+                    _delegatesDict.Clear();
+                }
+            }
+
             _logger.LogTrace("Context {context} disposed", _contextNumber);
         }
 
@@ -148,10 +153,16 @@ namespace ch1seL.TonNet.RustAdapter
 
         private async Task<bool> WaitForDelegates()
         {
-            //todo: use cts instead of Task.WaitAny  
+            // wait 30 seconds for all work to be completed
             var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             while (true)
             {
+                lock (_dictLock)
+                {
+                    if (_delegatesDict.Count == 0) return true;
+                    _logger.LogWarning("Some delegates not finished: {count} wait...", _delegatesDict.Count);
+                }
+
                 try
                 {
                     await Task.Delay(TimeSpan.FromSeconds(1), cts.Token);
@@ -159,12 +170,6 @@ namespace ch1seL.TonNet.RustAdapter
                 catch (TaskCanceledException)
                 {
                     return false;
-                }
-
-                lock (_dictLock)
-                {
-                    if (_delegatesDict.Count == 0) return true;
-                    _logger.LogWarning("Some delegates not finished: {count} wait...", _delegatesDict.Count);
                 }
             }
         }
