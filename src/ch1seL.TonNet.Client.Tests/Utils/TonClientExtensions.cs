@@ -49,7 +49,7 @@ namespace ch1seL.TonNet.Client.Tests.Utils
                 },
                 SendEvents = false
             };
-            ResultOfProcessMessage resultOfProcessMessage = await tonClient.Processing.ProcessMessage(processMessageParams, null);
+            ResultOfProcessMessage resultOfProcessMessage = await tonClient.Processing.ProcessMessage(processMessageParams);
 
             foreach (var outMessage in resultOfProcessMessage.OutMessages)
             {
@@ -74,7 +74,7 @@ namespace ch1seL.TonNet.Client.Tests.Utils
         {
             ResultOfEncodeMessage address = await tonClient.Abi.EncodeMessage(encodeMessageParams);
             await tonClient.SendGramsFromLocalGiver(address.Address);
-            await tonClient.Processing.ProcessMessage(new ParamsOfProcessMessage {MessageEncodeParams = encodeMessageParams}, null);
+            await tonClient.Processing.ProcessMessage(new ParamsOfProcessMessage {MessageEncodeParams = encodeMessageParams});
             return address.Address;
         }
     }

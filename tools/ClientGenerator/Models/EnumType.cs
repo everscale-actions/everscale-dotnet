@@ -21,5 +21,8 @@ namespace ch1seL.TonNet.ClientGenerator.Models
         [JsonPropertyName("optional_inner")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public GenericArg OptionalInner { get; set; }
+        
+        [JsonPropertyName("number_type")] public NumberType NumberType { get; set; }
+        [JsonPropertyName("number_size")] public long NumberSize { get; set; }
     }
 }

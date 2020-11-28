@@ -46,5 +46,10 @@ namespace ch1seL.TonNet.Client
         ///  Network access.
         /// </summary>
         public INetModule Net { get; }
+
+        /// <summary>
+        ///  [UNSTABLE](UNSTABLE.md) Module for working with debot.
+        /// </summary>
+        public IDebotModule Debot { get; }
     }
 }

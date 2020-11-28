@@ -7,6 +7,7 @@
         Optional,
         Ref,
         String,
-        Struct
+        Struct,
+        Number
     }
 }

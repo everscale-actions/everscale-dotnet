@@ -24,7 +24,7 @@ namespace ch1seL.TonNet.Client.Models
         public string Nonce { get; set; }
 
         /// <summary>
-        ///  Secret key - unprefixed 0-padded to 64 symbols hex string 
+        ///  Secret key - unprefixed 0-padded to 64 symbols hex string
         /// </summary>
         [JsonPropertyName("key")]
         public string Key { get; set; }

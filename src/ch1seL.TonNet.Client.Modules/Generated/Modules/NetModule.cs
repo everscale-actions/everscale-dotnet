@@ -52,7 +52,6 @@ namespace ch1seL.TonNet.Client.Modules
 
         /// <summary>
         /// <para> Creates a subscription</para>
-        /// <para> </para>
         /// <para> Triggers for each insert/update of data</para>
         /// <para> that satisfies the `filter` conditions.</para>
         /// <para> The projection fields are limited to `result` fields.</para>

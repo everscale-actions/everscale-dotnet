@@ -28,11 +28,5 @@ namespace ch1seL.TonNet.Client.Models
         /// </summary>
         [JsonPropertyName("hdkey_derivation_path")]
         public string HdkeyDerivationPath { get; set; }
-
-        /// <summary>
-        /// Not described yet..
-        /// </summary>
-        [JsonPropertyName("hdkey_compliant"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public bool? HdkeyCompliant { get; set; }
     }
 }

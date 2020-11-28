@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ch1seL.TonNet.TestsShared;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
@@ -8,9 +9,7 @@ using Xunit.Abstractions;
 namespace ch1seL.TonNet.Client.Tests
 {
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class TonClientTestsFixture
-        // todo: waiting for sdk release 1.2.0
-        //: IDisposable
+    public class TonClientTestsFixture : IDisposable
     {
         private readonly List<ServiceProvider> _serviceProviders = new List<ServiceProvider>();
 

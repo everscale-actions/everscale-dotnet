@@ -172,7 +172,7 @@ namespace ch1seL.TonNet.Client.Modules
         /// <summary>
         /// <para> Public key authenticated encryption</para>
         /// <para> Encrypt and authenticate a message using the senders secret key, the recievers public</para>
-        /// <para> key, and a nonce. </para>
+        /// <para> key, and a nonce.</para>
         /// </summary>
         public async Task<ResultOfNaclBox> NaclBox(ParamsOfNaclBox @params, CancellationToken cancellationToken = default)
         {
@@ -263,7 +263,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        ///  Derives the exented private key from the specified key and path
+        ///  Derives the extended private key from the specified key and path
         /// </summary>
         public async Task<ResultOfHDKeyDeriveFromXPrvPath> HdkeyDeriveFromXprvPath(ParamsOfHDKeyDeriveFromXPrvPath @params, CancellationToken cancellationToken = default)
         {
@@ -292,6 +292,46 @@ namespace ch1seL.TonNet.Client.Modules
         public async Task<ResultOfChaCha20> Chacha20(ParamsOfChaCha20 @params, CancellationToken cancellationToken = default)
         {
             return await _tonClientAdapter.Request<ParamsOfChaCha20, ResultOfChaCha20>("crypto.chacha20", @params, cancellationToken);
+        }
+
+        /// <summary>
+        ///  Register an application implemented signing box.
+        /// </summary>
+        public async Task<RegisteredSigningBox> RegisterSigningBox(Action<JsonElement,uint> appObject = null, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<RegisteredSigningBox, JsonElement>("crypto.register_signing_box", appObject, cancellationToken);
+        }
+
+        /// <summary>
+        ///  Creates a default signing box implementation.
+        /// </summary>
+        public async Task<RegisteredSigningBox> GetSigningBox(KeyPair @params, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<KeyPair, RegisteredSigningBox>("crypto.get_signing_box", @params, cancellationToken);
+        }
+
+        /// <summary>
+        ///  Returns public key of signing key pair.
+        /// </summary>
+        public async Task<ResultOfSigningBoxGetPublicKey> SigningBoxGetPublicKey(RegisteredSigningBox @params, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<RegisteredSigningBox, ResultOfSigningBoxGetPublicKey>("crypto.signing_box_get_public_key", @params, cancellationToken);
+        }
+
+        /// <summary>
+        ///  Returns signed user data.
+        /// </summary>
+        public async Task<ResultOfSigningBoxSign> SigningBoxSign(ParamsOfSigningBoxSign @params, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<ParamsOfSigningBoxSign, ResultOfSigningBoxSign>("crypto.signing_box_sign", @params, cancellationToken);
+        }
+
+        /// <summary>
+        ///  Removes signing box from SDK.
+        /// </summary>
+        public async Task RemoveSigningBox(RegisteredSigningBox @params, CancellationToken cancellationToken = default)
+        {
+            await _tonClientAdapter.Request<RegisteredSigningBox>("crypto.remove_signing_box", @params, cancellationToken);
         }
     }
 }

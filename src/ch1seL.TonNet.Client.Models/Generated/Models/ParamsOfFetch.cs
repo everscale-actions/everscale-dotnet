@@ -7,14 +7,14 @@ using System.Text.Json.Serialization;
 namespace ch1seL.TonNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    ///  [UNSTABLE](UNSTABLE.md) Parameters to fetch debot.
     /// </summary>
-    public class ParamsOfNaclSignKeyPairFromSecret
+    public class ParamsOfFetch
     {
         /// <summary>
-        ///  Secret key - unprefixed 0-padded to 64 symbols hex string
+        ///  Debot smart contract address
         /// </summary>
-        [JsonPropertyName("secret")]
-        public string Secret { get; set; }
+        [JsonPropertyName("address")]
+        public string Address { get; set; }
     }
 }

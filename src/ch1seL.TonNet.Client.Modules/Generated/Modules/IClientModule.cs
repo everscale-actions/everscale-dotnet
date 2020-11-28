@@ -23,5 +23,10 @@ namespace ch1seL.TonNet.Client.Modules
         ///  Returns detailed information about this build.
         /// </summary>
         public Task<ResultOfBuildInfo> BuildInfo(CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Not described yet..
+        /// </summary>
+        public Task ResolveAppRequest(ParamsOfResolveAppRequest @params, CancellationToken cancellationToken = default);
     }
 }
