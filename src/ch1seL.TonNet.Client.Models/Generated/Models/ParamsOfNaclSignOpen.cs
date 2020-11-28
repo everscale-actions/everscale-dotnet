@@ -18,7 +18,7 @@ namespace ch1seL.TonNet.Client.Models
         public string Signed { get; set; }
 
         /// <summary>
-        ///  Signer's public key - unprefixed 0-padded to 64 symbols hex string 
+        ///  Signer's public key - unprefixed 0-padded to 64 symbols hex string
         /// </summary>
         [JsonPropertyName("public")]
         public string Public { get; set; }
