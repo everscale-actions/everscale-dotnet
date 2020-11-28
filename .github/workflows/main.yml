@@ -1,6 +1,7 @@
 name: Main workflow
 
 on:
+  pull_request:
   push:
     branches: [ master ]
   release:
@@ -48,9 +49,11 @@ jobs:
       run: dotnet test -c Release --no-restore --no-build
 
     - name: Pack
+      if: github.event_name != 'pull_request'
       run: dotnet pack -v normal -c Release --no-restore --no-build --include-symbols --include-source -p:PackageVersion=$GITHUB_RUN_ID -o pack
 
     - name: Upload Artifact
+      if: github.event_name != 'pull_request'
       uses: actions/upload-artifact@v2
       with:
         name: nupkg
@@ -58,7 +61,7 @@ jobs:
         
   prerelease:
     needs: build
-    if: github.event_name != 'release'
+    if: github.event_name != 'release' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Download Artifact
