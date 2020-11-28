@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public abstract class Signer
     {
         /// <summary>
-        ///  No keys are provided. Creates an unsigned message. 
+        ///  No keys are provided. Creates an unsigned message.
         /// </summary>
         [JsonDiscriminator("None")]
         public class None : Signer
@@ -20,14 +20,14 @@ namespace ch1seL.TonNet.Client.Models
         }
 
         /// <summary>
-        /// <para> Only public key is provided in unprefixed hex string format to generate unsigned message </para>
+        /// <para> Only public key is provided in unprefixed hex string format to generate unsigned message</para>
         /// <para> and `data_to_sign` which can be signed later.  </para>
         /// </summary>
         [JsonDiscriminator("External")]
         public class External : Signer
         {
             /// <summary>
-            /// <para> Only public key is provided in unprefixed hex string format to generate unsigned message </para>
+            /// <para> Only public key is provided in unprefixed hex string format to generate unsigned message</para>
             /// <para> and `data_to_sign` which can be signed later.  </para>
             /// </summary>
             [JsonPropertyName("public_key")]

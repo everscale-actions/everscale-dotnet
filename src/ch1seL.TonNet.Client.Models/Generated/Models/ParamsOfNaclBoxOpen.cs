@@ -24,13 +24,13 @@ namespace ch1seL.TonNet.Client.Models
         public string Nonce { get; set; }
 
         /// <summary>
-        ///  Sender's public key - unprefixed 0-padded to 64 symbols hex string 
+        ///  Sender's public key - unprefixed 0-padded to 64 symbols hex string
         /// </summary>
         [JsonPropertyName("their_public")]
         public string TheirPublic { get; set; }
 
         /// <summary>
-        ///  Receiver's private key - unprefixed 0-padded to 64 symbols hex string 
+        ///  Receiver's private key - unprefixed 0-padded to 64 symbols hex string
         /// </summary>
         [JsonPropertyName("secret")]
         public string Secret { get; set; }

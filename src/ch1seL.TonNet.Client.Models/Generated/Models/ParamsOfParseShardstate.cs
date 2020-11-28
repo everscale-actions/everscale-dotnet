@@ -24,7 +24,7 @@ namespace ch1seL.TonNet.Client.Models
         public string Id { get; set; }
 
         /// <summary>
-        ///  Workchain shardstate belongs to 
+        ///  Workchain shardstate belongs to
         /// </summary>
         [JsonPropertyName("workchain_id")]
         public int WorkchainId { get; set; }
