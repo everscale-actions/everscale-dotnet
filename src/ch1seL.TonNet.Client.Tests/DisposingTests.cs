@@ -30,7 +30,7 @@ namespace ch1seL.TonNet.Client.Tests
             _serviceProvider?.Dispose();
         }
 
-        [Fact(Timeout = 1000, Skip = "WAITING FOR 1.2.0 RELEASE https://t.me/ton_sdk/4249")]
+        [Fact]
         public void TonClientDisposing()
         {
             var act = new Func<Task>(async () =>

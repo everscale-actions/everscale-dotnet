@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfConvertPublicKeyToTonSafeFormat
     {
         /// <summary>
-        ///  Public key represented in TON safe format. 
+        ///  Public key represented in TON safe format.
         /// </summary>
         [JsonPropertyName("ton_public_key")]
         public string TonPublicKey { get; set; }
