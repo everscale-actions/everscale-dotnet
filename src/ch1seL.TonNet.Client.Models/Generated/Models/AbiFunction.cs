@@ -33,6 +33,6 @@ namespace ch1seL.TonNet.Client.Models
         /// Not described yet..
         /// </summary>
         [JsonPropertyName("id"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public uint? Id { get; set; }
+        public string Id { get; set; }
     }
 }

@@ -9,24 +9,18 @@ namespace ch1seL.TonNet.Client.Models
     /// <summary>
     /// Not described yet..
     /// </summary>
-    public class AbiEvent
+    public class ParamsOfAppRequest
     {
         /// <summary>
         /// Not described yet..
         /// </summary>
-        [JsonPropertyName("name")]
-        public string Name { get; set; }
+        [JsonPropertyName("app_request_id")]
+        public uint AppRequestId { get; set; }
 
         /// <summary>
         /// Not described yet..
         /// </summary>
-        [JsonPropertyName("inputs")]
-        public JsonElement?[] Inputs { get; set; }
-
-        /// <summary>
-        /// Not described yet..
-        /// </summary>
-        [JsonPropertyName("id"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string Id { get; set; }
+        [JsonPropertyName("request_data")]
+        public JsonElement? RequestData { get; set; }
     }
 }

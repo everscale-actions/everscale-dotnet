@@ -9,12 +9,12 @@ namespace ch1seL.TonNet.Client.Models
     /// <summary>
     /// Not described yet..
     /// </summary>
-    public class ParamsOfNaclSignKeyPairFromSecret
+    public class ResultOfSigningBoxSign
     {
         /// <summary>
-        ///  Secret key - unprefixed 0-padded to 64 symbols hex string
+        ///  Data signature. Encoded with `base64`.
         /// </summary>
-        [JsonPropertyName("secret")]
-        public string Secret { get; set; }
+        [JsonPropertyName("signature")]
+        public string Signature { get; set; }
     }
 }

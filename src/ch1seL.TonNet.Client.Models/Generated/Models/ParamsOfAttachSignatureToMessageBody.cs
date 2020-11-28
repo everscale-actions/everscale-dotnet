@@ -24,7 +24,7 @@ namespace ch1seL.TonNet.Client.Models
         public string PublicKey { get; set; }
 
         /// <summary>
-        ///  Unsigned message BOC. Must be encoded with `base64`.
+        ///  Unsigned message body BOC. Must be encoded with `base64`.
         /// </summary>
         [JsonPropertyName("message")]
         public string Message { get; set; }
