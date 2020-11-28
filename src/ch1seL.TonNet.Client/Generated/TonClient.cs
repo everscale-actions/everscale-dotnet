@@ -10,7 +10,7 @@ namespace ch1seL.TonNet.Client
 
         public TonClient(IServiceProvider serviceProvider = null)
         {
-            _serviceProvider = TonClientServiceProviderBuilder.BuildTonClientServiceProvider(serviceProvider); Client = _serviceProvider.GetRequiredService<IClientModule>(); Crypto = _serviceProvider.GetRequiredService<ICryptoModule>(); Abi = _serviceProvider.GetRequiredService<IAbiModule>(); Boc = _serviceProvider.GetRequiredService<IBocModule>(); Processing = _serviceProvider.GetRequiredService<IProcessingModule>(); Utils = _serviceProvider.GetRequiredService<IUtilsModule>(); Tvm = _serviceProvider.GetRequiredService<ITvmModule>(); Net = _serviceProvider.GetRequiredService<INetModule>();
+            _serviceProvider = TonClientServiceProviderBuilder.BuildTonClientServiceProvider(serviceProvider); Client = _serviceProvider.GetRequiredService<IClientModule>(); Crypto = _serviceProvider.GetRequiredService<ICryptoModule>(); Abi = _serviceProvider.GetRequiredService<IAbiModule>(); Boc = _serviceProvider.GetRequiredService<IBocModule>(); Processing = _serviceProvider.GetRequiredService<IProcessingModule>(); Utils = _serviceProvider.GetRequiredService<IUtilsModule>(); Tvm = _serviceProvider.GetRequiredService<ITvmModule>(); Net = _serviceProvider.GetRequiredService<INetModule>(); Debot = _serviceProvider.GetRequiredService<IDebotModule>();
         }
 
         /// <summary>
@@ -55,6 +55,11 @@ namespace ch1seL.TonNet.Client
         ///  Network access.
         /// </summary>
         public INetModule Net { get; }
+
+        /// <summary>
+        ///  [UNSTABLE](UNSTABLE.md) Module for working with debot.
+        /// </summary>
+        public IDebotModule Debot { get; }
 
         public void Dispose()
         {

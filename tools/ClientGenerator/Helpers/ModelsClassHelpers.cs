@@ -60,7 +60,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                             properties.AddRange(subClass.StructFields.Select(sf =>
                             {
                                 var addPostfix = NamingConventions.Normalize(sf.Name) == NamingConventions.Normalize(subClass.Name);
-                                return CreatePropertyGenericArgs(sf.Type, sf.Name, sf.RefName, sf.OptionalInner, subClass.Description, addPostFix: addPostfix);
+                                return CreatePropertyGenericArgs(sf.Type, sf.Name, sf.RefName, sf.OptionalInner, subClass.Description, sf.NumberType, sf.NumberSize, addPostfix: addPostfix);
                             }));
                             return (MemberDeclarationSyntax) ClassDeclaration(NamingConventions.Normalize(subClass.Name))
                                 .AddAttributeLists(AttributeList(
@@ -101,15 +101,15 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
 
         private MemberDeclarationSyntax CreatePropertyGenericArgs(GenericArgType type, string name, string refName, GenericArg optionalInner,
-            string description,
-            bool optional = false, bool addPostFix = false)
+            string description, NumberType? numberType = null, long? numberSize = null, bool optional = false, bool addPostfix = false)
         {
             return type switch
             {
-                GenericArgType.Boolean => CreatePropertyDeclaration("bool", name, description, optional, addPostfix: addPostFix),
-                GenericArgType.Ref => CreatePropertyForRef(refName, name, description, addPostfix: addPostFix),
-                GenericArgType.String => CreatePropertyDeclaration("string", name, description, addPostfix: addPostFix),
-                GenericArgType.Optional => CreatePropertyGenericArgs(optionalInner.Type, name, optionalInner.RefName, null, description, addPostFix),
+                GenericArgType.Boolean => CreatePropertyDeclaration("bool", name, description, optional, addPostfix: addPostfix),
+                GenericArgType.Ref => CreatePropertyForRef(refName, name, description, addPostfix: addPostfix),
+                GenericArgType.String => CreatePropertyDeclaration("string", name, description, addPostfix: addPostfix),
+                GenericArgType.Optional => CreatePropertyGenericArgs(optionalInner.Type, name, optionalInner.RefName, null, description, addPostfix: addPostfix),
+                GenericArgType.Number => CreatePropertyDeclaration(NumberUtils.ConvertToSharpNumeric(numberType, numberSize), name, description, addPostfix: addPostfix),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
@@ -169,7 +169,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                 PurpleType.Number => CreatePropertyDeclaration(NumberUtils.ConvertToSharpNumeric(optionalInner.NumberType, optionalInner.NumberSize), name,
                     description,
                     true, true),
-                PurpleType.String => CreatePropertyDeclaration("string", name, description, true),
+                PurpleType.String => CreatePropertyDeclaration("string", name, description, nullable: true),
                 _ => throw new ArgumentOutOfRangeException(nameof(optionalInner.Type), optionalInner.Type, "Not supported type detected")
             };
         }

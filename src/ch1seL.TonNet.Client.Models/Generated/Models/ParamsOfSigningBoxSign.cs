@@ -9,18 +9,18 @@ namespace ch1seL.TonNet.Client.Models
     /// <summary>
     /// Not described yet..
     /// </summary>
-    public class ParamsOfNaclSign
+    public class ParamsOfSigningBoxSign
     {
         /// <summary>
-        ///  Data that must be signed encoded in `base64`.
+        ///  Signing Box handle.
+        /// </summary>
+        [JsonPropertyName("signing_box")]
+        public uint SigningBox { get; set; }
+
+        /// <summary>
+        ///  Unsigned user data. Must be encoded with `base64`.
         /// </summary>
         [JsonPropertyName("unsigned")]
         public string Unsigned { get; set; }
-
-        /// <summary>
-        ///  Signer's secret key - unprefixed 0-padded to 64 symbols hex string
-        /// </summary>
-        [JsonPropertyName("secret")]
-        public string Secret { get; set; }
     }
 }

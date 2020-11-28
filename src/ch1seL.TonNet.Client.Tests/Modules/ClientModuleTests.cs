@@ -22,13 +22,14 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             result.Version.Should().MatchRegex(@"\d\.\d\.\d");
         }
 
-        [Fact(Skip = "Release 1.1.2 has BuildNumber with 0")]
+        [Fact]
         public async Task ReturnsBuildInfo()
         {
             ResultOfBuildInfo result = await _tonClient.Client.BuildInfo();
 
             result.Dependencies.Should().NotBeNull();
-            result.BuildNumber.Should().BePositive();
+            // todo: 1.1.2+ returns  build_number = 0
+            // result.BuildNumber.Should().BePositive();
         }
 
         [Fact]

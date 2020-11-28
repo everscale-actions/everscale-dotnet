@@ -22,7 +22,7 @@ namespace ch1seL.TonNet.RustClient.Tests
             act.Should().NotThrow();
         }
 
-        [Fact(Timeout = 10000, Skip = "WAITING FOR 1.2.0 RELEASE https://t.me/ton_sdk/4249")]
+        [Fact(Timeout = 10000)]
         public async Task TonClientDisposing()
         {
             Func<Task> act = async () =>

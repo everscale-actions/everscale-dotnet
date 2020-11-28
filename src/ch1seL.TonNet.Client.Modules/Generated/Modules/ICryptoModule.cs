@@ -114,7 +114,7 @@ namespace ch1seL.TonNet.Client.Modules
         /// <summary>
         /// <para> Public key authenticated encryption</para>
         /// <para> Encrypt and authenticate a message using the senders secret key, the recievers public</para>
-        /// <para> key, and a nonce. </para>
+        /// <para> key, and a nonce.</para>
         /// </summary>
         public Task<ResultOfNaclBox> NaclBox(ParamsOfNaclBox @params, CancellationToken cancellationToken = default);
 
@@ -172,7 +172,7 @@ namespace ch1seL.TonNet.Client.Modules
         public Task<ResultOfHDKeyDeriveFromXPrv> HdkeyDeriveFromXprv(ParamsOfHDKeyDeriveFromXPrv @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        ///  Derives the exented private key from the specified key and path
+        ///  Derives the extended private key from the specified key and path
         /// </summary>
         public Task<ResultOfHDKeyDeriveFromXPrvPath> HdkeyDeriveFromXprvPath(ParamsOfHDKeyDeriveFromXPrvPath @params, CancellationToken cancellationToken = default);
 
@@ -190,5 +190,30 @@ namespace ch1seL.TonNet.Client.Modules
         ///  Performs symmetric `chacha20` encryption.
         /// </summary>
         public Task<ResultOfChaCha20> Chacha20(ParamsOfChaCha20 @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        ///  Register an application implemented signing box.
+        /// </summary>
+        public Task<RegisteredSigningBox> RegisterSigningBox(object appObject, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        ///  Creates a default signing box implementation.
+        /// </summary>
+        public Task<RegisteredSigningBox> GetSigningBox(KeyPair @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        ///  Returns public key of signing key pair.
+        /// </summary>
+        public Task<ResultOfSigningBoxGetPublicKey> SigningBoxGetPublicKey(RegisteredSigningBox @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        ///  Returns signed user data.
+        /// </summary>
+        public Task<ResultOfSigningBoxSign> SigningBoxSign(ParamsOfSigningBoxSign @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        ///  Removes signing box from SDK.
+        /// </summary>
+        public Task RemoveSigningBox(RegisteredSigningBox @params, CancellationToken cancellationToken = default);
     }
 }

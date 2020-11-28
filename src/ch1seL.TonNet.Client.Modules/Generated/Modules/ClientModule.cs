@@ -39,5 +39,13 @@ namespace ch1seL.TonNet.Client.Modules
         {
             return await _tonClientAdapter.Request<ResultOfBuildInfo>("client.build_info", cancellationToken);
         }
+
+        /// <summary>
+        /// Not described yet..
+        /// </summary>
+        public async Task ResolveAppRequest(ParamsOfResolveAppRequest @params, CancellationToken cancellationToken = default)
+        {
+            await _tonClientAdapter.Request<ParamsOfResolveAppRequest>("client.resolve_app_request", @params, cancellationToken);
+        }
     }
 }

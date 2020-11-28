@@ -83,7 +83,6 @@ namespace ch1seL.TonNet.Client.Modules
 
         /// <summary>
         /// <para> Creates account state BOC</para>
-        /// <para> </para>
         /// <para> Creates account state provided with one of these sets of data :</para>
         /// <para> 1. BOC of code, BOC of data, BOC of library</para>
         /// <para> 2. TVC (string in `base64`), keys, init params</para>

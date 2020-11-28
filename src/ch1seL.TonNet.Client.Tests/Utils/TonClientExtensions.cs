@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.Serialization;
 using ch1seL.TonNet.TestsShared;
@@ -30,6 +31,7 @@ namespace ch1seL.TonNet.Client.Tests.Utils
         /// </summary>
         /// <param name="tonClient"></param>
         /// <param name="account">the giver sends money to himself by default</param>
+        /// <param name="cancellationToken">cancellation token</param>
         public static async Task SendGramsFromLocalGiver(this ITonClient tonClient, string account = null)
         {
             account ??= LocalGiverAddress;
@@ -49,7 +51,7 @@ namespace ch1seL.TonNet.Client.Tests.Utils
                 },
                 SendEvents = false
             };
-            ResultOfProcessMessage resultOfProcessMessage = await tonClient.Processing.ProcessMessage(processMessageParams, null);
+            ResultOfProcessMessage resultOfProcessMessage = await tonClient.Processing.ProcessMessage(processMessageParams);
 
             foreach (var outMessage in resultOfProcessMessage.OutMessages)
             {
@@ -74,7 +76,7 @@ namespace ch1seL.TonNet.Client.Tests.Utils
         {
             ResultOfEncodeMessage address = await tonClient.Abi.EncodeMessage(encodeMessageParams);
             await tonClient.SendGramsFromLocalGiver(address.Address);
-            await tonClient.Processing.ProcessMessage(new ParamsOfProcessMessage {MessageEncodeParams = encodeMessageParams}, null);
+            await tonClient.Processing.ProcessMessage(new ParamsOfProcessMessage {MessageEncodeParams = encodeMessageParams});
             return address;
         }
     }
