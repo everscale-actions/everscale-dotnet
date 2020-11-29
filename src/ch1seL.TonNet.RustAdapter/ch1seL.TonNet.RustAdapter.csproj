@@ -1,11 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <Import Project="..\..\PackageInfo.targets" />
-
-    <PropertyGroup>
-<!--     this sdk core lib will be downloaded during the build -->
-        <SDKVersion>1.1.2</SDKVersion>
-    </PropertyGroup>
+    <Import Project="..\..\PackageInfo.targets" />    
+    <Import Project="..\..\SDKVersion.targets" />
+    <Import Project="DownloadLib.targets" />   
 
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
@@ -20,7 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj" />
+        <ProjectReference Include="..\ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj" />
         <ProjectReference Include="..\ch1seL.TonNet.Serialization\ch1seL.TonNet.Serialization.csproj" />
     </ItemGroup>
 
@@ -31,36 +28,30 @@
         <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
             <_Parameter1>ch1seL.TonNet.RustClient.Tests</_Parameter1>
         </AssemblyAttribute>
-        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-            <_Parameter1>ch1seL.TonNet.Client.Tests</_Parameter1>
-        </AssemblyAttribute>
-        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-            <_Parameter1>DynamicProxyGenAssembly2</_Parameter1>
-        </AssemblyAttribute>
     </ItemGroup>
-
-    <Import Project="DownloadLib.targets" />
     
     <ItemGroup>
-        <Content Include="..\runtimes\win-x64\native\tonclient.dll">
+        <None Include="..\runtimes\win-x64\native\tonclient.dll">
             <Pack>true</Pack>            
             <PackagePath>runtimes\win-x64\native\tonclient.dll</PackagePath>
             <Link>lib\tonclient.dll</Link>
-        </Content>
-        <Content Include="..\runtimes\linux-x64\native\libtonclient.so">
+        </None>
+        <None Include="..\runtimes\linux-x64\native\libtonclient.so">
             <Pack>true</Pack>
             <PackagePath>runtimes\linux-x64\native\libtonclient.so</PackagePath>
             <Link>lib\libtonclient.so</Link>
-        </Content>
-        <Content Include="..\runtimes\osx-x64\native\libtonclient.dylib">
+        </None>
+        <None Include="..\runtimes\osx-x64\native\libtonclient.dylib">
             <Pack>true</Pack>
             <PackagePath>runtimes\osx-x64\native\libtonclient.dylib</PackagePath>
             <Link>lib\libtonclient.dylib</Link>
-        </Content>
-        <Content Include="ch1seL.TonNet.RustClient.targets">
+        </None>
+        <None Include="ch1seL.TonNet.RustAdapter.targets">
             <Pack>true</Pack>
-            <PackagePath>build\ch1seL.TonNet.RustClient.targets</PackagePath>
-        </Content>
+            <PackagePath>build\ch1seL.TonNet.RustAdapter.targets</PackagePath>
+        </None>
     </ItemGroup>
+    
+    <Import Project="ch1seL.TonNet.RustAdapter.targets" />
     
 </Project>

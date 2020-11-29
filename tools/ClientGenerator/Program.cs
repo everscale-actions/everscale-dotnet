@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Reflection;
+using System.Threading.Tasks;
 
 namespace ch1seL.TonNet.ClientGenerator
 {
@@ -6,7 +7,11 @@ namespace ch1seL.TonNet.ClientGenerator
     {
         private static async Task Main(string[] args)
         {
-            await Generator.GenerateClient();
+            var repositoryLocation = Assembly.GetEntryAssembly()!
+                .GetCustomAttribute<RepositoryLocationAttribute>()
+                ?.SourcesLocation;
+
+            await ClientGenerator.GenerateClient(repositoryLocation);
         }
     }
 }

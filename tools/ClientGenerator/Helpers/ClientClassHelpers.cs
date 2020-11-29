@@ -69,7 +69,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                 .AddMembers(propertyDeclarationSyntaxes)
                 .AddMembers(disposeMethod);
 
-            return NamespaceDeclaration(IdentifierName(Generator.NameSpace))
+            return NamespaceDeclaration(IdentifierName(ClientGenerator.NameSpace))
                 .AddMembers(item);
         }
 
@@ -81,7 +81,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                 .AddModifiers(Token(SyntaxKind.PublicKeyword))
                 .AddMembers(propertyDeclarationSyntaxes);
 
-            return NamespaceDeclaration(IdentifierName(Generator.NameSpace))
+            return NamespaceDeclaration(IdentifierName(ClientGenerator.NameSpace))
                 .AddMembers(item);
         }
     }
