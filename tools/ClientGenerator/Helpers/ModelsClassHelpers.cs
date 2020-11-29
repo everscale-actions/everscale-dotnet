@@ -23,7 +23,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
         public NamespaceDeclarationSyntax CreateTonModelClass(TypeElement typeElement)
         {
-            NamespaceDeclarationSyntax ns = NamespaceDeclaration(IdentifierName(Generator.NameSpaceModels));
+            NamespaceDeclarationSyntax ns = NamespaceDeclaration(IdentifierName(ClientGenerator.NameSpaceModels));
 
             return typeElement.Type switch
             {

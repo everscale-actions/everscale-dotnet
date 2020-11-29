@@ -1,4 +1,5 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  
   <PropertyGroup>
     <_IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</_IsWindows>
     <_IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</_IsLinux>
@@ -14,10 +15,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Condition="'$(_NativeRuntime)' != ''" Include="$(MSBuildThisFileDirectory)..\runtimes\$(_NativeRuntime)\native\$(_NativeLibName)">
-      <Link>lib\$(_NativeLibName)</Link>
+    <None Condition="'$(_NativeRuntime)' != ''" Include="$(MSBuildThisFileDirectory)..\runtimes\$(_NativeRuntime)\native\$(_NativeLibName)">
+      <Link>$(_NativeLibName)</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </None>
   </ItemGroup>
   
 </Project>

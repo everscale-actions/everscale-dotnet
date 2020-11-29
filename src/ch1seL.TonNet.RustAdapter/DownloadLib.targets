@@ -1,25 +1,11 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <PackageReference Include="ch1seL.MSBuildGzTool" Version="1.0.9" />
+    <PackageReference Include="ch1seL.MSBuildGzTool" Version="1.0.9">
+      <PrivateAssets>All</PrivateAssets>      
+    </PackageReference>
   </ItemGroup>
   
   <PropertyGroup>
-    <_IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</_IsWindows>
-    <_IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</_IsLinux>
-    <_IsMacOS Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</_IsMacOS>
-
-    <_NativeRuntime Condition=" '$(_NativeRuntime)' == '' And '$(_IsWindows)' == 'true' And ('$(Prefer32Bit)' == 'false' Or '$(PlatformTarget)' == 'x64')">win-x64</_NativeRuntime>
-    <_NativeRuntime Condition=" '$(_NativeRuntime)' == '' And '$(_IsLinux)' == 'true' And ('$(Prefer32Bit)' == 'false' Or '$(PlatformTarget)' == 'x64')">linux-x64</_NativeRuntime>
-    <_NativeRuntime Condition=" '$(_NativeRuntime)' == '' And '$(_IsMacOS)' == 'true' And ('$(Prefer32Bit)' == 'false' Or '$(PlatformTarget)' == 'x64')">osx-x64</_NativeRuntime>
-
-    <_NativeLibName Condition="'$(_NativeRuntime)' == 'win-x64'">tonclient.dll</_NativeLibName>
-    <_NativeLibName Condition="'$(_NativeRuntime)' == 'linux-x64'">libtonclient.so</_NativeLibName>
-    <_NativeLibName Condition="'$(_NativeRuntime)' == 'osx-x64'">libtonclient.dylib</_NativeLibName>
-
-    <_LibPlatform Condition="'$(_IsWindows)' == 'true'">win32_dll</_LibPlatform>
-    <_LibPlatform Condition="'$(_IsLinux)' == 'true'">linux</_LibPlatform>
-    <_LibPlatform Condition="'$(_IsMacOS)' == 'true'">darwin</_LibPlatform>
-
     <_SDKVersionDenormalized>$([System.String]::Copy('$(SDKVersion)').Replace('.', '_'))</_SDKVersionDenormalized>
     
     <_TonLibDownloadUrlWin>http://sdkbinaries-ws.tonlabs.io/tonclient_$(_SDKVersionDenormalized)_win32_dll.gz</_TonLibDownloadUrlWin>
@@ -46,20 +32,5 @@
     </DownloadFile>
     <UnGzip SourceFile="$(MSBuildThisFileDirectory)..\downloads\tonclient_darwin.gz" DestinationFile="$(MSBuildThisFileDirectory)..\runtimes\osx-x64\native\libtonclient.dylib" />
   </Target>
-  
-  <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)..\downloads">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      <Visible>false</Visible>
-    </None>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <None Condition="'$(_NativeRuntime)' != ''" Include="$(MSBuildThisFileDirectory)..\runtimes\$(_NativeRuntime)\native\$(_NativeLibName)">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Link>$(_NativeLibName)</Link>
-      <Visible>false</Visible>
-    </None>
-  </ItemGroup>
-  
+    
 </Project>
