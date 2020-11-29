@@ -1,5 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+    <Import Project="..\..\SDKVersion.targets" />
+
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
         <OutputType>Exe</OutputType>
@@ -13,10 +15,31 @@
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.8.0" />
     </ItemGroup>
 
+    <PropertyGroup>
+        <_TonSdkApiJson>https://raw.githubusercontent.com/tonlabs/TON-SDK/$(SDKVersion)/tools/api.json</_TonSdkApiJson>
+    </PropertyGroup>
+
+    <Target Name="DownloadContentFiles" BeforeTargets="CoreCompile">
+        <MakeDir Directories="$(MSBuildThisFileDirectory)\Resources\" />
+        <DownloadFile SourceUrl="$(_TonSdkApiJson)" DestinationFolder="$(MSBuildThisFileDirectory)\Resources\" DestinationFileName="api.json">
+            <Output TaskParameter="DownloadedFile" ItemName="None" />
+        </DownloadFile>
+    </Target>
+
     <ItemGroup>
-      <None Update="Resources\api.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
+        <Content Include="Resources\api.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <PropertyGroup>
+        <RepositoryLocation>$([System.IO.Path]::Combine($(MSBuildThisFileDirectory), "..", ".."))</RepositoryLocation>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <AssemblyAttribute Include="ch1seL.TonNet.ClientGenerator.RepositoryLocationAttribute">
+            <_Parameter1>$(PropertyGroup)</_Parameter1>
+        </AssemblyAttribute>
     </ItemGroup>
     
 </Project>
