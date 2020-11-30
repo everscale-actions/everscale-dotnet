@@ -26,7 +26,7 @@
             <_Parameter1>ch1seL.TonNet.Client</_Parameter1>
         </AssemblyAttribute>
         <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-            <_Parameter1>ch1seL.TonNet.RustClient.Tests</_Parameter1>
+            <_Parameter1>ch1seL.TonNet.RustAdapter.Tests</_Parameter1>
         </AssemblyAttribute>
     </ItemGroup>
     

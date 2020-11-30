@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.RustAdapter", "src\ch1seL.TonNet.RustAdapter\ch1seL.TonNet.RustAdapter.csproj", "{D61297F9-DE59-41DA-A0CC-C843796FDC79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.RustClient.Tests", "src\ch1seL.TonNet.RustClient.Tests\ch1seL.TonNet.RustClient.Tests.csproj", "{002C7C4E-13D5-4BB9-A5D4-669A278580B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.RustAdapter.Tests", "src\ch1seL.TonNet.RustAdapter.Tests\ch1seL.TonNet.RustAdapter.Tests.csproj", "{002C7C4E-13D5-4BB9-A5D4-669A278580B2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Abstract", "src\ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj", "{D076E181-E3BC-4C08-B59F-2EF648D9C5B5}"
 EndProject

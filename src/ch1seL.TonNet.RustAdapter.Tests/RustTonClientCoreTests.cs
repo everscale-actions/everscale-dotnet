@@ -9,7 +9,7 @@ using Xunit;
 
 namespace ch1seL.TonNet.RustClient.Tests
 {
-    public class RustTonClientCoreTests
+    public class RustAdapterTests
     {
         [Fact]
         public void CreatingClientInitNotThrowException()
