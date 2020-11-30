@@ -38,7 +38,7 @@
 
     <ItemGroup>
         <AssemblyAttribute Include="ch1seL.TonNet.ClientGenerator.RepositoryLocationAttribute">
-            <_Parameter1>$(PropertyGroup)</_Parameter1>
+            <_Parameter1>$(RepositoryLocation)</_Parameter1>
         </AssemblyAttribute>
     </ItemGroup>
     
