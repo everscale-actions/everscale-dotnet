@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.Client.Tests.Utils;
+using ch1seL.TonNet.Serialization;
 using FluentAssertions;
 using Xunit;
 using Xunit.Abstractions;
@@ -523,6 +526,91 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             result.Public.Should().Be("02a87d9764eedaacee45b0f777b5a242939b05fa06873bf511ca9a59cb46a5f526");
         }
 
+        [Fact]
+        public async Task TestSigningBox()
+        {
+            KeyPair keys = await _tonClient.Crypto.GenerateRandomSignKeys();
+            RegisteredSigningBox registeredSigningBox = await _tonClient.Crypto.GetSigningBox(keys);
+            var keyBoxHandle = registeredSigningBox.Handle;
+
+            var callback = new Action<JsonElement, uint>(async (request, _) =>
+            {
+                var paramsOfAppRequest = PolymorphicSerializer.Deserialize<ParamsOfAppRequest>(request);
+
+                switch (PolymorphicSerializer.Deserialize<ParamsOfAppSigningBox>(paramsOfAppRequest.RequestData!.Value))
+                {
+                    case ParamsOfAppSigningBox.GetPublicKey:
+                    {
+                        ResultOfSigningBoxGetPublicKey resultOfSigningBoxGetPublicKey = await _tonClient.Crypto.SigningBoxGetPublicKey(new RegisteredSigningBox
+                        {
+                            Handle = keyBoxHandle
+                        });
+                        await _tonClient.Client.ResolveAppRequest(new ParamsOfResolveAppRequest
+                        {
+                            AppRequestId = paramsOfAppRequest.AppRequestId,
+                            Result = new AppRequestResult.Ok
+                            {
+                                Result = new ResultOfAppSigningBox.GetPublicKey {PublicKey = resultOfSigningBoxGetPublicKey.Pubkey}.ToJsonElement()
+                            }
+                        });
+                        break;
+                    }
+                    case ParamsOfAppSigningBox.Sign sign:
+                    {
+                        ResultOfSigningBoxSign resultOfSigningBoxSign = await _tonClient.Crypto.SigningBoxSign(new ParamsOfSigningBoxSign
+                        {
+                            SigningBox = keyBoxHandle,
+                            Unsigned = sign.Unsigned
+                        });
+                        await _tonClient.Client.ResolveAppRequest(new ParamsOfResolveAppRequest
+                        {
+                            AppRequestId = paramsOfAppRequest.AppRequestId,
+                            Result = new AppRequestResult.Ok
+                            {
+                                Result = new ResultOfAppSigningBox.Sign {Signature = resultOfSigningBoxSign.Signature}.ToJsonElement()
+                            }
+                        });
+                        break;
+                    }
+                }
+            });
+
+            // act
+            RegisteredSigningBox externalBox = await _tonClient.Crypto.RegisterSigningBox(callback);
+            ResultOfSigningBoxGetPublicKey boxPubkey = await _tonClient.Crypto.SigningBoxGetPublicKey(new RegisteredSigningBox {Handle = externalBox.Handle});
+
+            // assert
+            boxPubkey.Pubkey.Should().Be(keys.Public);
+
+            // arrange
+            var unsigned = "Test Message".ToBase64();
+
+            // act
+            ResultOfSigningBoxSign boxSign = await _tonClient.Crypto.SigningBoxSign(new ParamsOfSigningBoxSign
+            {
+                SigningBox = externalBox.Handle,
+                Unsigned = unsigned
+            });
+            ResultOfSign keysSign = await _tonClient.Crypto.Sign(new ParamsOfSign
+            {
+                Keys = keys,
+                Unsigned = unsigned
+            });
+
+            // assert
+            boxSign.Signature.Should().Be(keysSign.Signature);
+
+
+            // remove boxes 
+            await _tonClient.Crypto.RemoveSigningBox(new RegisteredSigningBox
+            {
+                Handle = externalBox.Handle
+            });
+            await _tonClient.Crypto.RemoveSigningBox(new RegisteredSigningBox
+            {
+                Handle = keyBoxHandle
+            });
+        }
 
         private class MnemonicFromRandomData : IEnumerable<object[]>
         {
