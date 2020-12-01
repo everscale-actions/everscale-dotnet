@@ -11,6 +11,12 @@ namespace ch1seL.TonNet.Client.Tests.Utils
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(input));
         }
 
+        public static string ToHexString(this string input)
+        {
+            var bytes = Encoding.Default.GetBytes(input);
+            return BitConverter.ToString(bytes).Replace("-", string.Empty);
+        }
+
         public static string FromBase64(this string input)
         {
             return Encoding.UTF8.GetString(Convert.FromBase64String(input));

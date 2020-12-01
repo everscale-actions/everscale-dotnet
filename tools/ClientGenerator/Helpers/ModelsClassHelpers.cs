@@ -60,7 +60,8 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                             properties.AddRange(subClass.StructFields.Select(sf =>
                             {
                                 var addPostfix = NamingConventions.Normalize(sf.Name) == NamingConventions.Normalize(subClass.Name);
-                                return CreatePropertyGenericArgs(sf.Type, sf.Name, sf.RefName, sf.OptionalInner, subClass.Description, sf.NumberType, sf.NumberSize, addPostfix: addPostfix);
+                                return CreatePropertyGenericArgs(sf.Type, sf.Name, sf.RefName, sf.OptionalInner, subClass.Description, sf.NumberType,
+                                    sf.NumberSize, addPostfix: addPostfix);
                             }));
                             return (MemberDeclarationSyntax) ClassDeclaration(NamingConventions.Normalize(subClass.Name))
                                 .AddAttributeLists(AttributeList(
@@ -110,7 +111,8 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                 GenericArgType.String => CreatePropertyDeclaration("string", name, description, addPostfix: addPostfix),
                 GenericArgType.Optional => CreatePropertyGenericArgs(optionalInner.Type, name, optionalInner.RefName, null, description,
                     addPostfix: addPostfix),
-                GenericArgType.Number => CreatePropertyDeclaration(NumberUtils.ConvertToSharpNumeric(numberType, numberSize), name, description, addPostfix: addPostfix),
+                GenericArgType.Number => CreatePropertyDeclaration(NumberUtils.ConvertToSharpNumeric(numberType, numberSize), name, description,
+                    addPostfix: addPostfix),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
