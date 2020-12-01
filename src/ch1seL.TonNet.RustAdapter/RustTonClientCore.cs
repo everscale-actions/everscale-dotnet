@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using ch1seL.TonNet.Abstract;
+using ch1seL.TonNet.Client;
 using ch1seL.TonNet.RustAdapter.Models;
 using ch1seL.TonNet.RustAdapter.RustInterop;
 using ch1seL.TonNet.RustAdapter.RustInterop.Models;
@@ -97,7 +98,7 @@ namespace ch1seL.TonNet.RustAdapter
                     // do nothing
                     case ResponseType.Nop:
                         break;
-                    // responseType>=100 
+                    // it is callback if responseType>=3 
                     default:
                         _logger.LogTrace("Sending callback context:{context} request:{request} body:{body}", _contextNumber, requestId, responseJson);
                         callback?.Invoke(responseJson, responseType);

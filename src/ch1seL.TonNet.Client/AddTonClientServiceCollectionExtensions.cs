@@ -3,6 +3,7 @@ using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.Client;
 using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.Client.PackageManager;
+using ch1seL.TonNet.Debot;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection
@@ -22,6 +23,7 @@ namespace Microsoft.Extensions.DependencyInjection
             return serviceCollection
                 .AddTransient<ITonClient, TonClient>()
                 .AddTransient<ITonPackageManager, FilePackageManager>()
+                .AddTransient<IDebotBrowser, DefaultDebotBrowser>()
                 .Configure<NetworkConfig>(options => configureNetworkOptions?.Invoke(options))
                 .Configure<PackageManagerOptions>(options => configurePackageManagerOptions?.Invoke(options));
         }
