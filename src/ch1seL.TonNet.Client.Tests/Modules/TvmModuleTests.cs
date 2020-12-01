@@ -74,7 +74,8 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 var originalBalance = parsed.Parsed.Get<string>("balance");
 
                 //act
-                ResultOfRunExecutor resultOfRun = await _tonClient.Tvm.RunExecutor(new ParamsOfRunExecutor {Message = message.Message, Abi = abi, Account = new AccountForExecutor.Account {Boc = account, UnlimitedBalance = true}});
+                ResultOfRunExecutor resultOfRun = await _tonClient.Tvm.RunExecutor(new ParamsOfRunExecutor
+                    {Message = message.Message, Abi = abi, Account = new AccountForExecutor.Account {Boc = account, UnlimitedBalance = true}});
 
                 // check that run with unlimited balance doesn't affect the contract balance
                 parsed = await _tonClient.Boc.ParseAccount(new ParamsOfParse {Boc = resultOfRun.Account});
@@ -167,11 +168,11 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             const string walletAddress = "0:2222222222222222222222222222222222222222222222222222222222222222";
 
             ParamsOfEncodeMessage encodeMessageParams = GetParamsOfEncodeMessage(TestsEnv.Packages.Subscription, walletAddress, keys);
-            ResultOfEncodeMessage address = await _tonClient.DeployWithGiver(encodeMessageParams);
-            var fetchAccount = await FetchAccount(address.Address);
+            var address = await _tonClient.DeployWithGiver(encodeMessageParams);
+            var fetchAccount = await FetchAccount(address);
             var account = fetchAccount.Get<string>("boc");
 
-            ResultOfEncodeMessage message = await GetSubscribeMessage(address.Address, subscribeParams.ToJsonElement(), TestsEnv.Packages.Subscription, keys);
+            ResultOfEncodeMessage message = await GetSubscribeMessage(address, subscribeParams.ToJsonElement(), TestsEnv.Packages.Subscription, keys);
 
             // run
             var runResult = await run(message, TestsEnv.Packages.Subscription.Abi, account);
@@ -220,12 +221,12 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             return subscribeEncodedMessage;
         }
 
-        private async Task<string> GetSubscriptionEncodedMessage(ResultOfEncodeMessage encodedMessage, Package subscriptionPackage,
+        private async Task<string> GetSubscriptionEncodedMessage(string address, Package subscriptionPackage,
             string subscriptionId, KeyPair keys)
         {
             ResultOfEncodeMessage getSubscriptionMessage = await _tonClient.Abi.EncodeMessage(new ParamsOfEncodeMessage
             {
-                Address = encodedMessage.Address,
+                Address = address,
                 Abi = subscriptionPackage.Abi,
                 CallSet = new CallSet
                 {

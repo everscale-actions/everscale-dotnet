@@ -70,12 +70,12 @@ namespace ch1seL.TonNet.Client.Tests.Utils
             }
         }
 
-        public static async Task<ResultOfEncodeMessage> DeployWithGiver(this ITonClient tonClient, ParamsOfEncodeMessage encodeMessageParams)
+        public static async Task<string> DeployWithGiver(this ITonClient tonClient, ParamsOfEncodeMessage encodeMessageParams)
         {
             ResultOfEncodeMessage address = await tonClient.Abi.EncodeMessage(encodeMessageParams);
             await tonClient.SendGramsFromLocalGiver(address.Address);
             await tonClient.Processing.ProcessMessage(new ParamsOfProcessMessage {MessageEncodeParams = encodeMessageParams}, null);
-            return address;
+            return address.Address;
         }
     }
 }
