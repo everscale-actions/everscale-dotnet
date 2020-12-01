@@ -17,6 +17,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_targets", "_targets", "{DD278D8B-D9EC-4CF6-8D3A-DC34992DBB72}"
 ProjectSection(SolutionItems) = preProject
 	PackageInfo.targets = PackageInfo.targets
+	SDKVersion.targets = SDKVersion.targets
 EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Serialization", "src\ch1seL.TonNet.Serialization\ch1seL.TonNet.Serialization.csproj", "{5D76F927-6D5D-4B4A-9DF3-CFFC0D4B585A}"
