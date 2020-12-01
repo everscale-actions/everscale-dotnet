@@ -61,7 +61,7 @@ namespace ch1seL.TonNet.RustAdapter
 
         private static Action<string, uint> DeserializeCallback<TEvent>(Action<TEvent, uint> callback)
         {
-            return (callbackResponseJson, responseType) => { callback?.Invoke(TonEventSerializer.Deserialize<TEvent>(callbackResponseJson), responseType); };
+            return (callbackResponseJson, responseType) => { callback?.Invoke(PolymorphicSerializer.Deserialize<TEvent>(callbackResponseJson), responseType); };
         }
     }
 }

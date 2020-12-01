@@ -10,12 +10,12 @@ namespace ch1seL.TonNet.Serialization
         {
             return element!.Value.GetProperty(property).ToObject<T>();
         }
-        
+
         public static T Get<T>(this JsonElement element, string property)
         {
             return element.GetProperty(property).ToObject<T>();
         }
-        
+
         public static T ToAnonymous<T>(this JsonElement element, T protorype)
         {
             var bufferWriter = new ArrayBufferWriter<byte>();
@@ -26,7 +26,7 @@ namespace ch1seL.TonNet.Serialization
 
             return JsonSerializer.Deserialize<T>(bufferWriter.WrittenSpan, JsonOptionsProvider.JsonSerializerOptions);
         }
-        
+
         public static T ToObject<T>(this JsonElement? element)
         {
             var bufferWriter = new ArrayBufferWriter<byte>();
@@ -37,8 +37,8 @@ namespace ch1seL.TonNet.Serialization
 
             return JsonSerializer.Deserialize<T>(bufferWriter.WrittenSpan, JsonOptionsProvider.JsonSerializerOptions);
         }
-        
-        public static T ToObject<T>(this JsonElement element)
+
+        public static T ToObject<T>(this JsonElement element, Type discriminatorType = null)
         {
             var bufferWriter = new ArrayBufferWriter<byte>();
             using (var writer = new Utf8JsonWriter(bufferWriter))
@@ -46,12 +46,14 @@ namespace ch1seL.TonNet.Serialization
                 element.WriteTo(writer);
             }
 
-            return JsonSerializer.Deserialize<T>(bufferWriter.WrittenSpan, JsonOptionsProvider.JsonSerializerOptions);
+            return discriminatorType != null
+                ? (T) JsonSerializer.Deserialize(bufferWriter.WrittenSpan, discriminatorType)
+                : JsonSerializer.Deserialize<T>(bufferWriter.WrittenSpan, JsonOptionsProvider.JsonSerializerOptions);
         }
 
         public static JsonElement ToJsonElement(this object element)
         {
-            return JsonDocument.Parse(JsonSerializer.Serialize(element)).RootElement;
+            return JsonDocument.Parse(JsonSerializer.Serialize(element, JsonOptionsProvider.JsonSerializerOptions)).RootElement;
         }
 
         public static T ToObject<T>(this JsonDocument document)
