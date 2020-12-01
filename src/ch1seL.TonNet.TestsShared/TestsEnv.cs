@@ -33,6 +33,8 @@ namespace ch1seL.TonNet.TestsShared
             public static readonly Package Hello = TonPackageManager.LoadPackage("Hello").GetAwaiter().GetResult();
             public static readonly Package Subscription = TonPackageManager.LoadPackage("Subscription").GetAwaiter().GetResult();
             public static readonly Abi GiverAbiV1 = TonPackageManagerAbi1.LoadAbi("Giver").GetAwaiter().GetResult();
+            public static readonly Package TestDebotTarget = TonPackageManager.LoadPackage("testDebotTarget").GetAwaiter().GetResult();
+            public static readonly Package TestDebot = TonPackageManager.LoadPackage("testDebot").GetAwaiter().GetResult();
         }
     }
 }
