@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using ch1seL.TonNet.Client.Models;
+using ch1seL.TonNet.TestsShared;
 using FluentAssertions;
 using Xunit;
 using Xunit.Abstractions;
@@ -20,7 +21,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         {
             ResultOfVersion result = await _tonClient.Client.Version();
 
-            result.Version.Should().Be("1.1.2");
+            result.Version.Should().Be(TestsEnv.SdkVersion);
         }
 
         [Fact(Skip = "Release 1.1.2 has BuildNumber with 0")]

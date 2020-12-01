@@ -4,14 +4,16 @@
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
 
+    <Import Project="..\..\SDKVersion.targets"/>
+
     <ItemGroup>
-        <None Include="_contracts\**" CopyToOutputDirectory="PreserveNewest" />
+        <None Include="_contracts\**" CopyToOutputDirectory="PreserveNewest"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\ch1seL.TonNet.Client\ch1seL.TonNet.Client.csproj" />
-        <ProjectReference Include="..\ch1seL.TonNet.Client.Modules\ch1seL.TonNet.Client.Modules.csproj" />
-        <ProjectReference Include="..\ch1seL.TonNet.Serialization\ch1seL.TonNet.Serialization.csproj" />
+        <ProjectReference Include="..\ch1seL.TonNet.Client\ch1seL.TonNet.Client.csproj"/>
+        <ProjectReference Include="..\ch1seL.TonNet.Client.Modules\ch1seL.TonNet.Client.Modules.csproj"/>
+        <ProjectReference Include="..\ch1seL.TonNet.Serialization\ch1seL.TonNet.Serialization.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -20,6 +22,12 @@
         </AssemblyAttribute>
         <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
             <_Parameter1>ch1seL.TonNet.Client.Tests</_Parameter1>
+        </AssemblyAttribute>
+    </ItemGroup>
+
+    <ItemGroup>
+        <AssemblyAttribute Include="ch1seL.TonNet.TestsShared.SdkVersionAttribute">
+            <_Parameter1>$(SDKVersion)</_Parameter1>
         </AssemblyAttribute>
     </ItemGroup>
 

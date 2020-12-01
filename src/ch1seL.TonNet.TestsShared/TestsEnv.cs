@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.Client.PackageManager;
 using Microsoft.Extensions.Options;
@@ -19,6 +20,8 @@ namespace ch1seL.TonNet.TestsShared
             {PackagesPath = Path.Join(ContractsPath, "abi_v1")}));
 
         public static readonly string TonNetworkAddress = Environment.GetEnvironmentVariable("TON_NETWORK_ADDRESS") ?? DefaultTonNetworkAddress;
+
+        public static readonly string SdkVersion = typeof(SdkVersionAttribute).Assembly!.GetCustomAttribute<SdkVersionAttribute>()?.SdkVersion;
 
         private static int CurrentAbiVersion => int.TryParse(Environment.GetEnvironmentVariable("ABI_VERSION"), out var version)
             ? version == 0 ? DefaultAbiVersion : version
