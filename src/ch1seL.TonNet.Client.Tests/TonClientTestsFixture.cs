@@ -18,7 +18,7 @@ namespace ch1seL.TonNet.Client.Tests
             _serviceProviders?.ForEach(sp => sp?.Dispose());
         }
 
-        public ITonClient CreateClient(ITestOutputHelper output, bool useNodeSe = false)
+        protected internal ITonClient CreateClient(ITestOutputHelper output, bool useNodeSe = false)
         {
             Logger logger = new LoggerConfiguration()
                 .MinimumLevel.Verbose()
