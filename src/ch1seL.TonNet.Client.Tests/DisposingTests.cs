@@ -2,7 +2,8 @@
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Core;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -12,10 +13,15 @@ namespace ch1seL.TonNet.Client.Tests
     {
         private readonly ServiceProvider _serviceProvider;
 
-        public DisposingTests(ITestOutputHelper testOutputHelper)
+        public DisposingTests(ITestOutputHelper output)
         {
+            Logger logger = new LoggerConfiguration()
+                .MinimumLevel.Verbose()
+                .WriteTo.TestOutput(output)
+                .CreateLogger();
+
             _serviceProvider = new ServiceCollection()
-                .AddLogging(builder => builder.AddXUnit(testOutputHelper).SetMinimumLevel(LogLevel.Trace))
+                .AddLogging(builder => builder.AddSerilog(logger))
                 .BuildServiceProvider();
         }
 
@@ -30,7 +36,7 @@ namespace ch1seL.TonNet.Client.Tests
             var act = new Func<Task>(async () =>
             {
                 var tonClient = new TonClient(_serviceProvider);
-                
+
                 await tonClient.Client.GetApiReference();
 
                 tonClient.Dispose();
