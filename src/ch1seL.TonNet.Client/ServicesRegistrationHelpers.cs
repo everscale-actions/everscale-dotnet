@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ch1seL.TonNet.Client
 {
     internal static class ServicesRegistrationHelpers
     {
-        internal static IServiceCollection AddServicesAsTransient(this IServiceCollection services, Type inheritableInterfaceType)
+        internal static IServiceCollection AddServicesAsTransient(this IServiceCollection services, Type inheritableInterfaceType,
+            IEnumerable<Assembly> assemblies)
         {
             IReadOnlyList<Type> registrationTypes =
-                AppDomain
-                    .CurrentDomain
-                    .GetAssemblies()
+                assemblies
                     .SelectMany(a => a.GetTypes())
                     .Where(t => inheritableInterfaceType.IsAssignableFrom(t) && t != inheritableInterfaceType)
                     .ToArray();

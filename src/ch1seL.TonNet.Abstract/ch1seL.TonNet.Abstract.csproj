@@ -5,5 +5,9 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
     </PropertyGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\ch1seL.TonNet.Client.Models\ch1seL.TonNet.Client.Models.csproj" />
+    </ItemGroup>
 
 </Project>

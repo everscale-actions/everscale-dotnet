@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.Client.Tests.Utils;
 using FluentAssertions;
@@ -13,6 +14,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
     public class CryptoModuleTests : IClassFixture<TonClientTestsFixture>
     {
         private readonly ITonClient _tonClient;
+
         public CryptoModuleTests(TonClientTestsFixture fixture, ITestOutputHelper outputHelper)
         {
             _tonClient = fixture.CreateClient(outputHelper);
@@ -549,6 +551,6 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                         d, w
                     }).ToList();
             }
-        }   
         }
+    }
 }

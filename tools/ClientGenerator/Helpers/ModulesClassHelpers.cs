@@ -127,7 +127,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                 .AddMembers(constructorDeclaration)
                 .AddMembers(methods);
 
-            return NamespaceDeclaration(IdentifierName(ClientGenerator.NameSpaceModules))
+            return NamespaceDeclaration(IdentifierName(ClientGenerator.NamespaceModules))
                 .AddMembers(item);
         }
 
@@ -145,7 +145,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                 .AddBaseListTypes(SimpleBaseType(IdentifierName("ITonModule")))
                 .AddMembers(methods);
 
-            return NamespaceDeclaration(IdentifierName(ClientGenerator.NameSpaceModules))
+            return NamespaceDeclaration(IdentifierName(ClientGenerator.NamespaceAbstractModules))
                 .AddMembers(item);
         }
     }

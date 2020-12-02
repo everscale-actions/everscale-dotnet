@@ -1,4 +1,5 @@
 using ch1seL.TonNet.Abstract;
+using ch1seL.TonNet.Abstract.Modules;
 using ch1seL.TonNet.Client.Models;
 using System;
 using System.Text.Json;

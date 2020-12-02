@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.TestsShared;
 using FluentAssertions;

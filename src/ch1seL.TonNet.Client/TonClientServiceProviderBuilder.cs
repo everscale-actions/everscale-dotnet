@@ -2,6 +2,7 @@
 using System.Text.Json;
 using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.Client.Models;
+using ch1seL.TonNet.Client.Modules;
 using ch1seL.TonNet.RustAdapter;
 using ch1seL.TonNet.Serialization;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,7 +40,7 @@ namespace ch1seL.TonNet.Client
 
                     return new RustTonClientCore(optionsJson, logger);
                 })
-                .AddServicesAsTransient(typeof(ITonModule))
+                .AddServicesAsTransient(typeof(ITonModule), new[] {typeof(ITonModule).Assembly, typeof(AbiModule).Assembly})
                 .AddOptions()
                 .AddSingleton(serviceProvider?.GetService<IOptions<NetworkConfig>>() ??
                               new OptionsWrapper<NetworkConfig>(new NetworkConfig {ServerAddress = DefaultServerAddress}))

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.TestsShared;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;

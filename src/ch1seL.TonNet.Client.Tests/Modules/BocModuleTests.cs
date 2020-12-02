@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.Client.Models;
 using FluentAssertions;
 using Xunit;
@@ -9,6 +10,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
     public class BocModuleTests : IClassFixture<TonClientTestsFixture>
     {
         private readonly ITonClient _tonClient;
+
         public BocModuleTests(TonClientTestsFixture fixture, ITestOutputHelper outputHelper)
         {
             _tonClient = fixture.CreateClient(outputHelper);

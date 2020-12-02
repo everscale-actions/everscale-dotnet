@@ -1,4 +1,5 @@
-using ch1seL.TonNet.Client.Modules;
+using ch1seL.TonNet.Abstract;
+using ch1seL.TonNet.Abstract.Modules;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 

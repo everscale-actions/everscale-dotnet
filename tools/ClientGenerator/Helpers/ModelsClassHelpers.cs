@@ -23,7 +23,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
         public NamespaceDeclarationSyntax CreateTonModelClass(TypeElement typeElement)
         {
-            NamespaceDeclarationSyntax ns = NamespaceDeclaration(IdentifierName(ClientGenerator.NameSpaceModels));
+            NamespaceDeclarationSyntax ns = NamespaceDeclaration(IdentifierName(ClientGenerator.NamespaceModels));
 
             return typeElement.Type switch
             {
@@ -109,7 +109,8 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                 GenericArgType.Boolean => CreatePropertyDeclaration("bool", name, description, optional, addPostfix: addPostFix),
                 GenericArgType.Ref => CreatePropertyForRef(refName, name, description, addPostfix: addPostFix),
                 GenericArgType.String => CreatePropertyDeclaration("string", name, description, addPostfix: addPostFix),
-                GenericArgType.Optional => CreatePropertyGenericArgs(optionalInner.Type, name, optionalInner.RefName, null, description, addPostFix),
+                GenericArgType.Optional => CreatePropertyGenericArgs(optionalInner.Type, name, optionalInner.RefName, null, description,
+                    addPostFix),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
