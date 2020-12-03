@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.Serialization;
@@ -9,6 +10,11 @@ namespace ch1seL.TonNet.Client.Tests.Utils
     public static class TonClientExtensions
     {
         private const string LocalGiverAddress = "0:841288ed3b55d9cdafa806807f02a0ae0c169aa5edfe88a789a6482429756a94";
+
+        // todo: migrate to new giver contract after next SDK Release 
+        // https://t.me/ton_sdk/4616
+        // https://t.me/ton_sdk/4609
+        private static readonly SemaphoreSlim WorkaroundOldGiverSemaphore = new SemaphoreSlim(1, 1);
 
         public static async Task<string> SignDetached(this ITonClient tonClient, KeyPair pair, string data)
         {
@@ -50,7 +56,17 @@ namespace ch1seL.TonNet.Client.Tests.Utils
                 },
                 SendEvents = false
             };
-            ResultOfProcessMessage resultOfProcessMessage = await tonClient.Processing.ProcessMessage(processMessageParams);
+
+            await WorkaroundOldGiverSemaphore.WaitAsync();
+            ResultOfProcessMessage resultOfProcessMessage;
+            try
+            {
+                resultOfProcessMessage = await tonClient.Processing.ProcessMessage(processMessageParams);
+            }
+            finally
+            {
+                WorkaroundOldGiverSemaphore.Release();
+            }
 
             foreach (var outMessage in resultOfProcessMessage.OutMessages)
             {
