@@ -53,17 +53,26 @@ public class YourTonService {
 There is easy option to load contracts abi and tvm info from files in this client.
 
 Now available following async methods:
+
 ```
 Task<Package> LoadPackage(string name); // Package entity just contains Abi and Tvc
 Task<Abi> LoadAbi(string name);
 Task<string> LoadTvc(string name);
 ```
+
 Default contracts path is `_contracts`
+
+## IDebotBrowser interface
+
+More information about DeBot https://ru.freeton.wiki/Технические_характеристики_DeBot
+Also see DeBot smart contracts https://github.com/tonlabs/ton-labs-contracts/tree/master/solidity/debots
+
+As default IDebotBrowser will resolve instance of DefaultDebotBrowser. You can inherit or implement own then replace default in DI
+`services.AddTransient<IDebotBrowser, MyDebotBrowser>()`
 
 ## Advanced client configuration
 
 See configuration parameters here https://github.com/tonlabs/TON-SDK/blob/master/docs/mod_client.md#NetworkConfig
-
 
 ```
 public void ConfigureServices(IServiceCollection services)
