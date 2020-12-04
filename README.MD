@@ -10,7 +10,7 @@ Free TON is modern and fast crypto network. Lets do this network convenient both
 - Fully supported methods provided in SDK documentation https://github.com/tonlabs/TON-SDK/tree/master/docs
 - No Newtonsoft.Json required, it is kinda legacy now, last release was over a year ago. New System.Text.Json is ten times faster
 - The most complete support of CancellationToken
-- [.NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0) (support for previous versions .NET Core 2.x, 3.x will be soon...)
+- Net Standard 2.1 compatible
 
 
 # Quick start 
