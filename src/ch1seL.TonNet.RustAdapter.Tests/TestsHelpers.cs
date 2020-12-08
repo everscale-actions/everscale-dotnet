@@ -1,8 +1,7 @@
-﻿using ch1seL.TonNet.RustAdapter;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
-namespace ch1seL.TonNet.RustClient.Tests
+namespace ch1seL.TonNet.RustAdapter.Tests
 {
     internal static class TestsHelpers
     {

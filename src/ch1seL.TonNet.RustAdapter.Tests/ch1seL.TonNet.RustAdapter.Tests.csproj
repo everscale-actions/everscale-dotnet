@@ -4,7 +4,6 @@
         <TargetFramework>net5.0</TargetFramework>
         <IsPackable>false</IsPackable>                
         <LangVersion>9</LangVersion>                
-        <RootNamespace>ch1seL.TonNet.RustClient.Tests</RootNamespace>                
     </PropertyGroup>
 
     <ItemGroup>
