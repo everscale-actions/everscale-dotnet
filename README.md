@@ -6,7 +6,7 @@
 
 Free TON is modern and fast crypto network. Lets do this network convenient both for users and developers!
 
-- This client was automatically generated from api.json https://github.com/tonlabs/TON-SDK/blob/master/tools/api.json 
+- This client was automatically generated from [api.json](https://github.com/tonlabs/TON-SDK/blob/master/tools/api.json) (see [ClientGenerator](https://github.com/ton-actions/ton-client-dotnet/tree/master/tools/ClientGenerator)) 
 - Fully supported methods provided in SDK documentation https://github.com/tonlabs/TON-SDK/tree/master/docs
 - No Newtonsoft.Json required, it is kinda legacy now, last release was over a year ago. New System.Text.Json is ten times faster
 - The most complete support of CancellationToken

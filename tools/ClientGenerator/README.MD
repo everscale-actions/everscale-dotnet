@@ -2,11 +2,12 @@
 
 TargetFramework: net5.0
 
-This is tool generate Ton Client .NET 
+This is tool generate Ton Client .NET
+
 
 ## Using
 
-- Copy api.json to Resources/api.json
+- Update SDK versions([SDKVersion.targets](https://github.com/ton-actions/ton-client-dotnet/blob/master/SDKVersion.targets))
 
 - Run: `dotnet run`
 
@@ -16,11 +17,10 @@ This is tool generate Ton Client .NET
 - Modules will be placed in ../../src/ch1seL.TonNet.Client.Modules/Generated
 
 - Models  will be placed in ../../src/ch1seL.TonNet.Client.Models/Generated
-  
+
 - TonClient will be placed in ../../src/ch1seL.TonNet.Client/Generated will be overriden
 
-## Roadmap 
+
+## Roadmap
 
 - Build-in running to generate client during the build
-
-- Download file api.json by version mentioned in .csproj file
