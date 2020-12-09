@@ -14,37 +14,37 @@ namespace ch1seL.TonNet.Client.Models
         /// <summary>
         /// Not described yet..
         /// </summary>
-        [JsonPropertyName("ABI version"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("ABI version")]
         public uint? ABIVersion { get; set; }
 
         /// <summary>
         /// Not described yet..
         /// </summary>
-        [JsonPropertyName("abi_version"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("abi_version")]
         public uint? AbiVersion { get; set; }
 
         /// <summary>
         /// Not described yet..
         /// </summary>
-        [JsonPropertyName("header"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("header")]
         public string[] Header { get; set; }
 
         /// <summary>
         /// Not described yet..
         /// </summary>
-        [JsonPropertyName("functions"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("functions")]
         public JsonElement?[] Functions { get; set; }
 
         /// <summary>
         /// Not described yet..
         /// </summary>
-        [JsonPropertyName("events"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("events")]
         public JsonElement?[] Events { get; set; }
 
         /// <summary>
         /// Not described yet..
         /// </summary>
-        [JsonPropertyName("data"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("data")]
         public JsonElement?[] Data { get; set; }
     }
 }

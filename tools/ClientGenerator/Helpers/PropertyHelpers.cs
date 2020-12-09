@@ -19,7 +19,8 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                 Attribute(IdentifierName($"JsonPropertyName(\"{name}\")"))
             };
 
-            if (nullable) attributes.Add(Attribute(IdentifierName("JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)")));
+            //todo: problem with nullable properties in netcoreapp3.1 see test TypeWithNullableProperties
+            //if (nullable) attributes.Add(Attribute(IdentifierName("JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)")));
 
             AccessorListSyntax accessorListSyntax = AccessorList(
                 List(new[]

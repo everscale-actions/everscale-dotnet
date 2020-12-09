@@ -14,19 +14,19 @@ namespace ch1seL.TonNet.Client.Models
         /// <summary>
         /// Not described yet..
         /// </summary>
-        [JsonPropertyName("workchain"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("workchain")]
         public int? Workchain { get; set; }
 
         /// <summary>
         /// Not described yet..
         /// </summary>
-        [JsonPropertyName("message_expiration_timeout"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("message_expiration_timeout")]
         public uint? MessageExpirationTimeout { get; set; }
 
         /// <summary>
         /// Not described yet..
         /// </summary>
-        [JsonPropertyName("message_expiration_timeout_grow_factor"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("message_expiration_timeout_grow_factor")]
         public float? MessageExpirationTimeoutGrowFactor { get; set; }
     }
 }

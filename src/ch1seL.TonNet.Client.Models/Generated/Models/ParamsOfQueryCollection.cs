@@ -32,13 +32,13 @@ namespace ch1seL.TonNet.Client.Models
         /// <summary>
         ///  Sorting order
         /// </summary>
-        [JsonPropertyName("order"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("order")]
         public JsonElement?[] Order { get; set; }
 
         /// <summary>
         ///  Number of documents to return
         /// </summary>
-        [JsonPropertyName("limit"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("limit")]
         public uint? Limit { get; set; }
     }
 }

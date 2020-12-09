@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ch1seL.TonNet.Abstract;
-using ch1seL.TonNet.Client;
 using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.Client.PackageManager;
 using ch1seL.TonNet.Serialization;
@@ -37,16 +36,16 @@ namespace SampleWorkerService
                     // load contracts from abi.json and tvc files 
                     // Package senderContract = await _packageManager.LoadPackage(SenderContractName);
                     Package receiverContract = await _packageManager.LoadPackage(ReceiverContractName);
-                    
+
                     // get keys by mnemonic
                     KeyPair keys = await _tonClient.Crypto.MnemonicDeriveSignKeys(new ParamsOfMnemonicDeriveSignKeys {Phrase = Mnemonic}, stoppingToken);
 
                     // ensure that balance of receiver address is good and contract has been already deployed
                     var receiverAddress = await CheckBalanceAndDeploy(receiverContract, keys, stoppingToken);
-            
+
                     // get received messages count
                     var count = await GetReceivedMessagesCount(receiverContract, keys, receiverAddress, stoppingToken);
-                    
+
                     _logger.LogInformation("Total received messages: {count} Repeat again in 10 sec...", count);
                 }
                 catch (Exception e)
@@ -68,9 +67,9 @@ namespace SampleWorkerService
                 Result = "boc",
                 Limit = 1
             }, cancellationToken);
-            
+
             var accountBoc = accountBocResult.Result[0].Get<string>("boc");
-            
+
             ResultOfEncodeMessage getCountEncodedMessage = await _tonClient.Abi.EncodeMessage(new ParamsOfEncodeMessage
             {
                 Address = address,
@@ -78,7 +77,7 @@ namespace SampleWorkerService
                 CallSet = new CallSet {FunctionName = "getCounter"},
                 Signer = new Signer.Keys {KeysAccessor = keys}
             }, cancellationToken);
-            
+
             ResultOfRunTvm result = await _tonClient.Tvm.RunTvm(new ParamsOfRunTvm
             {
                 Abi = contract.Abi,
@@ -88,6 +87,7 @@ namespace SampleWorkerService
 
             return result.Decoded.Output.Get<string>("c").HexToDec();
         }
+
         private async Task<string> CheckBalanceAndDeploy(Package package, KeyPair keys, CancellationToken cancellationToken)
         {
             var deployParams = new ParamsOfEncodeMessage
@@ -97,7 +97,7 @@ namespace SampleWorkerService
                 Signer = new Signer.Keys {KeysAccessor = keys},
                 CallSet = new CallSet {FunctionName = "constructor"}
             };
-            
+
             ResultOfEncodeMessage encoded = await _tonClient.Abi.EncodeMessage(deployParams, cancellationToken);
             ResultOfQueryCollection result = await _tonClient.Net.QueryCollection(new ParamsOfQueryCollection
             {
@@ -108,25 +108,22 @@ namespace SampleWorkerService
             }, cancellationToken);
 
             if (result.Result.Length == 0 || result.Result[0].Get<string>("balance").HexToDec() < 1_000_000_000_000ul)
-            {
                 await SendGramsFromGiver(encoded.Address, cancellationToken);
-            }
 
             try
             {
                 await ProcessAndWaitTransactions(deployParams, cancellationToken);
             }
-            catch (TonClientException e) when(e.Code==414)
+            catch (TonClientException e) when (e.Code == 414)
             {
                 _logger.LogInformation("Contract already has been deployed");
             }
 
             return encoded.Address;
         }
-        
+
         private async Task SendGramsFromGiver(string account, CancellationToken cancellationToken)
         {
-
             var sendGramsEncodedMessage = new ParamsOfEncodeMessage
             {
                 Address = GiverAddress,
@@ -144,25 +141,23 @@ namespace SampleWorkerService
         private async Task ProcessAndWaitTransactions(ParamsOfEncodeMessage encodedMessage, CancellationToken cancellationToken)
         {
             ResultOfProcessMessage resultOfProcessMessage = await _tonClient.Processing.ProcessMessage(
-                new ParamsOfProcessMessage()
+                new ParamsOfProcessMessage
                 {
                     MessageEncodeParams = encodedMessage
                 }, cancellationToken: cancellationToken);
-            
+
             await Task.WhenAll(resultOfProcessMessage.OutMessages.Select(async message =>
             {
                 ResultOfParse parseResult = await _tonClient.Boc.ParseMessage(new ParamsOfParse {Boc = message}, cancellationToken);
                 var parsedPrototype = new {type = default(int), id = default(string)};
                 var parsedMessage = parseResult.Parsed!.Value.ToAnonymous(parsedPrototype);
                 if (parsedMessage.type == 0)
-                {
                     await _tonClient.Net.WaitForCollection(new ParamsOfWaitForCollection
                     {
                         Collection = "transactions",
                         Filter = new {in_msg = new {eq = parsedMessage.id}}.ToJsonElement(),
                         Result = "id"
                     }, cancellationToken);
-                }
             }));
         }
     }

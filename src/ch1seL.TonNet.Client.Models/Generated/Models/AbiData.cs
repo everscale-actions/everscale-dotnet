@@ -32,7 +32,7 @@ namespace ch1seL.TonNet.Client.Models
         /// <summary>
         /// Not described yet..
         /// </summary>
-        [JsonPropertyName("components"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("components")]
         public JsonElement?[] Components { get; set; }
     }
 }

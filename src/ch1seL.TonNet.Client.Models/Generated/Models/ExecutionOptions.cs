@@ -20,19 +20,19 @@ namespace ch1seL.TonNet.Client.Models
         /// <summary>
         ///  time that is used as transaction time
         /// </summary>
-        [JsonPropertyName("block_time"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("block_time")]
         public uint? BlockTime { get; set; }
 
         /// <summary>
         ///  block logical time
         /// </summary>
-        [JsonPropertyName("block_lt"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("block_lt")]
         public ulong? BlockLt { get; set; }
 
         /// <summary>
         ///  transaction logical time
         /// </summary>
-        [JsonPropertyName("transaction_lt"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("transaction_lt")]
         public ulong? TransactionLt { get; set; }
     }
 }

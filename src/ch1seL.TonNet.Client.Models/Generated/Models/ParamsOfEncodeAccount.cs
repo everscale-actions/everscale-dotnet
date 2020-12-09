@@ -20,19 +20,19 @@ namespace ch1seL.TonNet.Client.Models
         /// <summary>
         ///  Initial balance.
         /// </summary>
-        [JsonPropertyName("balance"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("balance")]
         public ulong? Balance { get; set; }
 
         /// <summary>
         ///  Initial value for the `last_trans_lt`.
         /// </summary>
-        [JsonPropertyName("last_trans_lt"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("last_trans_lt")]
         public ulong? LastTransLt { get; set; }
 
         /// <summary>
         ///  Initial value for the `last_paid`.
         /// </summary>
-        [JsonPropertyName("last_paid"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("last_paid")]
         public uint? LastPaid { get; set; }
     }
 }

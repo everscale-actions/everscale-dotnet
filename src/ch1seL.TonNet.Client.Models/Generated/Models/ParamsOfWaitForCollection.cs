@@ -32,7 +32,7 @@ namespace ch1seL.TonNet.Client.Models
         /// <summary>
         ///  Query timeout
         /// </summary>
-        [JsonPropertyName("timeout"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("timeout")]
         public uint? Timeout { get; set; }
     }
 }

@@ -74,9 +74,9 @@ namespace ch1seL.TonNet.Serialization.Tests
         {
             var objectWithBigInteger = new {bigIng = (ulong) 1231231231231123123};
 
-            var json = JsonSerializer.Serialize(objectWithBigInteger);
+            var json = JsonSerializer.Serialize(objectWithBigInteger, JsonOptionsProvider.JsonSerializerOptions);
 
-            json.Should().NotBeNull();
+            json.Should().Be("{\"bigIng\":1231231231231123123}");
         }
 
         [Fact]
@@ -88,6 +88,16 @@ namespace ch1seL.TonNet.Serialization.Tests
             var res = JsonSerializer.Deserialize<ResultOfRunGet>(str, JsonOptionsProvider.JsonSerializerOptions);
 
             res.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void TypeWithNullableProperties()
+        {
+            var @params = new ParamsOfMnemonicFromRandom {Dictionary = 111};
+
+            var json = JsonSerializer.Serialize(@params, JsonOptionsProvider.JsonSerializerOptions);
+
+            json.Should().Be("{\"dictionary\":111}");
         }
     }
 }

@@ -16,7 +16,7 @@ namespace ch1seL.TonNet.Client.Models
         /// <para> If the message can't be decoded, then `None` will be stored in</para>
         /// <para> the appropriate position.</para>
         /// </summary>
-        [JsonPropertyName("out_messages"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("out_messages")]
         public JsonElement?[] OutMessages { get; set; }
 
         /// <summary>

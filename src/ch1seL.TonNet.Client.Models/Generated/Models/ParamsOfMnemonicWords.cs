@@ -14,7 +14,7 @@ namespace ch1seL.TonNet.Client.Models
         /// <summary>
         ///  Dictionary identifier
         /// </summary>
-        [JsonPropertyName("dictionary"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("dictionary")]
         public byte? Dictionary { get; set; }
     }
 }

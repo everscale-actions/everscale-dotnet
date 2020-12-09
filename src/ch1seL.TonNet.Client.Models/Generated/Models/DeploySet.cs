@@ -20,7 +20,7 @@ namespace ch1seL.TonNet.Client.Models
         /// <summary>
         ///  Target workchain for destination address. Default is `0`.
         /// </summary>
-        [JsonPropertyName("workchain_id"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("workchain_id")]
         public int? WorkchainId { get; set; }
 
         /// <summary>

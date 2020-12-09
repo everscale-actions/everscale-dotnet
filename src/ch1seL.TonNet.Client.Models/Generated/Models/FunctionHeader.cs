@@ -20,14 +20,14 @@ namespace ch1seL.TonNet.Client.Models
         /// <para> If not specified - calculated automatically from message_expiration_timeout(),</para>
         /// <para> try_index and message_expiration_timeout_grow_factor() (if ABI includes `expire` header).</para>
         /// </summary>
-        [JsonPropertyName("expire"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("expire")]
         public uint? Expire { get; set; }
 
         /// <summary>
         /// <para> Message creation time in milliseconds. If not specified, `now` is used</para>
         /// <para> (if ABI includes `time` header).</para>
         /// </summary>
-        [JsonPropertyName("time"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("time")]
         public ulong? Time { get; set; }
 
         /// <summary>

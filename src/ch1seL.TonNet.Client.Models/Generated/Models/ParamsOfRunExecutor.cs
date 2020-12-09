@@ -38,7 +38,7 @@ namespace ch1seL.TonNet.Client.Models
         /// <summary>
         ///  Skip transaction check flag
         /// </summary>
-        [JsonPropertyName("skip_transaction_check"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("skip_transaction_check")]
         public bool? SkipTransactionCheck { get; set; }
     }
 }

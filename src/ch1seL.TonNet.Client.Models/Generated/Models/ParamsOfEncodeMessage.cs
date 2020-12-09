@@ -57,7 +57,7 @@ namespace ch1seL.TonNet.Client.Models
         /// <para> &lt;.....add config parameter with default value here&gt;</para>
         /// <para> Default value is 0.</para>
         /// </summary>
-        [JsonPropertyName("processing_try_index"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("processing_try_index")]
         public byte? ProcessingTryIndex { get; set; }
     }
 }

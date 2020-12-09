@@ -32,7 +32,7 @@ namespace ch1seL.TonNet.Client.Models
         /// <summary>
         /// Not described yet..
         /// </summary>
-        [JsonPropertyName("id"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("id")]
         public string Id { get; set; }
     }
 }

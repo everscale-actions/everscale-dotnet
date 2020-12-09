@@ -14,13 +14,13 @@ namespace ch1seL.TonNet.Client.Models
         /// <summary>
         /// Not described yet..
         /// </summary>
-        [JsonPropertyName("mnemonic_dictionary"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("mnemonic_dictionary")]
         public byte? MnemonicDictionary { get; set; }
 
         /// <summary>
         /// Not described yet..
         /// </summary>
-        [JsonPropertyName("mnemonic_word_count"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("mnemonic_word_count")]
         public byte? MnemonicWordCount { get; set; }
 
         /// <summary>

@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk.Worker">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
         <UserSecretsId>dotnet-SampleWorkerService-CB70C09D-2613-4997-B2E4-A8F3AC8E70D7</UserSecretsId>
         <RootNamespace>SampleWorkerService</RootNamespace>
+        <TargetFrameworks>net5.0;netcoreapp3.1</TargetFrameworks>
     </PropertyGroup>
 
     <ItemGroup>

@@ -45,7 +45,7 @@ namespace ch1seL.TonNet.Client.Models
         /// <para> Expiration timeouts will grow with every retry.</para>
         /// <para> Default value is 0.</para>
         /// </summary>
-        [JsonPropertyName("processing_try_index"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("processing_try_index")]
         public byte? ProcessingTryIndex { get; set; }
     }
 }
