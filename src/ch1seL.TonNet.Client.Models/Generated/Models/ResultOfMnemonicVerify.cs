@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfMnemonicVerify
     {
         /// <summary>
-        ///  Flag indicating if the mnemonic is valid or not
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("valid")]
         public bool Valid { get; set; }

@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfFactorize
     {
         /// <summary>
-        ///  Two factors of composite or empty if composite can't be factorized.
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("factors")]
         public string[] Factors { get; set; }

@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfMnemonicWords
     {
         /// <summary>
-        ///  The list of mnemonic words
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("words")]
         public string Words { get; set; }

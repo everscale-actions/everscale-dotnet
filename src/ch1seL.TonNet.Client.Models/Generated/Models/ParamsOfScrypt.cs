@@ -12,39 +12,37 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfScrypt
     {
         /// <summary>
-        /// <para> The password bytes to be hashed.</para>
-        /// <para> Must be encoded with `base64`.</para>
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("password")]
         public string Password { get; set; }
 
         /// <summary>
-        /// <para> Salt bytes that modify the hash to protect against Rainbow table attacks.</para>
-        /// <para> Must be encoded with `base64`.</para>
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("salt")]
         public string Salt { get; set; }
 
         /// <summary>
-        ///  CPU/memory cost parameter
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("log_n")]
         public byte LogN { get; set; }
 
         /// <summary>
-        ///  The block size parameter, which fine-tunes sequential memory read size and performance.
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("r")]
         public uint R { get; set; }
 
         /// <summary>
-        ///  Parallelization parameter.
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("p")]
         public uint P { get; set; }
 
         /// <summary>
-        ///  Intended output length in octets of the derived key.
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("dk_len")]
         public uint DkLen { get; set; }

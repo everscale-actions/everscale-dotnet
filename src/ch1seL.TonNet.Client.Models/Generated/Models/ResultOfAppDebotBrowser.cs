@@ -7,38 +7,38 @@ using System.Text.Json.Serialization;
 namespace ch1seL.TonNet.Client.Models
 {
     /// <summary>
-    ///  [UNSTABLE](UNSTABLE.md) Returning values from Debot Browser callbacks.
+    /// Not described yet..
     /// </summary>
     public abstract class ResultOfAppDebotBrowser
     {
         /// <summary>
-        ///  Result of user input.
+        /// Not described yet..
         /// </summary>
         [JsonDiscriminator("Input")]
         public class Input : ResultOfAppDebotBrowser
         {
             /// <summary>
-            ///  Result of user input.
+            /// Not described yet..
             /// </summary>
             [JsonPropertyName("value")]
             public string Value { get; set; }
         }
 
         /// <summary>
-        ///  Result of getting signing box.
+        /// Not described yet..
         /// </summary>
         [JsonDiscriminator("GetSigningBox")]
         public class GetSigningBox : ResultOfAppDebotBrowser
         {
             /// <summary>
-            ///  Result of getting signing box.
+            /// Not described yet..
             /// </summary>
             [JsonPropertyName("signing_box")]
             public uint SigningBox { get; set; }
         }
 
         /// <summary>
-        ///  Result of debot invoking.
+        /// Not described yet..
         /// </summary>
         [JsonDiscriminator("InvokeDebot")]
         public class InvokeDebot : ResultOfAppDebotBrowser

@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfNaclBox
     {
         /// <summary>
-        ///  Encrypted data encoded in `base64`.
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("encrypted")]
         public string Encrypted { get; set; }

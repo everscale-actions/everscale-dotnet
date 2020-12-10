@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfQueryCollection
     {
         /// <summary>
-        ///  Objects that match the provided criteria
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("result")]
         public JsonElement?[] Result { get; set; }

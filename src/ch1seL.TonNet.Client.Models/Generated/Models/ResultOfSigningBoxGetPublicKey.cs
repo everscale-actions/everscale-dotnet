@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfSigningBoxGetPublicKey
     {
         /// <summary>
-        ///  Public key of signing box. Encoded with hex
+        /// Encoded with hex
         /// </summary>
         [JsonPropertyName("pubkey")]
         public string Pubkey { get; set; }

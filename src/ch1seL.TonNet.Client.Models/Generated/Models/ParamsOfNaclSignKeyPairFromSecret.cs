@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfNaclSignKeyPairFromSecret
     {
         /// <summary>
-        ///  Secret key - unprefixed 0-padded to 64 symbols hex string
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("secret")]
         public string Secret { get; set; }

@@ -12,13 +12,13 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfSigningBoxSign
     {
         /// <summary>
-        ///  Signing Box handle.
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("signing_box")]
         public uint SigningBox { get; set; }
 
         /// <summary>
-        ///  Unsigned user data. Must be encoded with `base64`.
+        /// Must be encoded with `base64`.
         /// </summary>
         [JsonPropertyName("unsigned")]
         public string Unsigned { get; set; }

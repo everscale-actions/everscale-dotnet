@@ -12,13 +12,13 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfVerifySignature
     {
         /// <summary>
-        ///  Signed data that must be verified encoded in `base64`.
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("signed")]
         public string Signed { get; set; }
 
         /// <summary>
-        ///  Signer's public key - 64 symbols hex string
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("public")]
         public string Public { get; set; }

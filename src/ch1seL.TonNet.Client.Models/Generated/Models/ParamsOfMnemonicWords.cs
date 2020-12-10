@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfMnemonicWords
     {
         /// <summary>
-        ///  Dictionary identifier
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("dictionary")]
         public byte? Dictionary { get; set; }

@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfHash
     {
         /// <summary>
-        ///  Hash of input `data`. Encoded with 'hex'.
+        /// Encoded with 'hex'.
         /// </summary>
         [JsonPropertyName("hash")]
         public string Hash { get; set; }

@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfParse
     {
         /// <summary>
-        ///  JSON containing parsed BOC
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("parsed")]
         public JsonElement? Parsed { get; set; }

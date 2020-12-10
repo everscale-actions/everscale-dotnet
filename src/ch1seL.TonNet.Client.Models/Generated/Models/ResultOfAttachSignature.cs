@@ -12,13 +12,13 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfAttachSignature
     {
         /// <summary>
-        ///  Signed message BOC
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("message")]
         public string Message { get; set; }
 
         /// <summary>
-        ///  Message ID
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("message_id")]
         public string MessageId { get; set; }

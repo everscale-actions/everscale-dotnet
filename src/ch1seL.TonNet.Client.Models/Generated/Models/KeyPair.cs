@@ -12,13 +12,13 @@ namespace ch1seL.TonNet.Client.Models
     public class KeyPair
     {
         /// <summary>
-        ///  Public key - 64 symbols hex string
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("public")]
         public string Public { get; set; }
 
         /// <summary>
-        ///  Private key - u64 symbols hex string
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("secret")]
         public string Secret { get; set; }

@@ -12,25 +12,25 @@ namespace ch1seL.TonNet.Client.Models
     public class DecodedMessageBody
     {
         /// <summary>
-        ///  Type of the message body content.
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("body_type")]
         public MessageBodyType BodyType { get; set; }
 
         /// <summary>
-        ///  Function or event name.
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
         /// <summary>
-        ///  Parameters or result value.
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("value")]
         public JsonElement? Value { get; set; }
 
         /// <summary>
-        ///  Function header.
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("header")]
         public FunctionHeader Header { get; set; }

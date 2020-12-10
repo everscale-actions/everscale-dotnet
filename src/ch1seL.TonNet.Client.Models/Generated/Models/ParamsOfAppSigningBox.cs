@@ -7,12 +7,12 @@ using System.Text.Json.Serialization;
 namespace ch1seL.TonNet.Client.Models
 {
     /// <summary>
-    ///  Signing box callbacks.
+    /// Not described yet..
     /// </summary>
     public abstract class ParamsOfAppSigningBox
     {
         /// <summary>
-        ///  Get signing box public key
+        /// Not described yet..
         /// </summary>
         [JsonDiscriminator("GetPublicKey")]
         public class GetPublicKey : ParamsOfAppSigningBox
@@ -20,13 +20,13 @@ namespace ch1seL.TonNet.Client.Models
         }
 
         /// <summary>
-        ///  Sign data
+        /// Not described yet..
         /// </summary>
         [JsonDiscriminator("Sign")]
         public class Sign : ParamsOfAppSigningBox
         {
             /// <summary>
-            ///  Sign data
+            /// Not described yet..
             /// </summary>
             [JsonPropertyName("unsigned")]
             public string Unsigned { get; set; }

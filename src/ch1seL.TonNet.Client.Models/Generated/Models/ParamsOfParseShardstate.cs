@@ -12,19 +12,19 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfParseShardstate
     {
         /// <summary>
-        ///  BOC encoded as base64
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("boc")]
         public string Boc { get; set; }
 
         /// <summary>
-        ///  Shardstate identificator
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("id")]
         public string Id { get; set; }
 
         /// <summary>
-        ///  Workchain shardstate belongs to
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("workchain_id")]
         public int WorkchainId { get; set; }

@@ -12,25 +12,25 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfMnemonicDeriveSignKeys
     {
         /// <summary>
-        ///  Phrase
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("phrase")]
         public string Phrase { get; set; }
 
         /// <summary>
-        ///  Derivation path, for instance "m/44'/396'/0'/0/0"
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("path")]
         public string Path { get; set; }
 
         /// <summary>
-        ///  Dictionary identifier
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("dictionary")]
         public byte? Dictionary { get; set; }
 
         /// <summary>
-        ///  Word count
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("word_count")]
         public byte? WordCount { get; set; }

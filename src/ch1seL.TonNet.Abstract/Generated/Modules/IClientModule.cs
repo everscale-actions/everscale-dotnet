@@ -9,17 +9,17 @@ namespace ch1seL.TonNet.Abstract.Modules
     public interface IClientModule : ITonModule
     {
         /// <summary>
-        ///  Returns Core Library API reference
+        /// Not described yet..
         /// </summary>
         public Task<ResultOfGetApiReference> GetApiReference(CancellationToken cancellationToken = default);
 
         /// <summary>
-        ///  Returns Core Library version
+        /// Not described yet..
         /// </summary>
         public Task<ResultOfVersion> Version(CancellationToken cancellationToken = default);
 
         /// <summary>
-        ///  Returns detailed information about this build.
+        /// Not described yet..
         /// </summary>
         public Task<ResultOfBuildInfo> BuildInfo(CancellationToken cancellationToken = default);
 

@@ -12,13 +12,13 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfDecodeMessage
     {
         /// <summary>
-        ///  contract ABI
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("abi")]
         public Abi Abi { get; set; }
 
         /// <summary>
-        ///  Message BOC
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("message")]
         public string Message { get; set; }

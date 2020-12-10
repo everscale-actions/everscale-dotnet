@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfHDKeyPublicFromXPrv
     {
         /// <summary>
-        ///  Serialized extended private key
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("xprv")]
         public string Xprv { get; set; }

@@ -12,13 +12,13 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfProcessMessage
     {
         /// <summary>
-        ///  Message encode parameters.
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("message_encode_params")]
         public ParamsOfEncodeMessage MessageEncodeParams { get; set; }
 
         /// <summary>
-        ///  Flag for requesting events sending
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("send_events")]
         public bool SendEvents { get; set; }

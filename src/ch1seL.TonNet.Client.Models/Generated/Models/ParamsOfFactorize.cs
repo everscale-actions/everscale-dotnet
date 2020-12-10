@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfFactorize
     {
         /// <summary>
-        ///  Hexadecimal representation of u64 composite number.
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("composite")]
         public string Composite { get; set; }

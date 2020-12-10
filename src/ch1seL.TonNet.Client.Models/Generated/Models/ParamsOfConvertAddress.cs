@@ -12,13 +12,13 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfConvertAddress
     {
         /// <summary>
-        ///  Account address in any TON format.
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("address")]
         public string Address { get; set; }
 
         /// <summary>
-        ///  Specify the format to convert to.
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("output_format")]
         public AddressStringFormat OutputFormat { get; set; }

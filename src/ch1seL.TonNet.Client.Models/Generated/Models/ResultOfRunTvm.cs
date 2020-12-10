@@ -12,21 +12,19 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfRunTvm
     {
         /// <summary>
-        ///  List of output messages' BOCs. Encoded as `base64`
+        /// Encoded as `base64`
         /// </summary>
         [JsonPropertyName("out_messages")]
         public string[] OutMessages { get; set; }
 
         /// <summary>
-        /// <para> Optional decoded message bodies according to the optional</para>
-        /// <para> `abi` parameter.</para>
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("decoded")]
         public DecodedOutput Decoded { get; set; }
 
         /// <summary>
-        /// <para> Updated account state BOC. Encoded as `base64`.</para>
-        /// <para> Attention! Only data in account state is updated.</para>
+        /// Encoded as `base64`.Attention! Only data in account state is updated.
         /// </summary>
         [JsonPropertyName("account")]
         public string Account { get; set; }

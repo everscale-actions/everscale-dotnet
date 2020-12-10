@@ -9,12 +9,12 @@ namespace ch1seL.TonNet.Client.Models
     /// <summary>
     /// Not described yet..
     /// </summary>
-    public class ParamsOfNaclBoxKeyPairFromSecret
+    public class ResultOfQuery
     {
         /// <summary>
         /// Not described yet..
         /// </summary>
-        [JsonPropertyName("secret")]
-        public string Secret { get; set; }
+        [JsonPropertyName("result")]
+        public JsonElement? Result { get; set; }
     }
 }

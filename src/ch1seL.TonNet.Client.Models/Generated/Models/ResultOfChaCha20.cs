@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfChaCha20
     {
         /// <summary>
-        ///  Encrypted/decrypted data. Encoded with `base64`.
+        /// Encoded with `base64`.
         /// </summary>
         [JsonPropertyName("data")]
         public string Data { get; set; }

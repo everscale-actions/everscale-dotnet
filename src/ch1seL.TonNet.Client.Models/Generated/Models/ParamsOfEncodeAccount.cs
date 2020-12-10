@@ -12,25 +12,25 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfEncodeAccount
     {
         /// <summary>
-        ///  Source of the account state init.
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("state_init")]
         public StateInitSource StateInit { get; set; }
 
         /// <summary>
-        ///  Initial balance.
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("balance")]
         public ulong? Balance { get; set; }
 
         /// <summary>
-        ///  Initial value for the `last_trans_lt`.
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("last_trans_lt")]
         public ulong? LastTransLt { get; set; }
 
         /// <summary>
-        ///  Initial value for the `last_paid`.
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("last_paid")]
         public uint? LastPaid { get; set; }

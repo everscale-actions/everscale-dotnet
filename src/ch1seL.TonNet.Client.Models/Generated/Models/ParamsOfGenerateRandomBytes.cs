@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfGenerateRandomBytes
     {
         /// <summary>
-        ///  Size of random byte array.
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("length")]
         public uint Length { get; set; }

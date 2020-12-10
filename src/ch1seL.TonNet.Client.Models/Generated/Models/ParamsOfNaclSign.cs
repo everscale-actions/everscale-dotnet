@@ -12,13 +12,13 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfNaclSign
     {
         /// <summary>
-        ///  Data that must be signed encoded in `base64`.
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("unsigned")]
         public string Unsigned { get; set; }
 
         /// <summary>
-        ///  Signer's secret key - unprefixed 0-padded to 64 symbols hex string
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("secret")]
         public string Secret { get; set; }

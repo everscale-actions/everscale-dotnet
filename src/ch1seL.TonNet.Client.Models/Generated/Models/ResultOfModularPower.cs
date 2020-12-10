@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfModularPower
     {
         /// <summary>
-        ///  Result of modular exponentiation
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("modular_power")]
         public string ModularPower { get; set; }

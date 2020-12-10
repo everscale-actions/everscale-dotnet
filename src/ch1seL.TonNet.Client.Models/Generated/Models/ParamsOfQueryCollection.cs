@@ -12,31 +12,31 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfQueryCollection
     {
         /// <summary>
-        ///  Collection name (accounts, blocks, transactions, messages, block_signatures)
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("collection")]
         public string Collection { get; set; }
 
         /// <summary>
-        ///  Collection filter
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("filter")]
         public JsonElement? Filter { get; set; }
 
         /// <summary>
-        ///  Projection (result) string
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("result")]
         public string Result { get; set; }
 
         /// <summary>
-        ///  Sorting order
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("order")]
         public JsonElement?[] Order { get; set; }
 
         /// <summary>
-        ///  Number of documents to return
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("limit")]
         public uint? Limit { get; set; }

@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfMnemonicFromRandom
     {
         /// <summary>
-        ///  String of mnemonic words
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("phrase")]
         public string Phrase { get; set; }

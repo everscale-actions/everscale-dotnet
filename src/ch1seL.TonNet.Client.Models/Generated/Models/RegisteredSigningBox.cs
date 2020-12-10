@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class RegisteredSigningBox
     {
         /// <summary>
-        ///  Handle of the signing box.
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("handle")]
         public uint Handle { get; set; }

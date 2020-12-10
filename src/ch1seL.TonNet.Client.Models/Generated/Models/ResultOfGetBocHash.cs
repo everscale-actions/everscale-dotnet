@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfGetBocHash
     {
         /// <summary>
-        ///  BOC root hash encoded with hex
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("hash")]
         public string Hash { get; set; }

@@ -12,38 +12,36 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfEncodeMessageBody
     {
         /// <summary>
-        ///  Contract ABI.
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("abi")]
         public Abi Abi { get; set; }
 
         /// <summary>
-        /// <para> Function call parameters.</para>
-        /// <para> Must be specified in non deploy message.</para>
-        /// <para> In case of deploy message contains parameters of constructor.</para>
+        /// <para>Must be specified in non deploy message.</para>
+        /// <para>In case of deploy message contains parameters of constructor.</para>
         /// </summary>
         [JsonPropertyName("call_set")]
         public CallSet CallSet { get; set; }
 
         /// <summary>
-        ///  True if internal message body must be encoded.
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("is_internal")]
         public bool IsInternal { get; set; }
 
         /// <summary>
-        ///  Signing parameters.
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("signer")]
         public Signer Signer { get; set; }
 
         /// <summary>
-        /// <para> Processing try index.</para>
-        /// <para> Used in message processing with retries.</para>
-        /// <para> Encoder uses the provided try index to calculate message</para>
-        /// <para> expiration time.</para>
-        /// <para> Expiration timeouts will grow with every retry.</para>
-        /// <para> Default value is 0.</para>
+        /// <para>Used in message processing with retries.</para>
+        /// <para>Encoder uses the provided try index to calculate message</para>
+        /// <para>expiration time.</para>
+        /// <para>Expiration timeouts will grow with every retry.</para>
+        /// <para>Default value is 0.</para>
         /// </summary>
         [JsonPropertyName("processing_try_index")]
         public byte? ProcessingTryIndex { get; set; }

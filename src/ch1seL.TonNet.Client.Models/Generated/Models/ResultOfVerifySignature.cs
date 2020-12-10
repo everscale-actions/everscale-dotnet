@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfVerifySignature
     {
         /// <summary>
-        ///  Unsigned data encoded in `base64`.
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("unsigned")]
         public string Unsigned { get; set; }

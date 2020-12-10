@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfMnemonicFromEntropy
     {
         /// <summary>
-        ///  Phrase
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("phrase")]
         public string Phrase { get; set; }

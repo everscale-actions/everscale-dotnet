@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfScrypt
     {
         /// <summary>
-        ///  Derived key. Encoded with `hex`.
+        /// Encoded with `hex`.
         /// </summary>
         [JsonPropertyName("key")]
         public string Key { get; set; }

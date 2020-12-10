@@ -18,7 +18,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        ///  Returns Core Library API reference
+        /// Not described yet..
         /// </summary>
         public async Task<ResultOfGetApiReference> GetApiReference(CancellationToken cancellationToken = default)
         {
@@ -26,7 +26,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        ///  Returns Core Library version
+        /// Not described yet..
         /// </summary>
         public async Task<ResultOfVersion> Version(CancellationToken cancellationToken = default)
         {
@@ -34,7 +34,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        ///  Returns detailed information about this build.
+        /// Not described yet..
         /// </summary>
         public async Task<ResultOfBuildInfo> BuildInfo(CancellationToken cancellationToken = default)
         {

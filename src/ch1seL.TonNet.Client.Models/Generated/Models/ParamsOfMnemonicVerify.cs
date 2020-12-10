@@ -12,19 +12,19 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfMnemonicVerify
     {
         /// <summary>
-        ///  Phrase
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("phrase")]
         public string Phrase { get; set; }
 
         /// <summary>
-        ///  Dictionary identifier
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("dictionary")]
         public byte? Dictionary { get; set; }
 
         /// <summary>
-        ///  Word count
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("word_count")]
         public byte? WordCount { get; set; }

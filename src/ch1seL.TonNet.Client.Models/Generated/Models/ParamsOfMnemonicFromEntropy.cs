@@ -12,19 +12,19 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfMnemonicFromEntropy
     {
         /// <summary>
-        ///  Entropy bytes. Hex encoded.
+        /// Hex encoded.
         /// </summary>
         [JsonPropertyName("entropy")]
         public string Entropy { get; set; }
 
         /// <summary>
-        ///  Dictionary identifier
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("dictionary")]
         public byte? Dictionary { get; set; }
 
         /// <summary>
-        ///  Mnemonic word count
+        /// Not described yet..
         /// </summary>
         [JsonPropertyName("word_count")]
         public byte? WordCount { get; set; }
