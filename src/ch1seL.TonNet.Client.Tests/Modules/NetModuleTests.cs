@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.Client.Tests.Utils;
-using ch1seL.TonNet.RustAdapter.RustInterop.Models;
 using ch1seL.TonNet.Serialization;
 using ch1seL.TonNet.TestsShared;
 using FluentAssertions;
@@ -34,7 +33,19 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         }
 
         [Fact]
-        public async Task QueryCollectionBLockSignatures()
+        public async Task Query()
+        {
+            ResultOfQuery result = await _tonClient.Net.Query(new ParamsOfQuery
+            {
+                Query = "query{info{version}}"
+            });
+
+            var resultParsed = result.Result!.Value.ToAnonymous(new {data = new {info = new {version = default(string)}}});
+            resultParsed.data.info.version.Split('.').Length.Should().Be(3);
+        }
+
+        [Fact]
+        public async Task BlockSignatures()
         {
             ResultOfQueryCollection result = await _tonClient.Net.QueryCollection(new ParamsOfQueryCollection
             {
@@ -48,7 +59,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         }
 
         [Fact]
-        public async Task QueryCollectionAllAccounts()
+        public async Task AllAccounts()
         {
             ResultOfQueryCollection result = await _tonClient.Net.QueryCollection(new ParamsOfQueryCollection
             {
@@ -61,7 +72,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         }
 
         [Fact]
-        public async Task QueryCollectionRanges()
+        public async Task Ranges()
         {
             ResultOfQueryCollection result = await _tonClient.Net.QueryCollection(new ParamsOfQueryCollection
             {
@@ -98,6 +109,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         public async Task SubscribeForTransactionsWithAddresses()
         {
             KeyPair keys = await _tonClient.Crypto.GenerateRandomSignKeys();
+            ITonClient subscriptionClient = _fixture.CreateClient(_outputHelper, true);
 
             var deployParams = new ParamsOfEncodeMessage
             {
@@ -126,7 +138,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             });
 
             //act
-            ResultOfSubscribeCollection handle = await _tonClient.Net.SubscribeCollection(new ParamsOfSubscribeCollection
+            ResultOfSubscribeCollection handle = await subscriptionClient.Net.SubscribeCollection(new ParamsOfSubscribeCollection
             {
                 Collection = "transactions",
                 Filter = new
@@ -136,17 +148,53 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 }.ToJsonElement(),
                 Result = "id account_addr"
             }, callback);
-            await _tonClient.DeployWithGiver(deployParams);
+
+            // send grams to create first transaction
+            await _tonClient.SendGramsFromLocalGiver(address);
+
+            // give some time for subscription to receive all data
             await Task.Delay(TimeSpan.FromSeconds(1));
-            await _tonClient.Net.Unsubscribe(new ResultOfSubscribeCollection
+
+            // suspend subscription
+            await subscriptionClient.Net.Suspend();
+
+            // deploy to create second transaction
+            await _tonClient.Processing.ProcessMessage(new ParamsOfProcessMessage
             {
-                Handle = handle.Handle
+                MessageEncodeParams = deployParams,
+                SendEvents = false
             });
 
-            //assert
+            // check that second transaction is not received when subscription suspended
+            transactions.Count.Should().Be(1);
+
+            // resume subscription
+            await subscriptionClient.Net.Resume();
+
+            // run contract function to create third transaction
+            await _tonClient.Processing.ProcessMessage(new ParamsOfProcessMessage
+            {
+                MessageEncodeParams = new ParamsOfEncodeMessage
+                {
+                    Abi = TestsEnv.Packages.Hello.Abi,
+                    Signer = new Signer.Keys {KeysAccessor = keys},
+                    Address = address,
+                    CallSet = new CallSet {FunctionName = "touch"}
+                }
+            });
+            
+            // give some time for subscription to receive all data
+            await Task.Delay(TimeSpan.FromSeconds(1));
+
+            // check that third transaction is now received after resume
             transactions.Count.Should().Be(2);
             transactions.Select(t => t.Get<string>("account_addr")).Should().BeEquivalentTo(address, address);
             transactions[0].Get<string>("id").Should().NotBe(transactions[1].Get<string>("id"));
+            
+            await subscriptionClient.Net.Unsubscribe(new ResultOfSubscribeCollection
+            {
+                Handle = handle.Handle
+            });
         }
 
         [Fact]
