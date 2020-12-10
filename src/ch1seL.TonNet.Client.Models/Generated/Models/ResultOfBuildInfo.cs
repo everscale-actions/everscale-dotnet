@@ -12,13 +12,13 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfBuildInfo
     {
         /// <summary>
-        /// Not described yet..
+        /// Build number assigned to this build by the CI.
         /// </summary>
         [JsonPropertyName("build_number")]
         public uint BuildNumber { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Fingerprint of the most important dependencies.
         /// </summary>
         [JsonPropertyName("dependencies")]
         public JsonElement?[] Dependencies { get; set; }

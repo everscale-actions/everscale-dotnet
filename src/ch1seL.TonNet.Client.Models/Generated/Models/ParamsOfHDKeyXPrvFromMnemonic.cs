@@ -12,19 +12,19 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfHDKeyXPrvFromMnemonic
     {
         /// <summary>
-        /// Not described yet..
+        /// String with seed phrase
         /// </summary>
         [JsonPropertyName("phrase")]
         public string Phrase { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Dictionary identifier
         /// </summary>
         [JsonPropertyName("dictionary")]
         public byte? Dictionary { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Mnemonic word count
         /// </summary>
         [JsonPropertyName("word_count")]
         public byte? WordCount { get; set; }

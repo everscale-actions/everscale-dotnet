@@ -12,7 +12,8 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfSigningBoxGetPublicKey
     {
         /// <summary>
-        /// Encoded with hex
+        /// <para>Public key of signing box.</para>
+        /// <para>Encoded with hex</para>
         /// </summary>
         [JsonPropertyName("pubkey")]
         public string Pubkey { get; set; }

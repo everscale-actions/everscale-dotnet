@@ -12,13 +12,13 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfHDKeyDeriveFromXPrvPath
     {
         /// <summary>
-        /// Not described yet..
+        /// Serialized extended private key
         /// </summary>
         [JsonPropertyName("xprv")]
         public string Xprv { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Derivation path, for instance "m/44'/396'/0'/0/0"
         /// </summary>
         [JsonPropertyName("path")]
         public string Path { get; set; }

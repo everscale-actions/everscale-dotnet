@@ -12,25 +12,25 @@ namespace ch1seL.TonNet.Client.Models
     public class ExecutionOptions
     {
         /// <summary>
-        /// Not described yet..
+        /// boc with config
         /// </summary>
         [JsonPropertyName("blockchain_config")]
         public string BlockchainConfig { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// time that is used as transaction time
         /// </summary>
         [JsonPropertyName("block_time")]
         public uint? BlockTime { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// block logical time
         /// </summary>
         [JsonPropertyName("block_lt")]
         public ulong? BlockLt { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// transaction logical time
         /// </summary>
         [JsonPropertyName("transaction_lt")]
         public ulong? TransactionLt { get; set; }

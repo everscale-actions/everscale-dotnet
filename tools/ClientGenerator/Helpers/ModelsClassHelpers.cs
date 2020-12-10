@@ -36,31 +36,36 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
         private static EnumDeclarationSyntax GenerateEnumOfConsts(TypeElement typeElement)
         {
+            var summary = typeElement.Summary + '\n' + (typeElement.Description != null ? $"\n{typeElement.Description}" : null);
             return EnumDeclaration(Identifier(NamingConventions.Normalize(typeElement.Name)))
                 .AddMembers(typeElement
                     .EnumConsts
                     .Select(e => EnumMemberDeclaration(e.Name))
                     .ToArray())
                 .AddModifiers(Token(SyntaxKind.PublicKeyword)
-                    .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(typeElement.Description)));
+                    .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(summary)));
         }
 
         private ClassDeclarationSyntax GenerateEnumOfTypes(TypeElement typeElement)
         {
+            var typeElementSummary = typeElement.Summary + (typeElement.Description != null ? $"\n{typeElement.Description}" : null);
+            
             var enumTypes = typeElement
                 .EnumTypes
                 .Select(subClass =>
                 {
+                    var subClassSummary = subClass.Summary + (subClass.Description != null ? $"\n{subClass.Description}" : null);
+                    
                     switch (subClass.Type)
                     {
                         case GenericArgType.Ref:
-                            return CreatePropertyForRef(subClass.RefName, subClass.Name, subClass.Description);
+                            return CreatePropertyForRef(subClass.RefName, subClass.Name, subClassSummary);
                         case GenericArgType.Struct:
                             var properties = new List<MemberDeclarationSyntax>();
                             properties.AddRange(subClass.StructFields.Select(sf =>
                             {
                                 var addPostfix = NamingConventions.Normalize(sf.Name) == NamingConventions.Normalize(subClass.Name);
-                                return CreatePropertyGenericArgs(sf.Type, sf.Name, sf.RefName, sf.OptionalInner, subClass.Description, sf.NumberType,
+                                return CreatePropertyGenericArgs(sf.Type, sf.Name, sf.RefName, sf.OptionalInner, subClassSummary, sf.NumberType,
                                     sf.NumberSize, addPostfix: addPostfix);
                             }));
                             return (MemberDeclarationSyntax) ClassDeclaration(NamingConventions.Normalize(subClass.Name))
@@ -69,7 +74,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                                         new[]
                                         {
                                             Attribute(IdentifierName($"JsonDiscriminator(\"{subClass.Name}\")"))
-                                        }))).WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(subClass.Description))
+                                        }))).WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(subClassSummary))
                                 .AddModifiers(Token(SyntaxKind.PublicKeyword))
                                 .AddBaseListTypes(
                                     SimpleBaseType(IdentifierName(NamingConventions.Normalize(typeElement.Name))))
@@ -82,7 +87,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
             return ClassDeclaration(NamingConventions.Normalize(typeElement.Name))
                 .AddModifiers(Token(SyntaxKind.PublicKeyword)
-                        .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(typeElement.Description))
+                        .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(typeElementSummary))
                     , Token(SyntaxKind.AbstractKeyword))
                 .AddMembers(enumTypes);
         }
@@ -120,27 +125,30 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
         private ClassDeclarationSyntax GenerateStruct(TypeElement typeElement)
         {
             var className = typeElement.Name;
+            var typeElementSummary = typeElement.Summary + (typeElement.Description != null ? $"\n{typeElement.Description}" : null);
 
             var properties = typeElement.StructFields.Select(CreatePropertyStructFields).ToArray();
 
             return ClassDeclaration(NamingConventions.Normalize(className))
                 .AddModifiers(Token(SyntaxKind.PublicKeyword)
-                    .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(typeElement.Description)))
+                    .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(typeElementSummary)))
                 .AddMembers(properties);
         }
 
         private MemberDeclarationSyntax CreatePropertyStructFields(StructField sf)
         {
+                var sfSummary = sf.Summary + (sf.Description != null ? $"\n{sf.Description}" : null);
+            
             return sf.Type switch
             {
                 PurpleType.Array => CreatePropertyForPurpleArrayItem(sf.Name, sf.ArrayItem.Type, sf.ArrayItem.RefName, sf.ArrayItem.OptionalInner,
-                    sf.Description),
-                PurpleType.BigInt => CreatePropertyDeclaration("ulong", sf.Name, sf.Description),
-                PurpleType.Boolean => CreatePropertyDeclaration("bool", sf.Name, sf.Description),
-                PurpleType.Number => CreatePropertyDeclaration(NumberUtils.ConvertToSharpNumeric(sf.NumberType, sf.NumberSize), sf.Name, sf.Description),
-                PurpleType.Ref => CreatePropertyForRef(sf.RefName, sf.Name, sf.Description),
-                PurpleType.String => CreatePropertyDeclaration("string", sf.Name, sf.Description),
-                PurpleType.Optional => CreateOptionalPropertyForPurple(sf.Name, sf.OptionalInner, sf.Description),
+                    sfSummary),
+                PurpleType.BigInt => CreatePropertyDeclaration("ulong", sf.Name, sfSummary),
+                PurpleType.Boolean => CreatePropertyDeclaration("bool", sf.Name, sfSummary),
+                PurpleType.Number => CreatePropertyDeclaration(NumberUtils.ConvertToSharpNumeric(sf.NumberType, sf.NumberSize), sf.Name, sfSummary),
+                PurpleType.Ref => CreatePropertyForRef(sf.RefName, sf.Name, sfSummary),
+                PurpleType.String => CreatePropertyDeclaration("string", sf.Name, sfSummary),
+                PurpleType.Optional => CreateOptionalPropertyForPurple(sf.Name, sf.OptionalInner, sfSummary),
                 _ => throw new ArgumentOutOfRangeException(nameof(sf.Type), sf.Type, "Not supported type detected")
             };
         }

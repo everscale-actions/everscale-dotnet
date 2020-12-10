@@ -9,22 +9,22 @@ namespace ch1seL.TonNet.Abstract.Modules
     public interface IClientModule : ITonModule
     {
         /// <summary>
-        /// Not described yet..
+        /// Returns Core Library API reference
         /// </summary>
         public Task<ResultOfGetApiReference> GetApiReference(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Not described yet..
+        /// Returns Core Library version
         /// </summary>
         public Task<ResultOfVersion> Version(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Not described yet..
+        /// Returns detailed information about this build.
         /// </summary>
         public Task<ResultOfBuildInfo> BuildInfo(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Not described yet..
+        /// Resolves application request processing result
         /// </summary>
         public Task ResolveAppRequest(ParamsOfResolveAppRequest @params, CancellationToken cancellationToken = default);
     }

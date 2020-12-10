@@ -7,42 +7,46 @@ using System.Text.Json.Serialization;
 namespace ch1seL.TonNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// [UNSTABLE](UNSTABLE.md) Describes a debot action in a Debot Context.
     /// </summary>
     public class DebotAction
     {
         /// <summary>
-        /// Should be used by Debot Browser as name ofmenu item.
+        /// <para>A short action description.</para>
+        /// <para>Should be used by Debot Browser as name ofmenu item.</para>
         /// </summary>
         [JsonPropertyName("description")]
         public string Description { get; set; }
 
         /// <summary>
-        /// Can be a debot function name or a print string(for Print Action).
+        /// <para>Depends on action type.</para>
+        /// <para>Can be a debot function name or a print string(for Print Action).</para>
         /// </summary>
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Action type.
         /// </summary>
         [JsonPropertyName("action_type")]
         public byte ActionType { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// ID of debot context to switch after action execution.
         /// </summary>
         [JsonPropertyName("to")]
         public byte To { get; set; }
 
         /// <summary>
-        /// In the form of "param=value,flag".attribute example: instant, args, fargs, sign.
+        /// <para>Action attributes.</para>
+        /// <para>In the form of "param=value,flag".attribute example: instant, args, fargs, sign.</para>
         /// </summary>
         [JsonPropertyName("attributes")]
         public string Attributes { get; set; }
 
         /// <summary>
-        /// Used by debot only.
+        /// <para>Some internal action data.</para>
+        /// <para>Used by debot only.</para>
         /// </summary>
         [JsonPropertyName("misc")]
         public string Misc { get; set; }

@@ -12,12 +12,13 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfSendMessage
     {
         /// <summary>
-        /// Not described yet..
+        /// Message BOC.
         /// </summary>
         [JsonPropertyName("message")]
         public string Message { get; set; }
 
         /// <summary>
+        /// <para>Optional message ABI.</para>
         /// <para>If this parameter is specified and the message has the</para>
         /// <para>`expire` header then expiration time will be checked against</para>
         /// <para>the current time to prevent unnecessary sending of already expired message.</para>
@@ -31,7 +32,7 @@ namespace ch1seL.TonNet.Client.Models
         public Abi Abi { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Flag for requesting events sending
         /// </summary>
         [JsonPropertyName("send_events")]
         public bool SendEvents { get; set; }

@@ -18,7 +18,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Performs DAppServer GraphQL query.
         /// </summary>
         public async Task<ResultOfQuery> Query(ParamsOfQuery @params, CancellationToken cancellationToken = default)
         {
@@ -26,6 +26,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
+        /// <para>Queries collection data</para>
         /// <para>Queries data that satisfies the `filter` conditions,</para>
         /// <para>limits the number of returned records and orders them.</para>
         /// <para>The projection fields are limited to `result` fields</para>
@@ -36,6 +37,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
+        /// <para>Returns an object that fulfills the conditions or waits for its appearance</para>
         /// <para>Triggers only once.</para>
         /// <para>If object that satisfies the `filter` conditions</para>
         /// <para>already exists - returns it immediately.</para>
@@ -49,7 +51,8 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Cancels a subscription specified by its handle.
+        /// <para>Cancels a subscription</para>
+        /// <para>Cancels a subscription specified by its handle.</para>
         /// </summary>
         public async Task Unsubscribe(ResultOfSubscribeCollection @params, CancellationToken cancellationToken = default)
         {
@@ -57,6 +60,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
+        /// <para>Creates a subscription</para>
         /// <para>Triggers for each insert/update of data</para>
         /// <para>that satisfies the `filter` conditions.</para>
         /// <para>The projection fields are limited to `result` fields.</para>
@@ -67,7 +71,8 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        ///  Suspends network module to stop any network activity
+        /// <para> Suspends network module to stop any network activity</para>
+        /// <para> Suspends network module to stop any network activity</para>
         /// </summary>
         public async Task Suspend(CancellationToken cancellationToken = default)
         {
@@ -75,7 +80,8 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        ///  Resumes network module to enable network activity
+        /// <para> Resumes network module to enable network activity</para>
+        /// <para> Resumes network module to enable network activity</para>
         /// </summary>
         public async Task Resume(CancellationToken cancellationToken = default)
         {

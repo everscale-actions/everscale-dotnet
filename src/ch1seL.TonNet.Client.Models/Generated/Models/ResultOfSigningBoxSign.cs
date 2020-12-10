@@ -12,7 +12,8 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfSigningBoxSign
     {
         /// <summary>
-        /// Encoded with `base64`.
+        /// <para>Data signature.</para>
+        /// <para>Encoded with `base64`.</para>
         /// </summary>
         [JsonPropertyName("signature")]
         public string Signature { get; set; }

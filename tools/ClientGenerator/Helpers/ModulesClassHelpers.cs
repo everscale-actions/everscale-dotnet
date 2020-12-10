@@ -54,7 +54,8 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                     };
             }
 
-            var modifiers = new List<SyntaxToken> {Token(SyntaxKind.PublicKeyword).WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(function.Description))};
+            var functionSummary = function.Summary + (function.Description != null ? $"\n{function.Description}" : null);
+            var modifiers = new List<SyntaxToken> {Token(SyntaxKind.PublicKeyword).WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(functionSummary))};
             if (withBody) modifiers.Add(Token(SyntaxKind.AsyncKeyword));
 
             var @params = new List<ParameterSyntax>();

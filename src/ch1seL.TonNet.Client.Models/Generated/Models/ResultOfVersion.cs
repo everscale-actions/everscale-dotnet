@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfVersion
     {
         /// <summary>
-        /// Not described yet..
+        /// Core Library version
         /// </summary>
         [JsonPropertyName("version")]
         public string Version { get; set; }

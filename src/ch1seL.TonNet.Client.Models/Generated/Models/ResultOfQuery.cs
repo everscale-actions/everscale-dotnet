@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfQuery
     {
         /// <summary>
-        /// Not described yet..
+        /// Result provided by DAppServer.
         /// </summary>
         [JsonPropertyName("result")]
         public JsonElement? Result { get; set; }

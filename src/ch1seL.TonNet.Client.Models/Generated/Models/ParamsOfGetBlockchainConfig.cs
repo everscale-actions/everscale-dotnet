@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfGetBlockchainConfig
     {
         /// <summary>
-        /// Not described yet..
+        /// Key block BOC encoded as base64
         /// </summary>
         [JsonPropertyName("block_boc")]
         public string BlockBoc { get; set; }

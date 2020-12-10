@@ -12,24 +12,27 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfEncodeMessage
     {
         /// <summary>
-        /// Not described yet..
+        /// Contract ABI.
         /// </summary>
         [JsonPropertyName("abi")]
         public Abi Abi { get; set; }
 
         /// <summary>
-        /// Must be specified in case of non-deploy message.
+        /// <para>Target address the message will be sent to.</para>
+        /// <para>Must be specified in case of non-deploy message.</para>
         /// </summary>
         [JsonPropertyName("address")]
         public string Address { get; set; }
 
         /// <summary>
-        /// Must be specified in case of deploy message.
+        /// <para>Deploy parameters.</para>
+        /// <para>Must be specified in case of deploy message.</para>
         /// </summary>
         [JsonPropertyName("deploy_set")]
         public DeploySet DeploySet { get; set; }
 
         /// <summary>
+        /// <para>Function call parameters.</para>
         /// <para>Must be specified in case of non-deploy message.</para>
         /// <para>In case of deploy message it is optional and contains parameters</para>
         /// <para>of the functions that will to be called upon deploy transaction.</para>
@@ -38,12 +41,13 @@ namespace ch1seL.TonNet.Client.Models
         public CallSet CallSet { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Signing parameters.
         /// </summary>
         [JsonPropertyName("signer")]
         public Signer Signer { get; set; }
 
         /// <summary>
+        /// <para>Processing try index.</para>
         /// <para>Used in message processing with retries (if contract's ABI includes "expire" header).</para>
         /// <para>Encoder uses the provided try index to calculate message</para>
         /// <para>expiration time. The 1st message expiration time is specified in</para>

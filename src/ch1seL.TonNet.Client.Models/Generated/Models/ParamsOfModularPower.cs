@@ -12,19 +12,19 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfModularPower
     {
         /// <summary>
-        /// Not described yet..
+        /// `base` argument of calculation.
         /// </summary>
         [JsonPropertyName("base")]
         public string Base { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// `exponent` argument of calculation.
         /// </summary>
         [JsonPropertyName("exponent")]
         public string Exponent { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// `modulus` argument of calculation.
         /// </summary>
         [JsonPropertyName("modulus")]
         public string Modulus { get; set; }

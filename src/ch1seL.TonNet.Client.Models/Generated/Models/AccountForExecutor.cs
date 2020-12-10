@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public abstract class AccountForExecutor
     {
         /// <summary>
-        /// Not described yet..
+        /// Non-existing account to run a creation internal message. Should be used with `skip_transaction_check = true` if the message has no deploy data since transactions on the uninitialized account are always aborted
         /// </summary>
         [JsonDiscriminator("None")]
         public class None : AccountForExecutor
@@ -20,7 +20,7 @@ namespace ch1seL.TonNet.Client.Models
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Emulate uninitialized account to run deploy message
         /// </summary>
         [JsonDiscriminator("Uninit")]
         public class Uninit : AccountForExecutor
@@ -28,19 +28,19 @@ namespace ch1seL.TonNet.Client.Models
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Account state to run message
         /// </summary>
         [JsonDiscriminator("Account")]
         public class Account : AccountForExecutor
         {
             /// <summary>
-            /// Not described yet..
+            /// Account state to run message
             /// </summary>
             [JsonPropertyName("boc")]
             public string Boc { get; set; }
 
             /// <summary>
-            /// Not described yet..
+            /// Account state to run message
             /// </summary>
             [JsonPropertyName("unlimited_balance")]
             public bool UnlimitedBalance { get; set; }

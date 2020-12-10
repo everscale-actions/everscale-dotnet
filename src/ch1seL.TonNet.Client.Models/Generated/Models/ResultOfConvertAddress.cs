@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfConvertAddress
     {
         /// <summary>
-        /// Not described yet..
+        /// Address in the specified format
         /// </summary>
         [JsonPropertyName("address")]
         public string Address { get; set; }

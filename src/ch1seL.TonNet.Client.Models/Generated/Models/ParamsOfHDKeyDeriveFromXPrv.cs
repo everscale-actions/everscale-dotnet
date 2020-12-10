@@ -12,19 +12,19 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfHDKeyDeriveFromXPrv
     {
         /// <summary>
-        /// Not described yet..
+        /// Serialized extended private key
         /// </summary>
         [JsonPropertyName("xprv")]
         public string Xprv { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Child index (see BIP-0032)
         /// </summary>
         [JsonPropertyName("child_index")]
         public uint ChildIndex { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Indicates the derivation of hardened/not-hardened key (see BIP-0032)
         /// </summary>
         [JsonPropertyName("hardened")]
         public bool Hardened { get; set; }

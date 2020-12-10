@@ -12,19 +12,19 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfRunGet
     {
         /// <summary>
-        /// Not described yet..
+        /// Account BOC in `base64`
         /// </summary>
         [JsonPropertyName("account")]
         public string Account { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Function name
         /// </summary>
         [JsonPropertyName("function_name")]
         public string FunctionName { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Input parameters
         /// </summary>
         [JsonPropertyName("input")]
         public JsonElement? Input { get; set; }

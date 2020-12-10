@@ -15,33 +15,34 @@ namespace ch1seL.TonNet.Client
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Provides information about library.
         /// </summary>
         public IClientModule Client { get; }
 
         /// <summary>
-        /// Not described yet..
+        /// Crypto functions.
         /// </summary>
         public ICryptoModule Crypto { get; }
 
         /// <summary>
-        /// Not described yet..
+        /// Provides message encoding and decoding according to the ABI specification.
         /// </summary>
         public IAbiModule Abi { get; }
 
         /// <summary>
-        /// Not described yet..
+        /// BOC manipulation module.
         /// </summary>
         public IBocModule Boc { get; }
 
         /// <summary>
+        /// <para>Message processing module.</para>
         /// <para>This module incorporates functions related to complex message</para>
         /// <para>processing scenarios.</para>
         /// </summary>
         public IProcessingModule Processing { get; }
 
         /// <summary>
-        /// Not described yet..
+        /// Misc utility Functions.
         /// </summary>
         public IUtilsModule Utils { get; }
 
@@ -51,12 +52,12 @@ namespace ch1seL.TonNet.Client
         public ITvmModule Tvm { get; }
 
         /// <summary>
-        /// Not described yet..
+        /// Network access.
         /// </summary>
         public INetModule Net { get; }
 
         /// <summary>
-        /// Not described yet..
+        /// [UNSTABLE](UNSTABLE.md) Module for working with debot.
         /// </summary>
         public IDebotModule Debot { get; }
 

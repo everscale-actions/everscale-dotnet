@@ -18,7 +18,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Performs prime factorization – decomposition of a composite number into a product of smaller prime integers (factors). See [https://en.wikipedia.org/wiki/Integer_factorization]
         /// </summary>
         public async Task<ResultOfFactorize> Factorize(ParamsOfFactorize @params, CancellationToken cancellationToken = default)
         {
@@ -26,7 +26,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Performs modular exponentiation for big integers (`base`^`exponent` mod `modulus`). See [https://en.wikipedia.org/wiki/Modular_exponentiation]
         /// </summary>
         public async Task<ResultOfModularPower> ModularPower(ParamsOfModularPower @params, CancellationToken cancellationToken = default)
         {
@@ -34,7 +34,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Calculates CRC16 using TON algorithm.
         /// </summary>
         public async Task<ResultOfTonCrc16> TonCrc16(ParamsOfTonCrc16 @params, CancellationToken cancellationToken = default)
         {
@@ -42,7 +42,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Generates random byte array of the specified length and returns it in `base64` format
         /// </summary>
         public async Task<ResultOfGenerateRandomBytes> GenerateRandomBytes(ParamsOfGenerateRandomBytes @params, CancellationToken cancellationToken = default)
         {
@@ -50,7 +50,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Converts public key to ton safe_format
         /// </summary>
         public async Task<ResultOfConvertPublicKeyToTonSafeFormat> ConvertPublicKeyToTonSafeFormat(ParamsOfConvertPublicKeyToTonSafeFormat @params, CancellationToken cancellationToken = default)
         {
@@ -58,7 +58,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Generates random ed25519 key pair.
         /// </summary>
         public async Task<KeyPair> GenerateRandomSignKeys(CancellationToken cancellationToken = default)
         {
@@ -66,7 +66,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Signs a data using the provided keys.
         /// </summary>
         public async Task<ResultOfSign> Sign(ParamsOfSign @params, CancellationToken cancellationToken = default)
         {
@@ -74,7 +74,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Verifies signed data using the provided public key. Raises error if verification is failed.
         /// </summary>
         public async Task<ResultOfVerifySignature> VerifySignature(ParamsOfVerifySignature @params, CancellationToken cancellationToken = default)
         {
@@ -82,7 +82,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Calculates SHA256 hash of the specified data.
         /// </summary>
         public async Task<ResultOfHash> Sha256(ParamsOfHash @params, CancellationToken cancellationToken = default)
         {
@@ -90,7 +90,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Calculates SHA512 hash of the specified data.
         /// </summary>
         public async Task<ResultOfHash> Sha512(ParamsOfHash @params, CancellationToken cancellationToken = default)
         {
@@ -98,6 +98,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
+        /// <para>Derives key from `password` and `key` using `scrypt` algorithm. See [https://en.wikipedia.org/wiki/Scrypt].</para>
         /// <para># Arguments</para>
         /// <para>- `log_n` - The log2 of the Scrypt parameter `N`</para>
         /// <para>- `r` - The Scrypt parameter `r`</para>
@@ -117,7 +118,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Generates a key pair for signing from the secret key
         /// </summary>
         public async Task<KeyPair> NaclSignKeypairFromSecretKey(ParamsOfNaclSignKeyPairFromSecret @params, CancellationToken cancellationToken = default)
         {
@@ -125,7 +126,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Signs data using the signer's secret key.
         /// </summary>
         public async Task<ResultOfNaclSign> NaclSign(ParamsOfNaclSign @params, CancellationToken cancellationToken = default)
         {
@@ -157,7 +158,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Generates key pair from a secret key
         /// </summary>
         public async Task<KeyPair> NaclBoxKeypairFromSecretKey(ParamsOfNaclBoxKeyPairFromSecret @params, CancellationToken cancellationToken = default)
         {
@@ -165,6 +166,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
+        /// <para>Public key authenticated encryption</para>
         /// <para>Encrypt and authenticate a message using the senders secret key, the recievers public</para>
         /// <para>key, and a nonce.</para>
         /// </summary>
@@ -174,7 +176,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Decrypt and verify the cipher text using the recievers secret key, the senders public key, and the nonce.
         /// </summary>
         public async Task<ResultOfNaclBoxOpen> NaclBoxOpen(ParamsOfNaclBoxOpen @params, CancellationToken cancellationToken = default)
         {
@@ -182,7 +184,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Encrypt and authenticate message using nonce and secret key.
         /// </summary>
         public async Task<ResultOfNaclBox> NaclSecretBox(ParamsOfNaclSecretBox @params, CancellationToken cancellationToken = default)
         {
@@ -190,7 +192,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Decrypts and verifies cipher text using `nonce` and secret `key`.
         /// </summary>
         public async Task<ResultOfNaclBoxOpen> NaclSecretBoxOpen(ParamsOfNaclSecretBoxOpen @params, CancellationToken cancellationToken = default)
         {
@@ -198,7 +200,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Prints the list of words from the specified dictionary
         /// </summary>
         public async Task<ResultOfMnemonicWords> MnemonicWords(ParamsOfMnemonicWords @params, CancellationToken cancellationToken = default)
         {
@@ -206,7 +208,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Generates a random mnemonic from the specified dictionary and word count
         /// </summary>
         public async Task<ResultOfMnemonicFromRandom> MnemonicFromRandom(ParamsOfMnemonicFromRandom @params, CancellationToken cancellationToken = default)
         {
@@ -214,7 +216,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Generates mnemonic from pre-generated entropy
         /// </summary>
         public async Task<ResultOfMnemonicFromEntropy> MnemonicFromEntropy(ParamsOfMnemonicFromEntropy @params, CancellationToken cancellationToken = default)
         {
@@ -222,7 +224,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// The phrase supplied will be checked for word length and validated according to the checksum specified in BIP0039.
         /// </summary>
         public async Task<ResultOfMnemonicVerify> MnemonicVerify(ParamsOfMnemonicVerify @params, CancellationToken cancellationToken = default)
         {
@@ -230,7 +232,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Validates the seed phrase, generates master key and then derives the key pair from the master key and the specified path
         /// </summary>
         public async Task<KeyPair> MnemonicDeriveSignKeys(ParamsOfMnemonicDeriveSignKeys @params, CancellationToken cancellationToken = default)
         {
@@ -238,7 +240,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Generates an extended master private key that will be the root for all the derived keys
         /// </summary>
         public async Task<ResultOfHDKeyXPrvFromMnemonic> HdkeyXprvFromMnemonic(ParamsOfHDKeyXPrvFromMnemonic @params, CancellationToken cancellationToken = default)
         {
@@ -246,7 +248,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Returns extended private key derived from the specified extended private key and child index
         /// </summary>
         public async Task<ResultOfHDKeyDeriveFromXPrv> HdkeyDeriveFromXprv(ParamsOfHDKeyDeriveFromXPrv @params, CancellationToken cancellationToken = default)
         {
@@ -254,7 +256,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Derives the extended private key from the specified key and path
         /// </summary>
         public async Task<ResultOfHDKeyDeriveFromXPrvPath> HdkeyDeriveFromXprvPath(ParamsOfHDKeyDeriveFromXPrvPath @params, CancellationToken cancellationToken = default)
         {
@@ -262,7 +264,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Extracts the private key from the serialized extended private key
         /// </summary>
         public async Task<ResultOfHDKeySecretFromXPrv> HdkeySecretFromXprv(ParamsOfHDKeySecretFromXPrv @params, CancellationToken cancellationToken = default)
         {
@@ -270,7 +272,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Extracts the public key from the serialized extended private key
         /// </summary>
         public async Task<ResultOfHDKeyPublicFromXPrv> HdkeyPublicFromXprv(ParamsOfHDKeyPublicFromXPrv @params, CancellationToken cancellationToken = default)
         {
@@ -278,7 +280,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Performs symmetric `chacha20` encryption.
         /// </summary>
         public async Task<ResultOfChaCha20> Chacha20(ParamsOfChaCha20 @params, CancellationToken cancellationToken = default)
         {
@@ -286,7 +288,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Register an application implemented signing box.
         /// </summary>
         public async Task<RegisteredSigningBox> RegisterSigningBox(Action<JsonElement,uint> appObject = null, CancellationToken cancellationToken = default)
         {
@@ -294,7 +296,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Creates a default signing box implementation.
         /// </summary>
         public async Task<RegisteredSigningBox> GetSigningBox(KeyPair @params, CancellationToken cancellationToken = default)
         {
@@ -302,7 +304,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Returns public key of signing key pair.
         /// </summary>
         public async Task<ResultOfSigningBoxGetPublicKey> SigningBoxGetPublicKey(RegisteredSigningBox @params, CancellationToken cancellationToken = default)
         {
@@ -310,7 +312,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Returns signed user data.
         /// </summary>
         public async Task<ResultOfSigningBoxSign> SigningBoxSign(ParamsOfSigningBoxSign @params, CancellationToken cancellationToken = default)
         {
@@ -318,7 +320,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Removes signing box from SDK.
         /// </summary>
         public async Task RemoveSigningBox(RegisteredSigningBox @params, CancellationToken cancellationToken = default)
         {

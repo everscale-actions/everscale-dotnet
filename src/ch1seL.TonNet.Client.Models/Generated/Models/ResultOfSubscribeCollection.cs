@@ -12,7 +12,8 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfSubscribeCollection
     {
         /// <summary>
-        /// Must be closed with `unsubscribe`
+        /// <para>Subscription handle.</para>
+        /// <para>Must be closed with `unsubscribe`</para>
         /// </summary>
         [JsonPropertyName("handle")]
         public uint Handle { get; set; }

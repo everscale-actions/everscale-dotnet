@@ -12,25 +12,27 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfRunTvm
     {
         /// <summary>
-        /// Must be encoded as base64.
+        /// <para>Input message BOC.</para>
+        /// <para>Must be encoded as base64.</para>
         /// </summary>
         [JsonPropertyName("message")]
         public string Message { get; set; }
 
         /// <summary>
-        /// Must be encoded as base64.
+        /// <para>Account BOC.</para>
+        /// <para>Must be encoded as base64.</para>
         /// </summary>
         [JsonPropertyName("account")]
         public string Account { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Execution options.
         /// </summary>
         [JsonPropertyName("execution_options")]
         public ExecutionOptions ExecutionOptions { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Contract ABI for dedcoding output messages
         /// </summary>
         [JsonPropertyName("abi")]
         public Abi Abi { get; set; }

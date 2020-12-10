@@ -12,19 +12,20 @@ namespace ch1seL.TonNet.Client.Models
     public class DeploySet
     {
         /// <summary>
-        /// Not described yet..
+        /// Content of TVC file encoded in `base64`.
         /// </summary>
         [JsonPropertyName("tvc")]
         public string Tvc { get; set; }
 
         /// <summary>
-        /// Default is `0`.
+        /// <para>Target workchain for destination address.</para>
+        /// <para>Default is `0`.</para>
         /// </summary>
         [JsonPropertyName("workchain_id")]
         public int? WorkchainId { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// List of initial values for contract's public variables.
         /// </summary>
         [JsonPropertyName("initial_data")]
         public JsonElement? InitialData { get; set; }

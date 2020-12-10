@@ -19,7 +19,7 @@ namespace ch1seL.TonNet.Abstract.Modules
         public Task<ResultOfRunTvm> RunTvm(ParamsOfRunTvm @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Not described yet..
+        /// Executes getmethod and returns data from TVM stack
         /// </summary>
         public Task<ResultOfRunGet> RunGet(ParamsOfRunGet @params, CancellationToken cancellationToken = default);
     }

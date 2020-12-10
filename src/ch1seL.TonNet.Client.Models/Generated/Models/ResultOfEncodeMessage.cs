@@ -12,12 +12,13 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfEncodeMessage
     {
         /// <summary>
-        /// Not described yet..
+        /// Message BOC encoded with `base64`.
         /// </summary>
         [JsonPropertyName("message")]
         public string Message { get; set; }
 
         /// <summary>
+        /// <para>Optional data to be signed encoded in `base64`.</para>
         /// <para>Returned in case of `Signer::External`. Can be used for external</para>
         /// <para>message signing. Is this case you need to use this data to create signature and</para>
         /// <para>then produce signed message using `abi.attach_signature`.</para>
@@ -26,13 +27,13 @@ namespace ch1seL.TonNet.Client.Models
         public string DataToSign { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Destination address.
         /// </summary>
         [JsonPropertyName("address")]
         public string Address { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Message id.
         /// </summary>
         [JsonPropertyName("message_id")]
         public string MessageId { get; set; }

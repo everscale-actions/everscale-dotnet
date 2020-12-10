@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfConvertPublicKeyToTonSafeFormat
     {
         /// <summary>
-        /// Not described yet..
+        /// Public key - 64 symbols hex string
         /// </summary>
         [JsonPropertyName("public_key")]
         public string PublicKey { get; set; }

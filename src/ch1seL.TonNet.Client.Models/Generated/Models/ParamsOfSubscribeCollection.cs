@@ -12,19 +12,19 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfSubscribeCollection
     {
         /// <summary>
-        /// Not described yet..
+        /// Collection name (accounts, blocks, transactions, messages, block_signatures)
         /// </summary>
         [JsonPropertyName("collection")]
         public string Collection { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Collection filter
         /// </summary>
         [JsonPropertyName("filter")]
         public JsonElement? Filter { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Projection (result) string
         /// </summary>
         [JsonPropertyName("result")]
         public string Result { get; set; }

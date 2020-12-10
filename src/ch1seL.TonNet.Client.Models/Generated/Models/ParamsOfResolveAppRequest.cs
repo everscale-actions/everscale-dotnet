@@ -12,13 +12,13 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfResolveAppRequest
     {
         /// <summary>
-        /// Not described yet..
+        /// Request ID received from SDK
         /// </summary>
         [JsonPropertyName("app_request_id")]
         public uint AppRequestId { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Result of request processing
         /// </summary>
         [JsonPropertyName("result")]
         public AppRequestResult Result { get; set; }

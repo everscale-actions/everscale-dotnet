@@ -9,12 +9,14 @@ namespace ch1seL.TonNet.Abstract.Modules
     public interface IProcessingModule : ITonModule
     {
         /// <summary>
+        /// <para>Sends message to the network</para>
         /// <para>Sends message to the network and returns the last generated shard block of the destination account</para>
         /// <para>before the message was sent. It will be required later for message processing.</para>
         /// </summary>
         public Task<ResultOfSendMessage> SendMessage(ParamsOfSendMessage @params, Action<ProcessingEvent,uint> callback = null, CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// <para>Performs monitoring of the network for the result transaction of the external inbound message processing.</para>
         /// <para>`send_events` enables intermediate events, such as `WillFetchNextBlock`,</para>
         /// <para>`FetchNextBlockFailed` that may be useful for logging of new shard blocks creation</para>
         /// <para>during message processing.</para>
@@ -39,6 +41,7 @@ namespace ch1seL.TonNet.Abstract.Modules
         public Task<ResultOfProcessMessage> WaitForTransaction(ParamsOfWaitForTransaction @params, Action<ProcessingEvent,uint> callback = null, CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// <para>Creates message, sends it to the network and monitors its processing.</para>
         /// <para>Creates ABI-compatible message,</para>
         /// <para>sends it to the network and monitors for the result transaction.</para>
         /// <para>Decodes the output messages' bodies.</para>

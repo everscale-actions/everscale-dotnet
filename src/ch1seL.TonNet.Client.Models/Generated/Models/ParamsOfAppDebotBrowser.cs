@@ -7,64 +7,66 @@ using System.Text.Json.Serialization;
 namespace ch1seL.TonNet.Client.Models
 {
     /// <summary>
-    /// Called by debot engine to communicate with debot browser.
+    /// <para>[UNSTABLE](UNSTABLE.md) Debot Browser callbacks</para>
+    /// <para>Called by debot engine to communicate with debot browser.</para>
     /// </summary>
     public abstract class ParamsOfAppDebotBrowser
     {
         /// <summary>
-        /// Not described yet..
+        /// Print message to user.
         /// </summary>
         [JsonDiscriminator("Log")]
         public class Log : ParamsOfAppDebotBrowser
         {
             /// <summary>
-            /// Not described yet..
+            /// Print message to user.
             /// </summary>
             [JsonPropertyName("msg")]
             public string Msg { get; set; }
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Switch debot to another context (menu).
         /// </summary>
         [JsonDiscriminator("Switch")]
         public class Switch : ParamsOfAppDebotBrowser
         {
             /// <summary>
-            /// Not described yet..
+            /// Switch debot to another context (menu).
             /// </summary>
             [JsonPropertyName("context_id")]
             public byte ContextId { get; set; }
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Show action to the user. Called after `switch` for each action in context.
         /// </summary>
         [JsonDiscriminator("ShowAction")]
         public class ShowAction : ParamsOfAppDebotBrowser
         {
             /// <summary>
-            /// Not described yet..
+            /// Show action to the user. Called after `switch` for each action in context.
             /// </summary>
             [JsonPropertyName("action")]
             public DebotAction Action { get; set; }
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Request user input.
         /// </summary>
         [JsonDiscriminator("Input")]
         public class Input : ParamsOfAppDebotBrowser
         {
             /// <summary>
-            /// Not described yet..
+            /// Request user input.
             /// </summary>
             [JsonPropertyName("prompt")]
             public string Prompt { get; set; }
         }
 
         /// <summary>
-        /// Signing box returned is owned and disposed by debot engine
+        /// <para>Get signing box to sign data.</para>
+        /// <para>Signing box returned is owned and disposed by debot engine</para>
         /// </summary>
         [JsonDiscriminator("GetSigningBox")]
         public class GetSigningBox : ParamsOfAppDebotBrowser
@@ -72,19 +74,19 @@ namespace ch1seL.TonNet.Client.Models
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Execute action of another debot.
         /// </summary>
         [JsonDiscriminator("InvokeDebot")]
         public class InvokeDebot : ParamsOfAppDebotBrowser
         {
             /// <summary>
-            /// Not described yet..
+            /// Execute action of another debot.
             /// </summary>
             [JsonPropertyName("debot_addr")]
             public string DebotAddr { get; set; }
 
             /// <summary>
-            /// Not described yet..
+            /// Execute action of another debot.
             /// </summary>
             [JsonPropertyName("action")]
             public DebotAction Action { get; set; }

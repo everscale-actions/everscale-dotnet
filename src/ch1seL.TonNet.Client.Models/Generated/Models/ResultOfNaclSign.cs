@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfNaclSign
     {
         /// <summary>
-        /// Not described yet..
+        /// Signed data, encoded in `base64`.
         /// </summary>
         [JsonPropertyName("signed")]
         public string Signed { get; set; }

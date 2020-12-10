@@ -12,13 +12,13 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfSign
     {
         /// <summary>
-        /// Not described yet..
+        /// Signed data combined with signature encoded in `base64`.
         /// </summary>
         [JsonPropertyName("signed")]
         public string Signed { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Signature encoded in `hex`.
         /// </summary>
         [JsonPropertyName("signature")]
         public string Signature { get; set; }

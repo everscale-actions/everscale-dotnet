@@ -12,13 +12,13 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfMnemonicFromRandom
     {
         /// <summary>
-        /// Not described yet..
+        /// Dictionary identifier
         /// </summary>
         [JsonPropertyName("dictionary")]
         public byte? Dictionary { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Mnemonic word count
         /// </summary>
         [JsonPropertyName("word_count")]
         public byte? WordCount { get; set; }

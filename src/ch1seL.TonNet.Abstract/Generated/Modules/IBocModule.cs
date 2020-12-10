@@ -9,27 +9,32 @@ namespace ch1seL.TonNet.Abstract.Modules
     public interface IBocModule : ITonModule
     {
         /// <summary>
-        /// JSON structure is compatible with GraphQL API message object
+        /// <para>Parses message boc into a JSON</para>
+        /// <para>JSON structure is compatible with GraphQL API message object</para>
         /// </summary>
         public Task<ResultOfParse> ParseMessage(ParamsOfParse @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// JSON structure is compatible with GraphQL API transaction object
+        /// <para>Parses transaction boc into a JSON</para>
+        /// <para>JSON structure is compatible with GraphQL API transaction object</para>
         /// </summary>
         public Task<ResultOfParse> ParseTransaction(ParamsOfParse @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// JSON structure is compatible with GraphQL API account object
+        /// <para>Parses account boc into a JSON</para>
+        /// <para>JSON structure is compatible with GraphQL API account object</para>
         /// </summary>
         public Task<ResultOfParse> ParseAccount(ParamsOfParse @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// JSON structure is compatible with GraphQL API block object
+        /// <para>Parses block boc into a JSON</para>
+        /// <para>JSON structure is compatible with GraphQL API block object</para>
         /// </summary>
         public Task<ResultOfParse> ParseBlock(ParamsOfParse @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// JSON structure is compatible with GraphQL API shardstate object
+        /// <para>Parses shardstate boc into a JSON</para>
+        /// <para>JSON structure is compatible with GraphQL API shardstate object</para>
         /// </summary>
         public Task<ResultOfParse> ParseShardstate(ParamsOfParseShardstate @params, CancellationToken cancellationToken = default);
 
@@ -39,7 +44,7 @@ namespace ch1seL.TonNet.Abstract.Modules
         public Task<ResultOfGetBlockchainConfig> GetBlockchainConfig(ParamsOfGetBlockchainConfig @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Not described yet..
+        /// Calculates BOC root hash
         /// </summary>
         public Task<ResultOfGetBocHash> GetBocHash(ParamsOfGetBocHash @params, CancellationToken cancellationToken = default);
     }

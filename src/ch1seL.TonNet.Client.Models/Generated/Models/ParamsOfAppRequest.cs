@@ -12,13 +12,14 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfAppRequest
     {
         /// <summary>
-        /// Should be used in `resolve_app_request` call
+        /// <para>Request ID.</para>
+        /// <para>Should be used in `resolve_app_request` call</para>
         /// </summary>
         [JsonPropertyName("app_request_id")]
         public uint AppRequestId { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Request describing data
         /// </summary>
         [JsonPropertyName("request_data")]
         public JsonElement? RequestData { get; set; }

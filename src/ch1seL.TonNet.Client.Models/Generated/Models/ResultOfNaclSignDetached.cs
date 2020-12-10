@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfNaclSignDetached
     {
         /// <summary>
-        /// Not described yet..
+        /// Signature encoded in `hex`.
         /// </summary>
         [JsonPropertyName("signature")]
         public string Signature { get; set; }

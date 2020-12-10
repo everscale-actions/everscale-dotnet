@@ -7,18 +7,18 @@ using System.Text.Json.Serialization;
 namespace ch1seL.TonNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// [UNSTABLE](UNSTABLE.md) Parameters for executing debot action.
     /// </summary>
     public class ParamsOfExecute
     {
         /// <summary>
-        /// Not described yet..
+        /// Debot handle which references an instance of debot engine.
         /// </summary>
         [JsonPropertyName("debot_handle")]
         public uint DebotHandle { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Debot Action that must be executed.
         /// </summary>
         [JsonPropertyName("action")]
         public DebotAction Action { get; set; }

@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfHDKeyPublicFromXPrv
     {
         /// <summary>
-        /// Not described yet..
+        /// Public key - 64 symbols hex string
         /// </summary>
         [JsonPropertyName("public")]
         public string Public { get; set; }

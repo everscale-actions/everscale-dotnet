@@ -12,31 +12,32 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfRunExecutor
     {
         /// <summary>
-        /// Must be encoded as base64.
+        /// <para>Input message BOC.</para>
+        /// <para>Must be encoded as base64.</para>
         /// </summary>
         [JsonPropertyName("message")]
         public string Message { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Account to run on executor
         /// </summary>
         [JsonPropertyName("account")]
         public AccountForExecutor Account { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Execution options.
         /// </summary>
         [JsonPropertyName("execution_options")]
         public ExecutionOptions ExecutionOptions { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Contract ABI for decoding output messages
         /// </summary>
         [JsonPropertyName("abi")]
         public Abi Abi { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Skip transaction check flag
         /// </summary>
         [JsonPropertyName("skip_transaction_check")]
         public bool? SkipTransactionCheck { get; set; }

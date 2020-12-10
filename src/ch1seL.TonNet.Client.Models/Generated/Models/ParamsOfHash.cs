@@ -12,7 +12,8 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfHash
     {
         /// <summary>
-        /// Encoded with `base64`.
+        /// <para>Input data for hash calculation.</para>
+        /// <para>Encoded with `base64`.</para>
         /// </summary>
         [JsonPropertyName("data")]
         public string Data { get; set; }

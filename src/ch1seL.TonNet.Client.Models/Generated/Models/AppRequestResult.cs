@@ -12,26 +12,26 @@ namespace ch1seL.TonNet.Client.Models
     public abstract class AppRequestResult
     {
         /// <summary>
-        /// Not described yet..
+        /// Error occured during request processing
         /// </summary>
         [JsonDiscriminator("Error")]
         public class Error : AppRequestResult
         {
             /// <summary>
-            /// Not described yet..
+            /// Error occured during request processing
             /// </summary>
             [JsonPropertyName("text")]
             public string Text { get; set; }
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Request processed successfully
         /// </summary>
         [JsonDiscriminator("Ok")]
         public class Ok : AppRequestResult
         {
             /// <summary>
-            /// Not described yet..
+            /// Request processed successfully
             /// </summary>
             [JsonPropertyName("result")]
             public JsonElement? Result { get; set; }

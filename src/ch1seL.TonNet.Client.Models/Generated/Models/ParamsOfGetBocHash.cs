@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfGetBocHash
     {
         /// <summary>
-        /// Not described yet..
+        /// BOC encoded as base64
         /// </summary>
         [JsonPropertyName("boc")]
         public string Boc { get; set; }

@@ -12,6 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class DecodedOutput
     {
         /// <summary>
+        /// <para>Decoded bodies of the out messages.</para>
         /// <para>If the message can't be decoded, then `None` will be stored in</para>
         /// <para>the appropriate position.</para>
         /// </summary>
@@ -19,7 +20,7 @@ namespace ch1seL.TonNet.Client.Models
         public JsonElement?[] OutMessages { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Decoded body of the function output message.
         /// </summary>
         [JsonPropertyName("output")]
         public JsonElement? Output { get; set; }

@@ -7,12 +7,12 @@ using System.Text.Json.Serialization;
 namespace ch1seL.TonNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// [UNSTABLE](UNSTABLE.md) Parameters to start debot.
     /// </summary>
     public class ParamsOfStart
     {
         /// <summary>
-        /// Not described yet..
+        /// Debot smart contract address
         /// </summary>
         [JsonPropertyName("address")]
         public string Address { get; set; }

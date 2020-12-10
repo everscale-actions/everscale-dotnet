@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfRunGet
     {
         /// <summary>
-        /// Not described yet..
+        /// Values returned by getmethod on stack
         /// </summary>
         [JsonPropertyName("output")]
         public JsonElement? Output { get; set; }

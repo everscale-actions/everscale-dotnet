@@ -18,7 +18,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Encodes message body according to ABI function call.
         /// </summary>
         public async Task<ResultOfEncodeMessageBody> EncodeMessageBody(ParamsOfEncodeMessageBody @params, CancellationToken cancellationToken = default)
         {
@@ -34,6 +34,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
+        /// <para>Encodes an ABI-compatible message</para>
         /// <para>Allows to encode deploy and function call messages,</para>
         /// <para>both signed and unsigned.</para>
         /// <para>Use cases include messages of any possible type:</para>
@@ -57,7 +58,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Combines `hex`-encoded `signature` with `base64`-encoded `unsigned_message`. Returns signed message encoded in `base64`.
         /// </summary>
         public async Task<ResultOfAttachSignature> AttachSignature(ParamsOfAttachSignature @params, CancellationToken cancellationToken = default)
         {
@@ -65,7 +66,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Decodes message body using provided message BOC and ABI.
         /// </summary>
         public async Task<DecodedMessageBody> DecodeMessage(ParamsOfDecodeMessage @params, CancellationToken cancellationToken = default)
         {
@@ -73,7 +74,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Decodes message body using provided body BOC and ABI.
         /// </summary>
         public async Task<DecodedMessageBody> DecodeMessageBody(ParamsOfDecodeMessageBody @params, CancellationToken cancellationToken = default)
         {
@@ -81,6 +82,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
+        /// <para>Creates account state BOC</para>
         /// <para>Creates account state provided with one of these sets of data :</para>
         /// <para>1. BOC of code, BOC of data, BOC of library</para>
         /// <para>2. TVC (string in `base64`), keys, init params</para>

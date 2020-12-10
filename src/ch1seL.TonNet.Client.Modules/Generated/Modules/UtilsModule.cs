@@ -18,7 +18,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Converts address from any TON format to any TON format
         /// </summary>
         public async Task<ResultOfConvertAddress> ConvertAddress(ParamsOfConvertAddress @params, CancellationToken cancellationToken = default)
         {

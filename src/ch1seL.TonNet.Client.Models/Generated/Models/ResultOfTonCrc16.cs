@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfTonCrc16
     {
         /// <summary>
-        /// Not described yet..
+        /// Calculated CRC for input data.
         /// </summary>
         [JsonPropertyName("crc")]
         public ushort Crc { get; set; }

@@ -34,7 +34,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Executes getmethod and returns data from TVM stack
         /// </summary>
         public async Task<ResultOfRunGet> RunGet(ParamsOfRunGet @params, CancellationToken cancellationToken = default)
         {

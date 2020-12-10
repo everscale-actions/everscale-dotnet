@@ -12,12 +12,13 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfEncodeMessageBody
     {
         /// <summary>
-        /// Not described yet..
+        /// Message body BOC encoded with `base64`.
         /// </summary>
         [JsonPropertyName("body")]
         public string Body { get; set; }
 
         /// <summary>
+        /// <para>Optional data to sign.</para>
         /// <para>Encoded with `base64`.</para>
         /// <para>Presents when `message` is unsigned. Can be used for external</para>
         /// <para>message signing. Is this case you need to sing this data and</para>

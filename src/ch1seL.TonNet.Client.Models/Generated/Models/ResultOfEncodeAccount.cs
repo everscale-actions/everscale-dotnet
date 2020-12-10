@@ -12,13 +12,13 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfEncodeAccount
     {
         /// <summary>
-        /// Not described yet..
+        /// Account BOC encoded in `base64`.
         /// </summary>
         [JsonPropertyName("account")]
         public string Account { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Account ID  encoded in `hex`.
         /// </summary>
         [JsonPropertyName("id")]
         public string Id { get; set; }

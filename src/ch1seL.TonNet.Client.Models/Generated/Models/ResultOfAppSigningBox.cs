@@ -7,31 +7,31 @@ using System.Text.Json.Serialization;
 namespace ch1seL.TonNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// Returning values from signing box callbacks.
     /// </summary>
     public abstract class ResultOfAppSigningBox
     {
         /// <summary>
-        /// Not described yet..
+        /// Result of getting public key
         /// </summary>
         [JsonDiscriminator("GetPublicKey")]
         public class GetPublicKey : ResultOfAppSigningBox
         {
             /// <summary>
-            /// Not described yet..
+            /// Result of getting public key
             /// </summary>
             [JsonPropertyName("public_key")]
             public string PublicKey { get; set; }
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Result of signing data
         /// </summary>
         [JsonDiscriminator("Sign")]
         public class Sign : ResultOfAppSigningBox
         {
             /// <summary>
-            /// Not described yet..
+            /// Result of signing data
             /// </summary>
             [JsonPropertyName("signature")]
             public string Signature { get; set; }

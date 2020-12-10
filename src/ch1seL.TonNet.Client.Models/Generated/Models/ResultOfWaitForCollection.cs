@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfWaitForCollection
     {
         /// <summary>
-        /// Not described yet..
+        /// First found object that matches the provided criteria
         /// </summary>
         [JsonPropertyName("result")]
         public JsonElement? Result { get; set; }

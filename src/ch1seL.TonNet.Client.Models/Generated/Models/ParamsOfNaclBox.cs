@@ -12,25 +12,25 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfNaclBox
     {
         /// <summary>
-        /// Not described yet..
+        /// Data that must be encrypted encoded in `base64`.
         /// </summary>
         [JsonPropertyName("decrypted")]
         public string Decrypted { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Nonce, encoded in `hex`
         /// </summary>
         [JsonPropertyName("nonce")]
         public string Nonce { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Receiver's public key - unprefixed 0-padded to 64 symbols hex string
         /// </summary>
         [JsonPropertyName("their_public")]
         public string TheirPublic { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Sender's private key - unprefixed 0-padded to 64 symbols hex string
         /// </summary>
         [JsonPropertyName("secret")]
         public string Secret { get; set; }

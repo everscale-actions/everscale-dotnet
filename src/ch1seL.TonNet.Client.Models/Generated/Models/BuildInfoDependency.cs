@@ -12,13 +12,14 @@ namespace ch1seL.TonNet.Client.Models
     public class BuildInfoDependency
     {
         /// <summary>
-        /// Usually it is a crate name.
+        /// <para>Dependency name.</para>
+        /// <para>Usually it is a crate name.</para>
         /// </summary>
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Git commit hash of the related repository.
         /// </summary>
         [JsonPropertyName("git_commit")]
         public string GitCommit { get; set; }

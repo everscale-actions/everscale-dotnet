@@ -12,19 +12,19 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfDecodeMessageBody
     {
         /// <summary>
-        /// Not described yet..
+        /// Contract ABI used to decode.
         /// </summary>
         [JsonPropertyName("abi")]
         public Abi Abi { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Message body BOC encoded in `base64`.
         /// </summary>
         [JsonPropertyName("body")]
         public string Body { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// True if the body belongs to the internal message.
         /// </summary>
         [JsonPropertyName("is_internal")]
         public bool IsInternal { get; set; }

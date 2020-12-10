@@ -12,7 +12,8 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfTonCrc16
     {
         /// <summary>
-        /// Encoded with `base64`.
+        /// <para>Input data for CRC calculation.</para>
+        /// <para>Encoded with `base64`.</para>
         /// </summary>
         [JsonPropertyName("data")]
         public string Data { get; set; }

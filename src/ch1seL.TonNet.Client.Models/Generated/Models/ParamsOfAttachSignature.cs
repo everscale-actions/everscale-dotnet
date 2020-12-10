@@ -12,25 +12,25 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfAttachSignature
     {
         /// <summary>
-        /// Not described yet..
+        /// Contract ABI
         /// </summary>
         [JsonPropertyName("abi")]
         public Abi Abi { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Public key encoded in `hex`.
         /// </summary>
         [JsonPropertyName("public_key")]
         public string PublicKey { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Unsigned message BOC encoded in `base64`.
         /// </summary>
         [JsonPropertyName("message")]
         public string Message { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Signature encoded in `hex`.
         /// </summary>
         [JsonPropertyName("signature")]
         public string Signature { get; set; }

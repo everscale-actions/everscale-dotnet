@@ -12,7 +12,8 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfHash
     {
         /// <summary>
-        /// Encoded with 'hex'.
+        /// <para>Hash of input `data`.</para>
+        /// <para>Encoded with 'hex'.</para>
         /// </summary>
         [JsonPropertyName("hash")]
         public string Hash { get; set; }
