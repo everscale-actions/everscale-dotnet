@@ -51,7 +51,9 @@ jobs:
     - name: Test
       env:
         TON_NETWORK_ADDRESS: http://localhost:5555
-      run: dotnet test -c Release --no-restore --no-build
+      run: | 
+        dotnet test --no-restore --no-build -c Release -f netcoreapp3.1
+        dotnet test --no-restore --no-build -c Release -f net5.0
 
     - name: Pack
       if: github.event_name != 'pull_request'
