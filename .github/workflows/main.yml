@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Run Node SE
-      run: docker run -d --name tonlab-node -p5555:80 tonlabs/local-node
+      run: docker run -d --name tonlab-node -e USER_AGREEMENT=yes -p5555:80 tonlabs/local-node
 
     - name: Checkout
       uses: actions/checkout@v2
