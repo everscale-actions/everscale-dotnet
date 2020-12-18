@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <None Condition="'$(_NativeRuntime)' != ''" Include="$(MSBuildThisFileDirectory)..\runtimes\$(_NativeRuntime)\native\$(_NativeLibName)">
-      <Link>$(_NativeLibName)</Link>
+      <Visible>false</Visible>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

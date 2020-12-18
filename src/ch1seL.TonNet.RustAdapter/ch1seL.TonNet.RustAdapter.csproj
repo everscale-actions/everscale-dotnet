@@ -50,6 +50,10 @@
             <Pack>true</Pack>
             <PackagePath>build\ch1seL.TonNet.RustAdapter.targets</PackagePath>
         </None>
+        <None Include="ch1seL.TonNet.RustAdapter.targets">
+            <Pack>true</Pack>
+            <PackagePath>buildTransitive\ch1seL.TonNet.RustAdapter.targets</PackagePath>
+        </None>
     </ItemGroup>
     
     <Import Project="ch1seL.TonNet.RustAdapter.targets" />
