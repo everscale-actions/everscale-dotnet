@@ -47,6 +47,12 @@ jobs:
 
     - name: Build
       run: dotnet build -c Release --no-restore -v n
+      
+    - name: Wait for Node SE
+      run: |
+        wget https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh
+        chmod +x wait-for-it.sh
+        ./wait-for-it.sh -s -t 120 localhost:5555
 
     - name: Test
       env:
