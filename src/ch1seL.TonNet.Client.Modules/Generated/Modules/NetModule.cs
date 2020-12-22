@@ -71,8 +71,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// <para> Suspends network module to stop any network activity</para>
-        /// <para> Suspends network module to stop any network activity</para>
+        /// Suspends network module to stop any network activity
         /// </summary>
         public async Task Suspend(CancellationToken cancellationToken = default)
         {
@@ -80,12 +79,19 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// <para> Resumes network module to enable network activity</para>
-        /// <para> Resumes network module to enable network activity</para>
+        /// Resumes network module to enable network activity
         /// </summary>
         public async Task Resume(CancellationToken cancellationToken = default)
         {
             await _tonClientAdapter.Request("net.resume", cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns ID of the last block in a specified account shard
+        /// </summary>
+        public async Task<ResultOfFindLastShardBlock> FindLastShardBlock(ParamsOfFindLastShardBlock @params, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<ParamsOfFindLastShardBlock, ResultOfFindLastShardBlock>("net.find_last_shard_block", @params, cancellationToken);
         }
     }
 }

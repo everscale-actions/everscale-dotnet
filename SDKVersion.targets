@@ -4,7 +4,7 @@
         <!--    TON SDK version -->
         <!--    used by tools\ClientGenerator (tools/api.json) -->
         <!--    used by src\ch1seL.TonNet.RustAdapter (runtime binaries) see DownloadLib.targets -->
-        <SDKVersion>1.3.0</SDKVersion>
+        <SDKVersion>1.4.0</SDKVersion>
     </PropertyGroup>
     
 </Project>

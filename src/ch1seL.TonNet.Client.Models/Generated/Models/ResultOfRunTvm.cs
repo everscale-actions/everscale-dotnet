@@ -26,7 +26,7 @@ namespace ch1seL.TonNet.Client.Models
 
         /// <summary>
         /// <para>Updated account state BOC.</para>
-        /// <para>Encoded as `base64`.Attention! Only data in account state is updated.</para>
+        /// <para>Encoded as `base64`.Attention! Only `account_state.storage.state.data` part of the boc is updated.</para>
         /// </summary>
         [JsonPropertyName("account")]
         public string Account { get; set; }

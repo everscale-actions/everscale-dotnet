@@ -39,6 +39,14 @@ namespace ch1seL.TonNet.Client.Models
         }
 
         /// <summary>
+        /// Notify browser that all context actions are shown.
+        /// </summary>
+        [JsonDiscriminator("SwitchCompleted")]
+        public class SwitchCompleted : ParamsOfAppDebotBrowser
+        {
+        }
+
+        /// <summary>
         /// Show action to the user. Called after `switch` for each action in context.
         /// </summary>
         [JsonDiscriminator("ShowAction")]

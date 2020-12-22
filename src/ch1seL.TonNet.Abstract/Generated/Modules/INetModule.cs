@@ -47,15 +47,18 @@ namespace ch1seL.TonNet.Abstract.Modules
         public Task<ResultOfSubscribeCollection> SubscribeCollection(ParamsOfSubscribeCollection @params, Action<JsonElement,uint> callback = null, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// <para> Suspends network module to stop any network activity</para>
-        /// <para> Suspends network module to stop any network activity</para>
+        /// Suspends network module to stop any network activity
         /// </summary>
         public Task Suspend(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// <para> Resumes network module to enable network activity</para>
-        /// <para> Resumes network module to enable network activity</para>
+        /// Resumes network module to enable network activity
         /// </summary>
         public Task Resume(CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Returns ID of the last block in a specified account shard
+        /// </summary>
+        public Task<ResultOfFindLastShardBlock> FindLastShardBlock(ParamsOfFindLastShardBlock @params, CancellationToken cancellationToken = default);
     }
 }

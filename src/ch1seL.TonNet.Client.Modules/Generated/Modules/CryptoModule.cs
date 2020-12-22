@@ -134,7 +134,10 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// <para>Verifies the signature and returns the unsigned message</para>
+        /// <para>Verifies the signature in `signed` using the signer's public key `public`</para>
+        /// <para>and returns the message `unsigned`.</para>
+        /// <para>If the signature fails verification, crypto_sign_open raises an exception.</para>
         /// </summary>
         public async Task<ResultOfNaclSignOpen> NaclSignOpen(ParamsOfNaclSignOpen @params, CancellationToken cancellationToken = default)
         {
@@ -142,7 +145,9 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// <para>Signs the message using the secret key and returns a signature.</para>
+        /// <para>Signs the message `unsigned` using the secret key `secret`</para>
+        /// <para>and returns a signature `signature`.</para>
         /// </summary>
         public async Task<ResultOfNaclSignDetached> NaclSignDetached(ParamsOfNaclSign @params, CancellationToken cancellationToken = default)
         {
@@ -150,7 +155,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Generates a random NaCl key pair
         /// </summary>
         public async Task<KeyPair> NaclBoxKeypair(CancellationToken cancellationToken = default)
         {
