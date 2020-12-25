@@ -18,6 +18,8 @@ namespace ch1seL.TonNet.Debot.Models
 
         public bool Finished { get; set; }
 
+        public bool SwitchStarted { get; set; }
+
         public void ActionWithLock(Action<DebotBrowserData> actionWithLock)
         {
             lock (_lock)

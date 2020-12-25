@@ -97,7 +97,7 @@ namespace ch1seL.TonNet.Debot
             {
                 case ParamsOfAppDebotBrowser.Input:
                     string value;
-                    value = state.Current.FuncWithLock(data => data.Step.Inputs.Dequeue());
+                    value = state.FuncWithLock(s => s.Current.Step.Inputs.Dequeue());
                     return new ResultOfAppDebotBrowser.Input
                     {
                         Value = value
@@ -106,11 +106,11 @@ namespace ch1seL.TonNet.Debot
                     RegisteredSigningBox signingBox = await _tonClient.Crypto.GetSigningBox(state.Keys);
                     return new ResultOfAppDebotBrowser.GetSigningBox {SigningBox = signingBox.Handle};
                 case ParamsOfAppDebotBrowser.InvokeDebot paramsOfAppDebotBrowser:
-                    DebotStep invokeStep = null;
-                    state.Current.ActionWithLock(step =>
+                    DebotStep[] invokeSteps = null;
+                    state.ActionWithLock(s =>
                     {
-                        step.Step.Invokes.Peek().Choice = 1;
-                        invokeStep = step.Step.Invokes.Dequeue();
+                        s.Current.Step.Invokes.Peek()[0].Choice = 1;
+                        invokeSteps = s.Current.Step.Invokes.Dequeue();
                     });
 
                     var current = new DebotCurrentStepData {AvailableActions = new List<DebotAction> {paramsOfAppDebotBrowser.Action}};
@@ -118,10 +118,9 @@ namespace ch1seL.TonNet.Debot
                     var fetchState = new DebotBrowserData
                     {
                         Current = current,
-                        Next = new Queue<DebotStep>(new[] {invokeStep}),
+                        Next = new Queue<DebotStep>(invokeSteps),
                         Keys = state.Keys,
                         Address = paramsOfAppDebotBrowser.DebotAddr,
-                        Finished = false
                     };
                     await ExecuteFromState(fetchState, callback => _tonClient.Debot.Fetch(new ParamsOfFetch {Address = state.Address}, callback));
                     return new ResultOfAppDebotBrowser.InvokeDebot();
@@ -131,27 +130,31 @@ namespace ch1seL.TonNet.Debot
             }
         }
 
-        private static async Task ProcessNotification(DebotBrowserData state, ParamsOfAppDebotBrowser @params)
+        private static Task ProcessNotification(DebotBrowserData state, ParamsOfAppDebotBrowser @params)
         {
             switch (@params)
             {
                 case ParamsOfAppDebotBrowser.Log log:
                     var msg = log.Msg;
-                    state.Current.ActionWithLock(data => data.Outputs.Enqueue(msg));
+                    state.ActionWithLock(s => s.Current.Outputs.Enqueue(msg));
                     break;
                 case ParamsOfAppDebotBrowser.Switch @switch:
+                    state.ActionWithLock(s=> s.SwitchStarted = true);
                     var contextId = @switch.ContextId;
                     if (contextId == (byte) DebotStates.StateExit) state.Finished = true;
-                    state.Current.ActionWithLock(data => data.AvailableActions.Clear());
+                    state.ActionWithLock(s => s.Current.AvailableActions.Clear());
+                    break;
+                case ParamsOfAppDebotBrowser.SwitchCompleted:
+                    state.ActionWithLock(s => s.SwitchStarted = false);
                     break;
                 case ParamsOfAppDebotBrowser.ShowAction showAction:
-                    state.Current.ActionWithLock(data => data.AvailableActions.Add(showAction.Action));
+                    state.ActionWithLock(s => s.Current.AvailableActions.Add(showAction.Action));
                     break;
                 default:
                     throw new ArgumentException($"invalid notification {JsonSerializer.Serialize(@params)}");
             }
 
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         }
     }
 }

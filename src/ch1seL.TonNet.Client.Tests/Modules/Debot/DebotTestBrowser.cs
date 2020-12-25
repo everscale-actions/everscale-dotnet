@@ -29,12 +29,12 @@ namespace ch1seL.TonNet.Client.Tests.Modules.Debot
                 {
                     DebotAction action = null;
 
-                    state.ActionWithLock(data =>
+                    state.ActionWithLock(s =>
                     {
-                        DebotCurrentStepData step = data.Current;
-                        step.Step = state.Next.Dequeue();
-                        step.Outputs.Clear();
-                        action = step.AvailableActions[step.Step.Choice - 1];
+                        DebotCurrentStepData currentStep = s.Current;
+                        currentStep.Step = state.Next.Dequeue();
+                        currentStep.Outputs.Clear();
+                        action = currentStep.AvailableActions[currentStep.Step.Choice - 1];
                     });
 
                     await _tonClient.Debot.Execute(new ParamsOfExecute
@@ -43,12 +43,14 @@ namespace ch1seL.TonNet.Client.Tests.Modules.Debot
                         DebotHandle = registeredDebot.DebotHandle
                     });
 
-                    state.Current.ActionWithLock(step =>
+                    state.ActionWithLock(debotBrowserData =>
                     {
-                        step.Outputs.Count.Should().Be(step.Step.Outputs.Count);
+                        DebotCurrentStepData currentStep = debotBrowserData.Current; 
+                        
+                        currentStep.Outputs.Count.Should().Be(currentStep.Step.Outputs.Count);
 
-                        foreach (var (outs0, outs1) in step.Outputs
-                            .Zip(step.Step.Outputs, Tuple.Create))
+                        foreach (var (outs0, outs1) in currentStep.Outputs
+                            .Zip(currentStep.Step.Outputs, Tuple.Create))
                         {
                             var pos = outs1.LastIndexOf("{}", StringComparison.Ordinal);
                             if (pos >= 0)
@@ -57,8 +59,8 @@ namespace ch1seL.TonNet.Client.Tests.Modules.Debot
                                 outs0.Should().BeEquivalentTo(outs1);
                         }
 
-                        step.Step.Inputs.Count.Should().Be(0);
-                        step.Step.Invokes.Count.Should().Be(0);
+                        currentStep.Step.Inputs.Count.Should().Be(0);
+                        currentStep.Step.Invokes.Count.Should().Be(0);
                     });
 
                     if (state.Current.AvailableActions.Count == 0) break;

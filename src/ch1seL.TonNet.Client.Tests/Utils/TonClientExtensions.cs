@@ -50,7 +50,7 @@ namespace ch1seL.TonNet.Client.Tests.Utils
                     CallSet = new CallSet
                     {
                         FunctionName = "sendGrams",
-                        Input = new {dest = account, amount = 100000000}.ToJsonElement()
+                        Input = new {dest = account, amount = 1000000000}.ToJsonElement()
                     },
                     Signer = new Signer.None()
                 },
