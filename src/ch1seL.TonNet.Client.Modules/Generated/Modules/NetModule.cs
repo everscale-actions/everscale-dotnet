@@ -93,5 +93,21 @@ namespace ch1seL.TonNet.Client.Modules
         {
             return await _tonClientAdapter.Request<ParamsOfFindLastShardBlock, ResultOfFindLastShardBlock>("net.find_last_shard_block", @params, cancellationToken);
         }
+
+        /// <summary>
+        /// Requests the list of alternative endpoints from server
+        /// </summary>
+        public async Task<EndpointsSet> FetchEndpoints(CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<EndpointsSet>("net.fetch_endpoints", cancellationToken);
+        }
+
+        /// <summary>
+        /// Sets the list of endpoints to use on reinit
+        /// </summary>
+        public async Task SetEndpoints(EndpointsSet @params, CancellationToken cancellationToken = default)
+        {
+            await _tonClientAdapter.Request<EndpointsSet>("net.set_endpoints", @params, cancellationToken);
+        }
     }
 }

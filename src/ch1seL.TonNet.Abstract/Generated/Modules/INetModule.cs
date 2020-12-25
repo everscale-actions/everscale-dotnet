@@ -60,5 +60,15 @@ namespace ch1seL.TonNet.Abstract.Modules
         /// Returns ID of the last block in a specified account shard
         /// </summary>
         public Task<ResultOfFindLastShardBlock> FindLastShardBlock(ParamsOfFindLastShardBlock @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Requests the list of alternative endpoints from server
+        /// </summary>
+        public Task<EndpointsSet> FetchEndpoints(CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Sets the list of endpoints to use on reinit
+        /// </summary>
+        public Task SetEndpoints(EndpointsSet @params, CancellationToken cancellationToken = default);
     }
 }
