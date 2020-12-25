@@ -34,28 +34,18 @@
         <None Include="..\runtimes\win-x64\native\tonclient.dll">
             <Pack>true</Pack>            
             <PackagePath>runtimes\win-x64\native\tonclient.dll</PackagePath>
-            <Link>lib\tonclient.dll</Link>
+            <Link>runtimes\win-x64\native\tonclient.dll</Link>
         </None>
         <None Include="..\runtimes\linux-x64\native\libtonclient.so">
             <Pack>true</Pack>
             <PackagePath>runtimes\linux-x64\native\libtonclient.so</PackagePath>
-            <Link>lib\libtonclient.so</Link>
+            <Link>runtimes\linux-x64\native\libtonclient.so</Link>
         </None>
         <None Include="..\runtimes\osx-x64\native\libtonclient.dylib">
             <Pack>true</Pack>
             <PackagePath>runtimes\osx-x64\native\libtonclient.dylib</PackagePath>
-            <Link>lib\libtonclient.dylib</Link>
-        </None>
-        <None Include="ch1seL.TonNet.RustAdapter.targets">
-            <Pack>true</Pack>
-            <PackagePath>build\ch1seL.TonNet.RustAdapter.targets</PackagePath>
-        </None>
-        <None Include="ch1seL.TonNet.RustAdapter.targets">
-            <Pack>true</Pack>
-            <PackagePath>buildTransitive\ch1seL.TonNet.RustAdapter.targets</PackagePath>
+            <Link>runtimes\osx-x64\native\libtonclient.dylib</Link>
         </None>
     </ItemGroup>
-    
-    <Import Project="ch1seL.TonNet.RustAdapter.targets" />
     
 </Project>
