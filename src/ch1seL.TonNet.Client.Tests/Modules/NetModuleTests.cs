@@ -122,9 +122,9 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             ResultOfEncodeMessage msg = await _tonClient.Abi.EncodeMessage(deployParams);
             var transactions = new List<JsonElement>();
             var transactionsLock = new object();
-            
+
             var address = msg.Address;
-            
+
             var callback = new Action<JsonElement, uint>((serdeJson, responseType) =>
             {
                 JsonElement result = (SubscriptionResponseType) responseType switch
@@ -135,7 +135,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 };
 
                 result.Get<string>("account_addr").Should().Be(address);
-                
+
                 lock (transactionsLock)
                 {
                     transactions.Add(result);
@@ -170,12 +170,14 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             await _tonClient.SendGramsFromLocalGiver(address);
 
             // give some time for subscription to receive all data
-            await Task.Delay(TimeSpan.FromSeconds(2));
+            await Task.Delay(TimeSpan.FromSeconds(1));
 
             var transactionCount1 = transactions.Count;
 
             // suspend subscription
             await subscriptionClient.Net.Suspend();
+
+            await Task.Delay(TimeSpan.FromSeconds(1));
 
             // deploy to create second transaction
             await _tonClient.Processing.ProcessMessage(new ParamsOfProcessMessage
@@ -189,7 +191,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
 
             // resume subscription
             await subscriptionClient.Net.Resume();
-            
+
             // run contract function to create third transaction
             await _tonClient.Processing.ProcessMessage(new ParamsOfProcessMessage
             {
@@ -201,9 +203,9 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                     CallSet = new CallSet {FunctionName = "touch"}
                 }
             });
-            
+
             // give some time for subscription to receive all data
-            await Task.Delay(TimeSpan.FromSeconds(5));
+            await Task.Delay(TimeSpan.FromSeconds(1));
 
             await subscriptionClient.Net.Unsubscribe(new ResultOfSubscribeCollection
             {
@@ -216,10 +218,10 @@ namespace ch1seL.TonNet.Client.Tests.Modules
 
             //check count before suspending 
             transactionCount1.Should().Be(2);
-            
+
             //check count before resume
             transactionCount2.Should().Be(2);
-            
+
             // check that third transaction is now received after resume
             transactions.Count.Should().Be(4);
             transactions.Select(t => t.Get<string>("account_addr")).Should().BeEquivalentTo(address, address, address, address);
@@ -265,7 +267,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         [Fact]
         public async Task FindLastShardBlock()
         {
-            ResultOfFindLastShardBlock block = await _tonClient.Net.FindLastShardBlock(new ParamsOfFindLastShardBlock()
+            ResultOfFindLastShardBlock block = await _tonClient.Net.FindLastShardBlock(new ParamsOfFindLastShardBlock
             {
                 Address = TestsEnv.LocalGiverAddress
             });

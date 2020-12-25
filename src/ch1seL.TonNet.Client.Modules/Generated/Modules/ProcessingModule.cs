@@ -66,11 +66,7 @@ namespace ch1seL.TonNet.Client.Modules
         /// <para>The intermediate events, such as `WillFetchFirstBlock`, `WillSend`, `DidSend`,</para>
         /// <para>`WillFetchNextBlock`, etc - are switched on/off by `send_events` flag</para>
         /// <para>and logged into the supplied callback function.</para>
-        /// <para>The retry configuration parameters are defined in config:</para>
-        /// <para>&lt;add correct config params here&gt;</para>
-        /// <para>pub const DEFAULT_EXPIRATION_RETRIES_LIMIT: i8 = 3; - max number of retries</para>
-        /// <para>pub const DEFAULT_EXPIRATION_TIMEOUT: u32 = 40000;  - message expiration timeout in ms.</para>
-        /// <para>pub const DEFAULT_....expiration_timeout_grow_factor... = 1.5 - factor that increases the expiration timeout for each retry</para>
+        /// <para>The retry configuration parameters are defined in client's `NetworkConfig`.</para>
         /// <para>If contract's ABI does not include "expire" header</para>
         /// <para>then, if no transaction is found within the network timeout (see config parameter ), exits with error.</para>
         /// </summary>

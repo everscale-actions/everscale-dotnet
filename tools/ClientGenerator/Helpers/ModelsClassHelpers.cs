@@ -40,7 +40,13 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
             return EnumDeclaration(Identifier(NamingConventions.Normalize(typeElement.Name)))
                 .AddMembers(typeElement
                     .EnumConsts
-                    .Select(e => EnumMemberDeclaration(e.Name))
+                    .Select(e => e.Value == null
+                        ? EnumMemberDeclaration(e.Name)
+                        : EnumMemberDeclaration(e.Name)
+                            .WithEqualsValue(EqualsValueClause(
+                                LiteralExpression(
+                                    SyntaxKind.NumericLiteralExpression,
+                                    Literal(int.Parse(e.Value))))))
                     .ToArray())
                 .AddModifiers(Token(SyntaxKind.PublicKeyword)
                     .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(summary)));
@@ -49,13 +55,13 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
         private ClassDeclarationSyntax GenerateEnumOfTypes(TypeElement typeElement)
         {
             var typeElementSummary = typeElement.Summary + (typeElement.Description != null ? $"\n{typeElement.Description}" : null);
-            
+
             var enumTypes = typeElement
                 .EnumTypes
                 .Select(subClass =>
                 {
                     var subClassSummary = subClass.Summary + (subClass.Description != null ? $"\n{subClass.Description}" : null);
-                    
+
                     switch (subClass.Type)
                     {
                         case GenericArgType.Ref:
@@ -137,8 +143,8 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
         private MemberDeclarationSyntax CreatePropertyStructFields(StructField sf)
         {
-                var sfSummary = sf.Summary + (sf.Description != null ? $"\n{sf.Description}" : null);
-            
+            var sfSummary = sf.Summary + (sf.Description != null ? $"\n{sf.Description}" : null);
+
             return sf.Type switch
             {
                 PurpleType.Array => CreatePropertyForPurpleArrayItem(sf.Name, sf.ArrayItem.Type, sf.ArrayItem.RefName, sf.ArrayItem.OptionalInner,
