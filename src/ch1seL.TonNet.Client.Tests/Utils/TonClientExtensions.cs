@@ -9,8 +9,6 @@ namespace ch1seL.TonNet.Client.Tests.Utils
 {
     public static class TonClientExtensions
     {
-        private const string LocalGiverAddress = "0:841288ed3b55d9cdafa806807f02a0ae0c169aa5edfe88a789a6482429756a94";
-
         // todo: migrate to new giver contract after next SDK Release 
         // https://t.me/ton_sdk/4616
         // https://t.me/ton_sdk/4609
@@ -39,13 +37,13 @@ namespace ch1seL.TonNet.Client.Tests.Utils
         /// <param name="account">the giver sends money to himself by default</param>
         public static async Task SendGramsFromLocalGiver(this ITonClient tonClient, string account = null)
         {
-            account ??= LocalGiverAddress;
+            account ??= TestsEnv.LocalGiverAddress;
 
             var processMessageParams = new ParamsOfProcessMessage
             {
                 MessageEncodeParams = new ParamsOfEncodeMessage
                 {
-                    Address = LocalGiverAddress,
+                    Address = TestsEnv.LocalGiverAddress,
                     Abi = TestsEnv.Packages.GiverAbiV1,
                     CallSet = new CallSet
                     {

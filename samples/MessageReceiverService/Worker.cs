@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ch1seL.TonNet.Abstract;
+using ch1seL.TonNet.Client;
 using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.Client.PackageManager;
 using ch1seL.TonNet.Serialization;

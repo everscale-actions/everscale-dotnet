@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.Client;
+using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.RustAdapter.Models;
 using ch1seL.TonNet.RustAdapter.RustInterop;
 using ch1seL.TonNet.RustAdapter.RustInterop.Models;
@@ -39,8 +40,8 @@ namespace ch1seL.TonNet.RustAdapter
             var createContextResult = JsonSerializer.Deserialize<CreateContextResponse>(resultJson, JsonOptionsProvider.JsonSerializerOptions);
             if (createContextResult?.ContextNumber == null)
                 throw new TonClientException($"Raw result: {resultJson}", new NullReferenceException("Result of context creation or context number is null"));
-            RustClientError error = createContextResult.Error;
-            if (error != null) throw TonClientException.CreateExceptionWithCodeWithData(error.Code, error.Data, error.Message);
+            ClientError error = createContextResult.Error;
+            if (error != null) throw TonClientException.CreateExceptionWithCodeWithData(error.Code, error.Data?.ToObject<Dictionary<string, object>>(), error.Message);
 
             _contextNumber = (uint) createContextResult.ContextNumber;
         }
@@ -92,7 +93,7 @@ namespace ch1seL.TonNet.RustAdapter
                         cts.SetResult(responseJson);
                         break;
                     case ResponseType.Error:
-                        TonClientException exception = GetTonClientExceptionByResponse(responseJson);
+                        TonClientException exception = TonExceptionSerializer.GetTonClientExceptionByResponse(responseJson);
                         cts.SetException(exception);
                         break;
                     // do nothing
@@ -131,25 +132,6 @@ namespace ch1seL.TonNet.RustAdapter
             // log error with ids and throw TonClientException
             _logger.LogError("Request execution timeout expired or cancellation requested. Context:{context} request:{request}", _contextNumber, _requestId);
             throw new TonClientException("Execution timeout expired or cancellation requested");
-        }
-
-        private static TonClientException GetTonClientExceptionByResponse(string responseJson)
-        {
-            RustClientError errorResponse = null;
-            Exception innerException = null;
-            try
-            {
-                errorResponse = JsonSerializer.Deserialize<RustClientError>(responseJson, JsonOptionsProvider.JsonSerializerOptions);
-            }
-            catch (Exception e)
-            {
-                innerException = e;
-            }
-
-            return errorResponse == null
-                ? new TonClientException($"Raw result: {responseJson}",
-                    innerException ?? new NullReferenceException("Result of error response is null or not valid"))
-                : TonClientException.CreateExceptionWithCodeWithData(errorResponse.Code, errorResponse.Data, errorResponse.Message);
         }
 
         private async Task<bool> WaitForDelegates()

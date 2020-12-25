@@ -1,4 +1,4 @@
-﻿namespace ch1seL.TonNet.TestsShared
+﻿namespace ch1seL.TonNet.Client
 {
     public enum TransactionProcessingStatus
     {

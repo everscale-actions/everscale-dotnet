@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ch1seL.TonNet.Abstract
+namespace ch1seL.TonNet.Client
 {
     // todo: seems like have to be moved to another lib?
     public class TonClientException : Exception
@@ -10,9 +10,9 @@ namespace ch1seL.TonNet.Abstract
         {
         }
 
-        public int Code { get; private set; }
+        public uint Code { get; private set; }
 
-        public static TonClientException CreateExceptionWithCodeWithData(int code, IDictionary<string, object> data = null, string message = null,
+        public static TonClientException CreateExceptionWithCodeWithData(uint code, IDictionary<string, object> data = null, string message = null,
             Exception inner = null)
         {
             var exception = new TonClientException(message, inner) {Code = code};
