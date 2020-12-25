@@ -84,10 +84,10 @@ See configuration parameters here https://github.com/tonlabs/TON-SDK/blob/master
 ```
 public void ConfigureServices(IServiceCollection services)
 {
-    services.AddTonClient(networkConfig =>
+    services.AddTonClient(config =>
     {
-        networkConfig.ServerAddress = "net.ton.dev"; // or http://localhost, main.ton.dev is default
-        networkConfig.NetworkRetriesCount = 5;
+        config.Network.ServerAddress = "net.ton.dev"; // or http://localhost, main.ton.dev is default
+        config.Network.NetworkRetriesCount = 5;
     }, packageManagerConfig =>
     {
         packageManagerConfig.PackagesPath = "packages"; // path to abi.json and tvc files, _contracts is default
@@ -99,20 +99,18 @@ public void ConfigureServices(IServiceCollection services)
 
 https://docs.microsoft.com/en-us/dotnet/core/extensions/configuration-providers
 
-#### Example for appsettings.json 
+#### Example for appsettings.json, see TonClientConfig
+
 ```
 {
-  "NetworkConfig": {
-    "server_address": "net.ton.dev",
-    "network_retries_count": "10",
-    "message_retries_count": "5",
-    "message_processing_timeout": 100,
-    "wait_for_timeout": 100,
-    "out_of_sync_threshold": 5000,
-    "access_key": "YourAccessKey"
+  "TonClient": {
+    "Network": {
+      "ServerAddress": "http://localhost",
+      "WaitForTimeout": 5000
+    }
   },
-  "PackageManager":{
-    "PackagesPath": "path_to_contracts"
+  "PackageManager": {
+    "PackagesPath": "_contracts"
   }
 }
 ```
@@ -120,11 +118,9 @@ https://docs.microsoft.com/en-us/dotnet/core/extensions/configuration-providers
 ```
 public void ConfigureServices(IServiceCollection services)
 {
-    services
-        .Configure<NetworkConfig>(Configuration.GetSection("NetworkConfig"))
+    services.AddTonClient()        
+        .Configure<TonClientOptions>(Configuration.GetSection("TonClient"))
         .Configure<PackageManagerOptions>(Configuration.GetSection("PackageManager"));
-
-    services.AddTonClient();
 }
 ```
 

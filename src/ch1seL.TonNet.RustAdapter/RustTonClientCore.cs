@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.Client;
 using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.RustAdapter.Models;
@@ -24,11 +23,11 @@ namespace ch1seL.TonNet.RustAdapter
         private readonly ILogger<RustTonClientCore> _logger;
         private uint _requestId;
 
-        public RustTonClientCore(string optionsJson, ILogger<RustTonClientCore> logger)
+        public RustTonClientCore(string configJson, ILogger<RustTonClientCore> logger)
         {
             _logger = logger;
-            _logger.LogTrace("Creating context with options: {options}", optionsJson);
-            using var optionsInteropJson = optionsJson.ToInteropStringDisposable();
+            _logger.LogTrace("Creating context with options: {config}", configJson);
+            using var optionsInteropJson = configJson.ToInteropStringDisposable();
             IntPtr resultPtr = RustInteropInterface.tc_create_context(optionsInteropJson);
 
             _logger.LogTrace("Reading context creation result");
@@ -41,7 +40,8 @@ namespace ch1seL.TonNet.RustAdapter
             if (createContextResult?.ContextNumber == null)
                 throw new TonClientException($"Raw result: {resultJson}", new NullReferenceException("Result of context creation or context number is null"));
             ClientError error = createContextResult.Error;
-            if (error != null) throw TonClientException.CreateExceptionWithCodeWithData(error.Code, error.Data?.ToObject<Dictionary<string, object>>(), error.Message);
+            if (error != null)
+                throw TonClientException.CreateExceptionWithCodeWithData(error.Code, error.Data?.ToObject<Dictionary<string, object>>(), error.Message);
 
             _contextNumber = (uint) createContextResult.ContextNumber;
         }

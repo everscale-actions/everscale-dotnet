@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ch1seL.TonNet.Abstract;
+using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.TestsShared;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
@@ -31,8 +32,8 @@ namespace ch1seL.TonNet.Client.Tests
                 .AddTonClient(config =>
                 {
                     //as default tests don't use any server by some integration tests require Node SE
-                    //if useNodeSe is true we use http://localhost or TON_NETWORK_ADDRESS env if provided  
-                    config.ServerAddress = useNodeSe ? TestsEnv.TonNetworkAddress : string.Empty;
+                    //if useNodeSe is true we use http://localhost or TON_NETWORK_ADDRESS env if provided
+                    config.Network = new NetworkConfig {ServerAddress = useNodeSe ? TestsEnv.TonNetworkAddress : null};
                 })
                 .BuildServiceProvider();
 
