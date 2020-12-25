@@ -29,6 +29,9 @@ namespace ch1seL.TonNet.Client
                     ILoggerFactory loggerFactory = serviceProvider?.GetService<ILoggerFactory>() ?? NullLoggerFactory.Instance;
                     TonClientOptions tonClientOptions = serviceProvider?.GetRequiredService<IOptions<TonClientOptions>>().Value ?? new TonClientOptions();
 
+                    // todo: workaround fixed in 1.5.0, remove this line
+                    tonClientOptions.Network.ServerAddress ??= string.Empty;
+
                     var configJson = JsonSerializer.Serialize(tonClientOptions, JsonOptionsProvider.JsonSerializerOptions);
                     var logger = loggerFactory.CreateLogger<RustTonClientCore>();
 
