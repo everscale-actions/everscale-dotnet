@@ -11,6 +11,6 @@ namespace ch1seL.TonNet.Client
 
         [JsonPropertyName("abi")] public AbiConfig Abi { get; set; } = new AbiConfig();
 
-        [JsonPropertyName("crypto")] public CryptoConfig CryptoConfig { get; set; } = new CryptoConfig();
+        [JsonPropertyName("crypto")] public CryptoConfig Crypto { get; set; } = new CryptoConfig();
     }
 }
