@@ -79,7 +79,11 @@ Can be inherited or implemented self-owned: `services.AddTransient<IDebotBrowser
 
 ## Advanced client configuration
 
-See configuration parameters here https://github.com/tonlabs/TON-SDK/blob/master/docs/mod_client.md#NetworkConfig
+See configuration parameters:
+
+* https://github.com/tonlabs/TON-SDK/blob/master/docs/mod_client.md#networkconfig
+* https://github.com/tonlabs/TON-SDK/blob/master/docs/mod_client.md#cryptoconfig
+* https://github.com/tonlabs/TON-SDK/blob/master/docs/mod_client.md#abiconfig
 
 ```
 public void ConfigureServices(IServiceCollection services)
@@ -99,7 +103,7 @@ public void ConfigureServices(IServiceCollection services)
 
 https://docs.microsoft.com/en-us/dotnet/core/extensions/configuration-providers
 
-#### Example for appsettings.json, see TonClientConfig
+#### Example for appsettings.json
 
 ```
 {
@@ -110,7 +114,7 @@ https://docs.microsoft.com/en-us/dotnet/core/extensions/configuration-providers
     }
   },
   "PackageManager": {
-    "PackagesPath": "_contracts"
+    "PackagesPath": "my_app_contracts"
   }
 }
 ```
