@@ -23,7 +23,7 @@ dotnet add package ch1seL.TonNet.Client
 ```
 
 ## Register in DI  
-**Be careful!** ServerAddress is "main.ton.dev" as default
+**Be careful!** main.ton.dev network is default endpoint
 
 ```
 public void ConfigureServices(IServiceCollection services)
@@ -86,7 +86,7 @@ public void ConfigureServices(IServiceCollection services)
 {
     services.AddTonClient(config =>
     {
-        config.Network.ServerAddress = "net.ton.dev"; // or http://localhost, main.ton.dev is default
+        config.Network.Endpoints = new[] { "net.ton.dev" }; // main.ton.dev is default
         config.Network.NetworkRetriesCount = 5;
     }, packageManagerConfig =>
     {
@@ -105,7 +105,7 @@ https://docs.microsoft.com/en-us/dotnet/core/extensions/configuration-providers
 {
   "TonClient": {
     "Network": {
-      "ServerAddress": "http://localhost",
+      "Endpoints": [ "net.ton.dev" ],
       "WaitForTimeout": 5000
     }
   },

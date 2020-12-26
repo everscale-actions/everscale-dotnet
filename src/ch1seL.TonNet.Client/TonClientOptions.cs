@@ -5,9 +5,9 @@ namespace ch1seL.TonNet.Client
 {
     public class TonClientOptions
     {
-        private const string DefaultServerAddress = "main.ton.dev";
+        private static readonly string[] DefaultEndpoints = {"main.ton.dev"};
 
-        [JsonPropertyName("network")] public NetworkConfig Network { get; set; } = new NetworkConfig {ServerAddress = DefaultServerAddress};
+        [JsonPropertyName("network")] public NetworkConfig Network { get; set; } = new NetworkConfig {Endpoints = DefaultEndpoints};
 
         [JsonPropertyName("abi")] public AbiConfig Abi { get; set; } = new AbiConfig();
 

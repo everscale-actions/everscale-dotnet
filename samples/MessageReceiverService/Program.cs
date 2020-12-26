@@ -19,7 +19,7 @@ namespace SampleWorkerService
                     services.AddHostedService<Worker>();
                     services.AddTonClient(config =>
                     {
-                        config.Network.ServerAddress = "http://localhost";
+                        config.Network.Endpoints = new[] {"http://localhost"};
                         config.Network.WaitForTimeout = 5000;
                     });
                 }).UseSerilog((context, configuration) =>
