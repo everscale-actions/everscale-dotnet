@@ -24,8 +24,6 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddTonClient(this IServiceCollection serviceCollection, Action<TonClientOptions> configureTonClientOptions = null,
             Action<PackageManagerOptions> configurePackageManagerOptions = null)
         {
-            if (configurePackageManagerOptions != null) serviceCollection.Configure<PackageManagerOptions>(configurePackageManagerOptions.Invoke);
-
             return serviceCollection
                 .AddTransient<ITonClient, TonClient>()
                 .AddTransient<ITonPackageManager, FilePackageManager>()
