@@ -33,7 +33,7 @@ namespace ch1seL.TonNet.Client.Tests
                 {
                     //as default tests don't use any server by some integration tests require Node SE
                     //if useNodeSe is true we use http://localhost or TON_NETWORK_ADDRESS env if provided
-                    config.Network = new NetworkConfig {ServerAddress = useNodeSe ? TestsEnv.TonNetworkAddress : null};
+                    config.Network = new NetworkConfig {Endpoints = useNodeSe ? new[] {TestsEnv.TonNetworkAddress} : null};
 
                     configureOptions?.Invoke(config);
                 })
