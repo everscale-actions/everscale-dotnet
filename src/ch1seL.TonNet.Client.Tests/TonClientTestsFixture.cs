@@ -20,7 +20,7 @@ namespace ch1seL.TonNet.Client.Tests
             _serviceProviders?.ForEach(sp => sp?.Dispose());
         }
 
-        protected internal ITonClient CreateClient(ITestOutputHelper output, bool useNodeSe = false)
+        protected internal ITonClient CreateClient(ITestOutputHelper output, bool useNodeSe = false, Action<TonClientOptions> configureOptions = null)
         {
             Logger logger = new LoggerConfiguration()
                 .MinimumLevel.Verbose()
@@ -34,6 +34,8 @@ namespace ch1seL.TonNet.Client.Tests
                     //as default tests don't use any server by some integration tests require Node SE
                     //if useNodeSe is true we use http://localhost or TON_NETWORK_ADDRESS env if provided
                     config.Network = new NetworkConfig {ServerAddress = useNodeSe ? TestsEnv.TonNetworkAddress : null};
+
+                    configureOptions?.Invoke(config);
                 })
                 .BuildServiceProvider();
 
