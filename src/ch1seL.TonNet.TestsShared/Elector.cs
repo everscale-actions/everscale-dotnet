@@ -6,10 +6,11 @@ using ch1seL.TonNet.Serialization;
 
 namespace ch1seL.TonNet.TestsShared
 {
-    [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global")]
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     internal class Elector
     {
-        public static Elector Instance = GetElector();
+        public static readonly Elector Instance = GetElector();
 
         [JsonPropertyName("id")] public string Id { get; set; }
 
@@ -19,7 +20,7 @@ namespace ch1seL.TonNet.TestsShared
 
         private static Elector GetElector()
         {
-            using FileStream fileStream = File.OpenRead(Path.Join("_contracts","elector.json"));
+            using FileStream fileStream = File.OpenRead(Path.Join("_contracts", "elector.json"));
             JsonDocument jsonDoc = JsonDocument.Parse(fileStream);
             return jsonDoc.RootElement.ToObject<Elector>();
         }

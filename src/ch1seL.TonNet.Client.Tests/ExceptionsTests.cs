@@ -11,23 +11,20 @@ namespace ch1seL.TonNet.Client.Tests
     public class ExceptionsTests : IClassFixture<TonClientTestsFixture>
     {
         private readonly ITonClient _tonClient;
+
         public ExceptionsTests(TonClientTestsFixture fixture, ITestOutputHelper outputHelper)
         {
             _tonClient = fixture.CreateClient(outputHelper);
         }
 
-        
-        
+
         [Fact(Timeout = 5000)]
         public async Task ThrowTonClientException()
         {
-            Func<Task> act = async () =>
-            {
-                await _tonClient.Crypto.MnemonicFromRandom(new ParamsOfMnemonicFromRandom() {Dictionary = 111, WordCount = 111});
-            };
+            Func<Task> act = async () => { await _tonClient.Crypto.MnemonicFromRandom(new ParamsOfMnemonicFromRandom {WordCount = 111}); };
 
             var exceptionAssertions = await act.Should().ThrowAsync<TonClientException>();
-            exceptionAssertions.Which.Code.Should().Be(118);
+            exceptionAssertions.Which.Code.Should().Be((uint) CryptoErrorCode.Bip39InvalidWordCount);
             exceptionAssertions.Which.Message.Should().StartWith("Invalid mnemonic word count");
         }
     }

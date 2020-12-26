@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace ch1seL.TonNet.Client
 {
-    // todo: seems like have to be moved to another lib?
     public class TonClientException : Exception
     {
         public TonClientException(string message = null, Exception inner = null) : base(message, inner)

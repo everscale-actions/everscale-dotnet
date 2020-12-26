@@ -1,7 +1,6 @@
 ﻿using System;
 using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.Client;
-using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.Client.PackageManager;
 using ch1seL.TonNet.Debot;
 
@@ -14,10 +13,15 @@ namespace Microsoft.Extensions.DependencyInjection
         ///     Provide ITonClient and ITonPackageManager in DI
         /// </summary>
         /// <param name="serviceCollection"></param>
-        /// <param name="configureNetworkOptions">Configure network <see cref="NetworkConfig" /> https://docs.ton.dev/86757ecb2/p/5328db-tonclient/t/31a659</param>
+        /// <param name="configureTonClientOptions">
+        ///     Configure network <see cref="TonClientOptions" />
+        ///     https://github.com/tonlabs/TON-SDK/blob/master/docs/mod_client.md#networkconfig
+        ///     https://github.com/tonlabs/TON-SDK/blob/master/docs/mod_client.md#cryptoconfig
+        ///     https://github.com/tonlabs/TON-SDK/blob/master/docs/mod_client.md#abiconfig
+        /// </param>
         /// <param name="configurePackageManagerOptions">Configure package manager, contracts path and etc. <see cref="PackageManagerOptions" /></param>
         /// <returns></returns>
-        public static IServiceCollection AddTonClient(this IServiceCollection serviceCollection, Action<TonClientOptions> configureNetworkOptions = null,
+        public static IServiceCollection AddTonClient(this IServiceCollection serviceCollection, Action<TonClientOptions> configureTonClientOptions = null,
             Action<PackageManagerOptions> configurePackageManagerOptions = null)
         {
             if (configurePackageManagerOptions != null) serviceCollection.Configure<PackageManagerOptions>(configurePackageManagerOptions.Invoke);
@@ -26,7 +30,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddTransient<ITonClient, TonClient>()
                 .AddTransient<ITonPackageManager, FilePackageManager>()
                 .AddTransient<IDebotBrowser, DefaultDebotBrowser>()
-                .Configure<TonClientOptions>(options => configureNetworkOptions?.Invoke(options))
+                .Configure<TonClientOptions>(options => configureTonClientOptions?.Invoke(options))
                 .Configure<PackageManagerOptions>(options => configurePackageManagerOptions?.Invoke(options));
         }
     }
