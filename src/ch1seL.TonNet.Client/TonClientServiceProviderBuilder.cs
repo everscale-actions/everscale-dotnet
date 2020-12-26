@@ -23,16 +23,15 @@ namespace ch1seL.TonNet.Client
             var serviceCollection = new ServiceCollection();
             return serviceCollection
                 .AddSingleton(serviceProvider?.GetService<ILoggerFactory>() ?? NullLoggerFactory.Instance)
-                .AddTransient<ITonClientAdapter, TonNetRustAdapter>()
-                .AddSingleton<IRustTonClientCore>(provider =>
+                .AddSingleton<ITonClientAdapter>(provider =>
                 {
                     ILoggerFactory loggerFactory = serviceProvider?.GetService<ILoggerFactory>() ?? NullLoggerFactory.Instance;
-                    TonClientOptions tonClientOptions = serviceProvider?.GetRequiredService<IOptions<TonClientOptions>>().Value ?? new TonClientOptions();
+                    TonClientOptions tonClientOptions = serviceProvider?.GetService<IOptions<TonClientOptions>>()?.Value ?? new TonClientOptions();
 
                     var configJson = JsonSerializer.Serialize(tonClientOptions, JsonOptionsProvider.JsonSerializerOptions);
-                    var logger = loggerFactory.CreateLogger<RustTonClientCore>();
+                    var logger = loggerFactory.CreateLogger<TonClientRustAdapter>();
 
-                    return new RustTonClientCore(configJson, logger);
+                    return new TonClientRustAdapter(configJson, logger);
                 })
                 .AddServicesAsTransient(typeof(ITonModule), new[] {typeof(ITonModule).Assembly, typeof(AbiModule).Assembly})
                 .BuildServiceProvider();

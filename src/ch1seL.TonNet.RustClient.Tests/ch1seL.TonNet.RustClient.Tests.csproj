@@ -1,9 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <IsPackable>false</IsPackable>                
-        <LangVersion>9</LangVersion>                
-        <TargetFrameworks>net5.0;netcoreapp3.1</TargetFrameworks>                
+        <IsPackable>false</IsPackable>
+        <LangVersion>9</LangVersion>
+        <TargetFrameworks>net5.0;netcoreapp3.1</TargetFrameworks>
+        <RootNamespace>ch1seL.TonNet.RustAdapter.Tests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
