@@ -275,5 +275,20 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             block.BlockId.Should().NotBeNull();
             block.BlockId.Length.Should().Be(64);
         }
+
+        [Fact]
+        public async Task TestEndpoints()
+        {
+            ITonClient client = _fixture.CreateClient(_outputHelper,
+                configureOptions: options => options.Network.Endpoints = new[] {"cinet.tonlabs.io", "cinet2.tonlabs.io/"});
+
+            Func<Task> act = async () =>
+            {
+                EndpointsSet endpoints = await client.Net.FetchEndpoints();
+                await client.Net.SetEndpoints(endpoints);
+            };
+
+            await act.Should().NotThrowAsync();
+        }
     }
 }
