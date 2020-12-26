@@ -23,7 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ch1seL.TonNet.Client\ch1seL.TonNet.Client.csproj" />
+        <ProjectReference Include="..\ch1seL.TonNet.Client\ch1seL.TonNet.Client.csproj"/>
         <ProjectReference Include="..\ch1seL.TonNet.TestsShared\ch1seL.TonNet.TestsShared.csproj" />
     </ItemGroup>
 
