@@ -66,7 +66,7 @@ namespace ch1seL.TonNet.Client.Modules
         /// <para>The intermediate events, such as `WillFetchFirstBlock`, `WillSend`, `DidSend`,</para>
         /// <para>`WillFetchNextBlock`, etc - are switched on/off by `send_events` flag</para>
         /// <para>and logged into the supplied callback function.</para>
-        /// <para>The retry configuration parameters are defined in client's `NetworkConfig`.</para>
+        /// <para>The retry configuration parameters are defined in the client's `NetworkConfig` and `AbiConfig`.</para>
         /// <para>If contract's ABI does not include "expire" header</para>
         /// <para>then, if no transaction is found within the network timeout (see config parameter ), exits with error.</para>
         /// </summary>

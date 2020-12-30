@@ -182,9 +182,10 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             // deploy to create second transaction
             await _tonClient.Processing.ProcessMessage(new ParamsOfProcessMessage
             {
-                MessageEncodeParams = deployParams,
-                SendEvents = false
+                MessageEncodeParams = deployParams
             });
+
+            await Task.Delay(TimeSpan.FromSeconds(1));
 
             // check that second transaction is not received when subscription suspended
             var transactionCount2 = transactions.Count;
