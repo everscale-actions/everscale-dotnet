@@ -101,6 +101,11 @@ namespace ch1seL.TonNet.Abstract.Modules
         public Task<ResultOfNaclSignDetached> NaclSignDetached(ParamsOfNaclSign @params, CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Verifies the signature with public key and `unsigned` data.
+        /// </summary>
+        public Task<ResultOfNaclSignDetachedVerify> NaclSignDetachedVerify(ParamsOfNaclSignDetachedVerify @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Generates a random NaCl key pair
         /// </summary>
         public Task<KeyPair> NaclBoxKeypair(CancellationToken cancellationToken = default);

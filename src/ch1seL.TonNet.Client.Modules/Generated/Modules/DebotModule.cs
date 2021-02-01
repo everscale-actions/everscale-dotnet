@@ -58,6 +58,15 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
+        /// <para>[UNSTABLE](UNSTABLE.md) Sends message to Debot.</para>
+        /// <para>Used by Debot Browser to send response on Dinterface call or from other Debots.</para>
+        /// </summary>
+        public async Task Send(ParamsOfSend @params, CancellationToken cancellationToken = default)
+        {
+            await _tonClientAdapter.Request<ParamsOfSend>("debot.send", @params, cancellationToken);
+        }
+
+        /// <summary>
         /// <para>[UNSTABLE](UNSTABLE.md) Destroys debot handle.</para>
         /// <para>Removes handle from Client Context and drops debot engine referenced by that handle.</para>
         /// </summary>

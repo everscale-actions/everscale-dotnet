@@ -40,6 +40,12 @@ namespace ch1seL.TonNet.Abstract.Modules
         public Task Execute(ParamsOfExecute @params, CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// <para>[UNSTABLE](UNSTABLE.md) Sends message to Debot.</para>
+        /// <para>Used by Debot Browser to send response on Dinterface call or from other Debots.</para>
+        /// </summary>
+        public Task Send(ParamsOfSend @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// <para>[UNSTABLE](UNSTABLE.md) Destroys debot handle.</para>
         /// <para>Removes handle from Client Context and drops debot engine referenced by that handle.</para>
         /// </summary>

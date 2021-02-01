@@ -23,6 +23,8 @@ namespace ch1seL.TonNet.Client.Models
         NetworkModuleSuspended = 609,
         WebsocketDisconnected = 610,
         NotSupported = 611,
-        NoEndpointsProvided = 612
+        NoEndpointsProvided = 612,
+        GraphqlWebsocketInitError = 613,
+        NetworkModuleResumed = 614
     }
 }

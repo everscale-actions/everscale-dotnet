@@ -155,6 +155,14 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
+        /// Verifies the signature with public key and `unsigned` data.
+        /// </summary>
+        public async Task<ResultOfNaclSignDetachedVerify> NaclSignDetachedVerify(ParamsOfNaclSignDetachedVerify @params, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<ParamsOfNaclSignDetachedVerify, ResultOfNaclSignDetachedVerify>("crypto.nacl_sign_detached_verify", @params, cancellationToken);
+        }
+
+        /// <summary>
         /// Generates a random NaCl key pair
         /// </summary>
         public async Task<KeyPair> NaclBoxKeypair(CancellationToken cancellationToken = default)

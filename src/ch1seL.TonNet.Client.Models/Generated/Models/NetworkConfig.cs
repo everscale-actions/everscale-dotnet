@@ -19,16 +19,30 @@ namespace ch1seL.TonNet.Client.Models
 
         /// <summary>
         /// <para>List of DApp Server addresses.</para>
-        /// <para>Any correct URL format can be specified, including IP addresses</para>
+        /// <para>Any correct URL format can be specified, including IP addresses This parameter is prevailing over `server_address`.</para>
         /// </summary>
         [JsonPropertyName("endpoints")]
         public string[] Endpoints { get; set; }
 
         /// <summary>
-        /// The number of automatic network retries that SDK performs in case of connection problems The default value is 5.
+        /// <para>Deprecated.</para>
+        /// <para>You must use `network.max_reconnect_timeout` that allows to specify maximum network resolving timeout.</para>
         /// </summary>
         [JsonPropertyName("network_retries_count")]
         public sbyte? NetworkRetriesCount { get; set; }
+
+        /// <summary>
+        /// <para>Maximum time for sequential reconnections in ms.</para>
+        /// <para>Default value is 120000 (2 min)</para>
+        /// </summary>
+        [JsonPropertyName("max_reconnect_timeout")]
+        public uint? MaxReconnectTimeout { get; set; }
+
+        /// <summary>
+        /// Deprecated
+        /// </summary>
+        [JsonPropertyName("reconnect_timeout")]
+        public uint? ReconnectTimeout { get; set; }
 
         /// <summary>
         /// The number of automatic message processing retries that SDK performs in case of `Message Expired (507)` error - but only for those messages which local emulation was successfull or failed with replay protection error. The default value is 5.
@@ -50,18 +64,12 @@ namespace ch1seL.TonNet.Client.Models
 
         /// <summary>
         /// <para>Maximum time difference between server and client.</para>
-        /// <para>If client's device time is out of sink and difference is more thanthe threshhold then error will occur. Also the error will occur if the specified threshhold is more than</para>
+        /// <para>If client's device time is out of sync and difference is more than the threshold then error will occur. Also an error will occur if the specified threshold is more than</para>
         /// <para>`message_processing_timeout/2`.</para>
         /// <para>The default value is 15 sec.</para>
         /// </summary>
         [JsonPropertyName("out_of_sync_threshold")]
         public uint? OutOfSyncThreshold { get; set; }
-
-        /// <summary>
-        /// Timeout between reconnect attempts
-        /// </summary>
-        [JsonPropertyName("reconnect_timeout")]
-        public uint? ReconnectTimeout { get; set; }
 
         /// <summary>
         /// <para>Access key to GraphQL API.</para>

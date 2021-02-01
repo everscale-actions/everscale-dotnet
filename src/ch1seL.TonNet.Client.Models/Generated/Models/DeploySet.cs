@@ -29,5 +29,15 @@ namespace ch1seL.TonNet.Client.Models
         /// </summary>
         [JsonPropertyName("initial_data")]
         public JsonElement? InitialData { get; set; }
+
+        /// <summary>
+        /// <para>Optional public key that can be provided in deploy set in order to substitute one in TVM file or provided by Signer.</para>
+        /// <para>Public key resolving priority:</para>
+        /// <para>1. Public key from deploy set.</para>
+        /// <para>2. Public key, specified in TVM file.</para>
+        /// <para>3. Public key, provided by Signer.</para>
+        /// </summary>
+        [JsonPropertyName("initial_pubkey")]
+        public string InitialPubkey { get; set; }
     }
 }

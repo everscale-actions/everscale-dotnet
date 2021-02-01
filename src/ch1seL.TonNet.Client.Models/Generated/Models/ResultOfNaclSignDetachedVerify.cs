@@ -9,13 +9,12 @@ namespace ch1seL.TonNet.Client.Models
     /// <summary>
     /// Not described yet..
     /// </summary>
-    public class ResultOfSigningBoxSign
+    public class ResultOfNaclSignDetachedVerify
     {
         /// <summary>
-        /// <para>Data signature.</para>
-        /// <para>Encoded with `hex`.</para>
+        /// `true` if verification succeeded or `false` if it failed
         /// </summary>
-        [JsonPropertyName("signature")]
-        public string Signature { get; set; }
+        [JsonPropertyName("succeeded")]
+        public bool Succeeded { get; set; }
     }
 }

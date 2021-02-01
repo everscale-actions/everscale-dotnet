@@ -13,14 +13,14 @@ namespace ch1seL.TonNet.Client.Models
     {
         /// <summary>
         /// <para>A short action description.</para>
-        /// <para>Should be used by Debot Browser as name ofmenu item.</para>
+        /// <para>Should be used by Debot Browser as name of menu item.</para>
         /// </summary>
         [JsonPropertyName("description")]
         public string Description { get; set; }
 
         /// <summary>
         /// <para>Depends on action type.</para>
-        /// <para>Can be a debot function name or a print string(for Print Action).</para>
+        /// <para>Can be a debot function name or a print string (for Print Action).</para>
         /// </summary>
         [JsonPropertyName("name")]
         public string Name { get; set; }
@@ -39,7 +39,7 @@ namespace ch1seL.TonNet.Client.Models
 
         /// <summary>
         /// <para>Action attributes.</para>
-        /// <para>In the form of "param=value,flag".attribute example: instant, args, fargs, sign.</para>
+        /// <para>In the form of "param=value,flag". attribute example: instant, args, fargs, sign.</para>
         /// </summary>
         [JsonPropertyName("attributes")]
         public string Attributes { get; set; }

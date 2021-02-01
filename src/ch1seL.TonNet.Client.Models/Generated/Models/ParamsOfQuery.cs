@@ -19,7 +19,7 @@ namespace ch1seL.TonNet.Client.Models
 
         /// <summary>
         /// <para>Variables used in query.</para>
-        /// <para>Must be a map with named values thatcan be used in query.</para>
+        /// <para>Must be a map with named values that can be used in query.</para>
         /// </summary>
         [JsonPropertyName("variables")]
         public JsonElement? Variables { get; set; }
