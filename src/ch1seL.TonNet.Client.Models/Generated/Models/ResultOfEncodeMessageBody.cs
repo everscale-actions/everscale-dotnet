@@ -19,7 +19,7 @@ namespace ch1seL.TonNet.Client.Models
 
         /// <summary>
         /// <para>Optional data to sign.</para>
-        /// <para>Encoded with `base64`.</para>
+        /// <para>Encoded with `base64`. </para>
         /// <para>Presents when `message` is unsigned. Can be used for external</para>
         /// <para>message signing. Is this case you need to sing this data and</para>
         /// <para>produce signed message using `abi.attach_signature`.</para>

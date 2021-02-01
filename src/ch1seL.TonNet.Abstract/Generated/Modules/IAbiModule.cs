@@ -33,9 +33,15 @@ namespace ch1seL.TonNet.Abstract.Modules
         /// <para>`Signer::External` takes public key and returns `data_to_sign` for later signing.</para>
         /// <para>Use `attach_signature` method with the result signature to get the signed message.</para>
         /// <para>`Signer::Keys` creates a signed message with provided key pair.</para>
-        /// <para>[SOON] `Signer::SigningBox` Allows using a special interface to imlepement signing</para>
+        /// <para>[SOON] `Signer::SigningBox` Allows using a special interface to implement signing</para>
         /// <para>without private key disclosure to SDK. For instance, in case of using a cold wallet or HSM,</para>
         /// <para>when application calls some API to sign data.</para>
+        /// <para>There is an optional public key can be provided in deploy set in order to substitute one</para>
+        /// <para>in TVM file.</para>
+        /// <para>Public key resolving priority:</para>
+        /// <para>1. Public key from deploy set.</para>
+        /// <para>2. Public key, specified in TVM file.</para>
+        /// <para>3. Public key, provided by signer.</para>
         /// </summary>
         public Task<ResultOfEncodeMessage> EncodeMessage(ParamsOfEncodeMessage @params, CancellationToken cancellationToken = default);
 

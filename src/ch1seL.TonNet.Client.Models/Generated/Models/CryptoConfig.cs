@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class CryptoConfig
     {
         /// <summary>
-        /// Mnemonic dictionary that will be used by default in crypto funcions. If not specified, 1 dictionary will be used.
+        /// Mnemonic dictionary that will be used by default in crypto functions. If not specified, 1 dictionary will be used.
         /// </summary>
         [JsonPropertyName("mnemonic_dictionary")]
         public byte? MnemonicDictionary { get; set; }

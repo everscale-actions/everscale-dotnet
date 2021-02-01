@@ -30,6 +30,7 @@ namespace ch1seL.TonNet.Client.Models
         Bip39InvalidWordCount = 118,
         MnemonicGenerationFailed = 119,
         MnemonicFromEntropyFailed = 120,
-        SigningBoxNotRegistered = 121
+        SigningBoxNotRegistered = 121,
+        InvalidSignature = 122
     }
 }

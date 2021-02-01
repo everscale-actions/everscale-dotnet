@@ -26,6 +26,14 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
+        /// Performs multiple queries per single fetch.
+        /// </summary>
+        public async Task<ResultOfBatchQuery> BatchQuery(ParamsOfBatchQuery @params, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<ParamsOfBatchQuery, ResultOfBatchQuery>("net.batch_query", @params, cancellationToken);
+        }
+
+        /// <summary>
         /// <para>Queries collection data</para>
         /// <para>Queries data that satisfies the `filter` conditions,</para>
         /// <para>limits the number of returned records and orders them.</para>
@@ -34,6 +42,16 @@ namespace ch1seL.TonNet.Client.Modules
         public async Task<ResultOfQueryCollection> QueryCollection(ParamsOfQueryCollection @params, CancellationToken cancellationToken = default)
         {
             return await _tonClientAdapter.Request<ParamsOfQueryCollection, ResultOfQueryCollection>("net.query_collection", @params, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Aggregates collection data.</para>
+        /// <para>Aggregates values from the specified `fields` for records</para>
+        /// <para>that satisfies the `filter` conditions,</para>
+        /// </summary>
+        public async Task<ResultOfAggregateCollection> AggregateCollection(ParamsOfAggregateCollection @params, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<ParamsOfAggregateCollection, ResultOfAggregateCollection>("net.aggregate_collection", @params, cancellationToken);
         }
 
         /// <summary>

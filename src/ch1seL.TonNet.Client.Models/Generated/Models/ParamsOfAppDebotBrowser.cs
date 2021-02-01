@@ -99,5 +99,18 @@ namespace ch1seL.TonNet.Client.Models
             [JsonPropertyName("action")]
             public DebotAction Action { get; set; }
         }
+
+        /// <summary>
+        /// Used by Debot to call DInterface implemented by Debot Browser.
+        /// </summary>
+        [JsonDiscriminator("Send")]
+        public class Send : ParamsOfAppDebotBrowser
+        {
+            /// <summary>
+            /// Used by Debot to call DInterface implemented by Debot Browser.
+            /// </summary>
+            [JsonPropertyName("message")]
+            public string Message { get; set; }
+        }
     }
 }

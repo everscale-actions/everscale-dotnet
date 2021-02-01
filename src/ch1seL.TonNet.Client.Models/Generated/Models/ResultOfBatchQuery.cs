@@ -9,13 +9,13 @@ namespace ch1seL.TonNet.Client.Models
     /// <summary>
     /// Not described yet..
     /// </summary>
-    public class ResultOfSigningBoxSign
+    public class ResultOfBatchQuery
     {
         /// <summary>
-        /// <para>Data signature.</para>
-        /// <para>Encoded with `hex`.</para>
+        /// <para>Result values for batched queries.</para>
+        /// <para>Returns an array of values. Each value corresponds to `queries` item.</para>
         /// </summary>
-        [JsonPropertyName("signature")]
-        public string Signature { get; set; }
+        [JsonPropertyName("results")]
+        public JsonElement?[] Results { get; set; }
     }
 }

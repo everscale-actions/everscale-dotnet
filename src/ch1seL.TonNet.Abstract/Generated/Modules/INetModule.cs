@@ -14,12 +14,24 @@ namespace ch1seL.TonNet.Abstract.Modules
         public Task<ResultOfQuery> Query(ParamsOfQuery @params, CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Performs multiple queries per single fetch.
+        /// </summary>
+        public Task<ResultOfBatchQuery> BatchQuery(ParamsOfBatchQuery @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// <para>Queries collection data</para>
         /// <para>Queries data that satisfies the `filter` conditions,</para>
         /// <para>limits the number of returned records and orders them.</para>
         /// <para>The projection fields are limited to `result` fields</para>
         /// </summary>
         public Task<ResultOfQueryCollection> QueryCollection(ParamsOfQueryCollection @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// <para>Aggregates collection data.</para>
+        /// <para>Aggregates values from the specified `fields` for records</para>
+        /// <para>that satisfies the `filter` conditions,</para>
+        /// </summary>
+        public Task<ResultOfAggregateCollection> AggregateCollection(ParamsOfAggregateCollection @params, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para>Returns an object that fulfills the conditions or waits for its appearance</para>
