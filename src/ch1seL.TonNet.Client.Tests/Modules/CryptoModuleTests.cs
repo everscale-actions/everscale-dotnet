@@ -186,6 +186,25 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 .Be("fb0cfe40eea5d6c960652e6ceb904da8a72ee2fcf6e05089cf835203179ff65bb48c57ecf31dcfcd26510bea67e64f3e6898b7c58300dc14338254268cade103");
         }
 
+        [Theory]
+        [InlineData("Test Message", true)]
+        [InlineData("Test Message 1", false)]
+        public async Task NaclSignDetachedVerify(string message, bool success)
+        {
+            const string signature =
+                "fb0cfe40eea5d6c960652e6ceb904da8a72ee2fcf6e05089cf835203179ff65bb48c57ecf31dcfcd26510bea67e64f3e6898b7c58300dc14338254268cade103";
+            const string @public = "1869b7ef29d58026217e9cf163cbfbd0de889bdf1bf4daebf5433a312f5b8d6e";
+
+            ResultOfNaclSignDetachedVerify result = await _tonClient.Crypto.NaclSignDetachedVerify(new ParamsOfNaclSignDetachedVerify
+            {
+                Signature = signature,
+                Public = @public,
+                Unsigned = message.ToBase64()
+            });
+
+            result.Succeeded.Should().Be(success);
+        }
+
 
         [Fact]
         public async Task VerifySignature()
