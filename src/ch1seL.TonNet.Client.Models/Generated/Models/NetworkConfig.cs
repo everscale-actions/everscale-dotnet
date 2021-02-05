@@ -45,13 +45,13 @@ namespace ch1seL.TonNet.Client.Models
         public uint? ReconnectTimeout { get; set; }
 
         /// <summary>
-        /// The number of automatic message processing retries that SDK performs in case of `Message Expired (507)` error - but only for those messages which local emulation was successfull or failed with replay protection error. The default value is 5.
+        /// The number of automatic message processing retries that SDK performs in case of `Message Expired (507)` error - but only for those messages which local emulation was successful or failed with replay protection error. The default value is 5.
         /// </summary>
         [JsonPropertyName("message_retries_count")]
         public sbyte? MessageRetriesCount { get; set; }
 
         /// <summary>
-        /// Timeout that is used to process message delivery for the contracts which ABI does not include "expire" header. If the message is not delivered within the speficied timeout the appropriate error occurs.
+        /// Timeout that is used to process message delivery for the contracts which ABI does not include "expire" header. If the message is not delivered within the specified timeout the appropriate error occurs.
         /// </summary>
         [JsonPropertyName("message_processing_timeout")]
         public uint? MessageProcessingTimeout { get; set; }

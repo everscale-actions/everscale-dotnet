@@ -12,13 +12,13 @@ namespace ch1seL.TonNet.Client.Models
     public abstract class AppRequestResult
     {
         /// <summary>
-        /// Error occured during request processing
+        /// Error occurred during request processing
         /// </summary>
         [JsonDiscriminator("Error")]
         public class Error : AppRequestResult
         {
             /// <summary>
-            /// Error occured during request processing
+            /// Error occurred during request processing
             /// </summary>
             [JsonPropertyName("text")]
             public string Text { get; set; }
