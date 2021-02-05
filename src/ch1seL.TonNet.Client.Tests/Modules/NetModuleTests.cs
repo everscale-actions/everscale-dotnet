@@ -120,42 +120,41 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             };
 
             ResultOfEncodeMessage msg = await _tonClient.Abi.EncodeMessage(deployParams);
-            var transactions = new List<JsonElement>();
-            var transactionsLock = new object();
+            var transactions = new List<string>();
+            var errorCodes = new List<uint>();
+            var @lock = new object();
 
             var address = msg.Address;
 
             var callback = new Action<JsonElement, uint>((serdeJson, responseType) =>
             {
-                JsonElement result = (SubscriptionResponseType) responseType switch
+                switch ((SubscriptionResponseType) responseType)
                 {
-                    SubscriptionResponseType.Ok => serdeJson.GetProperty("result"),
-                    SubscriptionResponseType.Error => throw TonExceptionSerializer.GetTonClientExceptionByResponse(serdeJson.GetProperty("result")),
-                    _ => throw new TonClientException($"Unknown SubscriptionResponseType: {responseType}")
-                };
+                    case SubscriptionResponseType.Ok:
+                        JsonElement resultOk = serdeJson.GetProperty("result");
+                        resultOk.Get<string>("account_addr").Should().Be(address);
+                        lock (@lock)
+                        {
+                            transactions.Add(resultOk.Get<string>("id"));
+                        }
 
-                result.Get<string>("account_addr").Should().Be(address);
+                        break;
+                    case SubscriptionResponseType.Error:
+                        var error = serdeJson.ToObject<ClientError>();
+                        _outputHelper.WriteLine($">> {error}");
+                        lock (@lock)
+                        {
+                            errorCodes.Add(error.Code);
+                        }
 
-                lock (transactionsLock)
-                {
-                    transactions.Add(result);
+                        break;
+                    default:
+                        throw new TonClientException($"Unknown SubscriptionResponseType: {responseType}");
                 }
             });
 
             //act
             ResultOfSubscribeCollection handle1 = await subscriptionClient.Net.SubscribeCollection(new ParamsOfSubscribeCollection
-            {
-                Collection = "transactions",
-                Filter = new
-                {
-                    account_addr = new {eq = address},
-                    status = new {eq = (int) TransactionProcessingStatus.Finalized}
-                }.ToJsonElement(),
-                Result = "id account_addr"
-            }, callback);
-
-            //act
-            ResultOfSubscribeCollection handle2 = await subscriptionClient.Net.SubscribeCollection(new ParamsOfSubscribeCollection
             {
                 Collection = "transactions",
                 Filter = new
@@ -182,8 +181,21 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             // deploy to create second transaction
             await _tonClient.Processing.ProcessMessage(new ParamsOfProcessMessage
             {
-                MessageEncodeParams = deployParams
+                MessageEncodeParams = deployParams,
+                SendEvents = false
             });
+
+            //act
+            ResultOfSubscribeCollection handle2 = await subscriptionClient.Net.SubscribeCollection(new ParamsOfSubscribeCollection
+            {
+                Collection = "transactions",
+                Filter = new
+                {
+                    account_addr = new {eq = address},
+                    status = new {eq = (int) TransactionProcessingStatus.Finalized}
+                }.ToJsonElement(),
+                Result = "id account_addr"
+            }, callback);
 
             await Task.Delay(TimeSpan.FromSeconds(1));
 
@@ -192,6 +204,8 @@ namespace ch1seL.TonNet.Client.Tests.Modules
 
             // resume subscription
             await subscriptionClient.Net.Resume();
+
+            await Task.Delay(TimeSpan.FromSeconds(1));
 
             // run contract function to create third transaction
             await _tonClient.Processing.ProcessMessage(new ParamsOfProcessMessage
@@ -202,7 +216,8 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                     Signer = new Signer.Keys {KeysAccessor = keys},
                     Address = address,
                     CallSet = new CallSet {FunctionName = "touch"}
-                }
+                },
+                SendEvents = false
             });
 
             // give some time for subscription to receive all data
@@ -218,15 +233,19 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             });
 
             //check count before suspending 
-            transactionCount1.Should().Be(2);
+            transactionCount1.Should().Be(1);
 
             //check count before resume
-            transactionCount2.Should().Be(2);
+            transactionCount2.Should().Be(1);
 
             // check that third transaction is now received after resume
-            transactions.Count.Should().Be(4);
-            transactions.Select(t => t.Get<string>("account_addr")).Should().BeEquivalentTo(address, address, address, address);
-            transactions[0].Get<string>("id").Should().NotBe(transactions[2].Get<string>("id"));
+            transactions.Count.Should().Be(3);
+            transactions[0].Should().NotBe(transactions[2]);
+
+            // check errors
+            errorCodes.Count.Should().Be(4);
+            errorCodes.Take(2).Should().AllBeEquivalentTo((uint) NetErrorCode.NetworkModuleSuspended);
+            errorCodes.TakeLast(2).Should().AllBeEquivalentTo((uint) NetErrorCode.NetworkModuleResumed);
         }
 
         [Fact]
