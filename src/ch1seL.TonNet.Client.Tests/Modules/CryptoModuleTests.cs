@@ -508,7 +508,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 Xprv = "xprv9uZwtSeoKf1swgAkVVCEUmC2at6t7MCJoHnBbn1MWJZyxQ4cySkVXPyNh7zjf9VjsP4vEHDDD2a6R35cHubg4WpzXRzniYiy8aJh1gNnBKv"
             });
 
-            result.Public.Should().Be("027a598c7572dbb4fbb9663a0c805576babf7faa173a4288a48a52f6f427e12be1");
+            result.Public.Should().Be("b45e1297a5e767341a6eaaac9e20f8ccd7556a0106298316f1272e461b6fbe98");
         }
 
         [Fact]
@@ -542,7 +542,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 Xprv = "xprvA1KNMo63UcGjmDF1bX39Cw2BXGUwrwMjeD5qvQ3tA3qS3mZQkGtpf4DHq8FDLKAvAjXsYGLHDP2dVzLu9ycta8PXLuSYib2T3vzLf3brVgZ"
             });
 
-            result.Public.Should().Be("02a87d9764eedaacee45b0f777b5a242939b05fa06873bf511ca9a59cb46a5f526");
+            result.Public.Should().Be("302a832bad9e5c9906422a82c28b39ae465dcd60178480f7309e183ee34b5e83");
         }
 
         [Fact]
