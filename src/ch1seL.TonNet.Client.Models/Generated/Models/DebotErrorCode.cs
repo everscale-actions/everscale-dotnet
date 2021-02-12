@@ -18,6 +18,9 @@ namespace ch1seL.TonNet.Client.Models
         DebotInvalidHandle = 804,
         DebotInvalidJsonParams = 805,
         DebotInvalidFunctionId = 806,
-        DebotInvalidAbi = 807
+        DebotInvalidAbi = 807,
+        DebotGetMethodFailed = 808,
+        DebotInvalidMsg = 809,
+        DebotExternaCallFailed = 810
     }
 }

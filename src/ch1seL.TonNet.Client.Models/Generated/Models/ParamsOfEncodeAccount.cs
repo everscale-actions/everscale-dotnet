@@ -34,5 +34,12 @@ namespace ch1seL.TonNet.Client.Models
         /// </summary>
         [JsonPropertyName("last_paid")]
         public uint? LastPaid { get; set; }
+
+        /// <summary>
+        /// <para>Cache type to put the result.</para>
+        /// <para>The BOC intself returned if no cache type provided</para>
+        /// </summary>
+        [JsonPropertyName("boc_cache")]
+        public BocCacheType BocCache { get; set; }
     }
 }

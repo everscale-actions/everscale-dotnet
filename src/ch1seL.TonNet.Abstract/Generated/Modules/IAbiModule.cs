@@ -46,6 +46,22 @@ namespace ch1seL.TonNet.Abstract.Modules
         public Task<ResultOfEncodeMessage> EncodeMessage(ParamsOfEncodeMessage @params, CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// <para>Encodes an internal ABI-compatible message</para>
+        /// <para>Allows to encode deploy and function call messages.</para>
+        /// <para>Use cases include messages of any possible type:</para>
+        /// <para>- deploy with initial function call (i.e. `constructor` or any other function that is used for some kind</para>
+        /// <para>of initialization);</para>
+        /// <para>- deploy without initial function call;</para>
+        /// <para>- simple function call</para>
+        /// <para>There is an optional public key can be provided in deploy set in order to substitute one</para>
+        /// <para>in TVM file.</para>
+        /// <para>Public key resolving priority:</para>
+        /// <para>1. Public key from deploy set.</para>
+        /// <para>2. Public key, specified in TVM file.</para>
+        /// </summary>
+        public Task<ResultOfEncodeInternalMessage> EncodeInternalMessage(ParamsOfEncodeInternalMessage @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Combines `hex`-encoded `signature` with `base64`-encoded `unsigned_message`. Returns signed message encoded in `base64`.
         /// </summary>
         public Task<ResultOfAttachSignature> AttachSignature(ParamsOfAttachSignature @params, CancellationToken cancellationToken = default);

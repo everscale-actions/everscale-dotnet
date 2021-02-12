@@ -85,5 +85,30 @@ namespace ch1seL.TonNet.Client.Modules
         {
             return await _tonClientAdapter.Request<ParamsOfGetCodeFromTvc, ResultOfGetCodeFromTvc>("boc.get_code_from_tvc", @params, cancellationToken);
         }
+
+        /// <summary>
+        /// Get BOC from cache
+        /// </summary>
+        public async Task<ResultOfBocCacheGet> CacheGet(ParamsOfBocCacheGet @params, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<ParamsOfBocCacheGet, ResultOfBocCacheGet>("boc.cache_get", @params, cancellationToken);
+        }
+
+        /// <summary>
+        /// Save BOC into cache
+        /// </summary>
+        public async Task<ResultOfBocCacheSet> CacheSet(ParamsOfBocCacheSet @params, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<ParamsOfBocCacheSet, ResultOfBocCacheSet>("boc.cache_set", @params, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Unpin BOCs with specified pin.</para>
+        /// <para>BOCs which don't have another pins will be removed from cache</para>
+        /// </summary>
+        public async Task CacheUnpin(ParamsOfBocCacheUnpin @params, CancellationToken cancellationToken = default)
+        {
+            await _tonClientAdapter.Request<ParamsOfBocCacheUnpin>("boc.cache_unpin", @params, cancellationToken);
+        }
     }
 }

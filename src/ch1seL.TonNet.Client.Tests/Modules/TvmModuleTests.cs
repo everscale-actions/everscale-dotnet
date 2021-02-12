@@ -70,17 +70,20 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         {
             async Task<string> Run(ResultOfEncodeMessage message, Abi abi, string account)
             {
-                //arrange
-                ResultOfParse parsed = await _tonClient.Boc.ParseAccount(new ParamsOfParse {Boc = account});
-                var originalBalance = parsed.Parsed.Get<string>("balance");
-
                 //act
                 ResultOfRunExecutor resultOfRun = await _tonClient.Tvm.RunExecutor(new ParamsOfRunExecutor
-                    {Message = message.Message, Abi = abi, Account = new AccountForExecutor.Account {Boc = account, UnlimitedBalance = true}});
+                {
+                    Message = message.Message,
+                    Abi = abi,
+                    Account = new AccountForExecutor.Account
+                    {
+                        Boc = account
+                    },
+                    ReturnUpdatedAccount = true
+                });
 
-                // check that run with unlimited balance doesn't affect the contract balance
-                parsed = await _tonClient.Boc.ParseAccount(new ParamsOfParse {Boc = resultOfRun.Account});
-                parsed.Parsed.Get<string>("balance").Should().Be(originalBalance);
+                resultOfRun.Transaction.Get<string>("in_msg").Should().Be(message.MessageId);
+                resultOfRun.Fees.TotalAccountFees.Should().BePositive();
 
                 return resultOfRun.Account;
             }
@@ -95,7 +98,13 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         {
             async Task<string> Run(ResultOfEncodeMessage message, Abi abi, string account)
             {
-                ResultOfRunTvm resultOfRunTvm = await _tonClient.Tvm.RunTvm(new ParamsOfRunTvm {Message = message.Message, Abi = abi, Account = account});
+                ResultOfRunTvm resultOfRunTvm = await _tonClient.Tvm.RunTvm(new ParamsOfRunTvm
+                {
+                    Message = message.Message,
+                    Abi = abi,
+                    Account = account,
+                    ReturnUpdatedAccount = true
+                });
 
                 return resultOfRunTvm.Account;
             }
@@ -115,7 +124,8 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             {
                 Message = message,
                 Account = new AccountForExecutor.None(),
-                SkipTransactionCheck = true
+                SkipTransactionCheck = true,
+                ReturnUpdatedAccount = true
             });
 
             ResultOfParse parsed = await _tonClient.Boc.ParseAccount(new ParamsOfParse
@@ -142,7 +152,8 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             ResultOfRunExecutor result = await _tonClient.Tvm.RunExecutor(new ParamsOfRunExecutor
             {
                 Message = message.Message,
-                Account = new AccountForExecutor.Uninit()
+                Account = new AccountForExecutor.Uninit(),
+                ReturnUpdatedAccount = true
             });
 
             ResultOfParse parsed = await _tonClient.Boc.ParseAccount(new ParamsOfParse

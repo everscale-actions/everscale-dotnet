@@ -36,5 +36,19 @@ namespace ch1seL.TonNet.Client.Models
         /// </summary>
         [JsonPropertyName("abi")]
         public Abi Abi { get; set; }
+
+        /// <summary>
+        /// <para>Cache type to put the result.</para>
+        /// <para>The BOC intself returned if no cache type provided</para>
+        /// </summary>
+        [JsonPropertyName("boc_cache")]
+        public BocCacheType BocCache { get; set; }
+
+        /// <summary>
+        /// <para>Return updated account flag.</para>
+        /// <para>Empty string is returned if the flag is `false`</para>
+        /// </summary>
+        [JsonPropertyName("return_updated_account")]
+        public bool? ReturnUpdatedAccount { get; set; }
     }
 }

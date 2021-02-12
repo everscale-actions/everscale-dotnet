@@ -52,5 +52,21 @@ namespace ch1seL.TonNet.Abstract.Modules
         /// Extracts code from TVC contract image
         /// </summary>
         public Task<ResultOfGetCodeFromTvc> GetCodeFromTvc(ParamsOfGetCodeFromTvc @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get BOC from cache
+        /// </summary>
+        public Task<ResultOfBocCacheGet> CacheGet(ParamsOfBocCacheGet @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Save BOC into cache
+        /// </summary>
+        public Task<ResultOfBocCacheSet> CacheSet(ParamsOfBocCacheSet @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// <para>Unpin BOCs with specified pin.</para>
+        /// <para>BOCs which don't have another pins will be removed from cache</para>
+        /// </summary>
+        public Task CacheUnpin(ParamsOfBocCacheUnpin @params, CancellationToken cancellationToken = default);
     }
 }

@@ -28,5 +28,11 @@ namespace ch1seL.TonNet.Client.Models
         /// </summary>
         [JsonPropertyName("abi")]
         public AbiConfig Abi { get; set; }
+
+        /// <summary>
+        /// Not described yet..
+        /// </summary>
+        [JsonPropertyName("boc")]
+        public BocConfig Boc { get; set; }
     }
 }
