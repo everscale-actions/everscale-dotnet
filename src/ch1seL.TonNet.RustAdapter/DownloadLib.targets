@@ -8,9 +8,9 @@
   <PropertyGroup>
     <_SDKVersionDenormalized>$([System.String]::Copy('$(SDKVersion)').Replace('.', '_'))</_SDKVersionDenormalized>
 
-    <_TonLibDownloadUrlWin>http://sdkbinaries-ws.tonlabs.io/tonclient_$(_SDKVersionDenormalized)_win32_dll.gz</_TonLibDownloadUrlWin>
-    <_TonLibDownloadUrlLinux>http://sdkbinaries-ws.tonlabs.io/tonclient_$(_SDKVersionDenormalized)_linux.gz</_TonLibDownloadUrlLinux>
-    <_TonLibDownloadUrlMacOS>http://sdkbinaries-ws.tonlabs.io/tonclient_$(_SDKVersionDenormalized)_darwin.gz</_TonLibDownloadUrlMacOS>
+    <_TonLibDownloadUrlWin>https://binaries.tonlabs.io/tonclient_$(_SDKVersionDenormalized)_win32_dll.gz</_TonLibDownloadUrlWin>
+    <_TonLibDownloadUrlLinux>https://binaries.tonlabs.io/tonclient_$(_SDKVersionDenormalized)_linux.gz</_TonLibDownloadUrlLinux>
+    <_TonLibDownloadUrlMacOS>https://binaries.tonlabs.io/tonclient_$(_SDKVersionDenormalized)_darwin.gz</_TonLibDownloadUrlMacOS>
 
     <_IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</_IsWindows>
     <_IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</_IsLinux>
