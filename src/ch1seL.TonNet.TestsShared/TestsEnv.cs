@@ -13,6 +13,8 @@ namespace ch1seL.TonNet.TestsShared
         private const string DefaultTonNetworkAddress = "http://localhost";
         private const string ContractsPath = "_contracts";
 
+        public const string LocalGiverAddress = "0:841288ed3b55d9cdafa806807f02a0ae0c169aa5edfe88a789a6482429756a94";
+
         private static readonly ITonPackageManager TonPackageManager = new FilePackageManager(Options.Create(new PackageManagerOptions
             {PackagesPath = Path.Join(ContractsPath, $"abi_v{CurrentAbiVersion}")}));
 
@@ -36,7 +38,5 @@ namespace ch1seL.TonNet.TestsShared
             public static readonly Package TestDebotTarget = TonPackageManager.LoadPackage("testDebotTarget").GetAwaiter().GetResult();
             public static readonly Package TestDebot = TonPackageManager.LoadPackage("testDebot").GetAwaiter().GetResult();
         }
-
-        public const string LocalGiverAddress = "0:841288ed3b55d9cdafa806807f02a0ae0c169aa5edfe88a789a6482429756a94";
     }
 }

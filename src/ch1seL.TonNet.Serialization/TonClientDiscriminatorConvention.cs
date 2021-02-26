@@ -10,11 +10,11 @@ namespace ch1seL.TonNet.Serialization
 {
     public class TonClientDiscriminatorConvention : IDiscriminatorConvention
     {
-        private readonly Dictionary<Type, string> _discriminatorsByType = new();
+        private readonly Dictionary<Type, string> _discriminatorsByType = new Dictionary<Type, string>();
         private readonly JsonConverter<string> _jsonConverter;
         private readonly ReadOnlyMemory<byte> _memberName;
         private readonly JsonSerializerOptions _options;
-        private readonly Dictionary<string, Type> _typesByDiscriminator = new();
+        private readonly Dictionary<string, Type> _typesByDiscriminator = new Dictionary<string, Type>();
 
         public TonClientDiscriminatorConvention(JsonSerializerOptions options)
             : this(options, "type")

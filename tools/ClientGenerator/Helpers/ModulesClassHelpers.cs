@@ -101,7 +101,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
 
                 StatementSyntax ex = responseType == null
-                    ? (StatementSyntax) ExpressionStatement(awaitExpression)
+                    ? ExpressionStatement(awaitExpression)
                     : ReturnStatement(awaitExpression);
                 BlockSyntax blockSyntax = Block(ex);
                 return method.WithBody(blockSyntax);

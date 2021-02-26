@@ -120,7 +120,7 @@ namespace ch1seL.TonNet.Debot
                         Current = current,
                         Next = new Queue<DebotStep>(invokeSteps),
                         Keys = state.Keys,
-                        Address = paramsOfAppDebotBrowser.DebotAddr,
+                        Address = paramsOfAppDebotBrowser.DebotAddr
                     };
                     await ExecuteFromState(fetchState, callback => _tonClient.Debot.Fetch(new ParamsOfFetch {Address = state.Address}, callback));
                     return new ResultOfAppDebotBrowser.InvokeDebot();
@@ -139,7 +139,7 @@ namespace ch1seL.TonNet.Debot
                     state.ActionWithLock(s => s.Current.Outputs.Enqueue(msg));
                     break;
                 case ParamsOfAppDebotBrowser.Switch @switch:
-                    state.ActionWithLock(s=> s.SwitchStarted = true);
+                    state.ActionWithLock(s => s.SwitchStarted = true);
                     var contextId = @switch.ContextId;
                     if (contextId == (byte) DebotStates.StateExit) state.Finished = true;
                     state.ActionWithLock(s => s.Current.AvailableActions.Clear());

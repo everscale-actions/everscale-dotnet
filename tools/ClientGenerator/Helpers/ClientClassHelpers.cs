@@ -17,7 +17,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                     var formattedName = NamingConventions.Normalize(module.Name);
 
                     var summary = module.Summary + (module.Description != null ? $"\n{module.Description}" : null);
-                    
+
                     return PropertyDeclaration(IdentifierName($"I{formattedName}Module"), formattedName)
                         .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword).WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(summary))))
                         .WithAccessorList(

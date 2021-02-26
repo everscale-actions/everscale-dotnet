@@ -72,9 +72,9 @@ namespace SampleWorkerService
                 Result = "boc",
                 Limit = 1
             }, cancellationToken);
-            
+
             var accountBoc = accountBocResult.Result[0].Get<string>("boc");
-            
+
             ResultOfEncodeMessage getCountEncodedMessage = await _tonClient.Abi.EncodeMessage(new ParamsOfEncodeMessage
             {
                 Address = senderAddress,
@@ -82,7 +82,7 @@ namespace SampleWorkerService
                 CallSet = new CallSet {FunctionName = "getCounter"},
                 Signer = new Signer.Keys {KeysAccessor = keys}
             }, cancellationToken);
-            
+
             ResultOfRunTvm result = await _tonClient.Tvm.RunTvm(new ParamsOfRunTvm
             {
                 Abi = contract.Abi,

@@ -13,11 +13,8 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
         public static SyntaxTriviaList BuildCommentTrivia(string comment)
         {
-            if (string.IsNullOrEmpty(comment))
-            {
-                comment = "Not described yet..";    
-            }
-            
+            if (string.IsNullOrEmpty(comment)) comment = "Not described yet..";
+
             var commentLines = GetLines(comment);
             var commentNodes = commentLines.Count > 1
                 ? commentLines.SelectMany(l => new XmlNodeSyntax[] {XmlParaElement(XmlText(l)), XmlText(XmlNewline)}).ToArray()

@@ -8,12 +8,11 @@ using Microsoft.Extensions.Options;
 
 namespace ch1seL.TonNet.Client.PackageManager
 {
-    public class FilePackageManager:ITonPackageManager
+    public class FilePackageManager : ITonPackageManager
     {
-        private readonly PackageManagerOptions _options;
-        
         private const string AbiFileTemplate = "{0}.abi.json";
         private const string TvcFileTemplate = "{0}.tvc";
+        private readonly PackageManagerOptions _options;
 
         public FilePackageManager(IOptions<PackageManagerOptions> optionsAccessor)
         {
@@ -29,7 +28,7 @@ namespace ch1seL.TonNet.Client.PackageManager
 
             Abi abi = await getAbiTask;
             var tvc = await getTvcTask;
-            
+
             return new Package(abi, tvc);
         }
 
@@ -39,7 +38,7 @@ namespace ch1seL.TonNet.Client.PackageManager
             var fileInfo = new FileInfo(filePath);
             await using FileStream fs = fileInfo.OpenRead();
             var abiContract = await JsonSerializer.DeserializeAsync<AbiContract>(fs, JsonOptionsProvider.JsonSerializerOptions);
-            
+
             return new Abi.Contract {Value = abiContract};
         }
 

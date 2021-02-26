@@ -45,8 +45,8 @@ namespace ch1seL.TonNet.Client.Tests.Modules.Debot
 
                     state.ActionWithLock(debotBrowserData =>
                     {
-                        DebotCurrentStepData currentStep = debotBrowserData.Current; 
-                        
+                        DebotCurrentStepData currentStep = debotBrowserData.Current;
+
                         currentStep.Outputs.Count.Should().Be(currentStep.Step.Outputs.Count);
 
                         foreach (var (outs0, outs1) in currentStep.Outputs

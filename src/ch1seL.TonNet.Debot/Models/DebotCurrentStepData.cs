@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ch1seL.TonNet.Client.Models;
 
 namespace ch1seL.TonNet.Debot.Models

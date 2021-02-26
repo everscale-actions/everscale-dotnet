@@ -74,7 +74,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                                 return CreatePropertyGenericArgs(sf.Type, sf.Name, sf.RefName, sf.OptionalInner, subClassSummary, sf.NumberType,
                                     sf.NumberSize, addPostfix: addPostfix);
                             }));
-                            return (MemberDeclarationSyntax) ClassDeclaration(NamingConventions.Normalize(subClass.Name))
+                            return ClassDeclaration(NamingConventions.Normalize(subClass.Name))
                                 .AddAttributeLists(AttributeList(
                                     SeparatedList(
                                         new[]
