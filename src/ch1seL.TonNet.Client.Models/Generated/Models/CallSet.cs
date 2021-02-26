@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.Client.Models
     public class CallSet
     {
         /// <summary>
-        /// Function name that is being called.
+        /// Function name that is being called. Or function id encoded as string in hex (starting with 0x).
         /// </summary>
         [JsonPropertyName("function_name")]
         public string FunctionName { get; set; }

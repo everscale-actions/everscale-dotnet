@@ -180,7 +180,7 @@ namespace ch1seL.TonNet.Client.Modules
 
         /// <summary>
         /// <para>Public key authenticated encryption</para>
-        /// <para>Encrypt and authenticate a message using the senders secret key, the recievers public</para>
+        /// <para>Encrypt and authenticate a message using the senders secret key, the receivers public</para>
         /// <para>key, and a nonce.</para>
         /// </summary>
         public async Task<ResultOfNaclBox> NaclBox(ParamsOfNaclBox @params, CancellationToken cancellationToken = default)
@@ -189,7 +189,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Decrypt and verify the cipher text using the recievers secret key, the senders public key, and the nonce.
+        /// Decrypt and verify the cipher text using the receivers secret key, the senders public key, and the nonce.
         /// </summary>
         public async Task<ResultOfNaclBoxOpen> NaclBoxOpen(ParamsOfNaclBoxOpen @params, CancellationToken cancellationToken = default)
         {

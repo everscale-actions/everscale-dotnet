@@ -32,14 +32,14 @@ namespace ch1seL.TonNet.Client.Models
         public ExecutionOptions ExecutionOptions { get; set; }
 
         /// <summary>
-        /// Contract ABI for dedcoding output messages
+        /// Contract ABI for decoding output messages
         /// </summary>
         [JsonPropertyName("abi")]
         public Abi Abi { get; set; }
 
         /// <summary>
         /// <para>Cache type to put the result.</para>
-        /// <para>The BOC intself returned if no cache type provided</para>
+        /// <para>The BOC itself returned if no cache type provided</para>
         /// </summary>
         [JsonPropertyName("boc_cache")]
         public BocCacheType BocCache { get; set; }

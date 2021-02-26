@@ -21,6 +21,6 @@ namespace ch1seL.TonNet.Client.Models
         DebotInvalidAbi = 807,
         DebotGetMethodFailed = 808,
         DebotInvalidMsg = 809,
-        DebotExternaCallFailed = 810
+        DebotExternalCallFailed = 810
     }
 }

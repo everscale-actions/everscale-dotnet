@@ -44,7 +44,7 @@ namespace ch1seL.TonNet.Client.Models
 
         /// <summary>
         /// <para>Cache type to put the result.</para>
-        /// <para>The BOC intself returned if no cache type provided</para>
+        /// <para>The BOC itself returned if no cache type provided</para>
         /// </summary>
         [JsonPropertyName("boc_cache")]
         public BocCacheType BocCache { get; set; }
