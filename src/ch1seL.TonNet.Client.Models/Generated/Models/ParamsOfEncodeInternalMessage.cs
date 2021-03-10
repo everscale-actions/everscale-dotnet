@@ -12,7 +12,8 @@ namespace ch1seL.TonNet.Client.Models
     public class ParamsOfEncodeInternalMessage
     {
         /// <summary>
-        /// Contract ABI.
+        /// <para>Contract ABI.</para>
+        /// <para>Can be None if both deploy_set and call_set are None.</para>
         /// </summary>
         [JsonPropertyName("abi")]
         public Abi Abi { get; set; }
@@ -23,6 +24,12 @@ namespace ch1seL.TonNet.Client.Models
         /// </summary>
         [JsonPropertyName("address")]
         public string Address { get; set; }
+
+        /// <summary>
+        /// Source address of the message.
+        /// </summary>
+        [JsonPropertyName("src_address")]
+        public string SrcAddress { get; set; }
 
         /// <summary>
         /// <para>Deploy parameters.</para>
@@ -41,7 +48,7 @@ namespace ch1seL.TonNet.Client.Models
         public CallSet CallSet { get; set; }
 
         /// <summary>
-        /// Value in nanograms to be sent with message.
+        /// Value in nanotokens to be sent with message.
         /// </summary>
         [JsonPropertyName("value")]
         public string Value { get; set; }

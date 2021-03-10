@@ -16,5 +16,11 @@ namespace ch1seL.TonNet.Client.Models
         /// </summary>
         [JsonPropertyName("debot_handle")]
         public uint DebotHandle { get; set; }
+
+        /// <summary>
+        /// Debot abi as json string.
+        /// </summary>
+        [JsonPropertyName("debot_abi")]
+        public string DebotAbi { get; set; }
     }
 }

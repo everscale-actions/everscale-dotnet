@@ -8,6 +8,7 @@
         Ref,
         String,
         Struct,
-        Number
+        Number,
+        Array
     }
 }

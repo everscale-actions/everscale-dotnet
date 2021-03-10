@@ -1,4 +1,5 @@
 using Dahomey.Json.Attributes;
+using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -17,7 +18,7 @@ namespace ch1seL.TonNet.Client.Models
         /// <para>the appropriate position.</para>
         /// </summary>
         [JsonPropertyName("out_messages")]
-        public JsonElement?[] OutMessages { get; set; }
+        public JsonElement[] OutMessages { get; set; }
 
         /// <summary>
         /// Decoded body of the function output message.

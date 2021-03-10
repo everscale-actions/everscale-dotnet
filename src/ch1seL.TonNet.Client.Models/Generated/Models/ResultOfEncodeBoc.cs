@@ -9,12 +9,12 @@ namespace ch1seL.TonNet.Client.Models
     /// <summary>
     /// Not described yet..
     /// </summary>
-    public class ParamsOfBatchQuery
+    public class ResultOfEncodeBoc
     {
         /// <summary>
-        /// List of query operations that must be performed per single fetch.
+        /// Encoded cell BOC or BOC cache key.
         /// </summary>
-        [JsonPropertyName("operations")]
-        public JsonElement[] Operations { get; set; }
+        [JsonPropertyName("boc")]
+        public string Boc { get; set; }
     }
 }

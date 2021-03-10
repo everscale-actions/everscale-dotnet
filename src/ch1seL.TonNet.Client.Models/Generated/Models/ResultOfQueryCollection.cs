@@ -15,6 +15,6 @@ namespace ch1seL.TonNet.Client.Models
         /// Objects that match the provided criteria
         /// </summary>
         [JsonPropertyName("result")]
-        public JsonElement?[] Result { get; set; }
+        public JsonElement[] Result { get; set; }
     }
 }

@@ -59,7 +59,7 @@ namespace ch1seL.TonNet.RustAdapter.Tests
 
             var response = await client.RustRequest("client.version", null);
 
-            response.Should().MatchRegex(@"{""version"":""\d.\d\.\d""}");
+            response.Should().MatchRegex(@"{""version"":""\d+\.\d+\.\d+""}");
         }
     }
 }

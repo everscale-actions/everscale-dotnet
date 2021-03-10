@@ -21,13 +21,13 @@ namespace ch1seL.TonNet.Client.Models
         /// Not described yet..
         /// </summary>
         [JsonPropertyName("inputs")]
-        public JsonElement?[] Inputs { get; set; }
+        public JsonElement[] Inputs { get; set; }
 
         /// <summary>
         /// Not described yet..
         /// </summary>
         [JsonPropertyName("outputs")]
-        public JsonElement?[] Outputs { get; set; }
+        public JsonElement[] Outputs { get; set; }
 
         /// <summary>
         /// Not described yet..

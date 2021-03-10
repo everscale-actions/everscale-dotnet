@@ -16,6 +16,6 @@ namespace ch1seL.TonNet.Client.Models
         /// <para>Returns an array of values. Each value corresponds to `queries` item.</para>
         /// </summary>
         [JsonPropertyName("results")]
-        public JsonElement?[] Results { get; set; }
+        public JsonElement[] Results { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using ch1seL.TonNet.ClientGenerator.Models;
 using Microsoft.CodeAnalysis;
@@ -72,7 +73,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                             {
                                 var addPostfix = NamingConventions.Normalize(sf.Name) == NamingConventions.Normalize(subClass.Name);
                                 return CreatePropertyGenericArgs(sf.Type, sf.Name, sf.RefName, sf.OptionalInner, subClassSummary, sf.NumberType,
-                                    sf.NumberSize, addPostfix: addPostfix);
+                                    sf.NumberSize, addPostfix: addPostfix, arrayItem: sf.ArrayItem);
                             }));
                             return ClassDeclaration(NamingConventions.Normalize(subClass.Name))
                                 .AddAttributeLists(AttributeList(
@@ -113,8 +114,14 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
 
         private MemberDeclarationSyntax CreatePropertyGenericArgs(GenericArgType type, string name, string refName, GenericArg optionalInner,
-            string description, NumberType? numberType = null, long? numberSize = null, bool optional = false, bool addPostfix = false)
+            string description, NumberType? numberType = null, long? numberSize = null, bool optional = false, bool addPostfix = false,
+            ArrayItem arrayItem = null)
         {
+            if (type == GenericArgType.Array && arrayItem == null)
+            {
+                throw new ArgumentNullException(nameof(arrayItem));
+            }
+
             return type switch
             {
                 GenericArgType.Boolean => CreatePropertyDeclaration("bool", name, description, optional, addPostfix: addPostfix),
@@ -124,6 +131,8 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                     addPostfix: addPostfix),
                 GenericArgType.Number => CreatePropertyDeclaration(NumberUtils.ConvertToSharpNumeric(numberType, numberSize), name, description,
                     addPostfix: addPostfix),
+                // ReSharper disable once PossibleNullReferenceException
+                GenericArgType.Array => CreatePropertyForPurpleArrayItem(name, arrayItem.Type, arrayItem.RefName, null, description),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
@@ -200,7 +209,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
             var typeName = arrayType switch
             {
-                GenericArgType.Ref => _allTypes.Contains(arrayRefName) ? NamingConventions.Normalize(arrayRefName) : "JsonElement?",
+                GenericArgType.Ref => _allTypes.Contains(arrayRefName) ? NamingConventions.Normalize(arrayRefName) : "JsonElement",
                 GenericArgType.Boolean => "bool",
                 GenericArgType.String => "string",
                 _ => throw new ArgumentOutOfRangeException()

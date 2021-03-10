@@ -63,7 +63,7 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Not described yet..
+        /// Extract blockchain configuration from key block and also from zerostate.
         /// </summary>
         public async Task<ResultOfGetBlockchainConfig> GetBlockchainConfig(ParamsOfGetBlockchainConfig @params, CancellationToken cancellationToken = default)
         {
@@ -109,6 +109,14 @@ namespace ch1seL.TonNet.Client.Modules
         public async Task CacheUnpin(ParamsOfBocCacheUnpin @params, CancellationToken cancellationToken = default)
         {
             await _tonClientAdapter.Request<ParamsOfBocCacheUnpin>("boc.cache_unpin", @params, cancellationToken);
+        }
+
+        /// <summary>
+        /// Encodes BOC from builder operations.
+        /// </summary>
+        public async Task<ResultOfEncodeBoc> EncodeBoc(ParamsOfEncodeBoc @params, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<ParamsOfEncodeBoc, ResultOfEncodeBoc>("boc.encode_boc", @params, cancellationToken);
         }
     }
 }

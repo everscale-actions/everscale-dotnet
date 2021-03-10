@@ -33,18 +33,18 @@ namespace ch1seL.TonNet.Client.Models
         /// Not described yet..
         /// </summary>
         [JsonPropertyName("functions")]
-        public JsonElement?[] Functions { get; set; }
+        public JsonElement[] Functions { get; set; }
 
         /// <summary>
         /// Not described yet..
         /// </summary>
         [JsonPropertyName("events")]
-        public JsonElement?[] Events { get; set; }
+        public JsonElement[] Events { get; set; }
 
         /// <summary>
         /// Not described yet..
         /// </summary>
         [JsonPropertyName("data")]
-        public JsonElement?[] Data { get; set; }
+        public JsonElement[] Data { get; set; }
     }
 }

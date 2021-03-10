@@ -18,21 +18,9 @@ namespace ch1seL.TonNet.Client.Models
         public uint DebotHandle { get; set; }
 
         /// <summary>
-        /// Std address of interface or debot.
+        /// BOC of internal message to debot encoded in base64 format.
         /// </summary>
-        [JsonPropertyName("source")]
-        public string Source { get; set; }
-
-        /// <summary>
-        /// Function Id to call
-        /// </summary>
-        [JsonPropertyName("func_id")]
-        public uint FuncId { get; set; }
-
-        /// <summary>
-        /// Json string with parameters
-        /// </summary>
-        [JsonPropertyName("params")]
-        public string @params { get; set; }
+        [JsonPropertyName("message")]
+        public string Message { get; set; }
     }
 }

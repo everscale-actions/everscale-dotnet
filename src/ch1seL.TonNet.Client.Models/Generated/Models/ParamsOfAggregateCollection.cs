@@ -27,6 +27,6 @@ namespace ch1seL.TonNet.Client.Models
         /// Projection (result) string
         /// </summary>
         [JsonPropertyName("fields")]
-        public JsonElement?[] Fields { get; set; }
+        public JsonElement[] Fields { get; set; }
     }
 }

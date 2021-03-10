@@ -39,7 +39,7 @@ namespace ch1seL.TonNet.Abstract.Modules
         public Task<ResultOfParse> ParseShardstate(ParamsOfParseShardstate @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Not described yet..
+        /// Extract blockchain configuration from key block and also from zerostate.
         /// </summary>
         public Task<ResultOfGetBlockchainConfig> GetBlockchainConfig(ParamsOfGetBlockchainConfig @params, CancellationToken cancellationToken = default);
 
@@ -68,5 +68,10 @@ namespace ch1seL.TonNet.Abstract.Modules
         /// <para>BOCs which don't have another pins will be removed from cache</para>
         /// </summary>
         public Task CacheUnpin(ParamsOfBocCacheUnpin @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Encodes BOC from builder operations.
+        /// </summary>
+        public Task<ResultOfEncodeBoc> EncodeBoc(ParamsOfEncodeBoc @params, CancellationToken cancellationToken = default);
     }
 }
