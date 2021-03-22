@@ -12,5 +12,10 @@ namespace ch1seL.TonNet.Abstract.Modules
         /// Converts address from any TON format to any TON format
         /// </summary>
         public Task<ResultOfConvertAddress> ConvertAddress(ParamsOfConvertAddress @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Calculates storage fee for an account over a specified time period
+        /// </summary>
+        public Task<ResultOfCalcStorageFee> CalcStorageFee(ParamsOfCalcStorageFee @params, CancellationToken cancellationToken = default);
     }
 }

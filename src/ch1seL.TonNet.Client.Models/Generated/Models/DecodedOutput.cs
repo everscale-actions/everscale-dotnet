@@ -1,5 +1,4 @@
 using Dahomey.Json.Attributes;
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;

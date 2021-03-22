@@ -24,5 +24,13 @@ namespace ch1seL.TonNet.Client.Modules
         {
             return await _tonClientAdapter.Request<ParamsOfConvertAddress, ResultOfConvertAddress>("utils.convert_address", @params, cancellationToken);
         }
+
+        /// <summary>
+        /// Calculates storage fee for an account over a specified time period
+        /// </summary>
+        public async Task<ResultOfCalcStorageFee> CalcStorageFee(ParamsOfCalcStorageFee @params, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<ParamsOfCalcStorageFee, ResultOfCalcStorageFee>("utils.calc_storage_fee", @params, cancellationToken);
+        }
     }
 }
