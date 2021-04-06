@@ -19,6 +19,9 @@ namespace ch1seL.TonNet.Debot.Models
         public bool Finished { get; set; }
 
         public bool SwitchStarted { get; set; }
+        public DebotInfo Info { get; set; }
+
+        public Queue<ExpectedTransaction> Activity { get; set; } = new Queue<ExpectedTransaction>();
 
         public void ActionWithLock(Action<DebotBrowserData> actionWithLock)
         {

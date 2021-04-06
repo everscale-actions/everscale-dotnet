@@ -44,5 +44,18 @@ namespace ch1seL.TonNet.Client.Models
         public class InvokeDebot : ResultOfAppDebotBrowser
         {
         }
+
+        /// <summary>
+        /// Result of `approve` callback.
+        /// </summary>
+        [JsonDiscriminator("Approve")]
+        public class Approve : ResultOfAppDebotBrowser
+        {
+            /// <summary>
+            /// Result of `approve` callback.
+            /// </summary>
+            [JsonPropertyName("approved")]
+            public bool Approved { get; set; }
+        }
     }
 }

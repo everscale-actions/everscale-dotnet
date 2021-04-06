@@ -133,6 +133,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                     addPostfix: addPostfix),
                 // ReSharper disable once PossibleNullReferenceException
                 GenericArgType.Array => CreatePropertyForPurpleArrayItem(name, arrayItem.Type, arrayItem.RefName, null, description),
+                GenericArgType.BigInt => CreatePropertyDeclaration("ulong", name, description),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }

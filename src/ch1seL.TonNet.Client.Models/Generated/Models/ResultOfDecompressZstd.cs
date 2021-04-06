@@ -7,14 +7,15 @@ using System.Text.Json.Serialization;
 namespace ch1seL.TonNet.Client.Models
 {
     /// <summary>
-    /// [UNSTABLE](UNSTABLE.md) Parameters to fetch DeBot metadata.
+    /// Not described yet..
     /// </summary>
-    public class ParamsOfFetch
+    public class ResultOfDecompressZstd
     {
         /// <summary>
-        /// Debot smart contract address.
+        /// <para>Decompressed data.</para>
+        /// <para>Must be encoded as base64.</para>
         /// </summary>
-        [JsonPropertyName("address")]
-        public string Address { get; set; }
+        [JsonPropertyName("decompressed")]
+        public string Decompressed { get; set; }
     }
 }

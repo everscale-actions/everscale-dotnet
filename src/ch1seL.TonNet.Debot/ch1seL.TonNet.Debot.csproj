@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <Import Project="..\..\PackageInfo.targets"/>
+    <Import Project="..\..\PackageInfo.targets" />
 
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
@@ -8,8 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj"/>
-        <ProjectReference Include="..\ch1seL.TonNet.Serialization\ch1seL.TonNet.Serialization.csproj"/>
+        <ProjectReference Include="..\ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj" />
+        <ProjectReference Include="..\ch1seL.TonNet.Serialization\ch1seL.TonNet.Serialization.csproj" />
     </ItemGroup>
 
 </Project>

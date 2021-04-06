@@ -7,12 +7,12 @@ using System.Text.Json.Serialization;
 namespace ch1seL.TonNet.Client.Models
 {
     /// <summary>
-    /// [UNSTABLE](UNSTABLE.md) Parameters to fetch DeBot metadata.
+    /// [UNSTABLE](UNSTABLE.md) Parameters to init DeBot.
     /// </summary>
-    public class ParamsOfFetch
+    public class ParamsOfInit
     {
         /// <summary>
-        /// Debot smart contract address.
+        /// Debot smart contract address
         /// </summary>
         [JsonPropertyName("address")]
         public string Address { get; set; }

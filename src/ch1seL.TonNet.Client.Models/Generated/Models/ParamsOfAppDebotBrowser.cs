@@ -112,5 +112,18 @@ namespace ch1seL.TonNet.Client.Models
             [JsonPropertyName("message")]
             public string Message { get; set; }
         }
+
+        /// <summary>
+        /// Requests permission from DeBot Browser to execute DeBot operation.
+        /// </summary>
+        [JsonDiscriminator("Approve")]
+        public class Approve : ParamsOfAppDebotBrowser
+        {
+            /// <summary>
+            /// Requests permission from DeBot Browser to execute DeBot operation.
+            /// </summary>
+            [JsonPropertyName("activity")]
+            public DebotActivity Activity { get; set; }
+        }
     }
 }

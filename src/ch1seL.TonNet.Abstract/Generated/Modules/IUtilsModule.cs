@@ -17,5 +17,15 @@ namespace ch1seL.TonNet.Abstract.Modules
         /// Calculates storage fee for an account over a specified time period
         /// </summary>
         public Task<ResultOfCalcStorageFee> CalcStorageFee(ParamsOfCalcStorageFee @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Compresses data using Zstandard algorithm
+        /// </summary>
+        public Task<ResultOfCompressZstd> CompressZstd(ParamsOfCompressZstd @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Decompresses data using Zstandard algorithm
+        /// </summary>
+        public Task<ResultOfDecompressZstd> DecompressZstd(ParamsOfDecompressZstd @params, CancellationToken cancellationToken = default);
     }
 }

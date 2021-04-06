@@ -9,6 +9,7 @@
         String,
         Struct,
         Number,
-        Array
+        Array,
+        BigInt
     }
 }

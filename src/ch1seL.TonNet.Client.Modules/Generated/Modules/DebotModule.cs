@@ -18,31 +18,40 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// <para>[UNSTABLE](UNSTABLE.md) Starts an instance of debot.</para>
-        /// <para>Downloads debot smart contract from blockchain and switches it to</para>
-        /// <para>context zero.</para>
-        /// <para>Returns a debot handle which can be used later in `execute` function.</para>
-        /// <para>This function must be used by Debot Browser to start a dialog with debot.</para>
-        /// <para>While the function is executing, several Browser Callbacks can be called,</para>
-        /// <para>since the debot tries to display all actions from the context 0 to the user.</para>
-        /// <para># Remarks</para>
-        /// <para>`start` is equivalent to `fetch` + switch to context 0.</para>
-        /// </summary>
-        public async Task<RegisteredDebot> Start(ParamsOfStart @params, Action<JsonElement,uint> appObject = null, CancellationToken cancellationToken = default)
-        {
-            return await _tonClientAdapter.Request<ParamsOfStart, RegisteredDebot, JsonElement>("debot.start", @params, appObject, cancellationToken);
-        }
-
-        /// <summary>
-        /// <para>[UNSTABLE](UNSTABLE.md) Fetches debot from blockchain.</para>
+        /// <para>[UNSTABLE](UNSTABLE.md) Creates and instance of DeBot.</para>
         /// <para>Downloads debot smart contract (code and data) from blockchain and creates</para>
         /// <para>an instance of Debot Engine for it.</para>
         /// <para># Remarks</para>
         /// <para>It does not switch debot to context 0. Browser Callbacks are not called.</para>
         /// </summary>
-        public async Task<RegisteredDebot> Fetch(ParamsOfFetch @params, Action<JsonElement,uint> appObject = null, CancellationToken cancellationToken = default)
+        public async Task<RegisteredDebot> Init(ParamsOfInit @params, Action<JsonElement,uint> appObject = null, CancellationToken cancellationToken = default)
         {
-            return await _tonClientAdapter.Request<ParamsOfFetch, RegisteredDebot, JsonElement>("debot.fetch", @params, appObject, cancellationToken);
+            return await _tonClientAdapter.Request<ParamsOfInit, RegisteredDebot, JsonElement>("debot.init", @params, appObject, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>[UNSTABLE](UNSTABLE.md) Starts the DeBot.</para>
+        /// <para>Downloads debot smart contract from blockchain and switches it to</para>
+        /// <para>context zero.</para>
+        /// <para>This function must be used by Debot Browser to start a dialog with debot.</para>
+        /// <para>While the function is executing, several Browser Callbacks can be called,</para>
+        /// <para>since the debot tries to display all actions from the context 0 to the user.</para>
+        /// <para>When the debot starts SDK registers `BrowserCallbacks` AppObject.</para>
+        /// <para>Therefore when `debote.remove` is called the debot is being deleted and the callback is called</para>
+        /// <para>with `finish`=`true` which indicates that it will never be used again.</para>
+        /// </summary>
+        public async Task Start(ParamsOfStart @params, CancellationToken cancellationToken = default)
+        {
+            await _tonClientAdapter.Request<ParamsOfStart>("debot.start", @params, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>[UNSTABLE](UNSTABLE.md) Fetches DeBot metadata from blockchain.</para>
+        /// <para>Downloads DeBot from blockchain and creates and fetches its metadata.</para>
+        /// </summary>
+        public async Task<ResultOfFetch> Fetch(ParamsOfFetch @params, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<ParamsOfFetch, ResultOfFetch>("debot.fetch", @params, cancellationToken);
         }
 
         /// <summary>
@@ -70,9 +79,9 @@ namespace ch1seL.TonNet.Client.Modules
         /// <para>[UNSTABLE](UNSTABLE.md) Destroys debot handle.</para>
         /// <para>Removes handle from Client Context and drops debot engine referenced by that handle.</para>
         /// </summary>
-        public async Task Remove(RegisteredDebot @params, CancellationToken cancellationToken = default)
+        public async Task Remove(ParamsOfRemove @params, CancellationToken cancellationToken = default)
         {
-            await _tonClientAdapter.Request<RegisteredDebot>("debot.remove", @params, cancellationToken);
+            await _tonClientAdapter.Request<ParamsOfRemove>("debot.remove", @params, cancellationToken);
         }
     }
 }

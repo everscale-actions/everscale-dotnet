@@ -7,14 +7,14 @@ using System.Text.Json.Serialization;
 namespace ch1seL.TonNet.Client.Models
 {
     /// <summary>
-    /// [UNSTABLE](UNSTABLE.md) Parameters to fetch DeBot metadata.
+    /// [UNSTABLE](UNSTABLE.md)
     /// </summary>
-    public class ParamsOfFetch
+    public class ParamsOfRemove
     {
         /// <summary>
-        /// Debot smart contract address.
+        /// Debot handle which references an instance of debot engine.
         /// </summary>
-        [JsonPropertyName("address")]
-        public string Address { get; set; }
+        [JsonPropertyName("debot_handle")]
+        public uint DebotHandle { get; set; }
     }
 }

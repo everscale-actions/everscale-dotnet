@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 namespace ch1seL.TonNet.Client.Models
 {
     /// <summary>
-    /// [UNSTABLE](UNSTABLE.md) Structure for storing debot handle returned from `start` and `fetch` functions.
+    /// [UNSTABLE](UNSTABLE.md) Structure for storing debot handle returned from `init` function.
     /// </summary>
     public class RegisteredDebot
     {
@@ -22,5 +22,11 @@ namespace ch1seL.TonNet.Client.Models
         /// </summary>
         [JsonPropertyName("debot_abi")]
         public string DebotAbi { get; set; }
+
+        /// <summary>
+        /// Debot metadata.
+        /// </summary>
+        [JsonPropertyName("info")]
+        public DebotInfo Info { get; set; }
     }
 }
