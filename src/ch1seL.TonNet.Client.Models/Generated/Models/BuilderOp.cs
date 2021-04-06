@@ -53,7 +53,7 @@ namespace ch1seL.TonNet.Client.Models
             /// Append ref to nested cells
             /// </summary>
             [JsonPropertyName("builder")]
-            public JsonElement[] Builder { get; set; }
+            public BuilderOp[] Builder { get; set; }
         }
 
         /// <summary>

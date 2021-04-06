@@ -33,7 +33,7 @@ namespace ch1seL.TonNet.Client.Models
         /// Sorting order
         /// </summary>
         [JsonPropertyName("order")]
-        public JsonElement[] Order { get; set; }
+        public OrderBy[] Order { get; set; }
 
         /// <summary>
         /// Number of documents to return

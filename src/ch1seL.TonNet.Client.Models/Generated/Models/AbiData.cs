@@ -33,6 +33,6 @@ namespace ch1seL.TonNet.Client.Models
         /// Not described yet..
         /// </summary>
         [JsonPropertyName("components")]
-        public JsonElement[] Components { get; set; }
+        public AbiParam[] Components { get; set; }
     }
 }

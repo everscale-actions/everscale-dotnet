@@ -33,7 +33,7 @@ namespace ch1seL.TonNet.Client.Models
             /// DeBot wants to create new transaction in blockchain.
             /// </summary>
             [JsonPropertyName("out")]
-            public JsonElement[] Out { get; set; }
+            public Spending[] Out { get; set; }
 
             /// <summary>
             /// DeBot wants to create new transaction in blockchain.

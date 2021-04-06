@@ -33,18 +33,18 @@ namespace ch1seL.TonNet.Client.Models
         /// Not described yet..
         /// </summary>
         [JsonPropertyName("functions")]
-        public JsonElement[] Functions { get; set; }
+        public AbiFunction[] Functions { get; set; }
 
         /// <summary>
         /// Not described yet..
         /// </summary>
         [JsonPropertyName("events")]
-        public JsonElement[] Events { get; set; }
+        public AbiEvent[] Events { get; set; }
 
         /// <summary>
         /// Not described yet..
         /// </summary>
         [JsonPropertyName("data")]
-        public JsonElement[] Data { get; set; }
+        public AbiData[] Data { get; set; }
     }
 }

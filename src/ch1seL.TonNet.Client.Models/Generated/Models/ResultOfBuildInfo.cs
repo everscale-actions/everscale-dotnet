@@ -21,6 +21,6 @@ namespace ch1seL.TonNet.Client.Models
         /// Fingerprint of the most important dependencies.
         /// </summary>
         [JsonPropertyName("dependencies")]
-        public JsonElement[] Dependencies { get; set; }
+        public BuildInfoDependency[] Dependencies { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace ch1seL.TonNet.Client.Models
         /// Cell builder operations.
         /// </summary>
         [JsonPropertyName("builder")]
-        public JsonElement[] Builder { get; set; }
+        public BuilderOp[] Builder { get; set; }
 
         /// <summary>
         /// Cache type to put the result. The BOC itself returned if no cache type provided.

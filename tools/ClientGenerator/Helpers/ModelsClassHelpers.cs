@@ -210,7 +210,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
             var typeName = arrayType switch
             {
-                GenericArgType.Ref => _allTypes.Contains(arrayRefName) ? NamingConventions.Normalize(arrayRefName) : "JsonElement",
+                GenericArgType.Ref => _allTypes.Contains(NamingConventions.Normalize(arrayRefName)) ? NamingConventions.Normalize(arrayRefName) : "JsonElement",
                 GenericArgType.Boolean => "bool",
                 GenericArgType.String => "string",
                 _ => throw new ArgumentOutOfRangeException()

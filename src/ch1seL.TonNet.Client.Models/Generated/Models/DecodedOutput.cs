@@ -17,7 +17,7 @@ namespace ch1seL.TonNet.Client.Models
         /// <para>the appropriate position.</para>
         /// </summary>
         [JsonPropertyName("out_messages")]
-        public JsonElement[] OutMessages { get; set; }
+        public DecodedMessageBody[] OutMessages { get; set; }
 
         /// <summary>
         /// Decoded body of the function output message.
