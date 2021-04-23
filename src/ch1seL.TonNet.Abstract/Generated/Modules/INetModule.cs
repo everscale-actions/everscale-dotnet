@@ -110,5 +110,13 @@ namespace ch1seL.TonNet.Abstract.Modules
         /// Sets the list of endpoints to use on reinit
         /// </summary>
         public Task SetEndpoints(EndpointsSet @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// <para>Allows to query and paginate through the list of accounts that the specified account has interacted with, sorted by the time of the last internal message between accounts</para>
+        /// <para>*Attention* this query retrieves data from 'Counterparties' service which is not supported in</para>
+        /// <para>the opensource version of DApp Server (and will not be supported) as well as in TON OS SE (will be supported in SE in future),</para>
+        /// <para>but is always accessible via [TON OS Devnet/Mainnet Clouds](https://docs.ton.dev/86757ecb2/p/85c869-networks)</para>
+        /// </summary>
+        public Task<ResultOfQueryCollection> QueryCounterparties(ParamsOfQueryCounterparties @params, CancellationToken cancellationToken = default);
     }
 }

@@ -155,5 +155,16 @@ namespace ch1seL.TonNet.Client.Modules
         {
             await _tonClientAdapter.Request<EndpointsSet>("net.set_endpoints", @params, cancellationToken);
         }
+
+        /// <summary>
+        /// <para>Allows to query and paginate through the list of accounts that the specified account has interacted with, sorted by the time of the last internal message between accounts</para>
+        /// <para>*Attention* this query retrieves data from 'Counterparties' service which is not supported in</para>
+        /// <para>the opensource version of DApp Server (and will not be supported) as well as in TON OS SE (will be supported in SE in future),</para>
+        /// <para>but is always accessible via [TON OS Devnet/Mainnet Clouds](https://docs.ton.dev/86757ecb2/p/85c869-networks)</para>
+        /// </summary>
+        public async Task<ResultOfQueryCollection> QueryCounterparties(ParamsOfQueryCounterparties @params, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<ParamsOfQueryCounterparties, ResultOfQueryCollection>("net.query_counterparties", @params, cancellationToken);
+        }
     }
 }

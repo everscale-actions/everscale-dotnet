@@ -21,7 +21,7 @@ namespace ch1seL.TonNet.Client.Models
             /// Append integer to cell data.
             /// </summary>
             [JsonPropertyName("size")]
-            public byte Size { get; set; }
+            public uint Size { get; set; }
 
             /// <summary>
             /// Append integer to cell data.

@@ -72,6 +72,12 @@ namespace ch1seL.TonNet.Client.Models
         public uint? OutOfSyncThreshold { get; set; }
 
         /// <summary>
+        /// Maximum number of randomly chosen endpoints the library uses to send message. The default value is 2 endpoints.
+        /// </summary>
+        [JsonPropertyName("sending_endpoint_count")]
+        public byte? SendingEndpointCount { get; set; }
+
+        /// <summary>
         /// <para>Access key to GraphQL API.</para>
         /// <para>At the moment is not used in production</para>
         /// </summary>

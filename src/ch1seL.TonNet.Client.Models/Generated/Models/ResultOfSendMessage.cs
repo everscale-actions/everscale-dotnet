@@ -18,5 +18,13 @@ namespace ch1seL.TonNet.Client.Models
         /// </summary>
         [JsonPropertyName("shard_block_id")]
         public string ShardBlockId { get; set; }
+
+        /// <summary>
+        /// <para>The list of endpoints to which the message was sent.</para>
+        /// <para>This list id must be used as a parameter of the</para>
+        /// <para>`wait_for_transaction`.</para>
+        /// </summary>
+        [JsonPropertyName("sending_endpoints")]
+        public string[] SendingEndpoints { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace ch1seL.TonNet.Client.Models
         public string Collection { get; set; }
 
         /// <summary>
-        /// Collection filter.
+        /// Collection filter
         /// </summary>
         [JsonPropertyName("filter")]
         public JsonElement? Filter { get; set; }

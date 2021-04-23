@@ -39,5 +39,12 @@ namespace ch1seL.TonNet.Client.Models
         /// </summary>
         [JsonPropertyName("send_events")]
         public bool SendEvents { get; set; }
+
+        /// <summary>
+        /// <para>The list of endpoints to which the message was sent.</para>
+        /// <para>You must provide the same value as the `send_message` has returned.</para>
+        /// </summary>
+        [JsonPropertyName("sending_endpoints")]
+        public string[] SendingEndpoints { get; set; }
     }
 }

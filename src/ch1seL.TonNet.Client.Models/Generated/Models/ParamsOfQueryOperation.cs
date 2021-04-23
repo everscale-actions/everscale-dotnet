@@ -28,5 +28,11 @@ namespace ch1seL.TonNet.Client.Models
         /// </summary>
         [JsonPropertyName("AggregateCollection")]
         public ParamsOfAggregateCollection AggregateCollection { get; set; }
+
+        /// <summary>
+        /// Not described yet..
+        /// </summary>
+        [JsonPropertyName("QueryCounterparties")]
+        public ParamsOfQueryCounterparties QueryCounterparties { get; set; }
     }
 }
