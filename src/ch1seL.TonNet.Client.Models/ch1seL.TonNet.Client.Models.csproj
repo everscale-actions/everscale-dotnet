@@ -8,8 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Dahomey.Json" Version="1.10.3" />
-        <PackageReference Include="System.Text.Json" Version="5.0.1" />
+        <PackageReference Include="Dahomey.Json" Version="1.10.4" />
+        <PackageReference Include="System.Text.Json" Version="5.0.2" />
     </ItemGroup>
 
 </Project>
