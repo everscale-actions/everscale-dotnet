@@ -32,8 +32,8 @@ namespace ch1seL.TonNet.Client.Models
         /// <summary>
         /// Short info about DeBot.
         /// </summary>
-        [JsonPropertyName("key")]
-        public string Key { get; set; }
+        [JsonPropertyName("caption")]
+        public string Caption { get; set; }
 
         /// <summary>
         /// The name of DeBot developer.
