@@ -17,7 +17,7 @@ namespace ch1seL.TonNet.Client
             var exception = new TonClientException(message, inner) {Code = code};
             if (data == null) return exception;
 
-            foreach ((var key, object value) in data) exception.Data.Add(key, value);
+            foreach (var (key, value) in data) exception.Data.Add(key, value);
             return exception;
         }
     }

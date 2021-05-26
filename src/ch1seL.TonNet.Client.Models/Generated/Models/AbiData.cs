@@ -15,7 +15,7 @@ namespace ch1seL.TonNet.Client.Models
         /// Not described yet..
         /// </summary>
         [JsonPropertyName("key")]
-        public ulong Key { get; set; }
+        public uint Key { get; set; }
 
         /// <summary>
         /// Not described yet..
