@@ -42,7 +42,9 @@ namespace ch1seL.TonNet.Client.Models
 
         /// <summary>
         /// <para>The list of endpoints to which the message was sent.</para>
-        /// <para>You must provide the same value as the `send_message` has returned.</para>
+        /// <para>Use this field to get more informative errors.</para>
+        /// <para>Provide the same value as the `send_message` has returned.</para>
+        /// <para>If the message was not delivered (expired), SDK will log the endpoint URLs, used for its sending.</para>
         /// </summary>
         [JsonPropertyName("sending_endpoints")]
         public string[] SendingEndpoints { get; set; }

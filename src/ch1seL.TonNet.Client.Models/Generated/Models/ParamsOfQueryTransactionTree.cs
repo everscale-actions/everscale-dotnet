@@ -22,5 +22,14 @@ namespace ch1seL.TonNet.Client.Models
         /// </summary>
         [JsonPropertyName("abi_registry")]
         public Abi[] AbiRegistry { get; set; }
+
+        /// <summary>
+        /// <para>Timeout used to limit waiting time for the missing messages and transaction.</para>
+        /// <para>If some of the following messages and transactions are missing yet</para>
+        /// <para>The maximum waiting time is regulated by this option.</para>
+        /// <para>Default value is 60000 (1 min).</para>
+        /// </summary>
+        [JsonPropertyName("timeout")]
+        public uint? Timeout { get; set; }
     }
 }

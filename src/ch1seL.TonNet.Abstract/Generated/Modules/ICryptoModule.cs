@@ -9,12 +9,17 @@ namespace ch1seL.TonNet.Abstract.Modules
     public interface ICryptoModule : ITonModule
     {
         /// <summary>
-        /// Performs prime factorization – decomposition of a composite number into a product of smaller prime integers (factors). See [https://en.wikipedia.org/wiki/Integer_factorization]
+        /// <para>Integer factorization</para>
+        /// <para>Performs prime factorization – decomposition of a composite number</para>
+        /// <para>into a product of smaller prime integers (factors).</para>
+        /// <para>See [https://en.wikipedia.org/wiki/Integer_factorization]</para>
         /// </summary>
         public Task<ResultOfFactorize> Factorize(ParamsOfFactorize @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Performs modular exponentiation for big integers (`base`^`exponent` mod `modulus`). See [https://en.wikipedia.org/wiki/Modular_exponentiation]
+        /// <para>Modular exponentiation</para>
+        /// <para>Performs modular exponentiation for big integers (`base`^`exponent` mod `modulus`).</para>
+        /// <para>See [https://en.wikipedia.org/wiki/Modular_exponentiation]</para>
         /// </summary>
         public Task<ResultOfModularPower> ModularPower(ParamsOfModularPower @params, CancellationToken cancellationToken = default);
 
@@ -59,7 +64,9 @@ namespace ch1seL.TonNet.Abstract.Modules
         public Task<ResultOfHash> Sha512(ParamsOfHash @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// <para>Derives key from `password` and `key` using `scrypt` algorithm. See [https://en.wikipedia.org/wiki/Scrypt].</para>
+        /// <para>Perform `scrypt` encryption</para>
+        /// <para>Derives key from `password` and `key` using `scrypt` algorithm.</para>
+        /// <para>See [https://en.wikipedia.org/wiki/Scrypt].</para>
         /// <para># Arguments</para>
         /// <para>- `log_n` - The log2 of the Scrypt parameter `N`</para>
         /// <para>- `r` - The Scrypt parameter `r`</para>
@@ -143,7 +150,8 @@ namespace ch1seL.TonNet.Abstract.Modules
         public Task<ResultOfMnemonicWords> MnemonicWords(ParamsOfMnemonicWords @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Generates a random mnemonic from the specified dictionary and word count
+        /// <para>Generates a random mnemonic</para>
+        /// <para>Generates a random mnemonic from the specified dictionary and word count</para>
         /// </summary>
         public Task<ResultOfMnemonicFromRandom> MnemonicFromRandom(ParamsOfMnemonicFromRandom @params, CancellationToken cancellationToken = default);
 
@@ -153,12 +161,16 @@ namespace ch1seL.TonNet.Abstract.Modules
         public Task<ResultOfMnemonicFromEntropy> MnemonicFromEntropy(ParamsOfMnemonicFromEntropy @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// The phrase supplied will be checked for word length and validated according to the checksum specified in BIP0039.
+        /// <para>Validates a mnemonic phrase</para>
+        /// <para>The phrase supplied will be checked for word length and validated according to the checksum</para>
+        /// <para>specified in BIP0039.</para>
         /// </summary>
         public Task<ResultOfMnemonicVerify> MnemonicVerify(ParamsOfMnemonicVerify @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Validates the seed phrase, generates master key and then derives the key pair from the master key and the specified path
+        /// <para>Derives a key pair for signing from the seed phrase</para>
+        /// <para>Validates the seed phrase, generates master key and then derives</para>
+        /// <para>the key pair from the master key and the specified path</para>
         /// </summary>
         public Task<KeyPair> MnemonicDeriveSignKeys(ParamsOfMnemonicDeriveSignKeys @params, CancellationToken cancellationToken = default);
 
