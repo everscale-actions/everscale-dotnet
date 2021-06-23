@@ -228,5 +228,30 @@ namespace ch1seL.TonNet.Abstract.Modules
         /// Removes signing box from SDK.
         /// </summary>
         public Task RemoveSigningBox(RegisteredSigningBox @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Register an application implemented encryption box.
+        /// </summary>
+        public Task<RegisteredEncryptionBox> RegisterEncryptionBox(Action<JsonElement,uint> appObject = null, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Removes encryption box from SDK
+        /// </summary>
+        public Task RemoveEncryptionBox(RegisteredEncryptionBox @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Queries info from the given encryption box
+        /// </summary>
+        public Task<ResultOfEncryptionBoxGetInfo> EncryptionBoxGetInfo(ParamsOfEncryptionBoxGetInfo @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Encrypts data using given encryption box
+        /// </summary>
+        public Task<ResultOfEncryptionBoxEncrypt> EncryptionBoxEncrypt(ParamsOfEncryptionBoxEncrypt @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Decrypts data using given encryption box
+        /// </summary>
+        public Task<ResultOfEncryptionBoxDecrypt> EncryptionBoxDecrypt(ParamsOfEncryptionBoxDecrypt @params, CancellationToken cancellationToken = default);
     }
 }

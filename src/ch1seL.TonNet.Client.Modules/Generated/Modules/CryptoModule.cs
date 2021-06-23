@@ -351,5 +351,45 @@ namespace ch1seL.TonNet.Client.Modules
         {
             await _tonClientAdapter.Request<RegisteredSigningBox>("crypto.remove_signing_box", @params, cancellationToken);
         }
+
+        /// <summary>
+        /// Register an application implemented encryption box.
+        /// </summary>
+        public async Task<RegisteredEncryptionBox> RegisterEncryptionBox(Action<JsonElement,uint> appObject = null, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<RegisteredEncryptionBox, JsonElement>("crypto.register_encryption_box", appObject, cancellationToken);
+        }
+
+        /// <summary>
+        /// Removes encryption box from SDK
+        /// </summary>
+        public async Task RemoveEncryptionBox(RegisteredEncryptionBox @params, CancellationToken cancellationToken = default)
+        {
+            await _tonClientAdapter.Request<RegisteredEncryptionBox>("crypto.remove_encryption_box", @params, cancellationToken);
+        }
+
+        /// <summary>
+        /// Queries info from the given encryption box
+        /// </summary>
+        public async Task<ResultOfEncryptionBoxGetInfo> EncryptionBoxGetInfo(ParamsOfEncryptionBoxGetInfo @params, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<ParamsOfEncryptionBoxGetInfo, ResultOfEncryptionBoxGetInfo>("crypto.encryption_box_get_info", @params, cancellationToken);
+        }
+
+        /// <summary>
+        /// Encrypts data using given encryption box
+        /// </summary>
+        public async Task<ResultOfEncryptionBoxEncrypt> EncryptionBoxEncrypt(ParamsOfEncryptionBoxEncrypt @params, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<ParamsOfEncryptionBoxEncrypt, ResultOfEncryptionBoxEncrypt>("crypto.encryption_box_encrypt", @params, cancellationToken);
+        }
+
+        /// <summary>
+        /// Decrypts data using given encryption box
+        /// </summary>
+        public async Task<ResultOfEncryptionBoxDecrypt> EncryptionBoxDecrypt(ParamsOfEncryptionBoxDecrypt @params, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<ParamsOfEncryptionBoxDecrypt, ResultOfEncryptionBoxDecrypt>("crypto.encryption_box_decrypt", @params, cancellationToken);
+        }
     }
 }

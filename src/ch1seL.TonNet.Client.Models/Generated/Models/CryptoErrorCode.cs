@@ -31,6 +31,7 @@ namespace ch1seL.TonNet.Client.Models
         MnemonicGenerationFailed = 119,
         MnemonicFromEntropyFailed = 120,
         SigningBoxNotRegistered = 121,
-        InvalidSignature = 122
+        InvalidSignature = 122,
+        EncryptionBoxNotRegistered = 123
     }
 }
