@@ -3,7 +3,7 @@
         <Authors>Alexander Salamatov</Authors>
         <Organization>ton-actions</Organization>
         <Owner>ch1seL</Owner>
-        <Copyright>Copyright 2020 (c) Alexander Salamatov. All rights reserved.</Copyright>
+        <Copyright>Copyright 2021 (c) Alexander Salamatov. All rights reserved.</Copyright>
         
         <Description>Free TON Client for .NET</Description>
         <IncludeSymbols>true</IncludeSymbols>

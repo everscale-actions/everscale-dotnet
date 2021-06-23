@@ -558,7 +558,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
 
                 switch (PolymorphicSerializer.Deserialize<ParamsOfAppSigningBox>(paramsOfAppRequest.RequestData!.Value))
                 {
-                    case ParamsOfAppSigningBox.GetPublicKey:
+                    case ParamsOfAppSigningBox.GetPublicKey getPublicKey:
                     {
                         ResultOfSigningBoxGetPublicKey resultOfSigningBoxGetPublicKey = await _tonClient.Crypto.SigningBoxGetPublicKey(new RegisteredSigningBox
                         {

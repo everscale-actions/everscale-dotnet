@@ -14,7 +14,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
         private static T FindAttributeOfType<T>(this Enum enumValue, Func<T, bool> filter = null)
         {
             return enumValue.GetType()
-                    .GetField(enumValue.ToString())!
+                .GetField(enumValue.ToString())!
                 .GetCustomAttributes(false)
                 .OfType<T>()
                 .SingleOrDefault(a => filter?.Invoke(a) ?? true);

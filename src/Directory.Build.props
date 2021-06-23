@@ -1,0 +1,7 @@
+<Project>
+    <Import Project="..\PackageInfo.targets"/>
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+    </PropertyGroup>
+</Project>

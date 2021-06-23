@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using ch1seL.TonNet.ClientGenerator.Models;
 using Microsoft.CodeAnalysis;
@@ -117,10 +116,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
             string description, NumberType? numberType = null, long? numberSize = null, bool optional = false, bool addPostfix = false,
             ArrayItem arrayItem = null)
         {
-            if (type == GenericArgType.Array && arrayItem == null)
-            {
-                throw new ArgumentNullException(nameof(arrayItem));
-            }
+            if (type == GenericArgType.Array && arrayItem == null) throw new ArgumentNullException(nameof(arrayItem));
 
             return type switch
             {

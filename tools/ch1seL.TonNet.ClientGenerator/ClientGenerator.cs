@@ -35,7 +35,7 @@ namespace ch1seL.TonNet.ClientGenerator
 
             foreach (var path in new[] {outputAbstract, outputPathClient, outputPathModules, outputPathModels}) PrepareDirectory(path);
 
-            var apiFilePath = Path.Combine(repositoryLocation, "tools", "ClientGenerator", "Resources", "api.json");
+            var apiFilePath = Path.Combine(repositoryLocation, "tools", "ch1seL.TonNet.ClientGenerator", "Resources", "api.json");
             await using FileStream apiFileStream = File.OpenRead(apiFilePath);
             var tonApi = await JsonSerializer.DeserializeAsync<TonApi>(apiFileStream, Options);
 
