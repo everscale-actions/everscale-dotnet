@@ -83,5 +83,11 @@ namespace ch1seL.TonNet.Abstract.Modules
         /// <para>2. TVC (string in `base64`), keys, init params</para>
         /// </summary>
         public Task<ResultOfEncodeAccount> EncodeAccount(ParamsOfEncodeAccount @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// <para>Decodes account data using provided data BOC and ABI.</para>
+        /// <para>Note: this feature requires ABI 2.1 or higher.</para>
+        /// </summary>
+        public Task<ResultOfDecodeData> DecodeAccountData(ParamsOfDecodeAccountData @params, CancellationToken cancellationToken = default);
     }
 }

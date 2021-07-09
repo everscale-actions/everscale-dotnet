@@ -116,5 +116,14 @@ namespace ch1seL.TonNet.Client.Modules
         {
             return await _tonClientAdapter.Request<ParamsOfEncodeAccount, ResultOfEncodeAccount>("abi.encode_account", @params, cancellationToken);
         }
+
+        /// <summary>
+        /// <para>Decodes account data using provided data BOC and ABI.</para>
+        /// <para>Note: this feature requires ABI 2.1 or higher.</para>
+        /// </summary>
+        public async Task<ResultOfDecodeData> DecodeAccountData(ParamsOfDecodeAccountData @params, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<ParamsOfDecodeAccountData, ResultOfDecodeData>("abi.decode_account_data", @params, cancellationToken);
+        }
     }
 }

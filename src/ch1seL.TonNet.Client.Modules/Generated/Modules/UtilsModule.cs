@@ -26,6 +26,21 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
+        /// <para>Validates and returns the type of any TON address.</para>
+        /// <para>Address types are the following</para>
+        /// <para>`0:919db8e740d50bf349df2eea03fa30c385d846b991ff5542e67098ee833fc7f7` - standart TON address most</para>
+        /// <para>commonly used in all cases. Also called as hex addres</para>
+        /// <para>`919db8e740d50bf349df2eea03fa30c385d846b991ff5542e67098ee833fc7f7` - account ID. A part of full</para>
+        /// <para>address. Identifies account inside particular workchain</para>
+        /// <para>`EQCRnbjnQNUL80nfLuoD+jDDhdhGuZH/VULmcJjugz/H9wam` - base64 address. Also called "user-friendly".</para>
+        /// <para>Was used at the beginning of TON. Now it is supported for compatibility</para>
+        /// </summary>
+        public async Task<ResultOfGetAddressType> GetAddressType(ParamsOfGetAddressType @params, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<ParamsOfGetAddressType, ResultOfGetAddressType>("utils.get_address_type", @params, cancellationToken);
+        }
+
+        /// <summary>
         /// Calculates storage fee for an account over a specified time period
         /// </summary>
         public async Task<ResultOfCalcStorageFee> CalcStorageFee(ParamsOfCalcStorageFee @params, CancellationToken cancellationToken = default)

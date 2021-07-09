@@ -46,5 +46,11 @@ namespace ch1seL.TonNet.Client.Models
         /// </summary>
         [JsonPropertyName("data")]
         public AbiData[] Data { get; set; }
+
+        /// <summary>
+        /// Not described yet..
+        /// </summary>
+        [JsonPropertyName("fields")]
+        public AbiParam[] Fields { get; set; }
     }
 }

@@ -23,6 +23,7 @@ namespace ch1seL.TonNet.Client.Models
         RequiredPublicKeyMissingForFunctionHeader = 309,
         InvalidSigner = 310,
         InvalidAbi = 311,
-        InvalidFunctionId = 312
+        InvalidFunctionId = 312,
+        InvalidData = 313
     }
 }
