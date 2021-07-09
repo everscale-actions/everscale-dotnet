@@ -5,7 +5,7 @@ namespace ch1seL.TonNet.Client
 {
     public class TonClientOptions
     {
-        private static readonly string[] DefaultEndpoints = {"main.ton.dev"};
+        private static readonly string[] DefaultEndpoints = {"https://main2.ton.dev/", "https://main3.ton.dev/", "https://main4.ton.dev/"};
 
         [JsonPropertyName("network")] public NetworkConfig Network { get; set; } = new NetworkConfig {Endpoints = DefaultEndpoints};
 
