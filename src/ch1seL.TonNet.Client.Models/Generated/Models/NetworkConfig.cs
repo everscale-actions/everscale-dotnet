@@ -99,6 +99,15 @@ namespace ch1seL.TonNet.Client.Models
         public uint? MaxLatency { get; set; }
 
         /// <summary>
+        /// <para>Default timeout for http requests.</para>
+        /// <para>Is is used when no timeout specified for the request to limit the answer waiting time. If no answer received during the timeout requests ends with</para>
+        /// <para>error.</para>
+        /// <para>Must be specified in milliseconds. Default is 60000 (1 min).</para>
+        /// </summary>
+        [JsonPropertyName("query_timeout")]
+        public uint? QueryTimeout { get; set; }
+
+        /// <summary>
         /// <para>Access key to GraphQL API.</para>
         /// <para>At the moment is not used in production.</para>
         /// </summary>

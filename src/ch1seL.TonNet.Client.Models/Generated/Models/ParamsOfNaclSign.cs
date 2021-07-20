@@ -18,7 +18,7 @@ namespace ch1seL.TonNet.Client.Models
         public string Unsigned { get; set; }
 
         /// <summary>
-        /// Signer's secret key - unprefixed 0-padded to 64 symbols hex string
+        /// Signer's secret key - unprefixed 0-padded to 128 symbols hex string (concatenation of 64 symbols secret and 64 symbols public keys). See `nacl_sign_keypair_from_secret_key`.
         /// </summary>
         [JsonPropertyName("secret")]
         public string Secret { get; set; }

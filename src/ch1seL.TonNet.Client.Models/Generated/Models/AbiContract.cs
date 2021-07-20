@@ -26,6 +26,12 @@ namespace ch1seL.TonNet.Client.Models
         /// <summary>
         /// Not described yet..
         /// </summary>
+        [JsonPropertyName("version")]
+        public string Version { get; set; }
+
+        /// <summary>
+        /// Not described yet..
+        /// </summary>
         [JsonPropertyName("header")]
         public string[] Header { get; set; }
 

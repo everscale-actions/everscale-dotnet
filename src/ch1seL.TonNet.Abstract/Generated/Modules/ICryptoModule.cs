@@ -83,7 +83,10 @@ namespace ch1seL.TonNet.Abstract.Modules
         public Task<ResultOfScrypt> Scrypt(ParamsOfScrypt @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Generates a key pair for signing from the secret key
+        /// <para>Generates a key pair for signing from the secret key</para>
+        /// <para>**NOTE:** In the result the secret key is actually the concatenation</para>
+        /// <para>of secret and public keys (128 symbols hex string) by design of [NaCL](http://nacl.cr.yp.to/sign.html).</para>
+        /// <para>See also [the stackexchange question](https://crypto.stackexchange.com/questions/54353/).</para>
         /// </summary>
         public Task<KeyPair> NaclSignKeypairFromSecretKey(ParamsOfNaclSignKeyPairFromSecret @params, CancellationToken cancellationToken = default);
 
