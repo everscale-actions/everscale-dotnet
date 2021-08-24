@@ -31,7 +31,7 @@ namespace ch1seL.TonNet.Client.Tests
         }
 
         [Fact]
-        public void TonClientDisposing()
+        public async Task TonClientDisposing()
         {
             var act = new Func<Task>(async () =>
             {
@@ -42,7 +42,7 @@ namespace ch1seL.TonNet.Client.Tests
                 tonClient.Dispose();
             });
 
-            act.Should().NotThrow();
+            await act.Should().NotThrowAsync();
         }
     }
 }
