@@ -248,13 +248,22 @@ namespace ch1seL.TonNet.Abstract.Modules
         public Task<ResultOfEncryptionBoxGetInfo> EncryptionBoxGetInfo(ParamsOfEncryptionBoxGetInfo @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Encrypts data using given encryption box
+        /// <para>Encrypts data using given encryption box Note.</para>
+        /// <para>Block cipher algorithms pad data to cipher block size so encrypted data can be longer then original data. Client should store the original data size after encryption and use it after</para>
+        /// <para>decryption to retrieve the original data from decrypted data.</para>
         /// </summary>
         public Task<ResultOfEncryptionBoxEncrypt> EncryptionBoxEncrypt(ParamsOfEncryptionBoxEncrypt @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Decrypts data using given encryption box
+        /// <para>Decrypts data using given encryption box Note.</para>
+        /// <para>Block cipher algorithms pad data to cipher block size so encrypted data can be longer then original data. Client should store the original data size after encryption and use it after</para>
+        /// <para>decryption to retrieve the original data from decrypted data.</para>
         /// </summary>
         public Task<ResultOfEncryptionBoxDecrypt> EncryptionBoxDecrypt(ParamsOfEncryptionBoxDecrypt @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Creates encryption box with specified algorithm
+        /// </summary>
+        public Task<RegisteredEncryptionBox> CreateEncryptionBox(ParamsOfCreateEncryptionBox @params, CancellationToken cancellationToken = default);
     }
 }

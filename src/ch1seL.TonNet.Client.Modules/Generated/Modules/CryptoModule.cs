@@ -380,7 +380,9 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Encrypts data using given encryption box
+        /// <para>Encrypts data using given encryption box Note.</para>
+        /// <para>Block cipher algorithms pad data to cipher block size so encrypted data can be longer then original data. Client should store the original data size after encryption and use it after</para>
+        /// <para>decryption to retrieve the original data from decrypted data.</para>
         /// </summary>
         public async Task<ResultOfEncryptionBoxEncrypt> EncryptionBoxEncrypt(ParamsOfEncryptionBoxEncrypt @params, CancellationToken cancellationToken = default)
         {
@@ -388,11 +390,21 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// Decrypts data using given encryption box
+        /// <para>Decrypts data using given encryption box Note.</para>
+        /// <para>Block cipher algorithms pad data to cipher block size so encrypted data can be longer then original data. Client should store the original data size after encryption and use it after</para>
+        /// <para>decryption to retrieve the original data from decrypted data.</para>
         /// </summary>
         public async Task<ResultOfEncryptionBoxDecrypt> EncryptionBoxDecrypt(ParamsOfEncryptionBoxDecrypt @params, CancellationToken cancellationToken = default)
         {
             return await _tonClientAdapter.Request<ParamsOfEncryptionBoxDecrypt, ResultOfEncryptionBoxDecrypt>("crypto.encryption_box_decrypt", @params, cancellationToken);
+        }
+
+        /// <summary>
+        /// Creates encryption box with specified algorithm
+        /// </summary>
+        public async Task<RegisteredEncryptionBox> CreateEncryptionBox(ParamsOfCreateEncryptionBox @params, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<ParamsOfCreateEncryptionBox, RegisteredEncryptionBox>("crypto.create_encryption_box", @params, cancellationToken);
         }
     }
 }

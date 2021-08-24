@@ -32,7 +32,7 @@ namespace ch1seL.TonNet.Abstract.Modules
         /// <para>Also it requires message BOC. To get the message BOC - use `abi.encode_message` or `abi.encode_internal_message`.</para>
         /// <para>If you need this emulation to be as precise as possible (for instance - emulate transaction</para>
         /// <para>with particular lt in particular block or use particular blockchain config,</para>
-        /// <para>in case you want to download it from a particular key block - then specify `ParamsOfRunExecutor` parameter.</para>
+        /// <para>downloaded from a particular key block - then specify `execution_options` parameter.</para>
         /// <para>If you need to see the aborted transaction as a result, not as an error, set `skip_transaction_check` to `true`.</para>
         /// </summary>
         public Task<ResultOfRunExecutor> RunExecutor(ParamsOfRunExecutor @params, CancellationToken cancellationToken = default);

@@ -9,12 +9,18 @@ namespace ch1seL.TonNet.Client.Models
     /// <summary>
     /// Not described yet..
     /// </summary>
-    public class ResultOfEncryptionBoxDecrypt
+    public class AesInfo
     {
         /// <summary>
-        /// Decrypted data, encoded in Base64.
+        /// Not described yet..
         /// </summary>
-        [JsonPropertyName("data")]
-        public string Data { get; set; }
+        [JsonPropertyName("mode")]
+        public CipherMode Mode { get; set; }
+
+        /// <summary>
+        /// Not described yet..
+        /// </summary>
+        [JsonPropertyName("iv")]
+        public string Iv { get; set; }
     }
 }

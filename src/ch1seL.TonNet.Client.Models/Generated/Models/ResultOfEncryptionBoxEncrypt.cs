@@ -12,7 +12,8 @@ namespace ch1seL.TonNet.Client.Models
     public class ResultOfEncryptionBoxEncrypt
     {
         /// <summary>
-        /// Encrypted data, encoded in Base64
+        /// <para>Encrypted data, encoded in Base64.</para>
+        /// <para>Padded to cipher block size</para>
         /// </summary>
         [JsonPropertyName("data")]
         public string Data { get; set; }

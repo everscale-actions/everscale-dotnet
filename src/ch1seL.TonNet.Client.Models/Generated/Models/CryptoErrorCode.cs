@@ -32,6 +32,12 @@ namespace ch1seL.TonNet.Client.Models
         MnemonicFromEntropyFailed = 120,
         SigningBoxNotRegistered = 121,
         InvalidSignature = 122,
-        EncryptionBoxNotRegistered = 123
+        EncryptionBoxNotRegistered = 123,
+        InvalidIvSize = 124,
+        UnsupportedCipherMode = 125,
+        CannotCreateCipher = 126,
+        EncryptDataError = 127,
+        DecryptDataError = 128,
+        IvRequired = 129
     }
 }

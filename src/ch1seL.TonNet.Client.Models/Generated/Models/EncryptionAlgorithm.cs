@@ -9,12 +9,12 @@ namespace ch1seL.TonNet.Client.Models
     /// <summary>
     /// Not described yet..
     /// </summary>
-    public class ResultOfEncryptionBoxDecrypt
+    public abstract class EncryptionAlgorithm
     {
         /// <summary>
-        /// Decrypted data, encoded in Base64.
+        /// Not described yet..
         /// </summary>
-        [JsonPropertyName("data")]
-        public string Data { get; set; }
+        [JsonPropertyName("AES")]
+        public AesParams AES { get; set; }
     }
 }
