@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
-        <PackageReference Include="Dahomey.Json" Version="1.11.1"/>
+        <PackageReference Include="Dahomey.Json" Version="1.11.2"/>
     </ItemGroup>
 
     <ItemGroup>
