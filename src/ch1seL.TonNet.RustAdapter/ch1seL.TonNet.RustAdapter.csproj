@@ -41,6 +41,11 @@
             <PackagePath>runtimes\osx-x64\native\libtonclient.dylib</PackagePath>
             <Link>runtimes\osx-x64\native\libtonclient.dylib</Link>
         </None>
+        <None Include="..\runtimes\osx.11.0-arm64\native\libtonclient.dylib">
+            <Pack>true</Pack>
+            <PackagePath>runtimes\osx.11.0-arm64\native\libtonclient.dylib</PackagePath>
+            <Link>runtimes\osx.11.0-arm64\native\libtonclient.dylib</Link>
+        </None>
     </ItemGroup>
     
 </Project>
