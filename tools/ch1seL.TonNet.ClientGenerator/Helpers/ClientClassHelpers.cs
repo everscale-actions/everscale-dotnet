@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using ch1seL.TonNet.ClientGenerator.Models;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
@@ -39,27 +40,28 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
             var propertyDeclarationSyntaxes = GetProperties(tonApi);
             var moduleNames = tonApi.Modules.Select(m => m.Name).ToArray();
 
-            VariableDeclarationSyntax variableDeclaration = VariableDeclaration(ParseTypeName("ServiceProvider"))
-                .AddVariables(VariableDeclarator("_serviceProvider"));
+            VariableDeclarationSyntax variableDeclaration = VariableDeclaration(ParseTypeName("ITonClientAdapter"))
+                .AddVariables(VariableDeclarator("_tonClientAdapter"));
             FieldDeclarationSyntax fieldDeclaration = FieldDeclaration(variableDeclaration)
                 .AddModifiers(Token(SyntaxKind.PrivateKeyword), Token(SyntaxKind.ReadOnlyKeyword));
 
             var statementSyntax =
                 new[]
                     {
-                        ParseStatement("_serviceProvider = TonClientServiceProviderBuilder.BuildTonClientServiceProvider(serviceProvider);")
+                        ParseStatement("_tonClientAdapter = tonClientAdapter;")
+                            .WithTrailingTrivia(LineFeed)
                     }
                     .Union(moduleNames
                         .Select(m => ParseStatement(
-                            $"{NamingConventions.Normalize(m)} = _serviceProvider.GetRequiredService<{NamingConventions.ToInterfaceName(m)}Module>();")))
+                            $"{NamingConventions.Normalize(m)} = new {NamingConventions.Normalize(m)}Module(tonClientAdapter);").WithTrailingTrivia(LineFeed)))
                     .ToArray();
 
             MethodDeclarationSyntax disposeMethod = MethodDeclaration(ParseTypeName("void"), "Dispose")
                 .AddModifiers(Token(SyntaxKind.PublicKeyword))
-                .AddBodyStatements(ParseStatement("_serviceProvider?.Dispose();"));
+                .AddBodyStatements(ParseStatement("_tonClientAdapter?.Dispose();"));
 
             ConstructorDeclarationSyntax constructorDeclaration = ConstructorDeclaration(unitName)
-                .AddParameterListParameters(Parameter(Identifier("serviceProvider = null")).WithType(IdentifierName("IServiceProvider")))
+                .AddParameterListParameters(Parameter(Identifier("tonClientAdapter")).WithType(IdentifierName("ITonClientAdapter")))
                 .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
                 .WithBody(Block(statementSyntax));
 

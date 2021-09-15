@@ -39,7 +39,7 @@ namespace ch1seL.TonNet.Client.PackageManager
             await using FileStream fs = fileInfo.OpenRead();
             var abiContract = await JsonSerializer.DeserializeAsync<AbiContract>(fs, JsonOptionsProvider.JsonSerializerOptions);
 
-            return new Abi.Contract {Value = abiContract};
+            return new Abi.Contract { Value = abiContract };
         }
 
         public async Task<string> LoadTvc(string name)

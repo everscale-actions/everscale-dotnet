@@ -8,7 +8,7 @@ namespace ch1seL.TonNet.Abstract
     ///     The most importantly interface. It provide all that needed to clients implementation
     /// </summary>
     /// There are big plans for this interface
-    public interface ITonClientAdapter
+    public interface ITonClientAdapter : IDisposable
     {
         Task Request<TRequest>(string method, TRequest request, CancellationToken cancellationToken = default);
         Task<TResponse> Request<TResponse>(string method, CancellationToken cancellationToken = default);

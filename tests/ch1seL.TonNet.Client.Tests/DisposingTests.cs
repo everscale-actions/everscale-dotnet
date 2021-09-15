@@ -1,7 +1,12 @@
 ﻿using System;
+using System.Text.Json;
 using System.Threading.Tasks;
+using ch1seL.TonNet.Abstract;
+using ch1seL.TonNet.RustAdapter;
+using ch1seL.TonNet.Serialization;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Core;
 using Xunit;
@@ -22,6 +27,11 @@ namespace ch1seL.TonNet.Client.Tests
 
             _serviceProvider = new ServiceCollection()
                 .AddLogging(builder => builder.AddSerilog(logger))
+                .AddSingleton<ITonClientAdapter>(provider =>
+                {
+                    var configJson = JsonSerializer.Serialize(new TonClientOptions(), JsonOptionsProvider.JsonSerializerOptions);
+                    return new TonClientRustAdapter(configJson, provider.GetRequiredService<ILogger<TonClientRustAdapter>>());
+                })
                 .BuildServiceProvider();
         }
 
@@ -35,7 +45,7 @@ namespace ch1seL.TonNet.Client.Tests
         {
             var act = new Func<Task>(async () =>
             {
-                var tonClient = new TonClient(_serviceProvider);
+                var tonClient = new TonClient(_serviceProvider.GetRequiredService<ITonClientAdapter>());
 
                 await tonClient.Client.GetApiReference();
 

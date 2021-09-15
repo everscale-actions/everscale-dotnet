@@ -1,17 +1,26 @@
 using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.Abstract.Modules;
-using Microsoft.Extensions.DependencyInjection;
+using ch1seL.TonNet.Client.Modules;
 using System;
 
 namespace ch1seL.TonNet.Client
 {
     public class TonClient : ITonClient, IDisposable
     {
-        private readonly ServiceProvider _serviceProvider;
+        private readonly ITonClientAdapter _tonClientAdapter;
 
-        public TonClient(IServiceProvider serviceProvider = null)
+        public TonClient(ITonClientAdapter tonClientAdapter)
         {
-            _serviceProvider = TonClientServiceProviderBuilder.BuildTonClientServiceProvider(serviceProvider); Client = _serviceProvider.GetRequiredService<IClientModule>(); Crypto = _serviceProvider.GetRequiredService<ICryptoModule>(); Abi = _serviceProvider.GetRequiredService<IAbiModule>(); Boc = _serviceProvider.GetRequiredService<IBocModule>(); Processing = _serviceProvider.GetRequiredService<IProcessingModule>(); Utils = _serviceProvider.GetRequiredService<IUtilsModule>(); Tvm = _serviceProvider.GetRequiredService<ITvmModule>(); Net = _serviceProvider.GetRequiredService<INetModule>(); Debot = _serviceProvider.GetRequiredService<IDebotModule>();
+            _tonClientAdapter = tonClientAdapter;
+            Client = new ClientModule(tonClientAdapter);
+            Crypto = new CryptoModule(tonClientAdapter);
+            Abi = new AbiModule(tonClientAdapter);
+            Boc = new BocModule(tonClientAdapter);
+            Processing = new ProcessingModule(tonClientAdapter);
+            Utils = new UtilsModule(tonClientAdapter);
+            Tvm = new TvmModule(tonClientAdapter);
+            Net = new NetModule(tonClientAdapter);
+            Debot = new DebotModule(tonClientAdapter);
         }
 
         /// <summary>
@@ -63,7 +72,7 @@ namespace ch1seL.TonNet.Client
 
         public void Dispose()
         {
-            _serviceProvider?.Dispose();
+            _tonClientAdapter?.Dispose();
         }
     }
 }

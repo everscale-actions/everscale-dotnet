@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
-      <ProjectReference Include="..\ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj" />
-      <ProjectReference Include="..\ch1seL.TonNet.Client.Modules\ch1seL.TonNet.Client.Modules.csproj" />
-      <ProjectReference Include="..\ch1seL.TonNet.Debot\ch1seL.TonNet.Debot.csproj" />
-      <ProjectReference Include="..\ch1seL.TonNet.RustAdapter\ch1seL.TonNet.RustAdapter.csproj" />
+        <ProjectReference Include="..\ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj"/>
+        <ProjectReference Include="..\ch1seL.TonNet.Client.Modules\ch1seL.TonNet.Client.Modules.csproj"/>
+        <ProjectReference Include="..\ch1seL.TonNet.Debot\ch1seL.TonNet.Debot.csproj"/>
+        <ProjectReference Include="..\ch1seL.TonNet.RustAdapter\ch1seL.TonNet.RustAdapter.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
-        <PackageReference Include="System.Text.Json" Version="5.0.2" />
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0"/>
+        <PackageReference Include="System.Text.Json" Version="5.0.2"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -17,5 +17,9 @@
             <_Parameter1>ch1seL.TonNet.Client.Tests</_Parameter1>
         </AssemblyAttribute>
     </ItemGroup>
-    
+
+    <ItemGroup>
+        <Compile Remove="TonClientServiceProviderBuilder.cs"/>
+    </ItemGroup>
+
 </Project>

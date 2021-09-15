@@ -1,7 +1,13 @@
 ﻿using System;
+using System.Text.Json;
 using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.Client;
 using ch1seL.TonNet.Client.PackageManager;
+using ch1seL.TonNet.RustAdapter;
+using ch1seL.TonNet.Serialization;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection
@@ -24,7 +30,13 @@ namespace Microsoft.Extensions.DependencyInjection
             Action<PackageManagerOptions> configurePackageManagerOptions = null)
         {
             return serviceCollection
-                .AddTransient<ITonClient, TonClient>()
+                .AddSingleton<ITonClient>(provider =>
+                {
+                    var configJson = JsonSerializer.Serialize(provider.GetRequiredService<IOptions<TonClientOptions>>().Value,
+                        JsonOptionsProvider.JsonSerializerOptions);
+                    var logger = provider.GetService<ILogger<TonClientRustAdapter>>() ?? NullLogger<TonClientRustAdapter>.Instance;
+                    return new TonClient(new TonClientRustAdapter(configJson, logger));
+                })
                 .AddTransient<ITonPackageManager, FilePackageManager>()
                 .Configure<TonClientOptions>(options => configureTonClientOptions?.Invoke(options))
                 .Configure<PackageManagerOptions>(options => configurePackageManagerOptions?.Invoke(options));
