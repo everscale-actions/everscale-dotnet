@@ -30,11 +30,10 @@ namespace ch1seL.TonNet.ClientGenerator
         public static async Task GenerateClient(string repositoryLocation)
         {
             var outputAbstract = Path.Combine(repositoryLocation, "src", "ch1seL.TonNet.Abstract", "Generated");
-            var outputPathClient = Path.Combine(repositoryLocation, "src", "ch1seL.TonNet.Client", "Generated");
             var outputPathModules = Path.Combine(repositoryLocation, "src", "ch1seL.TonNet.Client.Modules", "Generated");
             var outputPathModels = Path.Combine(repositoryLocation, "src", "ch1seL.TonNet.Client.Models", "Generated");
 
-            foreach (var path in new[] { outputAbstract, outputPathClient, outputPathModules, outputPathModels }) PrepareDirectory(path);
+            foreach (var path in new[] { outputAbstract, outputPathModules, outputPathModels }) PrepareDirectory(path);
 
             var apiFilePath = Path.Combine(repositoryLocation, "tools", "ch1seL.TonNet.ClientGenerator", "Resources", "api.json");
             await using FileStream apiFileStream = File.OpenRead(apiFilePath);
@@ -46,7 +45,7 @@ namespace ch1seL.TonNet.ClientGenerator
 
             //Create TonClient
             UnitHelpers.CreateUnit("TonClient", unitName =>
-                    ClientClassHelpers.CreateTonClientClass(unitName, tonApi), Path.Combine(outputPathClient, "TonClient.cs"),
+                    ClientClassHelpers.CreateTonClientClass(unitName, tonApi), Path.Combine(outputPathModules, "TonClient.cs"),
                 "System", "ch1seL.TonNet.Abstract", "ch1seL.TonNet.Abstract.Modules", "ch1seL.TonNet.Client.Modules");
 
             //Save all used types

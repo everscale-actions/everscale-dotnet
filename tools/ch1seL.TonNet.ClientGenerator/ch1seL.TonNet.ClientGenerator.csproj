@@ -26,12 +26,6 @@
         </DownloadFile>
     </Target>
 
-    <ItemGroup>
-        <Content Include="Resources\api.json">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-    </ItemGroup>
-
     <PropertyGroup>
         <RepositoryLocation>$([System.IO.Path]::Combine($(MSBuildThisFileDirectory), "..", ".."))</RepositoryLocation>
     </PropertyGroup>

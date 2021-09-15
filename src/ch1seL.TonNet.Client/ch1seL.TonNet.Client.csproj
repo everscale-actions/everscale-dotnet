@@ -18,8 +18,4 @@
         </AssemblyAttribute>
     </ItemGroup>
 
-    <ItemGroup>
-        <Compile Remove="TonClientServiceProviderBuilder.cs"/>
-    </ItemGroup>
-
 </Project>
