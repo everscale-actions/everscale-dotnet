@@ -2,20 +2,21 @@ using System;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using ch1seL.TonNet.RustAdapter;
 using ch1seL.TonNet.Serialization;
 using FluentAssertions;
 using Xunit;
 
-namespace ch1seL.TonNet.RustAdapter.Tests
+namespace ch1seL.TonNet.RustClient.Tests
 {
-    public class RustClientTests
+    public class RustAdapterTests
     {
         [Fact]
         public void CreatingClientInitNotThrowException()
         {
             var act = new Action(() =>
             {
-                using ITonClientRustAdapter client = TestsHelpers.CreateTonClient();
+                using ITonClientRustAdapter client = TestsHelpers.CreateRustAdapter();
             });
 
             act.Should().NotThrow();
@@ -26,7 +27,7 @@ namespace ch1seL.TonNet.RustAdapter.Tests
         {
             Func<Task> act = async () =>
             {
-                ITonClientRustAdapter client = TestsHelpers.CreateTonClient();
+                ITonClientRustAdapter client = TestsHelpers.CreateRustAdapter();
                 await Task.WhenAll(Enumerable.Repeat(0, 1000)
                     // ReSharper disable once AccessToDisposedClosure
                     .Select(_ => client.RustRequest("client.get_api_reference", null)));
@@ -40,7 +41,7 @@ namespace ch1seL.TonNet.RustAdapter.Tests
         [Fact]
         public async Task FactorizeReturnsCorrectOutput()
         {
-            using ITonClientRustAdapter client = TestsHelpers.CreateTonClient();
+            using ITonClientRustAdapter client = TestsHelpers.CreateRustAdapter();
 
             const string method = "crypto.factorize";
             var parameters = new
@@ -55,7 +56,7 @@ namespace ch1seL.TonNet.RustAdapter.Tests
         [Fact]
         public async Task VersionRequestResponseWithNotEmptyResultAndNullError()
         {
-            using ITonClientRustAdapter client = TestsHelpers.CreateTonClient();
+            using ITonClientRustAdapter client = TestsHelpers.CreateRustAdapter();
 
             var response = await client.RustRequest("client.version", null);
 

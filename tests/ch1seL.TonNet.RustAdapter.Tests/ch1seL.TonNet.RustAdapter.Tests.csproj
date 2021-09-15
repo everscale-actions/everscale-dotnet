@@ -1,5 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+    <PropertyGroup>
+        <RootNamespace>ch1seL.TonNet.RustClient.Tests</RootNamespace>
+    </PropertyGroup>
+
     <ItemGroup>
         <PackageReference Include="FluentAssertions" Version="6.1.0"/>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0"/>

@@ -41,7 +41,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Client.Tests"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.TestsShared", "tests\ch1seL.TonNet.TestsShared\ch1seL.TonNet.TestsShared.csproj", "{3C0B9C56-3539-455A-930E-852A6729B6FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.RustClient.Tests", "tests\ch1seL.TonNet.RustClient.Tests\ch1seL.TonNet.RustClient.Tests.csproj", "{FEA67E4D-08A2-4B1D-9024-D8A8E5D376A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.RustAdapter.Tests", "tests\ch1seL.TonNet.RustAdapter.Tests\ch1seL.TonNet.RustAdapter.Tests.csproj", "{FEA67E4D-08A2-4B1D-9024-D8A8E5D376A7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6FBB82C1-086C-48B3-844B-B08B096F3B80}"
 ProjectSection(SolutionItems) = preProject
