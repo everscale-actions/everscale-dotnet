@@ -366,3 +366,5 @@ FodyWeavers.xsd
 
 /src/downloads/*
 /src/runtimes/*
+
+tools/ch1seL.TonNet.ClientGenerator/Resources/api.json
