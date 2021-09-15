@@ -1,6 +1,6 @@
 ﻿using ch1seL.TonNet.Client.Models;
 
-namespace ch1seL.TonNet.Client.PackageManager
+namespace ch1seL.TonNet.Client
 {
     public class Package
     {

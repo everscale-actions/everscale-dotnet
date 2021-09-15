@@ -1,6 +1,6 @@
 ﻿namespace ch1seL.TonNet.Client.PackageManager
 {
-    public class PackageManagerOptions
+    public class FilePackageManagerOptions
     {
         /// <summary>
         ///     Path that will be used to load packages. Default is "_contracts"

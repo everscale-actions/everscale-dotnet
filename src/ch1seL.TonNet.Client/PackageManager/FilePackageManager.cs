@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
+using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.Serialization;
 using Microsoft.Extensions.Options;
@@ -12,9 +13,9 @@ namespace ch1seL.TonNet.Client.PackageManager
     {
         private const string AbiFileTemplate = "{0}.abi.json";
         private const string TvcFileTemplate = "{0}.tvc";
-        private readonly PackageManagerOptions _options;
+        private readonly FilePackageManagerOptions _options;
 
-        public FilePackageManager(IOptions<PackageManagerOptions> optionsAccessor)
+        public FilePackageManager(IOptions<FilePackageManagerOptions> optionsAccessor)
         {
             _options = optionsAccessor.Value;
         }

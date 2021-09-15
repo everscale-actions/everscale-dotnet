@@ -24,10 +24,10 @@ namespace Microsoft.Extensions.DependencyInjection
         ///     https://github.com/tonlabs/TON-SDK/blob/master/docs/mod_client.md#cryptoconfig
         ///     https://github.com/tonlabs/TON-SDK/blob/master/docs/mod_client.md#abiconfig
         /// </param>
-        /// <param name="configurePackageManagerOptions">Configure package manager, contracts path and etc. <see cref="PackageManagerOptions" /></param>
+        /// <param name="configurePackageManagerOptions">Configure package manager, contracts path and etc. <see cref="FilePackageManagerOptions" /></param>
         /// <returns></returns>
         public static IServiceCollection AddTonClient(this IServiceCollection serviceCollection, Action<TonClientOptions> configureTonClientOptions = null,
-            Action<PackageManagerOptions> configurePackageManagerOptions = null)
+            Action<FilePackageManagerOptions> configurePackageManagerOptions = null)
         {
             return serviceCollection
                 .AddSingleton<ITonClient>(provider =>
@@ -39,7 +39,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 })
                 .AddTransient<ITonPackageManager, FilePackageManager>()
                 .Configure<TonClientOptions>(options => configureTonClientOptions?.Invoke(options))
-                .Configure<PackageManagerOptions>(options => configurePackageManagerOptions?.Invoke(options));
+                .Configure<FilePackageManagerOptions>(options => configurePackageManagerOptions?.Invoke(options));
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using ch1seL.TonNet.Abstract;
+using ch1seL.TonNet.Client;
 using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.Client.PackageManager;
 using Microsoft.Extensions.Options;
@@ -15,11 +17,11 @@ namespace ch1seL.TonNet.TestsShared
 
         public const string LocalGiverAddress = "0:841288ed3b55d9cdafa806807f02a0ae0c169aa5edfe88a789a6482429756a94";
 
-        private static readonly ITonPackageManager TonPackageManager = new FilePackageManager(Options.Create(new PackageManagerOptions
-            {PackagesPath = Path.Join(ContractsPath, $"abi_v{CurrentAbiVersion}")}));
+        private static readonly ITonPackageManager TonPackageManager = new FilePackageManager(Options.Create(new FilePackageManagerOptions
+            { PackagesPath = Path.Join(ContractsPath, $"abi_v{CurrentAbiVersion}") }));
 
-        private static readonly ITonPackageManager TonPackageManagerAbi1 = new FilePackageManager(Options.Create(new PackageManagerOptions
-            {PackagesPath = Path.Join(ContractsPath, "abi_v1")}));
+        private static readonly ITonPackageManager TonPackageManagerAbi1 = new FilePackageManager(Options.Create(new FilePackageManagerOptions
+            { PackagesPath = Path.Join(ContractsPath, "abi_v1") }));
 
         public static readonly string TonNetworkAddress = Environment.GetEnvironmentVariable("TON_NETWORK_ADDRESS") ?? DefaultTonNetworkAddress;
 

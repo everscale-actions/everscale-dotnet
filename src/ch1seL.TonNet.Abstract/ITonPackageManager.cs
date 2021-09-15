@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
+using ch1seL.TonNet.Client;
 using ch1seL.TonNet.Client.Models;
 
-namespace ch1seL.TonNet.Client.PackageManager
+namespace ch1seL.TonNet.Abstract
 {
     /// <summary>
     ///     Load package from abi and tvm files. Default path is _contracts/abi_v{AbiVersion}/
