@@ -1,4 +1,5 @@
-﻿using ch1seL.TonNet.RustAdapter;
+﻿using ch1seL.TonNet.Client;
+using ch1seL.TonNet.RustAdapter;
 using Microsoft.Extensions.Logging.Abstractions;
 
 namespace ch1seL.TonNet.RustClient.Tests
@@ -7,7 +8,7 @@ namespace ch1seL.TonNet.RustClient.Tests
     {
         public static ITonClientRustAdapter CreateRustAdapter()
         {
-            return new TonClientRustAdapter(null, NullLogger<TonClientRustAdapter>.Instance);
+            return new TonClientRustAdapter(new TonClientOptions(), NullLogger<TonClientRustAdapter>.Instance);
         }
     }
 }

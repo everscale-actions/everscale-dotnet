@@ -56,10 +56,6 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                             $"{NamingConventions.Normalize(m)} = new {NamingConventions.Normalize(m)}Module(tonClientAdapter);").WithTrailingTrivia(LineFeed)))
                     .ToArray();
 
-            MethodDeclarationSyntax disposeMethod = MethodDeclaration(ParseTypeName("void"), "Dispose")
-                .AddModifiers(Token(SyntaxKind.PublicKeyword))
-                .AddBodyStatements(ParseStatement("_tonClientAdapter?.Dispose();"));
-
             ConstructorDeclarationSyntax constructorDeclaration = ConstructorDeclaration(unitName)
                 .AddParameterListParameters(Parameter(Identifier("tonClientAdapter")).WithType(IdentifierName("ITonClientAdapter")))
                 .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
@@ -67,11 +63,10 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
             ClassDeclarationSyntax item = ClassDeclaration(unitName)
                 .AddModifiers(Token(SyntaxKind.PublicKeyword))
-                .AddBaseListTypes(SimpleBaseType(IdentifierName("ITonClient")), SimpleBaseType(IdentifierName("IDisposable")))
+                .AddBaseListTypes(SimpleBaseType(IdentifierName("ITonClient")))
                 .AddMembers(fieldDeclaration)
                 .AddMembers(constructorDeclaration)
-                .AddMembers(propertyDeclarationSyntaxes)
-                .AddMembers(disposeMethod);
+                .AddMembers(propertyDeclarationSyntaxes);
 
             return NamespaceDeclaration(IdentifierName(ClientGenerator.Namespace))
                 .AddMembers(item);

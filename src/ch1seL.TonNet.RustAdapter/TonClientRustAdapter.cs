@@ -25,11 +25,13 @@ namespace ch1seL.TonNet.RustAdapter
         private readonly IDictionary<uint, CallbackDelegate> _delegatesDict = new Dictionary<uint, CallbackDelegate>();
         private readonly object _dictLock = new object();
         private readonly ILogger<TonClientRustAdapter> _logger;
+        private readonly object _requestIdLock = new object();
         private uint _requestId;
 
-        public TonClientRustAdapter(string configJson, ILogger<TonClientRustAdapter> logger)
+        public TonClientRustAdapter(TonClientOptions options, ILogger<TonClientRustAdapter> logger)
         {
             _logger = logger;
+            var configJson = JsonSerializer.Serialize(options, JsonOptionsProvider.JsonSerializerOptions);
             _logger.LogTrace("Creating context with options: {config}", configJson);
             using var optionsInteropJson = configJson.ToInteropStringDisposable();
             IntPtr resultPtr = RustInteropInterface.tc_create_context(optionsInteropJson);
@@ -47,7 +49,7 @@ namespace ch1seL.TonNet.RustAdapter
             if (error != null)
                 throw TonClientException.CreateExceptionWithCodeWithData(error.Code, error.Data?.ToObject<Dictionary<string, object>>(), error.Message);
 
-            _contextNumber = (uint) createContextResult.ContextNumber;
+            _contextNumber = (uint)createContextResult.ContextNumber;
         }
 
         public async Task<TResponse> Request<TResponse>(string method, CancellationToken cancellationToken = default)
@@ -110,15 +112,18 @@ namespace ch1seL.TonNet.RustAdapter
         public async Task<string> RustRequest(string method, string requestJson, Action<string, uint> callback = null,
             CancellationToken cancellationToken = default)
         {
-            _requestId = _requestId == uint.MaxValue ? 0 : _requestId + 1;
+            lock (_requestIdLock)
+            {
+                _requestId = _requestId == uint.MaxValue ? 0 : _requestId + 1;
+            }
 
-            var cts = new TaskCompletionSource<string>();
+            var tsc = new TaskCompletionSource<string>();
 
             var callbackDelegate = new CallbackDelegate((requestId, responseInteropString, responseType, finished) =>
             {
                 var responseJson = responseInteropString.ToString();
                 _logger.LogTrace("Got request response context:{context} request:{request} type:{responseType} finished:{finished} body:{body}",
-                    _contextNumber, requestId, ((ResponseType) responseType).ToString(), finished, responseJson);
+                    _contextNumber, requestId, ((ResponseType)responseType).ToString(), finished, responseJson);
 
                 lock (_dictLock)
                 {
@@ -131,14 +136,14 @@ namespace ch1seL.TonNet.RustAdapter
                     if (finished) RemoveDelegateFromDict(requestId);
                 }
 
-                switch ((ResponseType) responseType)
+                switch ((ResponseType)responseType)
                 {
                     case ResponseType.Success:
-                        cts.SetResult(responseJson);
+                        tsc.SetResult(responseJson);
                         break;
                     case ResponseType.Error:
                         TonClientException exception = TonExceptionSerializer.GetTonClientExceptionByResponse(responseJson);
-                        cts.SetException(exception);
+                        tsc.SetException(exception);
                         break;
                     // do nothing
                     case ResponseType.Nop:
@@ -170,8 +175,8 @@ namespace ch1seL.TonNet.RustAdapter
                 throw new TonClientException("Sending request error", ex);
             }
 
-            Task executeOrTimeout = await Task.WhenAny(cts.Task, Task.Delay(_coreExecutionTimeOut, cancellationToken));
-            if (cts.Task == executeOrTimeout) return await cts.Task;
+            Task executeOrTimeout = await Task.WhenAny(tsc.Task, Task.Delay(_coreExecutionTimeOut, cancellationToken));
+            if (tsc.Task == executeOrTimeout) return await tsc.Task;
 
             // log error with ids and throw TonClientException
             _logger.LogError("Request execution timeout expired or cancellation requested. Context:{context} request:{request}", _contextNumber, _requestId);

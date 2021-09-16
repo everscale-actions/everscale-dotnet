@@ -5,7 +5,7 @@ using System;
 
 namespace ch1seL.TonNet.Client
 {
-    public class TonClient : ITonClient, IDisposable
+    public class TonClient : ITonClient
     {
         private readonly ITonClientAdapter _tonClientAdapter;
 
@@ -69,10 +69,5 @@ namespace ch1seL.TonNet.Client
         /// [UNSTABLE](UNSTABLE.md) Module for working with debot.
         /// </summary>
         public IDebotModule Debot { get; }
-
-        public void Dispose()
-        {
-            _tonClientAdapter?.Dispose();
-        }
     }
 }

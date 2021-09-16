@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Text.Json;
 using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.Client;
 using ch1seL.TonNet.Client.PackageManager;
 using ch1seL.TonNet.RustAdapter;
-using ch1seL.TonNet.Serialization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
@@ -30,13 +28,14 @@ namespace Microsoft.Extensions.DependencyInjection
             Action<FilePackageManagerOptions> configurePackageManagerOptions = null)
         {
             return serviceCollection
-                .AddSingleton<ITonClient>(provider =>
-                {
-                    var configJson = JsonSerializer.Serialize(provider.GetRequiredService<IOptions<TonClientOptions>>().Value,
-                        JsonOptionsProvider.JsonSerializerOptions);
-                    var logger = provider.GetService<ILogger<TonClientRustAdapter>>() ?? NullLogger<TonClientRustAdapter>.Instance;
-                    return new TonClient(new TonClientRustAdapter(configJson, logger));
-                })
+                .AddSingleton<ITonClientAdapter>(provider =>
+                    {
+                        TonClientOptions options = provider.GetRequiredService<IOptions<TonClientOptions>>().Value;
+                        var logger = provider.GetService<ILogger<TonClientRustAdapter>>() ?? NullLogger<TonClientRustAdapter>.Instance;
+                        return new TonClientRustAdapter(options, logger);
+                    }
+                )
+                .AddTransient<ITonClient, TonClient>()
                 .AddTransient<ITonPackageManager, FilePackageManager>()
                 .Configure<TonClientOptions>(options => configureTonClientOptions?.Invoke(options))
                 .Configure<FilePackageManagerOptions>(options => configurePackageManagerOptions?.Invoke(options));
