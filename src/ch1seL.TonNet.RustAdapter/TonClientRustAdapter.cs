@@ -112,12 +112,8 @@ namespace ch1seL.TonNet.RustAdapter
         public async Task<string> RustRequest(string method, string requestJson, Action<string, uint> callback = null,
             CancellationToken cancellationToken = default)
         {
-            lock (_requestIdLock)
-            {
-                _requestId = _requestId == uint.MaxValue ? 0 : _requestId + 1;
-            }
-
             var tsc = new TaskCompletionSource<string>();
+            var request = GetNextRequestId();
 
             var callbackDelegate = new CallbackDelegate((requestId, responseInteropString, responseType, finished) =>
             {
@@ -158,20 +154,20 @@ namespace ch1seL.TonNet.RustAdapter
 
             lock (_dictLock)
             {
-                _delegatesDict.Add(_requestId, callbackDelegate);
+                _delegatesDict.Add(request, callbackDelegate);
             }
 
+            _logger.LogTrace("Sending request: context:{context} request:{request} method:{method} body:{body}", _contextNumber, request, method,
+                requestJson);
             try
             {
-                _logger.LogTrace("Sending request: context:{context} request:{request} method:{method} body:{body}", _contextNumber, _requestId, method,
-                    requestJson);
                 using var methodInteropString = method.ToInteropStringDisposable();
                 using var paramsJsonInteropString = requestJson.ToInteropStringDisposable();
-                RustInteropInterface.tc_request(_contextNumber, methodInteropString, paramsJsonInteropString, _requestId, callbackDelegate);
+                RustInteropInterface.tc_request(_contextNumber, methodInteropString, paramsJsonInteropString, request, callbackDelegate);
             }
             catch (Exception ex)
             {
-                RemoveDelegateFromDict(_requestId);
+                RemoveDelegateFromDict(request);
                 throw new TonClientException("Sending request error", ex);
             }
 
@@ -179,8 +175,18 @@ namespace ch1seL.TonNet.RustAdapter
             if (tsc.Task == executeOrTimeout) return await tsc.Task;
 
             // log error with ids and throw TonClientException
-            _logger.LogError("Request execution timeout expired or cancellation requested. Context:{context} request:{request}", _contextNumber, _requestId);
+            _logger.LogError("Request execution timeout expired or cancellation requested. Context:{context} request:{request}", _contextNumber, request);
             throw new TonClientException("Execution timeout expired or cancellation requested");
+        }
+
+        private uint GetNextRequestId()
+        {
+            lock (_requestIdLock)
+            {
+                _requestId = _requestId == uint.MaxValue ? 0 : _requestId + 1;
+            }
+
+            return _requestId;
         }
 
         private async Task<bool> WaitForDelegates()
