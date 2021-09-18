@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 using ch1seL.TonNet.Client.Models;
 
 namespace ch1seL.TonNet.Client
