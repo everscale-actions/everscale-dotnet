@@ -3,5 +3,7 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
+        <NoWarn>1591,1570</NoWarn>
     </PropertyGroup>
+
 </Project>
