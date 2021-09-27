@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
@@ -13,6 +14,9 @@ using ch1seL.TonNet.RustAdapter.Utils;
 using ch1seL.TonNet.Serialization;
 using Microsoft.Extensions.Logging;
 
+// todo: fix InconsistentLogPropertyNaming inspection
+// ReSharper disable InconsistentLogPropertyNaming
+
 namespace ch1seL.TonNet.RustAdapter
 {
     /// <summary>
@@ -22,10 +26,9 @@ namespace ch1seL.TonNet.RustAdapter
     {
         private readonly uint _contextNumber;
         private readonly TimeSpan _coreExecutionTimeOut = TimeSpan.FromMinutes(1);
-        private readonly IDictionary<uint, CallbackDelegate> _delegatesDict = new Dictionary<uint, CallbackDelegate>();
-        private readonly object _dictLock = new object();
+        private readonly ConcurrentDictionary<uint, CallbackDelegate> _dictionary = new ConcurrentDictionary<uint, CallbackDelegate>();
+        private readonly object _lock = new object();
         private readonly ILogger<TonClientRustAdapter> _logger;
-        private readonly object _requestIdLock = new object();
         private uint _requestId;
 
         public TonClientRustAdapter(TonClientOptions options, ILogger<TonClientRustAdapter> logger)
@@ -100,10 +103,7 @@ namespace ch1seL.TonNet.RustAdapter
             if (!waitDelegatesResult)
             {
                 _logger.LogError("Delegates didn't finish during the allotted time. Force clean...");
-                lock (_dictLock)
-                {
-                    _delegatesDict.Clear();
-                }
+                _dictionary.Clear();
             }
 
             _logger.LogTrace("Context {context} disposed", _contextNumber);
@@ -112,49 +112,14 @@ namespace ch1seL.TonNet.RustAdapter
         public async Task<string> RustRequest(string method, string requestJson, Action<string, uint> callback = null,
             CancellationToken cancellationToken = default)
         {
-            var tsc = new TaskCompletionSource<string>();
-            var request = GetNextRequestId();
-
-            var callbackDelegate = new CallbackDelegate((requestId, responseInteropString, responseType, finished) =>
+            var tcs = new TaskCompletionSource<string>();
+            var callbackDelegate = new CallbackDelegate((id, json, type, finished) => CallbackDelegate(id, json, type, finished, callback, tcs));
+            uint request;
+            lock (_lock)
             {
-                var responseJson = responseInteropString.ToString();
-                _logger.LogTrace("Got request response context:{context} request:{request} type:{responseType} finished:{finished} body:{body}",
-                    _contextNumber, requestId, ((ResponseType)responseType).ToString(), finished, responseJson);
-
-                lock (_dictLock)
-                {
-                    if (!_delegatesDict.ContainsKey(requestId))
-                    {
-                        _logger.LogWarning("Request {request} was not found in this context {context}", requestId, _contextNumber);
-                        return;
-                    }
-
-                    if (finished) RemoveDelegateFromDict(requestId);
-                }
-
-                switch ((ResponseType)responseType)
-                {
-                    case ResponseType.Success:
-                        tsc.SetResult(responseJson);
-                        break;
-                    case ResponseType.Error:
-                        TonClientException exception = TonExceptionSerializer.GetTonClientExceptionByResponse(responseJson);
-                        tsc.SetException(exception);
-                        break;
-                    // do nothing
-                    case ResponseType.Nop:
-                        break;
-                    // it is callback if responseType>=3 
-                    default:
-                        _logger.LogTrace("Sending callback context:{context} request:{request} body:{body}", _contextNumber, requestId, responseJson);
-                        callback?.Invoke(responseJson, responseType);
-                        break;
-                }
-            });
-
-            lock (_dictLock)
-            {
-                _delegatesDict.Add(request, callbackDelegate);
+                _requestId = _requestId == uint.MaxValue ? 0 : _requestId + 1;
+                request = _requestId;
+                _dictionary.AddOrUpdate(request, _ => callbackDelegate, (_, __) => callbackDelegate);
             }
 
             _logger.LogTrace("Sending request: context:{context} request:{request} method:{method} body:{body}", _contextNumber, request, method,
@@ -167,26 +132,56 @@ namespace ch1seL.TonNet.RustAdapter
             }
             catch (Exception ex)
             {
-                RemoveDelegateFromDict(request);
+                lock (_lock)
+                {
+                    _dictionary.Remove(request, out CallbackDelegate _);
+                }
+
                 throw new TonClientException("Sending request error", ex);
             }
 
-            Task executeOrTimeout = await Task.WhenAny(tsc.Task, Task.Delay(_coreExecutionTimeOut, cancellationToken));
-            if (tsc.Task == executeOrTimeout) return await tsc.Task;
+            Task executeOrTimeout = await Task.WhenAny(tcs.Task, Task.Delay(_coreExecutionTimeOut, cancellationToken));
+            if (tcs.Task == executeOrTimeout) return await tcs.Task;
 
             // log error with ids and throw TonClientException
             _logger.LogError("Request execution timeout expired or cancellation requested. Context:{context} request:{request}", _contextNumber, request);
             throw new TonClientException("Execution timeout expired or cancellation requested");
         }
 
-        private uint GetNextRequestId()
+        private void CallbackDelegate(uint requestId, InteropString responseInteropString, uint responseType, bool finished, Action<string, uint> callback,
+            TaskCompletionSource<string> tcs)
         {
-            lock (_requestIdLock)
+            var responseJson = responseInteropString.ToString();
+            _logger.LogTrace("Got request response context:{context} request:{request} type:{responseType} finished:{finished} body:{body}", _contextNumber,
+                requestId, ((ResponseType)responseType).ToString(), finished, responseJson);
             {
-                _requestId = _requestId == uint.MaxValue ? 0 : _requestId + 1;
+                if (!_dictionary.ContainsKey(requestId))
+                {
+                    _logger.LogWarning("Request {request} was not found in this context {context}", requestId, _contextNumber);
+                    return;
+                }
             }
 
-            return _requestId;
+            if (finished) _dictionary.Remove(requestId, out CallbackDelegate _);
+
+            switch ((ResponseType)responseType)
+            {
+                case ResponseType.Success:
+                    tcs.SetResult(responseJson);
+                    break;
+                case ResponseType.Error:
+                    TonClientException exception = TonExceptionSerializer.GetTonClientExceptionByResponse(responseJson);
+                    tcs.SetException(exception);
+                    break;
+                // do nothing
+                case ResponseType.Nop:
+                    break;
+                // it is callback if responseType>=3 
+                default:
+                    _logger.LogTrace("Sending callback context:{context} request:{request} body:{body}", _contextNumber, requestId, responseJson);
+                    callback?.Invoke(responseJson, responseType);
+                    break;
+            }
         }
 
         private async Task<bool> WaitForDelegates()
@@ -195,10 +190,10 @@ namespace ch1seL.TonNet.RustAdapter
             var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             while (true)
             {
-                lock (_dictLock)
+                lock (_lock)
                 {
-                    if (_delegatesDict.Count == 0) return true;
-                    _logger.LogWarning("Some delegates not finished: {count} wait...", _delegatesDict.Count);
+                    if (_dictionary.Count == 0) return true;
+                    _logger.LogWarning("Some delegates not finished: {count} wait...", _dictionary.Count);
                 }
 
                 try
@@ -209,14 +204,6 @@ namespace ch1seL.TonNet.RustAdapter
                 {
                     return false;
                 }
-            }
-        }
-
-        private void RemoveDelegateFromDict(uint requestId)
-        {
-            lock (_dictLock)
-            {
-                _delegatesDict.Remove(requestId);
             }
         }
 
