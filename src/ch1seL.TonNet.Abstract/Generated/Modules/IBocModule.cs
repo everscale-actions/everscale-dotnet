@@ -73,5 +73,31 @@ namespace ch1seL.TonNet.Abstract.Modules
         /// Encodes bag of cells (BOC) with builder operations. This method provides the same functionality as Solidity TvmBuilder. Resulting BOC of this method can be passed into Solidity and C++ contracts as TvmCell type
         /// </summary>
         public Task<ResultOfEncodeBoc> EncodeBoc(ParamsOfEncodeBoc @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Returns the contract code's salt if it is present.
+        /// </summary>
+        public Task<ResultOfGetCodeSalt> GetCodeSalt(ParamsOfGetCodeSalt @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// <para>Sets new salt to contract code.</para>
+        /// <para>Returns the new contract code with salt.</para>
+        /// </summary>
+        public Task<ResultOfSetCodeSalt> SetCodeSalt(ParamsOfSetCodeSalt @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Decodes tvc into code, data, libraries and special options.
+        /// </summary>
+        public Task<ResultOfDecodeTvc> DecodeTvc(ParamsOfDecodeTvc @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Encodes tvc from code, data, libraries ans special options (see input params)
+        /// </summary>
+        public Task<ResultOfEncodeTvc> EncodeTvc(ParamsOfEncodeTvc @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Returns the compiler version used to compile the code.
+        /// </summary>
+        public Task<ResultOfGetCompilerVersion> GetCompilerVersion(ParamsOfGetCompilerVersion @params, CancellationToken cancellationToken = default);
     }
 }

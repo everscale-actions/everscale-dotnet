@@ -9,12 +9,12 @@ namespace ch1seL.TonNet.Client.Models
     /// <summary>
     /// Not described yet..
     /// </summary>
-    public class ParamsOfGetCodeFromTvc
+    public class ResultOfUpdateInitialData
     {
         /// <summary>
-        /// Contract TVC image or image BOC handle
+        /// Updated data BOC or BOC handle
         /// </summary>
-        [JsonPropertyName("tvc")]
-        public string Tvc { get; set; }
+        [JsonPropertyName("data")]
+        public string Data { get; set; }
     }
 }

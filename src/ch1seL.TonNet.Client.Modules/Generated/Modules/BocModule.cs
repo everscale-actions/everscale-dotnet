@@ -118,5 +118,46 @@ namespace ch1seL.TonNet.Client.Modules
         {
             return await _tonClientAdapter.Request<ParamsOfEncodeBoc, ResultOfEncodeBoc>("boc.encode_boc", @params, cancellationToken);
         }
+
+        /// <summary>
+        /// Returns the contract code's salt if it is present.
+        /// </summary>
+        public async Task<ResultOfGetCodeSalt> GetCodeSalt(ParamsOfGetCodeSalt @params, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<ParamsOfGetCodeSalt, ResultOfGetCodeSalt>("boc.get_code_salt", @params, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Sets new salt to contract code.</para>
+        /// <para>Returns the new contract code with salt.</para>
+        /// </summary>
+        public async Task<ResultOfSetCodeSalt> SetCodeSalt(ParamsOfSetCodeSalt @params, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<ParamsOfSetCodeSalt, ResultOfSetCodeSalt>("boc.set_code_salt", @params, cancellationToken);
+        }
+
+        /// <summary>
+        /// Decodes tvc into code, data, libraries and special options.
+        /// </summary>
+        public async Task<ResultOfDecodeTvc> DecodeTvc(ParamsOfDecodeTvc @params, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<ParamsOfDecodeTvc, ResultOfDecodeTvc>("boc.decode_tvc", @params, cancellationToken);
+        }
+
+        /// <summary>
+        /// Encodes tvc from code, data, libraries ans special options (see input params)
+        /// </summary>
+        public async Task<ResultOfEncodeTvc> EncodeTvc(ParamsOfEncodeTvc @params, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<ParamsOfEncodeTvc, ResultOfEncodeTvc>("boc.encode_tvc", @params, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns the compiler version used to compile the code.
+        /// </summary>
+        public async Task<ResultOfGetCompilerVersion> GetCompilerVersion(ParamsOfGetCompilerVersion @params, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<ParamsOfGetCompilerVersion, ResultOfGetCompilerVersion>("boc.get_compiler_version", @params, cancellationToken);
+        }
     }
 }

@@ -89,5 +89,15 @@ namespace ch1seL.TonNet.Abstract.Modules
         /// <para>Note: this feature requires ABI 2.1 or higher.</para>
         /// </summary>
         public Task<ResultOfDecodeData> DecodeAccountData(ParamsOfDecodeAccountData @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Updates initial account data with initial values for the contract's static variables and owner's public key. This operation is applicable only for initial account data (before deploy). If the contract is already deployed, its data doesn't contain this data section any more.
+        /// </summary>
+        public Task<ResultOfUpdateInitialData> UpdateInitialData(ParamsOfUpdateInitialData @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Decodes initial values of a contract's static variables and owner's public key from account initial data This operation is applicable only for initial account data (before deploy). If the contract is already deployed, its data doesn't contain this data section any more.
+        /// </summary>
+        public Task<ResultOfDecodeInitialData> DecodeInitialData(ParamsOfDecodeInitialData @params, CancellationToken cancellationToken = default);
     }
 }

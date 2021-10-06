@@ -9,12 +9,12 @@ namespace ch1seL.TonNet.Client.Models
     /// <summary>
     /// Not described yet..
     /// </summary>
-    public class ParamsOfGetCodeFromTvc
+    public class ParamsOfGetCompilerVersion
     {
         /// <summary>
-        /// Contract TVC image or image BOC handle
+        /// Contract code BOC encoded as base64 or code BOC handle
         /// </summary>
-        [JsonPropertyName("tvc")]
-        public string Tvc { get; set; }
+        [JsonPropertyName("code")]
+        public string Code { get; set; }
     }
 }

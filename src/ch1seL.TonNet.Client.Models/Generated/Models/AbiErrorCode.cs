@@ -24,6 +24,7 @@ namespace ch1seL.TonNet.Client.Models
         InvalidSigner = 310,
         InvalidAbi = 311,
         InvalidFunctionId = 312,
-        InvalidData = 313
+        InvalidData = 313,
+        EncodeInitialDataFailed = 314
     }
 }

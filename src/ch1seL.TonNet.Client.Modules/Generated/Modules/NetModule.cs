@@ -176,17 +176,34 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
-        /// <para>Returns transactions tree for specific message.</para>
-        /// <para>Performs recursive retrieval of the transactions tree produced by the specific message:</para>
+        /// <para>Returns a tree of transactions triggered by a specific message.</para>
+        /// <para>Performs recursive retrieval of a transactions tree produced by a specific message:</para>
         /// <para>in_msg -&gt; dst_transaction -&gt; out_messages -&gt; dst_transaction -&gt; ...</para>
-        /// <para>All retrieved messages and transactions will be included</para>
+        /// <para>If the chain of transactions execution is in progress while the function is running,</para>
+        /// <para>it will wait for the next transactions to appear until the full tree or more than 50 transactions</para>
+        /// <para>are received.</para>
+        /// <para>All the retrieved messages and transactions are included</para>
         /// <para>into `result.messages` and `result.transactions` respectively.</para>
-        /// <para>The retrieval process will stop when the retrieved transaction count is more than 50.</para>
-        /// <para>It is guaranteed that each message in `result.messages` has the corresponding transaction</para>
+        /// <para>Function reads transactions layer by layer, by pages of 20 transactions.</para>
+        /// <para>The retrieval prosess goes like this:</para>
+        /// <para>Let's assume we have an infinite chain of transactions and each transaction generates 5 messages.</para>
+        /// <para>1. Retrieve 1st message (input parameter) and corresponding transaction - put it into result.</para>
+        /// <para>It is the first level of the tree of transactions - its root.</para>
+        /// <para>Retrieve 5 out message ids from the transaction for next steps.</para>
+        /// <para>2. Retrieve 5 messages and corresponding transactions on the 2nd layer. Put them into result.</para>
+        /// <para>Retrieve 5*5 out message ids from these transactions for next steps</para>
+        /// <para>3. Retrieve 20 (size of the page) messages and transactions (3rd layer) and 20*5=100 message ids (4th layer).</para>
+        /// <para>4. Retrieve the last 5 messages and 5 transactions on the 3rd layer + 15 messages and transactions (of 100) from the 4th layer</para>
+        /// <para>+ 25 message ids of the 4th layer + 75 message ids of the 5th layer.</para>
+        /// <para>5. Retrieve 20 more messages and 20 more transactions of the 4th layer + 100 more message ids of the 5th layer.</para>
+        /// <para>6. Now we have 1+5+20+20+20 = 66 transactions, which is more than 50. Function exits with the tree of</para>
+        /// <para>1m-&gt;1t-&gt;5m-&gt;5t-&gt;25m-&gt;25t-&gt;35m-&gt;35t. If we see any message ids in the last transactions out_msgs, which don't have</para>
+        /// <para>corresponding messages in the function result, it means that the full tree was not received and we need to continue iteration.</para>
+        /// <para>To summarize, it is guaranteed that each message in `result.messages` has the corresponding transaction</para>
         /// <para>in the `result.transactions`.</para>
-        /// <para>But there are no guaranties that all messages from transactions `out_msgs` are</para>
+        /// <para>But there is no guarantee that all messages from transactions `out_msgs` are</para>
         /// <para>presented in `result.messages`.</para>
-        /// <para>So the application have to continue retrieval for missing messages if it requires.</para>
+        /// <para>So the application has to continue retrieval for missing messages if it requires.</para>
         /// </summary>
         public async Task<ResultOfQueryTransactionTree> QueryTransactionTree(ParamsOfQueryTransactionTree @params, CancellationToken cancellationToken = default)
         {

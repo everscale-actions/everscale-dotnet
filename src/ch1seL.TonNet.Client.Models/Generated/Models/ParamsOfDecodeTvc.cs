@@ -9,12 +9,18 @@ namespace ch1seL.TonNet.Client.Models
     /// <summary>
     /// Not described yet..
     /// </summary>
-    public class ParamsOfGetCodeFromTvc
+    public class ParamsOfDecodeTvc
     {
         /// <summary>
-        /// Contract TVC image or image BOC handle
+        /// Contract TVC image BOC encoded as base64 or BOC handle
         /// </summary>
         [JsonPropertyName("tvc")]
         public string Tvc { get; set; }
+
+        /// <summary>
+        /// Cache type to put the result. The BOC itself returned if no cache type provided.
+        /// </summary>
+        [JsonPropertyName("boc_cache")]
+        public BocCacheType BocCache { get; set; }
     }
 }
