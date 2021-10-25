@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.Client;
 using ch1seL.TonNet.Client.Models;
-using ch1seL.TonNet.Client.PackageManager;
 using ch1seL.TonNet.Serialization;
 using ch1seL.TonNet.Utils;
 using Microsoft.Extensions.Hosting;
@@ -39,7 +38,9 @@ namespace SampleWorkerService
                     Package receiverContract = await _packageManager.LoadPackage(ReceiverContractName);
 
                     // get keys by mnemonic
-                    KeyPair keys = await _tonClient.Crypto.MnemonicDeriveSignKeys(new ParamsOfMnemonicDeriveSignKeys {Phrase = Mnemonic}, stoppingToken);
+                    KeyPair keys =
+                        await _tonClient.Crypto.MnemonicDeriveSignKeys(
+                            new ParamsOfMnemonicDeriveSignKeys { Phrase = Mnemonic }, stoppingToken);
 
                     // ensure that balance of receiver address is good and contract has been already deployed
                     var receiverAddress = await CheckBalanceAndDeploy(receiverContract, keys, stoppingToken);
@@ -59,12 +60,13 @@ namespace SampleWorkerService
                 }
         }
 
-        private async Task<ulong> GetReceivedMessagesCount(Package contract, KeyPair keys, string address, CancellationToken cancellationToken)
+        private async Task<ulong> GetReceivedMessagesCount(Package contract, KeyPair keys, string address,
+            CancellationToken cancellationToken)
         {
             ResultOfQueryCollection accountBocResult = await _tonClient.Net.QueryCollection(new ParamsOfQueryCollection
             {
                 Collection = "accounts",
-                Filter = new {id = new {eq = address}}.ToJsonElement(),
+                Filter = new { id = new { eq = address } }.ToJsonElement(),
                 Result = "boc",
                 Limit = 1
             }, cancellationToken);
@@ -75,8 +77,8 @@ namespace SampleWorkerService
             {
                 Address = address,
                 Abi = contract.Abi,
-                CallSet = new CallSet {FunctionName = "getCounter"},
-                Signer = new Signer.Keys {KeysAccessor = keys}
+                CallSet = new CallSet { FunctionName = "getCounter" },
+                Signer = new Signer.Keys { KeysAccessor = keys }
             }, cancellationToken);
 
             ResultOfRunTvm result = await _tonClient.Tvm.RunTvm(new ParamsOfRunTvm
@@ -89,21 +91,22 @@ namespace SampleWorkerService
             return result.Decoded.Output.Get<string>("c").HexToDec();
         }
 
-        private async Task<string> CheckBalanceAndDeploy(Package package, KeyPair keys, CancellationToken cancellationToken)
+        private async Task<string> CheckBalanceAndDeploy(Package package, KeyPair keys,
+            CancellationToken cancellationToken)
         {
             var deployParams = new ParamsOfEncodeMessage
             {
                 Abi = package.Abi,
-                DeploySet = new DeploySet {Tvc = package.Tvc},
-                Signer = new Signer.Keys {KeysAccessor = keys},
-                CallSet = new CallSet {FunctionName = "constructor"}
+                DeploySet = new DeploySet { Tvc = package.Tvc },
+                Signer = new Signer.Keys { KeysAccessor = keys },
+                CallSet = new CallSet { FunctionName = "constructor" }
             };
 
             ResultOfEncodeMessage encoded = await _tonClient.Abi.EncodeMessage(deployParams, cancellationToken);
             ResultOfQueryCollection result = await _tonClient.Net.QueryCollection(new ParamsOfQueryCollection
             {
                 Collection = "accounts",
-                Filter = new {id = new {eq = encoded.Address}}.ToJsonElement(),
+                Filter = new { id = new { eq = encoded.Address } }.ToJsonElement(),
                 Result = "balance",
                 Limit = 1
             }, cancellationToken);
@@ -132,14 +135,15 @@ namespace SampleWorkerService
                 CallSet = new CallSet
                 {
                     FunctionName = "sendGrams",
-                    Input = new {dest = account, amount = 100_000_000_000_000ul}.ToJsonElement()
+                    Input = new { dest = account, amount = 100_000_000_000_000ul }.ToJsonElement()
                 },
                 Signer = new Signer.None()
             };
             await ProcessAndWaitTransactions(sendGramsEncodedMessage, cancellationToken);
         }
 
-        private async Task ProcessAndWaitTransactions(ParamsOfEncodeMessage encodedMessage, CancellationToken cancellationToken)
+        private async Task ProcessAndWaitTransactions(ParamsOfEncodeMessage encodedMessage,
+            CancellationToken cancellationToken)
         {
             ResultOfProcessMessage resultOfProcessMessage = await _tonClient.Processing.ProcessMessage(
                 new ParamsOfProcessMessage
@@ -149,14 +153,15 @@ namespace SampleWorkerService
 
             await Task.WhenAll(resultOfProcessMessage.OutMessages.Select(async message =>
             {
-                ResultOfParse parseResult = await _tonClient.Boc.ParseMessage(new ParamsOfParse {Boc = message}, cancellationToken);
-                var parsedPrototype = new {type = default(int), id = default(string)};
+                ResultOfParse parseResult =
+                    await _tonClient.Boc.ParseMessage(new ParamsOfParse { Boc = message }, cancellationToken);
+                var parsedPrototype = new { type = default(int), id = default(string) };
                 var parsedMessage = parseResult.Parsed!.Value.ToAnonymous(parsedPrototype);
                 if (parsedMessage.type == 0)
                     await _tonClient.Net.WaitForCollection(new ParamsOfWaitForCollection
                     {
                         Collection = "transactions",
-                        Filter = new {in_msg = new {eq = parsedMessage.id}}.ToJsonElement(),
+                        Filter = new { in_msg = new { eq = parsedMessage.id } }.ToJsonElement(),
                         Result = "id"
                     }, cancellationToken);
             }));
