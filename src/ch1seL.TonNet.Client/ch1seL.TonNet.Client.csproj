@@ -3,7 +3,7 @@
     <ItemGroup>
         <ProjectReference Include="..\ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj"/>
         <ProjectReference Include="..\ch1seL.TonNet.Client.Modules\ch1seL.TonNet.Client.Modules.csproj"/>
-        <ProjectReference Include="..\ch1seL.TonNet.RustAdapter\ch1seL.TonNet.RustAdapter.csproj"/>
+        <ProjectReference Include="..\ch1seL.TonNet.Adapter.Rust\ch1seL.TonNet.Adapter.Rust.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

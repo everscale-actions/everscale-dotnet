@@ -1,8 +1,8 @@
 using System;
 using System.Runtime.InteropServices;
-using ch1seL.TonNet.RustAdapter.RustInterop.Models;
+using ch1seL.TonNet.Adapter.Rust.RustInterop.Models;
 
-namespace ch1seL.TonNet.RustAdapter.RustInterop
+namespace ch1seL.TonNet.Adapter.Rust.RustInterop
 {
     internal static class RustInteropInterface
     {
@@ -21,7 +21,8 @@ namespace ch1seL.TonNet.RustAdapter.RustInterop
         public static extern void tc_destroy_string(IntPtr str);
 
         [DllImport(TonClientLib, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void tc_request(uint context, InteropStringDisposable function, InteropStringDisposable parameters, uint requestId,
+        public static extern void tc_request(uint context, InteropStringDisposable function,
+            InteropStringDisposable parameters, uint requestId,
             CallbackDelegate callbackPointer);
     }
 }

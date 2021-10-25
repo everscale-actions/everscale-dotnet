@@ -1,6 +1,6 @@
-﻿using ch1seL.TonNet.RustAdapter.RustInterop.Models;
+﻿using ch1seL.TonNet.Adapter.Rust.RustInterop.Models;
 
-namespace ch1seL.TonNet.RustAdapter.Utils
+namespace ch1seL.TonNet.Adapter.Rust.Utils
 {
     public static class InteropStringDisposableExtensions
     {

@@ -1,11 +1,8 @@
 ﻿using System;
 using ch1seL.TonNet.Abstract;
+using ch1seL.TonNet.Adapter.Rust;
 using ch1seL.TonNet.Client;
 using ch1seL.TonNet.Client.PackageManager;
-using ch1seL.TonNet.RustAdapter;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
-using Microsoft.Extensions.Options;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection
@@ -22,23 +19,22 @@ namespace Microsoft.Extensions.DependencyInjection
         ///     https://github.com/tonlabs/TON-SDK/blob/master/docs/mod_client.md#cryptoconfig
         ///     https://github.com/tonlabs/TON-SDK/blob/master/docs/mod_client.md#abiconfig
         /// </param>
-        /// <param name="configurePackageManagerOptions">Configure package manager, contracts path and etc. <see cref="FilePackageManagerOptions" /></param>
+        /// <param name="configurePackageManagerOptions">
+        ///     Configure package manager, contracts path and etc.
+        ///     <see cref="FilePackageManagerOptions" />
+        /// </param>
         /// <returns></returns>
-        public static IServiceCollection AddTonClient(this IServiceCollection serviceCollection, Action<TonClientOptions> configureTonClientOptions = null,
+        public static IServiceCollection AddTonClient(this IServiceCollection serviceCollection,
+            Action<TonClientOptions> configureTonClientOptions = null,
             Action<FilePackageManagerOptions> configurePackageManagerOptions = null)
         {
+            if (configureTonClientOptions != null) serviceCollection.Configure(configureTonClientOptions);
+            if (configurePackageManagerOptions != null) serviceCollection.Configure(configurePackageManagerOptions);
+
             return serviceCollection
-                .AddSingleton<ITonClientAdapter>(provider =>
-                    {
-                        TonClientOptions options = provider.GetRequiredService<IOptions<TonClientOptions>>().Value;
-                        var logger = provider.GetService<ILogger<TonClientRustAdapter>>() ?? NullLogger<TonClientRustAdapter>.Instance;
-                        return new TonClientRustAdapter(options, logger);
-                    }
-                )
+                .AddTransient<ITonClientAdapter, TonClientRustAdapter>()
                 .AddTransient<ITonClient, TonClient>()
-                .AddTransient<ITonPackageManager, FilePackageManager>()
-                .Configure<TonClientOptions>(options => configureTonClientOptions?.Invoke(options))
-                .Configure<FilePackageManagerOptions>(options => configurePackageManagerOptions?.Invoke(options));
+                .AddTransient<ITonPackageManager, FilePackageManager>();
         }
     }
 }

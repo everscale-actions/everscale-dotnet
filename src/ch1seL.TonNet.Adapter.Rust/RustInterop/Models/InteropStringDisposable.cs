@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace ch1seL.TonNet.RustAdapter.RustInterop.Models
+namespace ch1seL.TonNet.Adapter.Rust.RustInterop.Models
 {
     //we have to use separate disposable struct to avoid use unmanaged shared resources
     [StructLayout(LayoutKind.Sequential)]
@@ -22,7 +22,7 @@ namespace ch1seL.TonNet.RustAdapter.RustInterop.Models
             return new InteropStringDisposable
             {
                 Pointer = pointer,
-                Length = (uint) bytes.Length
+                Length = (uint)bytes.Length
             };
         }
 

@@ -2,6 +2,8 @@ using System;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using ch1seL.TonNet.Abstract;
+using ch1seL.TonNet.Adapter.Rust;
 using ch1seL.TonNet.Serialization;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
@@ -25,14 +27,14 @@ namespace ch1seL.TonNet.RustAdapter.Tests
         }
 
         [Fact]
-        public void InitAdapterNotThrowExceptionTest()
+        public async Task InitAdapterNotThrowExceptionTest()
         {
-            var act = new Action(() =>
+            var act = new Func<Task>(async () =>
             {
-                using ITonClientRustAdapter rustAdapter = TestsHelpers.CreateRustAdapter(_logger);
+                await using ITonClientAdapter rustAdapter = TestsHelpers.CreateRustAdapter(_logger);
             });
 
-            act.Should().NotThrow();
+            await act.Should().NotThrowAsync();
         }
 
         [Fact(Timeout = 10000)]
@@ -40,12 +42,11 @@ namespace ch1seL.TonNet.RustAdapter.Tests
         {
             Func<Task> act = async () =>
             {
-                ITonClientRustAdapter rustAdapter = TestsHelpers.CreateRustAdapter(_logger);
+                ITonClientAdapter rustAdapter = TestsHelpers.CreateRustAdapter(_logger);
                 await Task.WhenAll(Enumerable.Repeat(0, 100)
-                    // ReSharper disable once AccessToDisposedClosure
-                    .Select(_ => rustAdapter.RustRequest("client.get_api_reference", null)));
+                    .Select(_ => rustAdapter.Request<JsonElement>("client.get_api_reference")));
 
-                rustAdapter.Dispose();
+                await rustAdapter.DisposeAsync();
             };
 
             await act.Should().NotThrowAsync();
@@ -54,26 +55,27 @@ namespace ch1seL.TonNet.RustAdapter.Tests
         [Fact]
         public async Task FactorizeReturnsCorrectOutputTest()
         {
-            using ITonClientRustAdapter rustAdapter = TestsHelpers.CreateRustAdapter(_logger);
+            await using ITonClientAdapter rustAdapter = TestsHelpers.CreateRustAdapter(_logger);
 
             const string method = "crypto.factorize";
             var parameters = new
             {
                 composite = "17ED48941A08F981"
             };
-            var response = await rustAdapter.RustRequest(method, JsonSerializer.Serialize(parameters, JsonOptionsProvider.JsonSerializerOptions));
+            JsonElement response =
+                await rustAdapter.Request<JsonElement, JsonElement>(method, parameters.ToJsonElement());
 
-            response.Should().Be("{\"factors\":[\"494C553B\",\"53911073\"]}");
+            response.ToString().Should().Be("{\"factors\":[\"494C553B\",\"53911073\"]}");
         }
 
         [Fact]
         public async Task VersionRequestResponseWithVersionRegexTest()
         {
-            using ITonClientRustAdapter rustAdapter = TestsHelpers.CreateRustAdapter(_logger);
+            await using ITonClientAdapter rustAdapter = TestsHelpers.CreateRustAdapter(_logger);
 
-            var response = await rustAdapter.RustRequest("client.version", null);
+            var response = await rustAdapter.Request<JsonElement>("client.version");
 
-            response.Should().MatchRegex(@"{""version"":""\d+\.\d+\.\d+""}");
+            response.ToString().Should().MatchRegex(@"{""version"":""\d+\.\d+\.\d+""}");
         }
     }
 }

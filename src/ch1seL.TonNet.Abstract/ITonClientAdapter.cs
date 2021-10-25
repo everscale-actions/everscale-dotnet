@@ -8,14 +8,27 @@ namespace ch1seL.TonNet.Abstract
     ///     The most importantly interface. It provide all that needed to clients implementation
     /// </summary>
     /// There are big plans for this interface
-    public interface ITonClientAdapter : IDisposable
+    public interface ITonClientAdapter : IAsyncDisposable
     {
-        Task Request<TRequest>(string method, TRequest request, CancellationToken cancellationToken = default);
-        Task<TResponse> Request<TResponse>(string method, CancellationToken cancellationToken = default);
-        Task<TResponse> Request<TRequest, TResponse>(string method, TRequest request, CancellationToken cancellationToken = default);
-        Task<TResponse> Request<TResponse, TEvent>(string method, Action<TEvent, uint> callback, CancellationToken cancellationToken = default);
+        Task Request<TRequest>(string method, TRequest request, CancellationToken cancellationToken = default)
+            where TRequest : new();
 
-        Task<TResponse> Request<TRequest, TResponse, TEvent>(string method, TRequest request, Action<TEvent, uint> callback,
-            CancellationToken cancellationToken = default);
+        Task<TResponse> Request<TResponse>(string method, CancellationToken cancellationToken = default)
+            where TResponse : new();
+
+        Task<TResponse> Request<TRequest, TResponse>(string method, TRequest request,
+            CancellationToken cancellationToken = default)
+            where TRequest : new()
+            where TResponse : new();
+
+        Task<TResponse> Request<TResponse, TEvent>(string method, Action<TEvent, uint> callback,
+            CancellationToken cancellationToken = default)
+            where TResponse : new();
+
+        Task<TResponse> Request<TRequest, TResponse, TEvent>(string method, TRequest request,
+            Action<TEvent, uint> callback,
+            CancellationToken cancellationToken = default)
+            where TRequest : new()
+            where TResponse : new();
     }
 }

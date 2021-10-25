@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <Import Project="..\..\SDKVersion.targets" />
-    <Import Project="DownloadLib.targets" />   
+    <Import Project="DownloadLib.targets"/>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
@@ -13,6 +13,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj" />
+        <ProjectReference Include="..\ch1seL.TonNet.Adapter.Base\ch1seL.TonNet.Adapter.Base.csproj"/>
         <ProjectReference Include="..\ch1seL.TonNet.Serialization\ch1seL.TonNet.Serialization.csproj" />
     </ItemGroup>
 
@@ -24,10 +25,10 @@
             <_Parameter1>ch1seL.TonNet.RustAdapter.Tests</_Parameter1>
         </AssemblyAttribute>
     </ItemGroup>
-    
+
     <ItemGroup>
         <None Include="..\runtimes\win-x64\native\tonclient.dll">
-            <Pack>true</Pack>            
+            <Pack>true</Pack>
             <PackagePath>runtimes\win-x64\native\tonclient.dll</PackagePath>
             <Link>runtimes\win-x64\native\tonclient.dll</Link>
         </None>
@@ -47,5 +48,5 @@
             <Link>runtimes\osx.11.0-arm64\native\libtonclient.dylib</Link>
         </None>
     </ItemGroup>
-    
+
 </Project>

@@ -18,7 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\ch1seL.TonNet.RustAdapter\ch1seL.TonNet.RustAdapter.csproj"/>
+        <ProjectReference Include="..\..\src\ch1seL.TonNet.Adapter.Rust\ch1seL.TonNet.Adapter.Rust.csproj"/>
     </ItemGroup>
 
 </Project>

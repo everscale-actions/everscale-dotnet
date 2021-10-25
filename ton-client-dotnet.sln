@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.RustAdapter", "src\ch1seL.TonNet.RustAdapter\ch1seL.TonNet.RustAdapter.csproj", "{D61297F9-DE59-41DA-A0CC-C843796FDC79}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Adapter.Rust", "src\ch1seL.TonNet.Adapter.Rust\ch1seL.TonNet.Adapter.Rust.csproj", "{D61297F9-DE59-41DA-A0CC-C843796FDC79}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Abstract", "src\ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj", "{D076E181-E3BC-4C08-B59F-2EF648D9C5B5}"
 EndProject
@@ -49,6 +49,8 @@ ProjectSection(SolutionItems) = preProject
 EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Serialization.Tests", "tests\ch1seL.TonNet.Serialization.Tests\ch1seL.TonNet.Serialization.Tests.csproj", "{2338F0F9-BB4D-4FC3-892A-2FC5D58F68E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Adapter.Base", "src\ch1seL.TonNet.Adapter.Base\ch1seL.TonNet.Adapter.Base.csproj", "{FAA82679-CBCB-423C-9953-72F88464118D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -116,6 +118,10 @@ Global
 		{2338F0F9-BB4D-4FC3-892A-2FC5D58F68E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2338F0F9-BB4D-4FC3-892A-2FC5D58F68E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2338F0F9-BB4D-4FC3-892A-2FC5D58F68E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAA82679-CBCB-423C-9953-72F88464118D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAA82679-CBCB-423C-9953-72F88464118D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAA82679-CBCB-423C-9953-72F88464118D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAA82679-CBCB-423C-9953-72F88464118D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3ECAD1EB-3AA6-4035-AB31-18F9F74479C3} = {6187011F-F7CB-4CE0-8A31-803667A9EE59}
@@ -133,5 +139,6 @@ Global
 		{5D76F927-6D5D-4B4A-9DF3-CFFC0D4B585A} = {6FBB82C1-086C-48B3-844B-B08B096F3B80}
 		{D57BFEF7-1A79-459F-B8EE-161DAB0D9A57} = {6FBB82C1-086C-48B3-844B-B08B096F3B80}
 		{2338F0F9-BB4D-4FC3-892A-2FC5D58F68E4} = {26096843-5ED8-41E9-A080-1E8C2A20FE00}
+		{FAA82679-CBCB-423C-9953-72F88464118D} = {6FBB82C1-086C-48B3-844B-B08B096F3B80}
 	EndGlobalSection
 EndGlobal

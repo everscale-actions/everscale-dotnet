@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.TestsShared;
@@ -11,16 +13,17 @@ using Xunit.Abstractions;
 namespace ch1seL.TonNet.Client.Tests
 {
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class TonClientTestsFixture : IDisposable
+    public class TonClientTestsFixture : IAsyncDisposable
     {
         private readonly List<ServiceProvider> _serviceProviders = new List<ServiceProvider>();
 
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
-            _serviceProviders?.ForEach(sp => sp?.Dispose());
+            await Task.WhenAll(_serviceProviders.Select(sp => sp.DisposeAsync().AsTask()));
         }
 
-        protected internal ITonClient CreateClient(ITestOutputHelper output, bool useNodeSe = false, Action<TonClientOptions> configureOptions = null)
+        protected internal ITonClient CreateClient(ITestOutputHelper output, bool useNodeSe = false,
+            Action<TonClientOptions> configureOptions = null)
         {
             Logger logger = new LoggerConfiguration()
                 .MinimumLevel.Verbose()
@@ -33,7 +36,8 @@ namespace ch1seL.TonNet.Client.Tests
                 {
                     //as default tests don't use any server by some integration tests require Node SE
                     //if useNodeSe is true we use http://localhost or TON_NETWORK_ADDRESS env if provided
-                    config.Network = new NetworkConfig {Endpoints = useNodeSe ? new[] {TestsEnv.TonNetworkAddress} : null};
+                    config.Network = new NetworkConfig
+                        { Endpoints = useNodeSe ? new[] { TestsEnv.TonNetworkAddress } : null };
 
                     configureOptions?.Invoke(config);
                 })
