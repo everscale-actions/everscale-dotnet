@@ -38,7 +38,8 @@ namespace ch1seL.TonNet.Client.PackageManager
             var filePath = Path.Join(_options.PackagesPath, string.Format(AbiFileTemplate, name));
             var fileInfo = new FileInfo(filePath);
             await using FileStream fs = fileInfo.OpenRead();
-            var abiContract = await JsonSerializer.DeserializeAsync<AbiContract>(fs, JsonOptionsProvider.JsonSerializerOptions);
+            var abiContract =
+                await JsonSerializer.DeserializeAsync<AbiContract>(fs, JsonOptionsProvider.JsonSerializerOptions);
 
             return new Abi.Contract { Value = abiContract };
         }
