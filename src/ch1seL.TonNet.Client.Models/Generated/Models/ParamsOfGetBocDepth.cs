@@ -9,7 +9,7 @@ namespace ch1seL.TonNet.Client.Models
     /// <summary>
     /// Not described yet..
     /// </summary>
-    public class ParamsOfGetBocHash
+    public class ParamsOfGetBocDepth
     {
         /// <summary>
         /// BOC encoded as base64 or BOC handle

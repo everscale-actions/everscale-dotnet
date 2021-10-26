@@ -49,6 +49,11 @@ namespace ch1seL.TonNet.Abstract.Modules
         public Task<ResultOfGetBocHash> GetBocHash(ParamsOfGetBocHash @params, CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Calculates BOC depth
+        /// </summary>
+        public Task<ResultOfGetBocDepth> GetBocDepth(ParamsOfGetBocDepth @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Extracts code from TVC contract image
         /// </summary>
         public Task<ResultOfGetCodeFromTvc> GetCodeFromTvc(ParamsOfGetCodeFromTvc @params, CancellationToken cancellationToken = default);

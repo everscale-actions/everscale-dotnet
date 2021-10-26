@@ -9,12 +9,12 @@ namespace ch1seL.TonNet.Client.Models
     /// <summary>
     /// Not described yet..
     /// </summary>
-    public class ParamsOfGetBocHash
+    public class ResultOfGetBocDepth
     {
         /// <summary>
-        /// BOC encoded as base64 or BOC handle
+        /// BOC root cell depth
         /// </summary>
-        [JsonPropertyName("boc")]
-        public string Boc { get; set; }
+        [JsonPropertyName("depth")]
+        public uint Depth { get; set; }
     }
 }

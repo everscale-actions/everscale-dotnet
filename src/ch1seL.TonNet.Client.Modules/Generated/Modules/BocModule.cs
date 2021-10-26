@@ -79,6 +79,14 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
+        /// Calculates BOC depth
+        /// </summary>
+        public async Task<ResultOfGetBocDepth> GetBocDepth(ParamsOfGetBocDepth @params, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<ParamsOfGetBocDepth, ResultOfGetBocDepth>("boc.get_boc_depth", @params, cancellationToken);
+        }
+
+        /// <summary>
         /// Extracts code from TVC contract image
         /// </summary>
         public async Task<ResultOfGetCodeFromTvc> GetCodeFromTvc(ParamsOfGetCodeFromTvc @params, CancellationToken cancellationToken = default)
