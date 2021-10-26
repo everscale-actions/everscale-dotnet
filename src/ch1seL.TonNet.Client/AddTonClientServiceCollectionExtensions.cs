@@ -12,7 +12,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <summary>
         ///     Provide ITonClient and ITonPackageManager in DI
         /// </summary>
-        /// <param name="serviceCollection"></param>
+        /// <param name="services"></param>
         /// <param name="configureTonClientOptions">
         ///     Configure network <see cref="TonClientOptions" />
         ///     https://github.com/tonlabs/TON-SDK/blob/master/docs/mod_client.md#networkconfig
@@ -24,14 +24,14 @@ namespace Microsoft.Extensions.DependencyInjection
         ///     <see cref="FilePackageManagerOptions" />
         /// </param>
         /// <returns></returns>
-        public static IServiceCollection AddTonClient(this IServiceCollection serviceCollection,
+        public static IServiceCollection AddTonClient(this IServiceCollection services,
             Action<TonClientOptions> configureTonClientOptions = null,
             Action<FilePackageManagerOptions> configurePackageManagerOptions = null)
         {
-            if (configureTonClientOptions != null) serviceCollection.Configure(configureTonClientOptions);
-            if (configurePackageManagerOptions != null) serviceCollection.Configure(configurePackageManagerOptions);
+            if (configureTonClientOptions != null) services.Configure(configureTonClientOptions);
+            if (configurePackageManagerOptions != null) services.Configure(configurePackageManagerOptions);
 
-            return serviceCollection
+            return services
                 .AddTransient<ITonClientAdapter, TonClientRustAdapter>()
                 .AddTransient<ITonClient, TonClient>()
                 .AddTransient<ITonPackageManager, FilePackageManager>();

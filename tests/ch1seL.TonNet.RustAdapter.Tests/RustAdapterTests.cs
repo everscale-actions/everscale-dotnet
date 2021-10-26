@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.Adapter.Rust;
+using ch1seL.TonNet.Client;
 using ch1seL.TonNet.Serialization;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
@@ -42,11 +43,9 @@ namespace ch1seL.TonNet.RustAdapter.Tests
         {
             Func<Task> act = async () =>
             {
-                ITonClientAdapter rustAdapter = TestsHelpers.CreateRustAdapter(_logger);
+                await using ITonClientAdapter rustAdapter = TestsHelpers.CreateRustAdapter(_logger);
                 await Task.WhenAll(Enumerable.Repeat(0, 100)
                     .Select(_ => rustAdapter.Request<JsonElement>("client.get_api_reference")));
-
-                await rustAdapter.DisposeAsync();
             };
 
             await act.Should().NotThrowAsync();
@@ -76,6 +75,19 @@ namespace ch1seL.TonNet.RustAdapter.Tests
             var response = await rustAdapter.Request<JsonElement>("client.version");
 
             response.ToString().Should().MatchRegex(@"{""version"":""\d+\.\d+\.\d+""}");
+        }
+
+        [Fact]
+        public async Task SDKInitializedWithoutNetworkExceptionTest()
+        {
+            Func<Task> act = async () =>
+            {
+                await using ITonClientAdapter rustAdapter = TestsHelpers.CreateRustAdapter(_logger);
+                await rustAdapter.Request<JsonElement>("net.get_endpoints");
+            };
+
+            await act.Should().ThrowAsync<TonClientException>()
+                .WithMessage("SDK is initialized without network config");
         }
     }
 }

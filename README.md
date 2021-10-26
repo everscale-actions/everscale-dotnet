@@ -23,7 +23,7 @@ dotnet add package ch1seL.TonNet.Client
 ```
 
 ## Register in DI  
-**Be careful!** main.ton.dev network is default endpoint
+**Be careful!** no network endpoints provided as default
 
 ```
 public void ConfigureServices(IServiceCollection services)
@@ -90,7 +90,7 @@ public void ConfigureServices(IServiceCollection services)
 {
     services.AddTonClient(config =>
     {
-        config.Network.Endpoints = new[] { "net.ton.dev" }; // main.ton.dev is default
+        config.Network.Endpoints = new[] { "net5.ton.dev" };
         config.Network.NetworkRetriesCount = 5;
     }, packageManagerConfig =>
     {
