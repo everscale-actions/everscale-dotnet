@@ -52,7 +52,7 @@ namespace SampleWorkerService
                     // get sent messages count
                     var count = await GetSentMessagesCount(senderContract, keys, senderAddress, stoppingToken);
 
-                    _logger.LogInformation("Total sent messages: {count} Repeat again in 10 sec...", count);
+                    _logger.LogInformation("Total sent messages: {Count} Repeat again in 10 sec...", count);
                 }
                 catch (Exception e)
                 {

@@ -48,7 +48,7 @@ namespace SampleWorkerService
                     // get received messages count
                     var count = await GetReceivedMessagesCount(receiverContract, keys, receiverAddress, stoppingToken);
 
-                    _logger.LogInformation("Total received messages: {count} Repeat again in 10 sec...", count);
+                    _logger.LogInformation("Total received messages: {Count} Repeat again in 10 sec...", count);
                 }
                 catch (Exception e)
                 {
