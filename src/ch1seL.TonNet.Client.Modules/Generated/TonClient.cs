@@ -21,6 +21,7 @@ namespace ch1seL.TonNet.Client
             Tvm = new TvmModule(tonClientAdapter);
             Net = new NetModule(tonClientAdapter);
             Debot = new DebotModule(tonClientAdapter);
+            Proofs = new ProofsModule(tonClientAdapter);
         }
 
         /// <summary>
@@ -69,5 +70,10 @@ namespace ch1seL.TonNet.Client
         /// [UNSTABLE](UNSTABLE.md) Module for working with debot.
         /// </summary>
         public IDebotModule Debot { get; }
+
+        /// <summary>
+        /// [UNSTABLE](UNSTABLE.md) Module for proving data, retrieved from TONOS API.
+        /// </summary>
+        public IProofsModule Proofs { get; }
     }
 }

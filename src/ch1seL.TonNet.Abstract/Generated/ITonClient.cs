@@ -50,5 +50,10 @@ namespace ch1seL.TonNet.Abstract
         /// [UNSTABLE](UNSTABLE.md) Module for working with debot.
         /// </summary>
         public IDebotModule Debot { get; }
+
+        /// <summary>
+        /// [UNSTABLE](UNSTABLE.md) Module for proving data, retrieved from TONOS API.
+        /// </summary>
+        public IProofsModule Proofs { get; }
     }
 }

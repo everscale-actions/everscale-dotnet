@@ -88,7 +88,7 @@ namespace ch1seL.TonNet.Abstract.Modules
         /// <para>Decodes account data using provided data BOC and ABI.</para>
         /// <para>Note: this feature requires ABI 2.1 or higher.</para>
         /// </summary>
-        public Task<ResultOfDecodeData> DecodeAccountData(ParamsOfDecodeAccountData @params, CancellationToken cancellationToken = default);
+        public Task<ResultOfDecodeAccountData> DecodeAccountData(ParamsOfDecodeAccountData @params, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Updates initial account data with initial values for the contract's static variables and owner's public key. This operation is applicable only for initial account data (before deploy). If the contract is already deployed, its data doesn't contain this data section any more.
@@ -99,5 +99,23 @@ namespace ch1seL.TonNet.Abstract.Modules
         /// Decodes initial values of a contract's static variables and owner's public key from account initial data This operation is applicable only for initial account data (before deploy). If the contract is already deployed, its data doesn't contain this data section any more.
         /// </summary>
         public Task<ResultOfDecodeInitialData> DecodeInitialData(ParamsOfDecodeInitialData @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// <para>Decodes BOC into JSON as a set of provided parameters.</para>
+        /// <para>Solidity functions use ABI types for [builder encoding](https://github.com/tonlabs/TON-Solidity-Compiler/blob/master/API.md#tvmbuilderstore).</para>
+        /// <para>The simplest way to decode such a BOC is to use ABI decoding.</para>
+        /// <para>ABI has it own rules for fields layout in cells so manually encoded</para>
+        /// <para>BOC can not be described in terms of ABI rules.</para>
+        /// <para>To solve this problem we introduce a new ABI type `Ref(&lt;ParamType&gt;)`</para>
+        /// <para>which allows to store `ParamType` ABI parameter in cell reference and, thus,</para>
+        /// <para>decode manually encoded BOCs. This type is available only in `decode_boc` function</para>
+        /// <para>and will not be available in ABI messages encoding until it is included into some ABI revision.</para>
+        /// <para>Such BOC descriptions covers most users needs. If someone wants to decode some BOC which</para>
+        /// <para>can not be described by these rules (i.e. BOC with TLB containing constructors of flags</para>
+        /// <para>defining some parsing conditions) then they can decode the fields up to fork condition,</para>
+        /// <para>check the parsed data manually, expand the parsing schema and then decode the whole BOC</para>
+        /// <para>with the full schema.</para>
+        /// </summary>
+        public Task<ResultOfDecodeBoc> DecodeBoc(ParamsOfDecodeBoc @params, CancellationToken cancellationToken = default);
     }
 }

@@ -92,7 +92,7 @@ namespace ch1seL.TonNet.Client.Models
         public uint? LatencyDetectionInterval { get; set; }
 
         /// <summary>
-        /// <para>Maximum value for the endpoint's blockchain data syncronization latency (time-lag). Library periodically checks the current endpoint for blockchain data syncronization latency. If the latency (time-lag) is less then `NetworkConfig.max_latency` then library selects another endpoint.</para>
+        /// <para>Maximum value for the endpoint's blockchain data syncronization latency (time-lag). Library periodically checks the current endpoint for blockchain data synchronization latency. If the latency (time-lag) is less then `NetworkConfig.max_latency` then library selects another endpoint.</para>
         /// <para>Must be specified in milliseconds. Default is 60000 (1 min).</para>
         /// </summary>
         [JsonPropertyName("max_latency")]

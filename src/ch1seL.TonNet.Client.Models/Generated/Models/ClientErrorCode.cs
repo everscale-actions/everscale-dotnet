@@ -45,6 +45,7 @@ namespace ch1seL.TonNet.Client.Models
         UnexpectedCallbackResponse = 31,
         CanNotParseNumber = 32,
         InternalError = 33,
-        InvalidHandle = 34
+        InvalidHandle = 34,
+        LocalStorageError = 35
     }
 }
