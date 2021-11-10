@@ -2,9 +2,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 
-namespace SampleWorkerService
+namespace MessageReceiverService
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {

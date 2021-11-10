@@ -10,7 +10,7 @@ using ch1seL.TonNet.Utils;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace SampleWorkerService
+namespace MessageSenderService
 {
     public class Worker : BackgroundService
     {

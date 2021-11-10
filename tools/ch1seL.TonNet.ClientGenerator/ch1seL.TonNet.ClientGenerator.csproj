@@ -3,10 +3,9 @@
     <Import Project="..\..\SDKVersion.targets" />
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         <OutputType>Exe</OutputType>
         <IsPackable>false</IsPackable>
-        <RootNamespace>ch1seL.TonNet.ClientGenerator</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
