@@ -14,7 +14,7 @@ namespace MessageSenderService
         private static IHostBuilder CreateHostBuilder(string[] args)
         {
             return Host.CreateDefaultBuilder(args)
-                .ConfigureServices((context, services) =>
+                .ConfigureServices((_, services) =>
                 {
                     services.AddHostedService<Worker>();
                     services.AddTonClient(config =>
@@ -22,7 +22,7 @@ namespace MessageSenderService
                         config.Network.Endpoints = new[] { "http://localhost:8080" };
                         config.Network.WaitForTimeout = 5000;
                     });
-                }).UseSerilog((context, configuration) =>
+                }).UseSerilog((_, configuration) =>
                 {
                     configuration
                         .MinimumLevel.Verbose()

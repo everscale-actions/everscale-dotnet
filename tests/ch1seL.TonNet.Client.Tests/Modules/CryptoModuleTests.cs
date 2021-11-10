@@ -91,10 +91,11 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         [Fact]
         public async Task GenerateRandomBytes()
         {
-            ResultOfGenerateRandomBytes result = await _tonClient.Crypto.GenerateRandomBytes(new ParamsOfGenerateRandomBytes
-            {
-                Length = 32
-            });
+            ResultOfGenerateRandomBytes result = await _tonClient.Crypto.GenerateRandomBytes(
+                new ParamsOfGenerateRandomBytes
+                {
+                    Length = 32
+                });
 
             result.Bytes.Length.Should().Be(44);
         }
@@ -108,7 +109,8 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             });
 
             result.Hash.Should()
-                .Be("2616a44e0da827f0244e93c2b0b914223737a6129bc938b8edf2780ac9482960baa9b7c7cdb11457c1cebd5ae77e295ed94577f32d4c963dc35482991442daa5");
+                .Be(
+                    "2616a44e0da827f0244e93c2b0b914223737a6129bc938b8edf2780ac9482960baa9b7c7cdb11457c1cebd5ae77e295ed94577f32d4c963dc35482991442daa5");
         }
 
         [Fact]
@@ -150,10 +152,11 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         [Fact]
         public async Task ConvertPublicKeyToTonSafeFormat()
         {
-            ResultOfConvertPublicKeyToTonSafeFormat result = await _tonClient.Crypto.ConvertPublicKeyToTonSafeFormat(new ParamsOfConvertPublicKeyToTonSafeFormat
-            {
-                PublicKey = "06117f59ade83e097e0fb33e5d29e8735bda82b3bf78a015542aaa853bb69600"
-            });
+            ResultOfConvertPublicKeyToTonSafeFormat result = await _tonClient.Crypto.ConvertPublicKeyToTonSafeFormat(
+                new ParamsOfConvertPublicKeyToTonSafeFormat
+                {
+                    PublicKey = "06117f59ade83e097e0fb33e5d29e8735bda82b3bf78a015542aaa853bb69600"
+                });
 
             result.TonPublicKey.Should().Be("PuYGEX9Zreg-CX4Psz5dKehzW9qCs794oBVUKqqFO7aWAOTD");
         }
@@ -181,9 +184,12 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 }
             });
 
-            result.Signed.Should().Be("+wz+QO6l1slgZS5s65BNqKcu4vz24FCJz4NSAxef9lu0jFfs8x3PzSZRC+pn5k8+aJi3xYMA3BQzglQmjK3hA1Rlc3QgTWVzc2FnZQ==");
+            result.Signed.Should()
+                .Be(
+                    "+wz+QO6l1slgZS5s65BNqKcu4vz24FCJz4NSAxef9lu0jFfs8x3PzSZRC+pn5k8+aJi3xYMA3BQzglQmjK3hA1Rlc3QgTWVzc2FnZQ==");
             result.Signature.Should()
-                .Be("fb0cfe40eea5d6c960652e6ceb904da8a72ee2fcf6e05089cf835203179ff65bb48c57ecf31dcfcd26510bea67e64f3e6898b7c58300dc14338254268cade103");
+                .Be(
+                    "fb0cfe40eea5d6c960652e6ceb904da8a72ee2fcf6e05089cf835203179ff65bb48c57ecf31dcfcd26510bea67e64f3e6898b7c58300dc14338254268cade103");
         }
 
         [Theory]
@@ -195,12 +201,13 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 "fb0cfe40eea5d6c960652e6ceb904da8a72ee2fcf6e05089cf835203179ff65bb48c57ecf31dcfcd26510bea67e64f3e6898b7c58300dc14338254268cade103";
             const string @public = "1869b7ef29d58026217e9cf163cbfbd0de889bdf1bf4daebf5433a312f5b8d6e";
 
-            ResultOfNaclSignDetachedVerify result = await _tonClient.Crypto.NaclSignDetachedVerify(new ParamsOfNaclSignDetachedVerify
-            {
-                Signature = signature,
-                Public = @public,
-                Unsigned = message.ToBase64()
-            });
+            ResultOfNaclSignDetachedVerify result = await _tonClient.Crypto.NaclSignDetachedVerify(
+                new ParamsOfNaclSignDetachedVerify
+                {
+                    Signature = signature,
+                    Public = @public,
+                    Unsigned = message.ToBase64()
+                });
 
             result.Succeeded.Should().Be(success);
         }
@@ -212,7 +219,8 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             ResultOfVerifySignature verified = await _tonClient.Crypto.VerifySignature(new ParamsOfVerifySignature
             {
                 Public = "1869b7ef29d58026217e9cf163cbfbd0de889bdf1bf4daebf5433a312f5b8d6e",
-                Signed = "+wz+QO6l1slgZS5s65BNqKcu4vz24FCJz4NSAxef9lu0jFfs8x3PzSZRC+pn5k8+aJi3xYMA3BQzglQmjK3hA1Rlc3QgTWVzc2FnZQ=="
+                Signed =
+                    "+wz+QO6l1slgZS5s65BNqKcu4vz24FCJz4NSAxef9lu0jFfs8x3PzSZRC+pn5k8+aJi3xYMA3BQzglQmjK3hA1Rlc3QgTWVzc2FnZQ=="
             });
 
             verified.Unsigned.FromBase64().Should().Be("Test Message");
@@ -233,7 +241,8 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             });
 
             result.Key.Should()
-                .Be("52e7fcf91356eca55fc5d52f16f5d777e3521f54e3c570c9bbb7df58fc15add73994e5db42be368de7ebed93c9d4f21f9be7cc453358d734b04a057d0ed3626d");
+                .Be(
+                    "52e7fcf91356eca55fc5d52f16f5d777e3521f54e3c570c9bbb7df58fc15add73994e5db42be368de7ebed93c9d4f21f9be7cc453358d734b04a057d0ed3626d");
         }
 
         [Fact]
@@ -257,7 +266,9 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                     "56b6a77093d6fdf14e593f36275d872d75de5b341942376b2a08759f3cbae78f1869b7ef29d58026217e9cf163cbfbd0de889bdf1bf4daebf5433a312f5b8d6e"
             });
 
-            result.Signed.Should().Be("+wz+QO6l1slgZS5s65BNqKcu4vz24FCJz4NSAxef9lu0jFfs8x3PzSZRC+pn5k8+aJi3xYMA3BQzglQmjK3hA1Rlc3QgTWVzc2FnZQ==");
+            result.Signed.Should()
+                .Be(
+                    "+wz+QO6l1slgZS5s65BNqKcu4vz24FCJz4NSAxef9lu0jFfs8x3PzSZRC+pn5k8+aJi3xYMA3BQzglQmjK3hA1Rlc3QgTWVzc2FnZQ==");
         }
 
         [Fact]
@@ -285,7 +296,8 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             });
 
             result.Signature.Should()
-                .Be("fb0cfe40eea5d6c960652e6ceb904da8a72ee2fcf6e05089cf835203179ff65bb48c57ecf31dcfcd26510bea67e64f3e6898b7c58300dc14338254268cade103");
+                .Be(
+                    "fb0cfe40eea5d6c960652e6ceb904da8a72ee2fcf6e05089cf835203179ff65bb48c57ecf31dcfcd26510bea67e64f3e6898b7c58300dc14338254268cade103");
         }
 
         [Fact]
@@ -370,9 +382,9 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             const string text = "Text with \' and \" and : {}";
 
             ResultOfNaclBox e = await _tonClient.Crypto.NaclSecretBox(
-                new ParamsOfNaclSecretBox {Decrypted = text.ToBase64(), Nonce = nonce, Key = key});
+                new ParamsOfNaclSecretBox { Decrypted = text.ToBase64(), Nonce = nonce, Key = key });
             ResultOfNaclBoxOpen d = await _tonClient.Crypto.NaclSecretBoxOpen(
-                new ParamsOfNaclSecretBoxOpen {Encrypted = e.Encrypted, Nonce = nonce, Key = key});
+                new ParamsOfNaclSecretBoxOpen { Encrypted = e.Encrypted, Nonce = nonce, Key = key });
 
             d.Decrypted.FromBase64().Should().Be(text);
         }
@@ -389,11 +401,12 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         [ClassData(typeof(MnemonicFromRandomData))]
         public async Task MnemonicFromRandom(byte dictionary, byte wordCount)
         {
-            ResultOfMnemonicFromRandom result = await _tonClient.Crypto.MnemonicFromRandom(new ParamsOfMnemonicFromRandom
-            {
-                Dictionary = dictionary,
-                WordCount = wordCount
-            });
+            ResultOfMnemonicFromRandom result = await _tonClient.Crypto.MnemonicFromRandom(
+                new ParamsOfMnemonicFromRandom
+                {
+                    Dictionary = dictionary,
+                    WordCount = wordCount
+                });
 
             result.Phrase.Split(" ").Length.Should().Be(wordCount);
         }
@@ -401,25 +414,28 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         [Fact]
         public async Task MnemonicFromEntropy()
         {
-            ResultOfMnemonicFromEntropy result = await _tonClient.Crypto.MnemonicFromEntropy(new ParamsOfMnemonicFromEntropy
-            {
-                Entropy = "00112233445566778899AABBCCDDEEFF",
-                Dictionary = 1,
-                WordCount = 12
-            });
+            ResultOfMnemonicFromEntropy result = await _tonClient.Crypto.MnemonicFromEntropy(
+                new ParamsOfMnemonicFromEntropy
+                {
+                    Entropy = "00112233445566778899AABBCCDDEEFF",
+                    Dictionary = 1,
+                    WordCount = 12
+                });
 
-            result.Phrase.Should().Be("abandon math mimic master filter design carbon crystal rookie group knife young");
+            result.Phrase.Should()
+                .Be("abandon math mimic master filter design carbon crystal rookie group knife young");
         }
 
         [Theory]
         [ClassData(typeof(MnemonicFromRandomData))]
         public async Task MnemonicFromRandomVerify(byte dictionary, byte wordCount)
         {
-            ResultOfMnemonicFromRandom result = await _tonClient.Crypto.MnemonicFromRandom(new ParamsOfMnemonicFromRandom
-            {
-                Dictionary = dictionary,
-                WordCount = wordCount
-            });
+            ResultOfMnemonicFromRandom result = await _tonClient.Crypto.MnemonicFromRandom(
+                new ParamsOfMnemonicFromRandom
+                {
+                    Dictionary = dictionary,
+                    WordCount = wordCount
+                });
 
             ResultOfMnemonicVerify verifyResult = await _tonClient.Crypto.MnemonicVerify(new ParamsOfMnemonicVerify
             {
@@ -453,11 +469,12 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 WordCount = 24
             });
 
-            ResultOfConvertPublicKeyToTonSafeFormat anotherResult = await _tonClient.Crypto.ConvertPublicKeyToTonSafeFormat(
-                new ParamsOfConvertPublicKeyToTonSafeFormat
-                {
-                    PublicKey = result.Public
-                });
+            ResultOfConvertPublicKeyToTonSafeFormat anotherResult =
+                await _tonClient.Crypto.ConvertPublicKeyToTonSafeFormat(
+                    new ParamsOfConvertPublicKeyToTonSafeFormat
+                    {
+                        PublicKey = result.Public
+                    });
 
             anotherResult.TonPublicKey.Should().Be("PuYTvCuf__YXhp-4jv3TXTHL0iK65ImwxG0RGrYc1sP3H4KS");
         }
@@ -474,11 +491,12 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 WordCount = 24
             });
 
-            ResultOfConvertPublicKeyToTonSafeFormat anotherResult = await _tonClient.Crypto.ConvertPublicKeyToTonSafeFormat(
-                new ParamsOfConvertPublicKeyToTonSafeFormat
-                {
-                    PublicKey = result.Public
-                });
+            ResultOfConvertPublicKeyToTonSafeFormat anotherResult =
+                await _tonClient.Crypto.ConvertPublicKeyToTonSafeFormat(
+                    new ParamsOfConvertPublicKeyToTonSafeFormat
+                    {
+                        PublicKey = result.Public
+                    });
 
             anotherResult.TonPublicKey.Should().Be("PubDdJkMyss2qHywFuVP1vzww0TpsLxnRNnbifTCcu-XEgW0");
         }
@@ -491,11 +509,12 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 Phrase = "abandon math mimic master filter design carbon crystal rookie group knife young"
             });
 
-            ResultOfConvertPublicKeyToTonSafeFormat anotherResult = await _tonClient.Crypto.ConvertPublicKeyToTonSafeFormat(
-                new ParamsOfConvertPublicKeyToTonSafeFormat
-                {
-                    PublicKey = result.Public
-                });
+            ResultOfConvertPublicKeyToTonSafeFormat anotherResult =
+                await _tonClient.Crypto.ConvertPublicKeyToTonSafeFormat(
+                    new ParamsOfConvertPublicKeyToTonSafeFormat
+                    {
+                        PublicKey = result.Public
+                    });
 
             anotherResult.TonPublicKey.Should().Be("PuZhw8W5ejPJwKA68RL7sn4_RNmeH4BIU_mEK7em5d4_-cIx");
         }
@@ -503,10 +522,12 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         [Fact]
         public async Task HdkeyPublicFromXprv()
         {
-            ResultOfHDKeyPublicFromXPrv result = await _tonClient.Crypto.HdkeyPublicFromXprv(new ParamsOfHDKeyPublicFromXPrv
-            {
-                Xprv = "xprv9uZwtSeoKf1swgAkVVCEUmC2at6t7MCJoHnBbn1MWJZyxQ4cySkVXPyNh7zjf9VjsP4vEHDDD2a6R35cHubg4WpzXRzniYiy8aJh1gNnBKv"
-            });
+            ResultOfHDKeyPublicFromXPrv result = await _tonClient.Crypto.HdkeyPublicFromXprv(
+                new ParamsOfHDKeyPublicFromXPrv
+                {
+                    Xprv =
+                        "xprv9uZwtSeoKf1swgAkVVCEUmC2at6t7MCJoHnBbn1MWJZyxQ4cySkVXPyNh7zjf9VjsP4vEHDDD2a6R35cHubg4WpzXRzniYiy8aJh1gNnBKv"
+                });
 
             result.Public.Should().Be("b45e1297a5e767341a6eaaac9e20f8ccd7556a0106298316f1272e461b6fbe98");
         }
@@ -514,22 +535,28 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         [Fact]
         public async Task HdkeyDeriveFromXprvPath()
         {
-            ResultOfHDKeyDeriveFromXPrvPath result = await _tonClient.Crypto.HdkeyDeriveFromXprvPath(new ParamsOfHDKeyDeriveFromXPrvPath
-            {
-                Xprv = "xprv9s21ZrQH143K25JhKqEwvJW7QAiVvkmi4WRenBZanA6kxHKtKAQQKwZG65kCyW5jWJ8NY9e3GkRoistUjjcpHNsGBUv94istDPXvqGNuWpC",
-                Path = "m/44'/60'/0'/0'"
-            });
+            ResultOfHDKeyDeriveFromXPrvPath result = await _tonClient.Crypto.HdkeyDeriveFromXprvPath(
+                new ParamsOfHDKeyDeriveFromXPrvPath
+                {
+                    Xprv =
+                        "xprv9s21ZrQH143K25JhKqEwvJW7QAiVvkmi4WRenBZanA6kxHKtKAQQKwZG65kCyW5jWJ8NY9e3GkRoistUjjcpHNsGBUv94istDPXvqGNuWpC",
+                    Path = "m/44'/60'/0'/0'"
+                });
 
-            result.Xprv.Should().Be("xprvA1KNMo63UcGjmDF1bX39Cw2BXGUwrwMjeD5qvQ3tA3qS3mZQkGtpf4DHq8FDLKAvAjXsYGLHDP2dVzLu9ycta8PXLuSYib2T3vzLf3brVgZ");
+            result.Xprv.Should()
+                .Be(
+                    "xprvA1KNMo63UcGjmDF1bX39Cw2BXGUwrwMjeD5qvQ3tA3qS3mZQkGtpf4DHq8FDLKAvAjXsYGLHDP2dVzLu9ycta8PXLuSYib2T3vzLf3brVgZ");
         }
 
         [Fact]
         public async Task HdkeySecretFromXprv2()
         {
-            ResultOfHDKeySecretFromXPrv result = await _tonClient.Crypto.HdkeySecretFromXprv(new ParamsOfHDKeySecretFromXPrv
-            {
-                Xprv = "xprvA1KNMo63UcGjmDF1bX39Cw2BXGUwrwMjeD5qvQ3tA3qS3mZQkGtpf4DHq8FDLKAvAjXsYGLHDP2dVzLu9ycta8PXLuSYib2T3vzLf3brVgZ"
-            });
+            ResultOfHDKeySecretFromXPrv result = await _tonClient.Crypto.HdkeySecretFromXprv(
+                new ParamsOfHDKeySecretFromXPrv
+                {
+                    Xprv =
+                        "xprvA1KNMo63UcGjmDF1bX39Cw2BXGUwrwMjeD5qvQ3tA3qS3mZQkGtpf4DHq8FDLKAvAjXsYGLHDP2dVzLu9ycta8PXLuSYib2T3vzLf3brVgZ"
+                });
 
             result.Secret.Should().Be("1c566ade41169763b155761406d3cef08b29b31cf8014f51be08c0cb4e67c5e1");
         }
@@ -537,10 +564,12 @@ namespace ch1seL.TonNet.Client.Tests.Modules
         [Fact]
         public async Task HdkeyPublicFromXprv2()
         {
-            ResultOfHDKeyPublicFromXPrv result = await _tonClient.Crypto.HdkeyPublicFromXprv(new ParamsOfHDKeyPublicFromXPrv
-            {
-                Xprv = "xprvA1KNMo63UcGjmDF1bX39Cw2BXGUwrwMjeD5qvQ3tA3qS3mZQkGtpf4DHq8FDLKAvAjXsYGLHDP2dVzLu9ycta8PXLuSYib2T3vzLf3brVgZ"
-            });
+            ResultOfHDKeyPublicFromXPrv result = await _tonClient.Crypto.HdkeyPublicFromXprv(
+                new ParamsOfHDKeyPublicFromXPrv
+                {
+                    Xprv =
+                        "xprvA1KNMo63UcGjmDF1bX39Cw2BXGUwrwMjeD5qvQ3tA3qS3mZQkGtpf4DHq8FDLKAvAjXsYGLHDP2dVzLu9ycta8PXLuSYib2T3vzLf3brVgZ"
+                });
 
             result.Public.Should().Be("302a832bad9e5c9906422a82c28b39ae465dcd60178480f7309e183ee34b5e83");
         }
@@ -552,43 +581,47 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             RegisteredSigningBox registeredSigningBox = await _tonClient.Crypto.GetSigningBox(keys);
             var keyBoxHandle = registeredSigningBox.Handle;
 
-            var callback = new Action<JsonElement, uint>(async (request, _) =>
+            var callback = new Action<JsonElement, uint>((request, _) =>
             {
                 var paramsOfAppRequest = PolymorphicSerializer.Deserialize<ParamsOfAppRequest>(request);
 
                 switch (PolymorphicSerializer.Deserialize<ParamsOfAppSigningBox>(paramsOfAppRequest.RequestData!.Value))
                 {
-                    case ParamsOfAppSigningBox.GetPublicKey getPublicKey:
+                    case ParamsOfAppSigningBox.GetPublicKey _:
                     {
-                        ResultOfSigningBoxGetPublicKey resultOfSigningBoxGetPublicKey = await _tonClient.Crypto.SigningBoxGetPublicKey(new RegisteredSigningBox
-                        {
-                            Handle = keyBoxHandle
-                        });
-                        await _tonClient.Client.ResolveAppRequest(new ParamsOfResolveAppRequest
+                        ResultOfSigningBoxGetPublicKey resultOfSigningBoxGetPublicKey = _tonClient.Crypto
+                            .SigningBoxGetPublicKey(new RegisteredSigningBox
+                            {
+                                Handle = keyBoxHandle
+                            }).GetAwaiter().GetResult();
+                        _tonClient.Client.ResolveAppRequest(new ParamsOfResolveAppRequest
                         {
                             AppRequestId = paramsOfAppRequest.AppRequestId,
                             Result = new AppRequestResult.Ok
                             {
-                                Result = new ResultOfAppSigningBox.GetPublicKey {PublicKey = resultOfSigningBoxGetPublicKey.Pubkey}.ToJsonElement()
+                                Result = new ResultOfAppSigningBox.GetPublicKey
+                                    { PublicKey = resultOfSigningBoxGetPublicKey.Pubkey }.ToJsonElement()
                             }
-                        });
+                        }).GetAwaiter().GetResult();
                         break;
                     }
                     case ParamsOfAppSigningBox.Sign sign:
                     {
-                        ResultOfSigningBoxSign resultOfSigningBoxSign = await _tonClient.Crypto.SigningBoxSign(new ParamsOfSigningBoxSign
-                        {
-                            SigningBox = keyBoxHandle,
-                            Unsigned = sign.Unsigned
-                        });
-                        await _tonClient.Client.ResolveAppRequest(new ParamsOfResolveAppRequest
+                        ResultOfSigningBoxSign resultOfSigningBoxSign = _tonClient.Crypto.SigningBoxSign(
+                            new ParamsOfSigningBoxSign
+                            {
+                                SigningBox = keyBoxHandle,
+                                Unsigned = sign.Unsigned
+                            }).GetAwaiter().GetResult();
+                        _tonClient.Client.ResolveAppRequest(new ParamsOfResolveAppRequest
                         {
                             AppRequestId = paramsOfAppRequest.AppRequestId,
                             Result = new AppRequestResult.Ok
                             {
-                                Result = new ResultOfAppSigningBox.Sign {Signature = resultOfSigningBoxSign.Signature}.ToJsonElement()
+                                Result = new ResultOfAppSigningBox.Sign { Signature = resultOfSigningBoxSign.Signature }
+                                    .ToJsonElement()
                             }
-                        });
+                        }).GetAwaiter().GetResult();
                         break;
                     }
                 }
@@ -596,7 +629,9 @@ namespace ch1seL.TonNet.Client.Tests.Modules
 
             // act
             RegisteredSigningBox externalBox = await _tonClient.Crypto.RegisterSigningBox(callback);
-            ResultOfSigningBoxGetPublicKey boxPubkey = await _tonClient.Crypto.SigningBoxGetPublicKey(new RegisteredSigningBox {Handle = externalBox.Handle});
+            ResultOfSigningBoxGetPublicKey boxPubkey =
+                await _tonClient.Crypto.SigningBoxGetPublicKey(new RegisteredSigningBox
+                    { Handle = externalBox.Handle });
 
             // assert
             boxPubkey.Pubkey.Should().Be(keys.Public);
@@ -649,7 +684,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             private static List<object[]> GetData()
             {
                 var dict = Enumerable.Range(1, 8);
-                int[] words = {12, 15, 18, 21, 24};
+                int[] words = { 12, 15, 18, 21, 24 };
 
                 return (from d in dict
                     from w in words

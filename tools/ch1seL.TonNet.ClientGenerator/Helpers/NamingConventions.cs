@@ -4,8 +4,6 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 {
     public static class NamingConventions
     {
-        private static readonly Regex ResultOfReplacer = new Regex(@"ResultOf(?'name'\w+)", RegexOptions.Compiled);
-        private static readonly Regex ParamsOfReplacer = new Regex(@"ParamsOf(?'name'\w+)", RegexOptions.Compiled);
         private static readonly Regex SnackCaseRegex = new Regex(@"([_\s]|^)(?'firstChar'\w)", RegexOptions.Compiled);
         private static readonly Regex FieldRegex = new Regex(@"(^)(?'firstChar'\w)", RegexOptions.Compiled);
 

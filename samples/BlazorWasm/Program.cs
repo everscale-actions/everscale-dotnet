@@ -21,7 +21,7 @@ namespace BlazorWasm
         private static void ConfigureServices(IServiceCollection services, string hostEnvironmentBaseAddress)
         {
             services
-                .AddScoped(sp => new HttpClient { BaseAddress = new Uri(hostEnvironmentBaseAddress) })
+                .AddScoped(_ => new HttpClient { BaseAddress = new Uri(hostEnvironmentBaseAddress) })
                 .AddTonClient(options => options.Network.Endpoints = new[] { "net5.ton.dev" })
                 .AddTransient<MessageSender>();
         }

@@ -30,13 +30,15 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                 TypeType.EnumOfConsts => ns.AddMembers(GenerateEnumOfConsts(typeElement)),
                 TypeType.EnumOfTypes => ns.AddMembers(GenerateEnumOfTypes(typeElement)),
                 TypeType.Struct => ns.AddMembers(GenerateStruct(typeElement)),
-                _ => throw new ArgumentOutOfRangeException(nameof(typeElement.Type), typeElement.Type, "Not supported type")
+                _ => throw new ArgumentOutOfRangeException(nameof(typeElement.Type), typeElement.Type,
+                    "Not supported type")
             };
         }
 
         private static EnumDeclarationSyntax GenerateEnumOfConsts(TypeElement typeElement)
         {
-            var summary = typeElement.Summary + '\n' + (typeElement.Description != null ? $"\n{typeElement.Description}" : null);
+            var summary = typeElement.Summary + '\n' +
+                          (typeElement.Description != null ? $"\n{typeElement.Description}" : null);
             return EnumDeclaration(Identifier(NamingConventions.Normalize(typeElement.Name)))
                 .AddMembers(typeElement
                     .EnumConsts
@@ -54,13 +56,15 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
         private ClassDeclarationSyntax GenerateEnumOfTypes(TypeElement typeElement)
         {
-            var typeElementSummary = typeElement.Summary + (typeElement.Description != null ? $"\n{typeElement.Description}" : null);
+            var typeElementSummary = typeElement.Summary +
+                                     (typeElement.Description != null ? $"\n{typeElement.Description}" : null);
 
             var enumTypes = typeElement
                 .EnumTypes
                 .Select(subClass =>
                 {
-                    var subClassSummary = subClass.Summary + (subClass.Description != null ? $"\n{subClass.Description}" : null);
+                    var subClassSummary = subClass.Summary +
+                                          (subClass.Description != null ? $"\n{subClass.Description}" : null);
 
                     switch (subClass.Type)
                     {
@@ -70,8 +74,10 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                             var properties = new List<MemberDeclarationSyntax>();
                             properties.AddRange(subClass.StructFields.Select(sf =>
                             {
-                                var addPostfix = NamingConventions.Normalize(sf.Name) == NamingConventions.Normalize(subClass.Name);
-                                return CreatePropertyGenericArgs(sf.Type, sf.Name, sf.RefName, sf.OptionalInner, subClassSummary, sf.NumberType,
+                                var addPostfix = NamingConventions.Normalize(sf.Name) ==
+                                                 NamingConventions.Normalize(subClass.Name);
+                                return CreatePropertyGenericArgs(sf.Type, sf.Name, sf.RefName, sf.OptionalInner,
+                                    subClassSummary, sf.NumberType,
                                     sf.NumberSize, addPostfix: addPostfix, arrayItem: sf.ArrayItem);
                             }));
                             return ClassDeclaration(NamingConventions.Normalize(subClass.Name))
@@ -86,7 +92,8 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                                     SimpleBaseType(IdentifierName(NamingConventions.Normalize(typeElement.Name))))
                                 .AddMembers(properties.ToArray());
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(subClass.Type), subClass.Type, "EnumOfTypes doesn't support this type");
+                            throw new ArgumentOutOfRangeException(nameof(subClass.Type), subClass.Type,
+                                "EnumOfTypes doesn't support this type");
                     }
                 })
                 .ToArray();
@@ -98,7 +105,8 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                 .AddMembers(enumTypes);
         }
 
-        private MemberDeclarationSyntax CreatePropertyForRef(string typeName, string name, string description, bool optional = false, bool nullable = false,
+        private MemberDeclarationSyntax CreatePropertyForRef(string typeName, string name, string description,
+            bool optional = false,
             bool addPostfix = false)
         {
             typeName = NamingConventions.Normalize(typeName);
@@ -108,27 +116,32 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                 ? _numberTypesMapping[typeName]
                 : typeName;
 
-            return CreatePropertyDeclaration(typeName, name, description, optional, nullable, addPostfix);
+            return CreatePropertyDeclaration(typeName, name, description, optional, addPostfix);
         }
 
 
-        private MemberDeclarationSyntax CreatePropertyGenericArgs(GenericArgType type, string name, string refName, GenericArg optionalInner,
-            string description, NumberType? numberType = null, long? numberSize = null, bool optional = false, bool addPostfix = false,
+        private MemberDeclarationSyntax CreatePropertyGenericArgs(GenericArgType type, string name, string refName,
+            GenericArg optionalInner,
+            string description, NumberType? numberType = null, long? numberSize = null, bool optional = false,
+            bool addPostfix = false,
             ArrayItem arrayItem = null)
         {
             if (type == GenericArgType.Array && arrayItem == null) throw new ArgumentNullException(nameof(arrayItem));
 
             return type switch
             {
-                GenericArgType.Boolean => CreatePropertyDeclaration("bool", name, description, optional, addPostfix: addPostfix),
+                GenericArgType.Boolean => CreatePropertyDeclaration("bool", name, description, optional, addPostfix),
                 GenericArgType.Ref => CreatePropertyForRef(refName, name, description, addPostfix: addPostfix),
                 GenericArgType.String => CreatePropertyDeclaration("string", name, description, addPostfix: addPostfix),
-                GenericArgType.Optional => CreatePropertyGenericArgs(optionalInner.Type, name, optionalInner.RefName, null, description,
+                GenericArgType.Optional => CreatePropertyGenericArgs(optionalInner.Type, name, optionalInner.RefName,
+                    null, description,
                     addPostfix: addPostfix),
-                GenericArgType.Number => CreatePropertyDeclaration(NumberUtils.ConvertToSharpNumeric(numberType, numberSize), name, description,
+                GenericArgType.Number => CreatePropertyDeclaration(
+                    NumberUtils.ConvertToSharpNumeric(numberType, numberSize), name, description,
                     addPostfix: addPostfix),
                 // ReSharper disable once PossibleNullReferenceException
-                GenericArgType.Array => CreatePropertyForPurpleArrayItem(name, arrayItem.Type, arrayItem.RefName, null, description),
+                GenericArgType.Array => CreatePropertyForPurpleArrayItem(name, arrayItem.Type, arrayItem.RefName, null,
+                    description),
                 GenericArgType.BigInt => CreatePropertyDeclaration("ulong", name, description),
                 _ => throw new ArgumentOutOfRangeException()
             };
@@ -137,7 +150,8 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
         private ClassDeclarationSyntax GenerateStruct(TypeElement typeElement)
         {
             var className = typeElement.Name;
-            var typeElementSummary = typeElement.Summary + (typeElement.Description != null ? $"\n{typeElement.Description}" : null);
+            var typeElementSummary = typeElement.Summary +
+                                     (typeElement.Description != null ? $"\n{typeElement.Description}" : null);
 
             var properties = typeElement.StructFields.Select(CreatePropertyStructFields).ToArray();
 
@@ -153,11 +167,13 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 
             return sf.Type switch
             {
-                PurpleType.Array => CreatePropertyForPurpleArrayItem(sf.Name, sf.ArrayItem.Type, sf.ArrayItem.RefName, sf.ArrayItem.OptionalInner,
+                PurpleType.Array => CreatePropertyForPurpleArrayItem(sf.Name, sf.ArrayItem.Type, sf.ArrayItem.RefName,
+                    sf.ArrayItem.OptionalInner,
                     sfSummary),
                 PurpleType.BigInt => CreatePropertyDeclaration("ulong", sf.Name, sfSummary),
                 PurpleType.Boolean => CreatePropertyDeclaration("bool", sf.Name, sfSummary),
-                PurpleType.Number => CreatePropertyDeclaration(NumberUtils.ConvertToSharpNumeric(sf.NumberType, sf.NumberSize), sf.Name, sfSummary),
+                PurpleType.Number => CreatePropertyDeclaration(
+                    NumberUtils.ConvertToSharpNumeric(sf.NumberType, sf.NumberSize), sf.Name, sfSummary),
                 PurpleType.Ref => CreatePropertyForRef(sf.RefName, sf.Name, sfSummary),
                 PurpleType.String => CreatePropertyDeclaration("string", sf.Name, sfSummary),
                 PurpleType.Optional => CreateOptionalPropertyForPurple(sf.Name, sf.OptionalInner, sfSummary),
@@ -165,54 +181,65 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
             };
         }
 
-        private MemberDeclarationSyntax CreateOptionalPropertyForPurple(string name, StructFieldOptionalInner optionalInner, string description)
+        private MemberDeclarationSyntax CreateOptionalPropertyForPurple(string name,
+            StructFieldOptionalInner optionalInner, string description)
         {
             return optionalInner.Type switch
             {
-                PurpleType.Array => CreatePropertyForPurpleArrayItem(name, optionalInner.ArrayItem.Type, optionalInner.ArrayItem.RefName, null, description,
-                    true),
-                PurpleType.BigInt => CreatePropertyDeclaration("ulong", name, description, true, true),
-                PurpleType.Boolean => CreatePropertyDeclaration("bool", name, description, true, true),
-                PurpleType.Number => CreatePropertyDeclaration(NumberUtils.ConvertToSharpNumeric(optionalInner.NumberType, optionalInner.NumberSize), name,
+                PurpleType.Array => CreatePropertyForPurpleArrayItem(name, optionalInner.ArrayItem.Type,
+                    optionalInner.ArrayItem.RefName, null, description),
+                PurpleType.BigInt => CreatePropertyDeclaration("ulong", name, description, true),
+                PurpleType.Boolean => CreatePropertyDeclaration("bool", name, description, true),
+                PurpleType.Number => CreatePropertyDeclaration(
+                    NumberUtils.ConvertToSharpNumeric(optionalInner.NumberType, optionalInner.NumberSize), name,
                     description, true),
                 PurpleType.Ref => CreatePropertyForRef(optionalInner.RefName, name, description),
                 PurpleType.String => CreatePropertyDeclaration("string", name, description),
-                PurpleType.Optional => CreatePropertyForPurpleTypeOptionalOptional(name, optionalInner.OptionalInner, description),
-                _ => throw new ArgumentOutOfRangeException(nameof(optionalInner.Type), optionalInner.Type, "Not supported type detected")
+                PurpleType.Optional => CreatePropertyForPurpleTypeOptionalOptional(name, optionalInner.OptionalInner,
+                    description),
+                _ => throw new ArgumentOutOfRangeException(nameof(optionalInner.Type), optionalInner.Type,
+                    "Not supported type detected")
             };
         }
 
-        private static MemberDeclarationSyntax CreatePropertyForPurpleTypeOptionalOptional(string name, OptionalInnerOptionalInner optionalInner,
+        private static MemberDeclarationSyntax CreatePropertyForPurpleTypeOptionalOptional(string name,
+            OptionalInnerOptionalInner optionalInner,
             string description)
         {
             return optionalInner.Type switch
             {
-                PurpleType.BigInt => CreatePropertyDeclaration("ulong", name, description, true, true),
-                PurpleType.Boolean => CreatePropertyDeclaration("bool", name, description, true, true),
-                PurpleType.Number => CreatePropertyDeclaration(NumberUtils.ConvertToSharpNumeric(optionalInner.NumberType, optionalInner.NumberSize), name,
+                PurpleType.BigInt => CreatePropertyDeclaration("ulong", name, description, true),
+                PurpleType.Boolean => CreatePropertyDeclaration("bool", name, description, true),
+                PurpleType.Number => CreatePropertyDeclaration(
+                    NumberUtils.ConvertToSharpNumeric(optionalInner.NumberType, optionalInner.NumberSize), name,
                     description,
-                    true, true),
-                PurpleType.String => CreatePropertyDeclaration("string", name, description, nullable: true),
-                _ => throw new ArgumentOutOfRangeException(nameof(optionalInner.Type), optionalInner.Type, "Not supported type detected")
+                    true),
+                PurpleType.String => CreatePropertyDeclaration("string", name, description),
+                _ => throw new ArgumentOutOfRangeException(nameof(optionalInner.Type), optionalInner.Type,
+                    "Not supported type detected")
             };
         }
 
-        private MemberDeclarationSyntax CreatePropertyForPurpleArrayItem(string name, GenericArgType arrayType, string arrayRefName,
-            GenericArg arrayItemOptionalInner, string description, bool nullable = false)
+        private MemberDeclarationSyntax CreatePropertyForPurpleArrayItem(string name, GenericArgType arrayType,
+            string arrayRefName,
+            GenericArg arrayItemOptionalInner, string description)
         {
             if (arrayType == GenericArgType.Optional)
                 // ReSharper disable once TailRecursiveCall
-                return CreatePropertyForPurpleArrayItem(name, arrayItemOptionalInner.Type, arrayItemOptionalInner.RefName, null, description, true);
+                return CreatePropertyForPurpleArrayItem(name, arrayItemOptionalInner.Type,
+                    arrayItemOptionalInner.RefName, null, description);
 
             var typeName = arrayType switch
             {
-                GenericArgType.Ref => _allTypes.Contains(NamingConventions.Normalize(arrayRefName)) ? NamingConventions.Normalize(arrayRefName) : "JsonElement",
+                GenericArgType.Ref => _allTypes.Contains(NamingConventions.Normalize(arrayRefName))
+                    ? NamingConventions.Normalize(arrayRefName)
+                    : "JsonElement",
                 GenericArgType.Boolean => "bool",
                 GenericArgType.String => "string",
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            return CreatePropertyDeclaration($"{typeName}[]", name, description, nullable: nullable);
+            return CreatePropertyDeclaration($"{typeName}[]", name, description);
         }
     }
 }

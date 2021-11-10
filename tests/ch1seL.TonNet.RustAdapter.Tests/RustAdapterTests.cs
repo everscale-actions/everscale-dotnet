@@ -45,7 +45,8 @@ namespace ch1seL.TonNet.RustAdapter.Tests
             {
                 await using ITonClientAdapter rustAdapter = TestsHelpers.CreateRustAdapter(_logger);
                 await Task.WhenAll(Enumerable.Repeat(0, 100)
-                    .Select(_ => rustAdapter.Request<JsonElement>("client.get_api_reference")));
+                    // ReSharper disable once AccessToDisposedClosure
+                    .Select(_ => rustAdapter.Request("client.get_api_reference")));
             };
 
             await act.Should().NotThrowAsync();
@@ -78,7 +79,7 @@ namespace ch1seL.TonNet.RustAdapter.Tests
         }
 
         [Fact]
-        public async Task SDKInitializedWithoutNetworkExceptionTest()
+        public async Task SdkInitializedWithoutNetworkExceptionTest()
         {
             Func<Task> act = async () =>
             {

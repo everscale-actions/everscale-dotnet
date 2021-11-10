@@ -8,19 +8,14 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
 {
     internal static class PropertyHelpers
     {
-        public static PropertyDeclarationSyntax CreatePropertyDeclaration(string typeName, string name, string description, bool optional = false,
-            bool nullable = false,
+        public static PropertyDeclarationSyntax CreatePropertyDeclaration(string typeName, string name,
+            string description, bool optional = false,
             bool addPostfix = false)
         {
-            nullable = optional || nullable;
-
             var attributes = new List<AttributeSyntax>
             {
                 Attribute(IdentifierName($"JsonPropertyName(\"{name}\")"))
             };
-
-            //todo: problem with nullable properties in netcoreapp3.1 see test TypeWithNullableProperties
-            //if (nullable) attributes.Add(Attribute(IdentifierName("JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)")));
 
             AccessorListSyntax accessorListSyntax = AccessorList(
                 List(new[]

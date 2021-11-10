@@ -16,8 +16,8 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
         {
             var responseType = function.Result.GetMethodReturnType();
             var responseDeclaration = responseType == null ? "Task" : $"Task<{responseType}>";
-            var requestParam = new {name = default(string), type = default(string)};
-            var callbackParam = new {name = default(string), nameWithNull = default(string), type = default(string)};
+            var requestParam = new { name = default(string), type = default(string) };
+            var callbackParam = new { name = default(string), nameWithNull = default(string), type = default(string) };
 
             foreach (Param param in function.Params)
             {
@@ -54,23 +54,30 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                     };
             }
 
-            var functionSummary = function.Summary + (function.Description != null ? $"\n{function.Description}" : null);
-            var modifiers = new List<SyntaxToken> {Token(SyntaxKind.PublicKeyword).WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(functionSummary))};
+            var functionSummary =
+                function.Summary + (function.Description != null ? $"\n{function.Description}" : null);
+            var modifiers = new List<SyntaxToken>
+            {
+                Token(SyntaxKind.PublicKeyword).WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(functionSummary))
+            };
             if (withBody) modifiers.Add(Token(SyntaxKind.AsyncKeyword));
 
             var @params = new List<ParameterSyntax>();
             var methodDeclarationParams = new List<ParameterSyntax>();
             if (requestParam.name != default)
             {
-                ParameterSyntax param = Parameter(Identifier(requestParam.name)).WithType(IdentifierName(requestParam.type));
+                ParameterSyntax param = Parameter(Identifier(requestParam.name))
+                    .WithType(IdentifierName(requestParam.type));
                 methodDeclarationParams.Add(param);
                 @params.Add(param);
             }
 
             if (callbackParam.name != default)
             {
-                methodDeclarationParams.Add(Parameter(Identifier(callbackParam.nameWithNull)).WithType(IdentifierName($"Action<{callbackParam.type},uint>")));
-                @params.Add(Parameter(Identifier(callbackParam.name)).WithType(IdentifierName($"Action<{callbackParam.type},uint>")));
+                methodDeclarationParams.Add(Parameter(Identifier(callbackParam.nameWithNull))
+                    .WithType(IdentifierName($"Action<{callbackParam.type},uint>")));
+                @params.Add(Parameter(Identifier(callbackParam.name))
+                    .WithType(IdentifierName($"Action<{callbackParam.type},uint>")));
             }
 
             MethodDeclarationSyntax method =
@@ -93,7 +100,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                 arguments.Add(Argument(IdentifierName("cancellationToken")));
 
                 var genericParametersDeclaration =
-                    StringUtils.GetGenericParametersDeclaration(requestParam?.type, responseType, callbackParam?.type);
+                    StringUtils.GetGenericParametersDeclaration(requestParam.type, responseType, callbackParam.type);
 
                 AwaitExpressionSyntax awaitExpression = AwaitExpression(
                     InvocationExpression(IdentifierName($"_tonClientAdapter.Request{genericParametersDeclaration}"))
@@ -113,11 +120,6 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
         private static string GetParamType(Param param)
         {
             return NamingConventions.Normalize(param.RefName);
-        }
-
-        private static string GetCallbackActionType(string callBackType)
-        {
-            return $"Action<{callBackType}, uint>";
         }
 
         public static NamespaceDeclarationSyntax CreateTonModuleClass(string unitName, Module module)

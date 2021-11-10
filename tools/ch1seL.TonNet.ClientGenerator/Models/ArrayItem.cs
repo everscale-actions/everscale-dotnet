@@ -6,12 +6,8 @@ namespace ch1seL.TonNet.ClientGenerator.Models
     {
         [JsonPropertyName("type")] public GenericArgType Type { get; set; }
 
-        [JsonPropertyName("ref_name")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string RefName { get; set; }
+        [JsonPropertyName("ref_name")] public string RefName { get; set; }
 
-        [JsonPropertyName("optional_inner")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public GenericArg OptionalInner { get; set; }
+        [JsonPropertyName("optional_inner")] public GenericArg OptionalInner { get; set; }
     }
 }

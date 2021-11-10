@@ -10,14 +10,18 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
         public static Dictionary<string, string> MapNumericTypes(IEnumerable<Module> module)
         {
             return module.SelectMany(m => m.Types).Where(t => t.Type == TypeType.Number)
-                .Select(t => new {typeName = NamingConventions.Normalize(t.Name), sharpType = ConvertToSharpNumeric(t.NumberType, t.NumberSize)})
+                .Select(t => new
+                {
+                    typeName = NamingConventions.Normalize(t.Name),
+                    sharpType = ConvertToSharpNumeric(t.NumberType, t.NumberSize)
+                })
                 .ToDictionary(kv => kv.typeName, kv => kv.sharpType);
         }
 
         public static string ConvertToSharpNumeric(NumberType? numberType, long? size)
         {
-            if (numberType == null) throw new ArgumentNullException(nameof(NumberType));
-            if (size == null) throw new ArgumentNullException(nameof(NumberType));
+            if (numberType == null) throw new ArgumentNullException(nameof(numberType));
+            if (size == null) throw new ArgumentNullException(nameof(size));
 
             return numberType switch
             {

@@ -17,7 +17,8 @@ namespace ch1seL.TonNet.Serialization
             var options = new JsonSerializerOptions
             {
                 MaxDepth = int.MaxValue,
-                Converters = {new JsonStringEnumConverter()},
+                Converters = { new JsonStringEnumConverter() },
+                //todo: investigate netcoreapp3.1 framework doesnt work with DefaultIgnoreCondition 
                 IgnoreNullValues = true
             };
 

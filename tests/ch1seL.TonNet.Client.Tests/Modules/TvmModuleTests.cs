@@ -3,7 +3,6 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.Client.Models;
-using ch1seL.TonNet.Client.PackageManager;
 using ch1seL.TonNet.Client.Tests.Utils;
 using ch1seL.TonNet.Serialization;
 using ch1seL.TonNet.TestsShared;
@@ -15,7 +14,9 @@ namespace ch1seL.TonNet.Client.Tests.Modules
 {
     public class TvmModuleTests : IClassFixture<TonClientTestsFixture>
     {
-        private const string SubscribeParamsPubkey = "0x2222222222222222222222222222222222222222222222222222222222222222";
+        private const string SubscribeParamsPubkey =
+            "0x2222222222222222222222222222222222222222222222222222222222222222";
+
         private readonly Lazy<Task<string>> _electorEncodedLazy;
         private readonly ITonClient _tonClient;
 
@@ -133,7 +134,8 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 Boc = result.Account
             });
 
-            parsed.Parsed.Get<string>("id").Should().Be("0:f18d106c11586689b11e946269ec1550b69654a8d5964de668149c28877fb65a");
+            parsed.Parsed.Get<string>("id").Should()
+                .Be("0:f18d106c11586689b11e946269ec1550b69654a8d5964de668149c28877fb65a");
             parsed.Parsed.Get<string>("acc_type_name").Should().Be("Uninit");
         }
 
@@ -144,9 +146,9 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             ResultOfEncodeMessage message = await _tonClient.Abi.EncodeMessage(new ParamsOfEncodeMessage
             {
                 Abi = TestsEnv.Packages.Hello.Abi,
-                CallSet = new CallSet {FunctionName = "constructor"},
-                DeploySet = new DeploySet {Tvc = TestsEnv.Packages.Hello.Tvc},
-                Signer = new Signer.Keys {KeysAccessor = keys}
+                CallSet = new CallSet { FunctionName = "constructor" },
+                DeploySet = new DeploySet { Tvc = TestsEnv.Packages.Hello.Tvc },
+                Signer = new Signer.Keys { KeysAccessor = keys }
             });
 
             ResultOfRunExecutor result = await _tonClient.Tvm.RunExecutor(new ParamsOfRunExecutor
@@ -179,17 +181,20 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             KeyPair keys = await _tonClient.Crypto.GenerateRandomSignKeys();
             const string walletAddress = "0:2222222222222222222222222222222222222222222222222222222222222222";
 
-            ParamsOfEncodeMessage encodeMessageParams = GetParamsOfEncodeMessage(TestsEnv.Packages.Subscription, walletAddress, keys);
+            ParamsOfEncodeMessage encodeMessageParams =
+                GetParamsOfEncodeMessage(TestsEnv.Packages.Subscription, walletAddress, keys);
             var address = await _tonClient.DeployWithGiver(encodeMessageParams);
             var fetchAccount = await FetchAccount(address);
             var account = fetchAccount.Get<string>("boc");
 
-            ResultOfEncodeMessage message = await GetSubscribeMessage(address, subscribeParams.ToJsonElement(), TestsEnv.Packages.Subscription, keys);
+            ResultOfEncodeMessage message = await GetSubscribeMessage(address, subscribeParams.ToJsonElement(),
+                TestsEnv.Packages.Subscription, keys);
 
             // run
             var runResult = await run(message, TestsEnv.Packages.Subscription.Abi, account);
 
-            var getSubscriptionMessage = await GetSubscriptionEncodedMessage(address, TestsEnv.Packages.Subscription, subscribeParams.subscriptionId, keys);
+            var getSubscriptionMessage = await GetSubscriptionEncodedMessage(address, TestsEnv.Packages.Subscription,
+                subscribeParams.subscriptionId, keys);
 
             ResultOfRunTvm result = await _tonClient.Tvm.RunTvm(new ParamsOfRunTvm
             {
@@ -201,14 +206,16 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             return result.Decoded.Output.Get<JsonElement>("value0").Get<string>("pubkey");
         }
 
-        private static ParamsOfEncodeMessage GetParamsOfEncodeMessage(Package subscriptionPackage, string walletAddress, KeyPair keys)
+        private static ParamsOfEncodeMessage GetParamsOfEncodeMessage(Package subscriptionPackage, string walletAddress,
+            KeyPair keys)
         {
             return new ParamsOfEncodeMessage
             {
                 Abi = subscriptionPackage.Abi,
-                DeploySet = new DeploySet {Tvc = subscriptionPackage.Tvc},
-                CallSet = new CallSet {FunctionName = "constructor", Input = new {wallet = walletAddress}.ToJsonElement()},
-                Signer = new Signer.Keys {KeysAccessor = keys}
+                DeploySet = new DeploySet { Tvc = subscriptionPackage.Tvc },
+                CallSet = new CallSet
+                    { FunctionName = "constructor", Input = new { wallet = walletAddress }.ToJsonElement() },
+                Signer = new Signer.Keys { KeysAccessor = keys }
             };
         }
 
@@ -243,7 +250,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 CallSet = new CallSet
                 {
                     FunctionName = "getSubscription",
-                    Input = new {subscriptionId}.ToJsonElement()
+                    Input = new { subscriptionId }.ToJsonElement()
                 },
                 Signer = new Signer.Keys
                 {
@@ -258,7 +265,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             ResultOfWaitForCollection result = await _tonClient.Net.WaitForCollection(new ParamsOfWaitForCollection
             {
                 Collection = "accounts",
-                Filter = new {id = new {eq = address}}.ToJsonElement(),
+                Filter = new { id = new { eq = address } }.ToJsonElement(),
                 Result = "id boc"
             });
 

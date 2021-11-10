@@ -12,7 +12,7 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
     {
         private static MemberDeclarationSyntax[] GetProperties(TonApi tonApi)
         {
-            MemberDeclarationSyntax[] propertyDeclarationSyntaxes = tonApi.Modules
+            return tonApi.Modules
                 .Select(module =>
                 {
                     var formattedName = NamingConventions.Normalize(module.Name);
@@ -20,7 +20,8 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                     var summary = module.Summary + (module.Description != null ? $"\n{module.Description}" : null);
 
                     return PropertyDeclaration(IdentifierName($"I{formattedName}Module"), formattedName)
-                        .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword).WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(summary))))
+                        .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)
+                            .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(summary))))
                         .WithAccessorList(
                             AccessorList(
                                 List(new[]
@@ -31,8 +32,8 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                                             Token(SyntaxKind.SemicolonToken))
                                 })));
                 })
+                .Cast<MemberDeclarationSyntax>()
                 .ToArray();
-            return propertyDeclarationSyntaxes;
         }
 
         public static NamespaceDeclarationSyntax CreateTonClientClass(string unitName, TonApi tonApi)
@@ -53,11 +54,13 @@ namespace ch1seL.TonNet.ClientGenerator.Helpers
                     }
                     .Union(moduleNames
                         .Select(m => ParseStatement(
-                            $"{NamingConventions.Normalize(m)} = new {NamingConventions.Normalize(m)}Module(tonClientAdapter);").WithTrailingTrivia(LineFeed)))
+                                $"{NamingConventions.Normalize(m)} = new {NamingConventions.Normalize(m)}Module(tonClientAdapter);")
+                            .WithTrailingTrivia(LineFeed)))
                     .ToArray();
 
             ConstructorDeclarationSyntax constructorDeclaration = ConstructorDeclaration(unitName)
-                .AddParameterListParameters(Parameter(Identifier("tonClientAdapter")).WithType(IdentifierName("ITonClientAdapter")))
+                .AddParameterListParameters(Parameter(Identifier("tonClientAdapter"))
+                    .WithType(IdentifierName("ITonClientAdapter")))
                 .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
                 .WithBody(Block(statementSyntax));
 
