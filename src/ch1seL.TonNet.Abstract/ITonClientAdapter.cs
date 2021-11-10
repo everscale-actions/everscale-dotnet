@@ -10,11 +10,13 @@ namespace ch1seL.TonNet.Abstract
     /// There are big plans for this interface
     public interface ITonClientAdapter : IAsyncDisposable
     {
-        Task Request<TRequest>(string method, TRequest request, CancellationToken cancellationToken = default)
-            where TRequest : new();
+        Task Request(string method, CancellationToken cancellationToken = default);
 
         Task<TResponse> Request<TResponse>(string method, CancellationToken cancellationToken = default)
             where TResponse : new();
+
+        Task Request<TRequest>(string method, TRequest request, CancellationToken cancellationToken = default)
+            where TRequest : new();
 
         Task<TResponse> Request<TRequest, TResponse>(string method, TRequest request,
             CancellationToken cancellationToken = default)

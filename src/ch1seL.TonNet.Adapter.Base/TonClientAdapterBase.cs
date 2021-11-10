@@ -31,6 +31,11 @@ namespace ch1seL.TonNet.Adapter.Base
             _logger = logger;
         }
 
+        public async Task Request(string method, CancellationToken cancellationToken = default)
+        {
+            await Request(method, EmptyJson, null, cancellationToken);
+        }
+
         public async Task<TResponse> Request<TResponse>(string method, CancellationToken cancellationToken = default)
             where TResponse : new()
         {
