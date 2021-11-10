@@ -18,7 +18,6 @@ namespace ch1seL.TonNet.Serialization
             {
                 MaxDepth = int.MaxValue,
                 Converters = { new JsonStringEnumConverter() },
-                //todo: investigate netcoreapp3.1 framework doesnt work with DefaultIgnoreCondition 
                 IgnoreNullValues = true
             };
 

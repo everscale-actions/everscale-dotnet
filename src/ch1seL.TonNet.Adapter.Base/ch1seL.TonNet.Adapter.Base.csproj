@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <ItemGroup>
+        <ProjectReference Include="..\ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj" />
         <ProjectReference Include="..\ch1seL.TonNet.Serialization\ch1seL.TonNet.Serialization.csproj" />
     </ItemGroup>
     <ItemGroup>

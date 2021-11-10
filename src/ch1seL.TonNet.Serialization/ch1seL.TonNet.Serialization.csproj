@@ -5,7 +5,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\ch1seL.TonNet.Client.Modules\ch1seL.TonNet.Client.Modules.csproj" />
+        <ProjectReference Include="..\ch1seL.TonNet.Client.Models\ch1seL.TonNet.Client.Models.csproj" />
     </ItemGroup>
 
 </Project>
