@@ -1,11 +1,10 @@
-(async () => {
-    const module = await import('./tonclient.js');
-    module.libWebSetup({debugLog: console.debug});
-    window.jsAdapter = await module.libWeb();
-})();
+export async function init(dotnetAdapter) {
+    const tonClient = await import('./tonclient.js');
+    tonClient.libWebSetup({debugLog: console.debug, binaryURL: '/_content/ch1seL.TonNet.Adapter.Web/tonclient.wasm'});
 
-window.setAdapterResponseHandler = (dotnetAdapter) => {
-    window.jsAdapter.setResponseHandler((requestId, paramsJson, responseType, finished) => {
+    const libWeb = await tonClient.libWeb();
+    libWeb.setResponseHandler((requestId, paramsJson, responseType, finished) => {
         dotnetAdapter.invokeMethod('ResponseHandler', requestId, paramsJson, responseType, finished);
     });
+    return libWeb;
 }
