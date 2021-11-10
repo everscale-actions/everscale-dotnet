@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 
 namespace ch1seL.TonNet.TestsShared
 {
-    internal static class TestsEnv
+    public static class TestsEnv
     {
         private const int DefaultAbiVersion = 2;
         private const string DefaultTonNetworkAddress = "http://localhost:8080";

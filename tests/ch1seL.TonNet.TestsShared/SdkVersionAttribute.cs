@@ -3,7 +3,7 @@
 namespace ch1seL.TonNet.TestsShared
 {
     [AttributeUsage(AttributeTargets.Assembly)]
-    internal sealed class SdkVersionAttribute : Attribute
+    public sealed class SdkVersionAttribute : Attribute
     {
         public SdkVersionAttribute(string sdkVersion)
         {

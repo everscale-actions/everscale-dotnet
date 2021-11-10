@@ -7,18 +7,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\ch1seL.TonNet.Client\ch1seL.TonNet.Client.csproj"/>
-        <ProjectReference Include="..\..\src\ch1seL.TonNet.Client.Modules\ch1seL.TonNet.Client.Modules.csproj"/>
-        <ProjectReference Include="..\..\src\ch1seL.TonNet.Serialization\ch1seL.TonNet.Serialization.csproj"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-            <_Parameter1>ch1seL.TonNet.Serialization.Tests</_Parameter1>
-        </AssemblyAttribute>
-        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-            <_Parameter1>ch1seL.TonNet.Client.Tests</_Parameter1>
-        </AssemblyAttribute>
+        <ProjectReference Include="..\..\src\ch1seL.TonNet.Client\ch1seL.TonNet.Client.csproj" />
+        <ProjectReference Include="..\..\src\ch1seL.TonNet.Client.Modules\ch1seL.TonNet.Client.Modules.csproj" />
+        <ProjectReference Include="..\..\src\ch1seL.TonNet.Serialization\ch1seL.TonNet.Serialization.csproj" />
     </ItemGroup>
 
     <ItemGroup>

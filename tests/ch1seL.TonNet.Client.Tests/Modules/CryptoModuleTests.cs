@@ -581,7 +581,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
             RegisteredSigningBox registeredSigningBox = await _tonClient.Crypto.GetSigningBox(keys);
             var keyBoxHandle = registeredSigningBox.Handle;
 
-            var callback = new Action<JsonElement, uint>((request, _) =>
+            var callback = new Action<JsonElement, uint>(async (request, _) =>
             {
                 var paramsOfAppRequest = PolymorphicSerializer.Deserialize<ParamsOfAppRequest>(request);
 
@@ -589,12 +589,12 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                 {
                     case ParamsOfAppSigningBox.GetPublicKey _:
                     {
-                        ResultOfSigningBoxGetPublicKey resultOfSigningBoxGetPublicKey = _tonClient.Crypto
-                            .SigningBoxGetPublicKey(new RegisteredSigningBox
+                        ResultOfSigningBoxGetPublicKey resultOfSigningBoxGetPublicKey =
+                            await _tonClient.Crypto.SigningBoxGetPublicKey(new RegisteredSigningBox
                             {
                                 Handle = keyBoxHandle
-                            }).GetAwaiter().GetResult();
-                        _tonClient.Client.ResolveAppRequest(new ParamsOfResolveAppRequest
+                            });
+                        await _tonClient.Client.ResolveAppRequest(new ParamsOfResolveAppRequest
                         {
                             AppRequestId = paramsOfAppRequest.AppRequestId,
                             Result = new AppRequestResult.Ok
@@ -602,18 +602,18 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                                 Result = new ResultOfAppSigningBox.GetPublicKey
                                     { PublicKey = resultOfSigningBoxGetPublicKey.Pubkey }.ToJsonElement()
                             }
-                        }).GetAwaiter().GetResult();
+                        });
                         break;
                     }
                     case ParamsOfAppSigningBox.Sign sign:
                     {
-                        ResultOfSigningBoxSign resultOfSigningBoxSign = _tonClient.Crypto.SigningBoxSign(
+                        ResultOfSigningBoxSign resultOfSigningBoxSign = await _tonClient.Crypto.SigningBoxSign(
                             new ParamsOfSigningBoxSign
                             {
                                 SigningBox = keyBoxHandle,
                                 Unsigned = sign.Unsigned
-                            }).GetAwaiter().GetResult();
-                        _tonClient.Client.ResolveAppRequest(new ParamsOfResolveAppRequest
+                            });
+                        await _tonClient.Client.ResolveAppRequest(new ParamsOfResolveAppRequest
                         {
                             AppRequestId = paramsOfAppRequest.AppRequestId,
                             Result = new AppRequestResult.Ok
@@ -621,7 +621,7 @@ namespace ch1seL.TonNet.Client.Tests.Modules
                                 Result = new ResultOfAppSigningBox.Sign { Signature = resultOfSigningBoxSign.Signature }
                                     .ToJsonElement()
                             }
-                        }).GetAwaiter().GetResult();
+                        });
                         break;
                     }
                 }

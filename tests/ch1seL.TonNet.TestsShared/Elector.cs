@@ -8,7 +8,7 @@ namespace ch1seL.TonNet.TestsShared
 {
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-    internal class Elector
+    public class Elector
     {
         public static readonly Elector Instance = GetElector();
 
