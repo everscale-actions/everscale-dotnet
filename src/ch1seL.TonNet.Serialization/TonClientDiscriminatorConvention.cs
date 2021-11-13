@@ -24,7 +24,7 @@ namespace ch1seL.TonNet.Serialization
         private TonClientDiscriminatorConvention(JsonSerializerOptions options, string memberName)
         {
             _options = options;
-            _memberName = (ReadOnlyMemory<byte>) Encoding.UTF8.GetBytes(memberName);
+            _memberName = (ReadOnlyMemory<byte>)Encoding.UTF8.GetBytes(memberName);
             _jsonConverter = options.GetConverter<string>();
         }
 
@@ -57,7 +57,7 @@ namespace ch1seL.TonNet.Serialization
             if (!_discriminatorsByType.TryGetValue(actualType, out var obj))
                 throw new JsonException($"Unknown discriminator for type: {actualType}");
 
-            var split = obj.Split("+");
+            var split = obj.Split('+');
             var discriminator = split.Length == 1 ? obj : split[1];
 
             _jsonConverter.Write(writer, discriminator, _options);

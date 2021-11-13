@@ -27,7 +27,7 @@
     <_NativeLibName Condition="'$(_NativeRuntime)' == 'osx-x64' Or '$(_NativeRuntime)' == 'osx.11.0-arm64'">libtonclient.dylib</_NativeLibName>
   </PropertyGroup>
 
-  <Target Name="DownloadContentFiles" BeforeTargets="CoreCompile">
+  <Target Name="DownloadContentFiles" BeforeTargets="DispatchToInnerBuilds">
     <MakeDir Directories="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\"/>
     <DownloadFile SourceUrl="$(_TonLibDownloadUrlWin)" DestinationFolder="$(MSBuildThisFileDirectory)..\downloads\" DestinationFileName="tonclient_win32_dll.gz">
       <Output TaskParameter="DownloadedFile" ItemName="None"/>

@@ -18,7 +18,11 @@ namespace ch1seL.TonNet.Serialization
             {
                 MaxDepth = int.MaxValue,
                 Converters = { new JsonStringEnumConverter() },
+#if NET5_0_OR_GREATER
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+#else
                 IgnoreNullValues = true
+#endif
             };
 
             options.SetupExtensions();

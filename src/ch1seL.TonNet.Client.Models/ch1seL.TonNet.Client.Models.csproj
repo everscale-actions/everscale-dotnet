@@ -6,7 +6,6 @@
 
     <ItemGroup>
         <PackageReference Include="Dahomey.Json" Version="1.11.3" />
-        <PackageReference Include="System.Text.Json" Version="4.7.2" />
     </ItemGroup>
 
 </Project>

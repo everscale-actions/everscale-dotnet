@@ -16,7 +16,7 @@ namespace ch1seL.TonNet.Serialization
             return element.GetProperty(property).ToObject<T>();
         }
 
-        public static T ToAnonymous<T>(this JsonElement element, T protorype)
+        public static T ToAnonymous<T>(this JsonElement element, T prototype)
         {
             var bufferWriter = new ArrayBufferWriter<byte>();
             using (var writer = new Utf8JsonWriter(bufferWriter))
@@ -47,7 +47,7 @@ namespace ch1seL.TonNet.Serialization
             }
 
             return discriminatorType != null
-                ? (T) JsonSerializer.Deserialize(bufferWriter.WrittenSpan, discriminatorType)
+                ? (T)JsonSerializer.Deserialize(bufferWriter.WrittenSpan, discriminatorType)
                 : JsonSerializer.Deserialize<T>(bufferWriter.WrittenSpan, JsonOptionsProvider.JsonSerializerOptions);
         }
 
