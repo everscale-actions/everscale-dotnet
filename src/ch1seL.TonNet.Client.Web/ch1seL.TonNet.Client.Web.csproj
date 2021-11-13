@@ -5,18 +5,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj" />
-        <ProjectReference Include="..\ch1seL.TonNet.Adapter.Web\ch1seL.TonNet.Adapter.Web.csproj" />
-        <ProjectReference Include="..\ch1seL.TonNet.Client.Models\ch1seL.TonNet.Client.Models.csproj" />
-        <ProjectReference Include="..\ch1seL.TonNet.Client.Modules\ch1seL.TonNet.Client.Modules.csproj" />
+        <ProjectReference Include="..\ch1seL.TonNet.Abstract\ch1seL.TonNet.Abstract.csproj"/>
+        <ProjectReference Include="..\ch1seL.TonNet.Adapter.Web\ch1seL.TonNet.Adapter.Web.csproj"/>
+        <ProjectReference Include="..\ch1seL.TonNet.Client.Models\ch1seL.TonNet.Client.Models.csproj"/>
+        <ProjectReference Include="..\ch1seL.TonNet.Client.Modules\ch1seL.TonNet.Client.Modules.csproj"/>
     </ItemGroup>
 
-    <ItemGroup Condition=" '$(TargetFramework)' == 'net5.0' ">
-        <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
-    </ItemGroup>
-
-    <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
-        <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0"/>
     </ItemGroup>
 
 </Project>

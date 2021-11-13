@@ -1,6 +1,6 @@
-﻿namespace ch1seL.TonNet.Client.Blazor.PackageManager
+﻿namespace ch1seL.TonNet.Client.Web.PackageManager
 {
-    public class BlazorPackageManagerOptions
+    public class WebPackageManagerOptions
     {
         /// <summary>
         ///     Path that will be used to load packages. Default is "_contracts"

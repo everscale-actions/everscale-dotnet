@@ -7,16 +7,16 @@ using ch1seL.TonNet.Client.Models;
 using ch1seL.TonNet.Serialization;
 using Microsoft.Extensions.Options;
 
-namespace ch1seL.TonNet.Client.Blazor.PackageManager
+namespace ch1seL.TonNet.Client.Web.PackageManager
 {
-    public class BlazorPackageManager : ITonPackageManager
+    public class WebPackageManager : ITonPackageManager
     {
         private const string AbiFileTemplate = "{0}.abi.json";
         private const string TvcFileTemplate = "{0}.tvc";
         private readonly HttpClient _httpClient;
-        private readonly IOptions<BlazorPackageManagerOptions> _optionsAccessor;
+        private readonly IOptions<WebPackageManagerOptions> _optionsAccessor;
 
-        public BlazorPackageManager(HttpClient httpClient, IOptions<BlazorPackageManagerOptions> optionsAccessor)
+        public WebPackageManager(HttpClient httpClient, IOptions<WebPackageManagerOptions> optionsAccessor)
         {
             _httpClient = httpClient;
             _optionsAccessor = optionsAccessor;

@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\ch1seL.TonNet.Client.Blazor\ch1seL.TonNet.Client.Blazor.csproj" />
+    <ProjectReference Include="..\..\src\ch1seL.TonNet.Client.Web\ch1seL.TonNet.Client.Web.csproj"/>
   </ItemGroup>
 
 </Project>

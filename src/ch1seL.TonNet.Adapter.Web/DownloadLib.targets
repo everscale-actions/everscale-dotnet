@@ -1,6 +1,6 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-    <Target Name="DownloadContentFiles" BeforeTargets="CoreCompile">
+    <Target Name="DownloadContentFiles" BeforeTargets="DispatchToInnerBuilds">
         <Exec Command="npm i --no-save @tonclient/lib-web@$(SDKVersion)"/>
         <Copy SourceFiles="node_modules/@tonclient/lib-web/index.js" DestinationFiles="wwwroot/js/tonclient.js" OverwriteReadOnlyFiles="true"/>
         <Copy SourceFiles="node_modules/@tonclient/lib-web/tonclient.wasm" DestinationFiles="wwwroot/tonclient.wasm" OverwriteReadOnlyFiles="true"/>

@@ -54,7 +54,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Adapter.Web",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Adapter.Base", "src\ch1seL.TonNet.Adapter.Base\ch1seL.TonNet.Adapter.Base.csproj", "{FAA82679-CBCB-423C-9953-72F88464118D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Client.Blazor", "src\ch1seL.TonNet.Client.Blazor\ch1seL.TonNet.Client.Blazor.csproj", "{EEFF217C-451E-47B4-8D3D-94BA77022C65}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ch1seL.TonNet.Client.Web", "src\ch1seL.TonNet.Client.Web\ch1seL.TonNet.Client.Web.csproj", "{EEFF217C-451E-47B4-8D3D-94BA77022C65}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorWasm6", "samples\BlazorWasm6\BlazorWasm6.csproj", "{5266B4DB-D141-4FB3-93BE-FED64F2E0EB6}"
 EndProject

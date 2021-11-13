@@ -2,7 +2,7 @@
 using ch1seL.TonNet.Abstract;
 using ch1seL.TonNet.Adapter.Web;
 using ch1seL.TonNet.Client;
-using ch1seL.TonNet.Client.Blazor.PackageManager;
+using ch1seL.TonNet.Client.Web.PackageManager;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection
@@ -21,12 +21,12 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </param>
         /// <param name="configurePackageManagerOptions">
         ///     Configure package manager, contracts path and etc.
-        ///     <see cref="BlazorPackageManagerOptions" />
+        ///     <see cref="WebPackageManager" />
         /// </param>
         /// <returns></returns>
         public static IServiceCollection AddTonClient(this IServiceCollection services,
             Action<TonClientOptions> configureTonClientOptions = null,
-            Action<BlazorPackageManagerOptions> configurePackageManagerOptions = null)
+            Action<WebPackageManagerOptions> configurePackageManagerOptions = null)
         {
             if (configureTonClientOptions != null) services.Configure(configureTonClientOptions);
             if (configurePackageManagerOptions != null) services.Configure(configurePackageManagerOptions);
@@ -34,7 +34,7 @@ namespace Microsoft.Extensions.DependencyInjection
             return services
                 .AddTransient<ITonClientAdapter, TonClientWebAdapter>()
                 .AddTransient<ITonClient, TonClient>()
-                .AddTransient<ITonPackageManager, BlazorPackageManager>();
+                .AddTransient<ITonPackageManager, WebPackageManager>();
         }
     }
 }
