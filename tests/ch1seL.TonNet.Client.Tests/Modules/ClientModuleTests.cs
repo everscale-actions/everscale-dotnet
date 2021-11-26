@@ -6,41 +6,35 @@ using FluentAssertions;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace ch1seL.TonNet.Client.Tests.Modules
-{
-    public class ClientModuleTests : IClassFixture<TonClientTestsFixture>
-    {
-        private readonly ITonClient _tonClient;
+namespace ch1seL.TonNet.Client.Tests.Modules;
 
-        public ClientModuleTests(TonClientTestsFixture fixture, ITestOutputHelper outputHelper)
-        {
-            _tonClient = fixture.CreateClient(outputHelper);
-        }
+public class ClientModuleTests : IClassFixture<TonClientTestsFixture> {
+	public ClientModuleTests(TonClientTestsFixture fixture, ITestOutputHelper outputHelper) {
+		_tonClient = fixture.CreateClient(outputHelper);
+	}
 
-        [Fact]
-        public async Task ReturnsMatchedVersion()
-        {
-            ResultOfVersion result = await _tonClient.Client.Version();
+	private readonly ITonClient _tonClient;
 
-            result.Version.Should().Be(TestsEnv.SdkVersion);
-        }
+	[Fact]
+	public async Task ReturnsApiReference() {
+		ResultOfGetApiReference result = await _tonClient.Client.GetApiReference();
 
-        [Fact]
-        public async Task ReturnsBuildInfo()
-        {
-            ResultOfBuildInfo result = await _tonClient.Client.BuildInfo();
+		result.Api.Should().NotBeNull();
+	}
 
-            result.Dependencies.Should().NotBeNull();
-            // todo: 1.1.2+ returns  build_number = 0
-            // result.BuildNumber.Should().BePositive();
-        }
+	[Fact]
+	public async Task ReturnsBuildInfo() {
+		ResultOfBuildInfo result = await _tonClient.Client.BuildInfo();
 
-        [Fact]
-        public async Task ReturnsApiReference()
-        {
-            ResultOfGetApiReference result = await _tonClient.Client.GetApiReference();
+		result.Dependencies.Should().NotBeNull();
+		// todo: 1.1.2+ returns  build_number = 0
+		// result.BuildNumber.Should().BePositive();
+	}
 
-            result.Api.Should().NotBeNull();
-        }
-    }
+	[Fact]
+	public async Task ReturnsMatchedVersion() {
+		ResultOfVersion result = await _tonClient.Client.Version();
+
+		result.Version.Should().Be(TestsEnv.SdkVersion);
+	}
 }

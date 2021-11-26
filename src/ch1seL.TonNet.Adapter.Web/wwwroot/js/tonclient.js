@@ -978,7 +978,7 @@ export function libWeb() {
 
     const workerBlob = new Blob(
         [workerScript],
-        { type: 'application/javascript' }
+        {type: 'application/javascript'}
     );
     const workerUrl = URL.createObjectURL(workerBlob);
     const worker = new Worker(workerUrl);
@@ -1030,30 +1030,30 @@ export function libWeb() {
     worker.onmessage = (evt) => {
         const message = evt.data;
         switch (message.type) {
-        case 'init':
-            initComplete = true;
-            for (const [requestId, request] of createContextRequests.entries()) {
-                worker.postMessage({
-                    type: 'createContext',
-                    requestId,
-                    configJson: request.configJson,
-                });
-            }
-            break;
-        case 'createContext':
-            const request = createContextRequests.get(message.requestId);
-            if (request) {
-                createContextRequests.delete(message.requestId);
-                request.resolve(message.result);
-            }
-            break;
-        case 'destroyContext':
-            break;
-        case 'response':
-            if (responseHandler) {
-                responseHandler(message.requestId, message.params, message.responseType, message.finished);
-            }
-            break;
+            case 'init':
+                initComplete = true;
+                for (const [requestId, request] of createContextRequests.entries()) {
+                    worker.postMessage({
+                        type: 'createContext',
+                        requestId,
+                        configJson: request.configJson,
+                    });
+                }
+                break;
+            case 'createContext':
+                const request = createContextRequests.get(message.requestId);
+                if (request) {
+                    createContextRequests.delete(message.requestId);
+                    request.resolve(message.result);
+                }
+                break;
+            case 'destroyContext':
+                break;
+            case 'response':
+                if (responseHandler) {
+                    responseHandler(message.requestId, message.params, message.responseType, message.finished);
+                }
+                break;
         }
     }
 

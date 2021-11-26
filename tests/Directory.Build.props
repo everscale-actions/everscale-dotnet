@@ -1,6 +1,7 @@
-<Project >
-    <PropertyGroup >
-        <TargetFrameworks >net6.0;net5.0;netcoreapp3.1</TargetFrameworks >
-        <IsPackable >false</IsPackable >
-    </PropertyGroup >
-</Project >
+<Project>
+    <PropertyGroup>
+        <TargetFrameworks>net6.0;net5.0;netcoreapp3.1</TargetFrameworks>
+        <IsPackable>false</IsPackable>
+        <LangVersion>10</LangVersion>
+    </PropertyGroup>
+</Project>

@@ -8,169 +8,155 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
-namespace ch1seL.TonNet.ClientGenerator.Helpers
-{
-    internal static class ModulesClassHelpers
-    {
-        private static MemberDeclarationSyntax GetMethodDeclaration(Module module, Function function, bool withBody)
-        {
-            var responseType = function.Result.GetMethodReturnType();
-            var responseDeclaration = responseType == null ? "Task" : $"Task<{responseType}>";
-            var requestParam = new { name = default(string), type = default(string) };
-            var callbackParam = new { name = default(string), nameWithNull = default(string), type = default(string) };
+namespace ch1seL.TonNet.ClientGenerator.Helpers;
 
-            foreach (Param param in function.Params)
-            {
-                if (param.Type == ParamType.Generic && param.GenericName == ParamGenericName.Arc)
-                {
-                    GenericArg arcArg = param.GenericArgs[0];
-                    if (arcArg.Type == GenericArgType.Ref && arcArg.RefName == "Request")
-                    {
-                        var name = StringUtils.EscapeReserved(function.Params[2].Name.GetEnumMemberValueOrString());
-                        callbackParam = new
-                        {
-                            name,
-                            nameWithNull = $"{name} = null",
-                            type = string.Equals(module.Name, "net", StringComparison.OrdinalIgnoreCase)
-                                ? "JsonElement"
-                                : NamingConventions.EventFormatter(module.Name)
-                        };
-                    }
-                }
+internal static class ModulesClassHelpers {
+	public static NamespaceDeclarationSyntax CreateTonModuleClass(string unitName, Module module) {
+		var moduleName = $"{unitName}Module";
 
-                if (param.Type == ParamType.Generic && param.GenericName == ParamGenericName.AppObject)
-                    callbackParam = new
-                    {
-                        name = "appObject",
-                        nameWithNull = "appObject = null",
-                        type = "JsonElement"
-                    };
+		StatementSyntax statementSyntax = ParseStatement("_tonClientAdapter = tonClientAdapter;");
 
-                if (param.Name == Name.Params)
-                    requestParam = new
-                    {
-                        name = StringUtils.EscapeReserved(function.Params[1].Name.GetEnumMemberValueOrString()),
-                        type = GetParamType(function.Params[1])
-                    };
-            }
+		VariableDeclarationSyntax variableDeclaration = VariableDeclaration(ParseTypeName("ITonClientAdapter"))
+			.AddVariables(VariableDeclarator("_tonClientAdapter"));
+		FieldDeclarationSyntax fieldDeclaration = FieldDeclaration(variableDeclaration)
+			.AddModifiers(Token(SyntaxKind.PrivateKeyword), Token(SyntaxKind.ReadOnlyKeyword));
 
-            var functionSummary =
-                function.Summary + (function.Description != null ? $"\n{function.Description}" : null);
-            var modifiers = new List<SyntaxToken>
-            {
-                Token(SyntaxKind.PublicKeyword).WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(functionSummary))
-            };
-            if (withBody) modifiers.Add(Token(SyntaxKind.AsyncKeyword));
+		ConstructorDeclarationSyntax constructorDeclaration = ConstructorDeclaration(moduleName)
+		                                                      .AddParameterListParameters(
+			                                                      Parameter(Identifier("tonClientAdapter")).WithType(IdentifierName("ITonClientAdapter")))
+		                                                      .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
+		                                                      .WithBody(Block(statementSyntax));
 
-            var @params = new List<ParameterSyntax>();
-            var methodDeclarationParams = new List<ParameterSyntax>();
-            if (requestParam.name != default)
-            {
-                ParameterSyntax param = Parameter(Identifier(requestParam.name))
-                    .WithType(IdentifierName(requestParam.type));
-                methodDeclarationParams.Add(param);
-                @params.Add(param);
-            }
+		MemberDeclarationSyntax[] methods = module
+		                                    .Functions
+		                                    .Select(f => GetMethodDeclaration(module, f, true))
+		                                    .ToArray();
 
-            if (callbackParam.name != default)
-            {
-                methodDeclarationParams.Add(Parameter(Identifier(callbackParam.nameWithNull))
-                    .WithType(IdentifierName($"Action<{callbackParam.type},uint>")));
-                @params.Add(Parameter(Identifier(callbackParam.name))
-                    .WithType(IdentifierName($"Action<{callbackParam.type},uint>")));
-            }
+		ClassDeclarationSyntax item = ClassDeclaration(moduleName)
+		                              .AddModifiers(Token(SyntaxKind.PublicKeyword))
+		                              .AddBaseListTypes(SimpleBaseType(IdentifierName(NamingConventions.ToInterfaceName(moduleName))))
+		                              .AddMembers(fieldDeclaration)
+		                              .AddMembers(constructorDeclaration)
+		                              .AddMembers(methods);
 
-            MethodDeclarationSyntax method =
-                MethodDeclaration(ParseTypeName(responseDeclaration), NamingConventions.Normalize(function.Name))
-                    .AddParameterListParameters(methodDeclarationParams.ToArray())
-                    .AddParameterListParameters(Parameter(Identifier("cancellationToken"))
-                        .WithType(IdentifierName(nameof(CancellationToken)))
-                        .WithDefault(EqualsValueClause(IdentifierName("default"))))
-                    .AddModifiers(modifiers.ToArray());
+		return NamespaceDeclaration(IdentifierName(ClientGenerator.NamespaceModules))
+			.AddMembers(item);
+	}
 
-            if (withBody)
-            {
-                var arguments = new List<ArgumentSyntax>
-                {
-                    Argument(IdentifierName($"\"{module.Name}.{function.Name}\""))
-                };
-                arguments.AddRange(
-                    @params
-                        .Select(p => Argument(IdentifierName(p.Identifier.Text))));
-                arguments.Add(Argument(IdentifierName("cancellationToken")));
+	public static NamespaceDeclarationSyntax CreateTonModuleInterface(string unitName, Module module) {
+		var moduleName = $"{unitName}Module";
 
-                var genericParametersDeclaration =
-                    StringUtils.GetGenericParametersDeclaration(requestParam.type, responseType, callbackParam.type);
+		MemberDeclarationSyntax[] methods = module
+		                                    .Functions
+		                                    .Select(function => GetMethodDeclaration(module, function, false))
+		                                    .ToArray();
 
-                AwaitExpressionSyntax awaitExpression = AwaitExpression(
-                    InvocationExpression(IdentifierName($"_tonClientAdapter.Request{genericParametersDeclaration}"))
-                        .AddArgumentListArguments(arguments.ToArray()));
+		InterfaceDeclarationSyntax item = InterfaceDeclaration($"I{moduleName}")
+		                                  .AddModifiers(Token(SyntaxKind.PublicKeyword))
+		                                  .AddBaseListTypes(SimpleBaseType(IdentifierName("ITonModule")))
+		                                  .AddMembers(methods);
 
+		return NamespaceDeclaration(IdentifierName(ClientGenerator.NamespaceAbstractModules))
+			.AddMembers(item);
+	}
 
-                StatementSyntax ex = responseType == null
-                    ? ExpressionStatement(awaitExpression)
-                    : ReturnStatement(awaitExpression);
-                BlockSyntax blockSyntax = Block(ex);
-                return method.WithBody(blockSyntax);
-            }
+	private static MemberDeclarationSyntax GetMethodDeclaration(Module module, Function function, bool withBody) {
+		string responseType = function.Result.GetMethodReturnType();
+		string responseDeclaration = responseType == null ? "Task" : $"Task<{responseType}>";
+		var requestParam = new { name = default(string), type = default(string) };
+		var callbackParam = new { name = default(string), nameWithNull = default(string), type = default(string) };
 
-            return method.WithSemicolonToken(Token(SyntaxKind.SemicolonToken));
-        }
+		foreach (Param param in function.Params) {
+			if (param.Type == ParamType.Generic && param.GenericName == ParamGenericName.Arc) {
+				GenericArg arcArg = param.GenericArgs[0];
+				if (arcArg.Type == GenericArgType.Ref && arcArg.RefName == "Request") {
+					string name = StringUtils.EscapeReserved(function.Params[2].Name.GetEnumMemberValueOrString());
+					callbackParam = new {
+						name,
+						nameWithNull = $"{name} = null",
+						type = string.Equals(module.Name, "net", StringComparison.OrdinalIgnoreCase)
+							       ? "JsonElement"
+							       : NamingConventions.EventFormatter(module.Name)
+					};
+				}
+			}
 
-        private static string GetParamType(Param param)
-        {
-            return NamingConventions.Normalize(param.RefName);
-        }
+			if (param.Type == ParamType.Generic && param.GenericName == ParamGenericName.AppObject) {
+				callbackParam = new {
+					name = "appObject",
+					nameWithNull = "appObject = null",
+					type = "JsonElement"
+				};
+			}
 
-        public static NamespaceDeclarationSyntax CreateTonModuleClass(string unitName, Module module)
-        {
-            var moduleName = $"{unitName}Module";
+			if (param.Name == Name.Params) {
+				requestParam = new {
+					name = StringUtils.EscapeReserved(function.Params[1].Name.GetEnumMemberValueOrString()),
+					type = GetParamType(function.Params[1])
+				};
+			}
+		}
 
-            StatementSyntax statementSyntax = ParseStatement("_tonClientAdapter = tonClientAdapter;");
+		string functionSummary =
+			function.Summary + (function.Description != null ? $"\n{function.Description}" : null);
+		var modifiers = new List<SyntaxToken> {
+			Token(SyntaxKind.PublicKeyword).WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(functionSummary))
+		};
+		if (withBody) {
+			modifiers.Add(Token(SyntaxKind.AsyncKeyword));
+		}
 
-            VariableDeclarationSyntax variableDeclaration = VariableDeclaration(ParseTypeName("ITonClientAdapter"))
-                .AddVariables(VariableDeclarator("_tonClientAdapter"));
-            FieldDeclarationSyntax fieldDeclaration = FieldDeclaration(variableDeclaration)
-                .AddModifiers(Token(SyntaxKind.PrivateKeyword), Token(SyntaxKind.ReadOnlyKeyword));
+		var @params = new List<ParameterSyntax>();
+		var methodDeclarationParams = new List<ParameterSyntax>();
+		if (requestParam.name != default) {
+			ParameterSyntax param = Parameter(Identifier(requestParam.name))
+				.WithType(IdentifierName(requestParam.type));
+			methodDeclarationParams.Add(param);
+			@params.Add(param);
+		}
 
-            ConstructorDeclarationSyntax constructorDeclaration = ConstructorDeclaration(moduleName)
-                .AddParameterListParameters(
-                    Parameter(Identifier("tonClientAdapter")).WithType(IdentifierName("ITonClientAdapter")))
-                .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
-                .WithBody(Block(statementSyntax));
+		if (callbackParam.name != default) {
+			methodDeclarationParams.Add(Parameter(Identifier(callbackParam.nameWithNull))
+				                            .WithType(IdentifierName($"Action<{callbackParam.type},uint>")));
+			@params.Add(Parameter(Identifier(callbackParam.name))
+				            .WithType(IdentifierName($"Action<{callbackParam.type},uint>")));
+		}
 
-            var methods = module
-                .Functions
-                .Select(f => GetMethodDeclaration(module, f, true))
-                .ToArray();
+		MethodDeclarationSyntax method =
+			MethodDeclaration(ParseTypeName(responseDeclaration), NamingConventions.Normalize(function.Name))
+				.AddParameterListParameters(methodDeclarationParams.ToArray())
+				.AddParameterListParameters(Parameter(Identifier("cancellationToken"))
+				                            .WithType(IdentifierName(nameof(CancellationToken)))
+				                            .WithDefault(EqualsValueClause(IdentifierName("default"))))
+				.AddModifiers(modifiers.ToArray());
 
-            ClassDeclarationSyntax item = ClassDeclaration(moduleName)
-                .AddModifiers(Token(SyntaxKind.PublicKeyword))
-                .AddBaseListTypes(SimpleBaseType(IdentifierName(NamingConventions.ToInterfaceName(moduleName))))
-                .AddMembers(fieldDeclaration)
-                .AddMembers(constructorDeclaration)
-                .AddMembers(methods);
+		if (withBody) {
+			var arguments = new List<ArgumentSyntax> {
+				Argument(IdentifierName($"\"{module.Name}.{function.Name}\""))
+			};
+			arguments.AddRange(
+				@params
+					.Select(p => Argument(IdentifierName(p.Identifier.Text))));
+			arguments.Add(Argument(IdentifierName("cancellationToken")));
 
-            return NamespaceDeclaration(IdentifierName(ClientGenerator.NamespaceModules))
-                .AddMembers(item);
-        }
+			string genericParametersDeclaration =
+				StringUtils.GetGenericParametersDeclaration(requestParam.type, responseType, callbackParam.type);
 
-        public static NamespaceDeclarationSyntax CreateTonModuleInterface(string unitName, Module module)
-        {
-            var moduleName = $"{unitName}Module";
+			AwaitExpressionSyntax awaitExpression = AwaitExpression(
+				InvocationExpression(IdentifierName($"_tonClientAdapter.Request{genericParametersDeclaration}"))
+					.AddArgumentListArguments(arguments.ToArray()));
 
-            var methods = module
-                .Functions
-                .Select(function => GetMethodDeclaration(module, function, false))
-                .ToArray();
+			StatementSyntax ex = responseType == null
+				                     ? ExpressionStatement(awaitExpression)
+				                     : ReturnStatement(awaitExpression);
+			BlockSyntax blockSyntax = Block(ex);
+			return method.WithBody(blockSyntax);
+		}
 
-            InterfaceDeclarationSyntax item = InterfaceDeclaration($"I{moduleName}")
-                .AddModifiers(Token(SyntaxKind.PublicKeyword))
-                .AddBaseListTypes(SimpleBaseType(IdentifierName("ITonModule")))
-                .AddMembers(methods);
+		return method.WithSemicolonToken(Token(SyntaxKind.SemicolonToken));
+	}
 
-            return NamespaceDeclaration(IdentifierName(ClientGenerator.NamespaceAbstractModules))
-                .AddMembers(item);
-        }
-    }
+	private static string GetParamType(Param param) {
+		return NamingConventions.Normalize(param.RefName);
+	}
 }

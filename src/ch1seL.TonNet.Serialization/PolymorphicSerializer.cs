@@ -2,28 +2,28 @@
 using System.Linq;
 using System.Text.Json;
 
-namespace ch1seL.TonNet.Serialization
-{
-    public static class PolymorphicSerializer
-    {
-        public static TEvent Deserialize<TEvent>(string json)
-        {
-            return Deserialize<TEvent>(JsonDocument.Parse(json).RootElement);
-        }
+namespace ch1seL.TonNet.Serialization;
 
-        public static TEvent Deserialize<TEvent>(JsonElement jsonElement)
-        {
-            if (typeof(TEvent) == typeof(JsonElement)) return (TEvent) (object) jsonElement;
+public static class PolymorphicSerializer {
+	public static TEvent Deserialize<TEvent>(string json) {
+		return Deserialize<TEvent>(JsonDocument.Parse(json).RootElement);
+	}
 
-            var nestedTypes = typeof(TEvent).GetNestedTypes();
+	public static TEvent Deserialize<TEvent>(JsonElement jsonElement) {
+		if (typeof(TEvent) == typeof(JsonElement)) {
+			return (TEvent)(object)jsonElement;
+		}
 
-            if (nestedTypes.Length == 0) return jsonElement.ToObject<TEvent>();
+		Type[] nestedTypes = typeof(TEvent).GetNestedTypes();
 
-            var nestedTypeName = jsonElement.GetProperty("type").GetString();
-            Type type = nestedTypes.FirstOrDefault(t => t.Name == nestedTypeName);
-            return type == null
-                ? default
-                : jsonElement.ToObject<TEvent>(type);
-        }
-    }
+		if (nestedTypes.Length == 0) {
+			return jsonElement.ToObject<TEvent>();
+		}
+
+		string nestedTypeName = jsonElement.GetProperty("type").GetString();
+		Type type = nestedTypes.FirstOrDefault(t => t.Name == nestedTypeName);
+		return type == null
+			       ? default
+			       : jsonElement.ToObject<TEvent>(type);
+	}
 }

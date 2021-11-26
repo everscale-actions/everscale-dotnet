@@ -4,76 +4,68 @@
 <h1>Message sender</h1>
 
 <EditForm Model="@_sendMessageModel" OnValidSubmit="@Submit">
-    <DataAnnotationsValidator/>
-    <ValidationSummary/>
-    <p>
-        <label>
-            Seed phrase:
-            <InputText id="phrase" @bind-Value="_sendMessageModel.Phrase" size="80"/>
-        </label>
-    </p>
-    <p>
-        <label>
-            Recipient address:
-            <InputText id="recipient" @bind-Value="_sendMessageModel.Recipient" size="80"/>
-        </label>
-    </p>
-    <p>
-        <label>
-            Message:
-            <InputText id="message" @bind-Value="_sendMessageModel.Message" size="80"/>
-        </label>
-    </p>
-    <button disabled="@Sending" type="submit">@(Sending ? "Sending.." : "Send")</button>
+	<DataAnnotationsValidator/>
+	<ValidationSummary/>
+	<p>
+		<label>
+			Seed phrase:
+			<InputText id="phrase" @bind-Value="_sendMessageModel.Phrase" size="80"/>
+		</label>
+	</p>
+	<p>
+		<label>
+			Recipient address:
+			<InputText id="recipient" @bind-Value="_sendMessageModel.Recipient" size="80"/>
+		</label>
+	</p>
+	<p>
+		<label>
+			Message:
+			<InputText id="message" @bind-Value="_sendMessageModel.Message" size="80"/>
+		</label>
+	</p>
+	<button disabled="@Sending" type="submit">@(Sending ? "Sending.." : "Send")</button>
 </EditForm>
-@if (Error != null)
-{
-    <p>
-        <label>
-            Error: @Error
-        </label>
-    </p>
+@if (Error != null) {
+	<p>
+		<label>
+			Error: @Error
+		</label>
+	</p>
 }
 
 @code {
 
-    private readonly SendMessageModel _sendMessageModel = new SendMessageModel();
+	private readonly SendMessageModel _sendMessageModel = new SendMessageModel();
 
-    public class SendMessageModel
-    {
-        [Required]
-        public string Phrase { get; set; }
+	public class SendMessageModel {
+		[Required]
+		public string Phrase { get; set; }
 
-        [Required]
-        public string Recipient { get; set; }
+		[Required]
+		public string Recipient { get; set; }
 
-        [Required]
-        public string Message { get; set; }
-    }
+		[Required]
+		public string Message { get; set; }
+	}
 
-    [Inject]
-    MessageSender MessageSender { get; set; }
+	[Inject]
+	MessageSender MessageSender { get; set; }
 
-    private async Task Submit()
-    {
-        Sending = true;
-        try
-        {
-            await MessageSender.SendMessage(_sendMessageModel.Phrase, _sendMessageModel.Recipient, _sendMessageModel.Message);
-            Error = null;
-        }
-        catch (Exception e)
-        {
-            Error = e.Message;
-        }
-        finally
-        {
-            Sending = false;
-        }
-    }
+	private async Task Submit() {
+		Sending = true;
+		try {
+			await MessageSender.SendMessage(_sendMessageModel.Phrase, _sendMessageModel.Recipient, _sendMessageModel.Message);
+			Error = null;
+		} catch (Exception e) {
+			Error = e.Message;
+		} finally {
+			Sending = false;
+		}
+	}
 
-    public string Error { get; set; }
+	public string Error { get; set; }
 
-    public bool Sending { get; set; }
+	public bool Sending { get; set; }
 
 }

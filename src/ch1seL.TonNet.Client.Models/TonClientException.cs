@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ch1seL.TonNet.Client
-{
-    public class TonClientException : Exception
-    {
-        public TonClientException(string message = null, Exception inner = null) : base(message, inner)
-        {
-        }
+namespace ch1seL.TonNet.Client; 
 
-        public uint Code { get; private set; }
+public class TonClientException : Exception {
+	public TonClientException(string message = null, Exception inner = null) : base(message, inner) { }
 
-        public static TonClientException CreateExceptionWithCodeWithData(uint code, IDictionary<string, object> data = null, string message = null,
-            Exception inner = null)
-        {
-            var exception = new TonClientException(message, inner) {Code = code};
-            if (data == null) return exception;
+	public uint Code { get; private set; }
 
-            foreach (var (key, value) in data) exception.Data.Add(key, value);
-            return exception;
-        }
-    }
+	public static TonClientException CreateExceptionWithCodeWithData(uint code, IDictionary<string, object> data = null, string message = null,
+	                                                                 Exception inner = null) {
+		var exception = new TonClientException(message, inner) { Code = code };
+		if (data == null) {
+			return exception;
+		}
+
+		foreach ((string key, object value) in data) {
+			exception.Data.Add(key, value);
+		}
+		return exception;
+	}
 }

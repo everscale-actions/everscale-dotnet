@@ -10,41 +10,36 @@ using Serilog;
 using Serilog.Core;
 using Xunit.Abstractions;
 
-namespace ch1seL.TonNet.Client.Tests
-{
-    // ReSharper disable once ClassNeverInstantiated.Global
-    public class TonClientTestsFixture : IAsyncDisposable
-    {
-        private readonly List<ServiceProvider> _serviceProviders = new List<ServiceProvider>();
+namespace ch1seL.TonNet.Client.Tests;
 
-        public async ValueTask DisposeAsync()
-        {
-            await Task.WhenAll(_serviceProviders.Select(sp => sp.DisposeAsync().AsTask()));
-        }
+// ReSharper disable once ClassNeverInstantiated.Global
+public class TonClientTestsFixture : IAsyncDisposable {
+	private readonly List<ServiceProvider> _serviceProviders = new List<ServiceProvider>();
 
-        protected internal ITonClient CreateClient(ITestOutputHelper output, bool useNodeSe = false,
-            Action<TonClientOptions> configureOptions = null)
-        {
-            Logger logger = new LoggerConfiguration()
-                .MinimumLevel.Verbose()
-                .WriteTo.TestOutput(output)
-                .CreateLogger();
+	public async ValueTask DisposeAsync() {
+		await Task.WhenAll(_serviceProviders.Select(sp => sp.DisposeAsync().AsTask()));
+	}
 
-            ServiceProvider serviceProvider = new ServiceCollection()
-                .AddLogging(builder => builder.AddSerilog(logger))
-                .AddTonClient(config =>
-                {
-                    //as default tests don't use any server by some integration tests require Node SE
-                    //if useNodeSe is true we use http://localhost or TON_NETWORK_ADDRESS env if provided
-                    config.Network = new NetworkConfig
-                        { Endpoints = useNodeSe ? new[] { TestsEnv.TonNetworkAddress } : null };
+	protected internal ITonClient CreateClient(ITestOutputHelper output, bool useNodeSe = false,
+	                                           Action<TonClientOptions> configureOptions = null) {
+		Logger logger = new LoggerConfiguration()
+		                .MinimumLevel.Verbose()
+		                .WriteTo.TestOutput(output)
+		                .CreateLogger();
 
-                    configureOptions?.Invoke(config);
-                })
-                .BuildServiceProvider();
+		ServiceProvider serviceProvider = new ServiceCollection()
+		                                  .AddLogging(builder => builder.AddSerilog(logger))
+		                                  .AddTonClient(config => {
+			                                  //as default tests don't use any server by some integration tests require Node SE
+			                                  //if useNodeSe is true we use http://localhost or TON_NETWORK_ADDRESS env if provided
+			                                  config.Network = new NetworkConfig
+				                                  { Endpoints = useNodeSe ? new[] { TestsEnv.TonNetworkAddress } : null };
 
-            _serviceProviders.Add(serviceProvider);
-            return serviceProvider.GetRequiredService<ITonClient>();
-        }
-    }
+			                                  configureOptions?.Invoke(config);
+		                                  })
+		                                  .BuildServiceProvider();
+
+		_serviceProviders.Add(serviceProvider);
+		return serviceProvider.GetRequiredService<ITonClient>();
+	}
 }

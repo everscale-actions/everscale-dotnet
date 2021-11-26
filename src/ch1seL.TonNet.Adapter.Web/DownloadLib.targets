@@ -5,5 +5,5 @@
         <Copy SourceFiles="node_modules/@tonclient/lib-web/index.js" DestinationFiles="wwwroot/js/tonclient.js" OverwriteReadOnlyFiles="true"/>
         <Copy SourceFiles="node_modules/@tonclient/lib-web/tonclient.wasm" DestinationFiles="wwwroot/tonclient.wasm" OverwriteReadOnlyFiles="true"/>
     </Target>
-    
+
 </Project>

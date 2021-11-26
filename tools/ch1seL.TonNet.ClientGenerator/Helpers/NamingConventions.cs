@@ -1,54 +1,48 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace ch1seL.TonNet.ClientGenerator.Helpers
-{
-    public static class NamingConventions
-    {
-        private static readonly Regex SnackCaseRegex = new Regex(@"([_\s]|^)(?'firstChar'\w)", RegexOptions.Compiled);
-        private static readonly Regex FieldRegex = new Regex(@"(^)(?'firstChar'\w)", RegexOptions.Compiled);
+namespace ch1seL.TonNet.ClientGenerator.Helpers;
 
-        public static string Normalize(string name)
-        {
-            if (name.Contains(".")) name = name.Split(".")[1];
+public static class NamingConventions {
+	private static readonly Regex SnackCaseRegex = new Regex(@"([_\s]|^)(?'firstChar'\w)", RegexOptions.Compiled);
+	private static readonly Regex FieldRegex = new Regex(@"(^)(?'firstChar'\w)", RegexOptions.Compiled);
 
-            name = StringUtils.EscapeReserved(name);
-            // I prefer Request, Response postfix instead ParamsOf and ResultOf prefixes but well, then maybe for now just leave it.
-            // name = ResultOfReplacer.Replace(name, match => $"{match.Groups["name"].Value}Response");
-            // name = ParamsOfReplacer.Replace(name, match => $"{match.Groups["name"].Value}Request");
-            name = SnackCaseRegex.Replace(name, FirstCharToUpper);
+	public static string Normalize(string name) {
+		if (name.Contains(".")) {
+			name = name.Split(".")[1];
+		}
 
-            return name;
-        }
+		name = StringUtils.EscapeReserved(name);
+		// I prefer Request, Response postfix instead ParamsOf and ResultOf prefixes but well, then maybe for now just leave it.
+		// name = ResultOfReplacer.Replace(name, match => $"{match.Groups["name"].Value}Response");
+		// name = ParamsOfReplacer.Replace(name, match => $"{match.Groups["name"].Value}Request");
+		name = SnackCaseRegex.Replace(name, FirstCharToUpper);
 
-        public static string ToFieldName(string name)
-        {
-            name = Normalize(name);
+		return name;
+	}
 
-            return FieldRegex.Replace(name, match => $"_{match.Groups["firstChar"].Value.ToLowerInvariant()}");
-        }
+	public static string ToFieldName(string name) {
+		name = Normalize(name);
 
-        public static string ToVarName(string name)
-        {
-            name = Normalize(name);
+		return FieldRegex.Replace(name, match => $"_{match.Groups["firstChar"].Value.ToLowerInvariant()}");
+	}
 
-            return FieldRegex.Replace(name, match => $"{match.Groups["firstChar"].Value.ToLowerInvariant()}");
-        }
+	public static string ToVarName(string name) {
+		name = Normalize(name);
 
-        public static string ToInterfaceName(string name)
-        {
-            name = Normalize(name);
+		return FieldRegex.Replace(name, match => $"{match.Groups["firstChar"].Value.ToLowerInvariant()}");
+	}
 
-            return $"I{name}";
-        }
+	public static string ToInterfaceName(string name) {
+		name = Normalize(name);
 
-        private static string FirstCharToUpper(Match match)
-        {
-            return $"{match.Groups["firstChar"].Value.ToUpperInvariant()}";
-        }
+		return $"I{name}";
+	}
 
-        public static string EventFormatter(string moduleName)
-        {
-            return Normalize($"{moduleName}_event");
-        }
-    }
+	public static string EventFormatter(string moduleName) {
+		return Normalize($"{moduleName}_event");
+	}
+
+	private static string FirstCharToUpper(Match match) {
+		return $"{match.Groups["firstChar"].Value.ToUpperInvariant()}";
+	}
 }

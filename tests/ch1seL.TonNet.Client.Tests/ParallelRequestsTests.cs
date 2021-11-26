@@ -7,29 +7,24 @@ using FluentAssertions;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace ch1seL.TonNet.Client.Tests
-{
-    public class ParallelRequestsTests : IClassFixture<TonClientTestsFixture>
-    {
-        private readonly ITonClient _tonClient;
+namespace ch1seL.TonNet.Client.Tests;
 
-        public ParallelRequestsTests(TonClientTestsFixture fixture, ITestOutputHelper outputHelper)
-        {
-            _tonClient = fixture.CreateClient(outputHelper);
-        }
+public class ParallelRequestsTests : IClassFixture<TonClientTestsFixture> {
+	public ParallelRequestsTests(TonClientTestsFixture fixture, ITestOutputHelper outputHelper) {
+		_tonClient = fixture.CreateClient(outputHelper);
+	}
 
+	private readonly ITonClient _tonClient;
 
-        [Fact(Timeout = 10000)]
-        public async Task ParallelRunNotThrowExceptions()
-        {
-            var tasks = new List<Task>();
+	[Fact(Timeout = 10000)]
+	public async Task ParallelRunNotThrowExceptions() {
+		var tasks = new List<Task>();
 
-            Parallel.For(0, 10000,
-                _ => { tasks.Add(_tonClient.Crypto.MnemonicFromRandom(new ParamsOfMnemonicFromRandom())); });
+		Parallel.For(0, 10000,
+		             _ => { tasks.Add(_tonClient.Crypto.MnemonicFromRandom(new ParamsOfMnemonicFromRandom())); });
 
-            Func<Task> act = async () => { await Task.WhenAll(tasks); };
+		Func<Task> act = async () => { await Task.WhenAll(tasks); };
 
-            await act.Should().NotThrowAsync();
-        }
-    }
+		await act.Should().NotThrowAsync();
+	}
 }

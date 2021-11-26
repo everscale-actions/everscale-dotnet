@@ -11,74 +11,68 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
 
-namespace ch1seL.TonNet.Adapter.Web
-{
-    public class TonClientWebAdapter : TonClientAdapterBase
-    {
-        private readonly IJSRuntime _jsRuntime;
-        private readonly ILogger<TonClientWebAdapter> _logger;
-        private readonly IOptions<TonClientOptions> _optionsAccessor;
-        private IJSObjectReference? _libWeb;
+namespace ch1seL.TonNet.Adapter.Web;
 
-        public TonClientWebAdapter(IJSRuntime jsRuntime, IOptions<TonClientOptions> optionsAccessor,
-            ILogger<TonClientWebAdapter> logger) : base(logger)
-        {
-            _jsRuntime = jsRuntime;
-            _optionsAccessor = optionsAccessor;
-            _logger = logger;
-        }
+public class TonClientWebAdapter : TonClientAdapterBase {
+	private readonly IJSRuntime _jsRuntime;
+	private readonly ILogger<TonClientWebAdapter> _logger;
+	private readonly IOptions<TonClientOptions> _optionsAccessor;
+	private IJSObjectReference? _libWeb;
 
-        protected override async Task RequestImpl(uint requestId, string requestJson,
-            string method,
-            CancellationToken cancellationToken = default)
-        {
-            await (_libWeb ?? throw new InvalidOperationException()).InvokeVoidAsync("sendRequest", cancellationToken,
-                ContextId,
-                requestId,
-                method,
-                requestJson);
-        }
+	public TonClientWebAdapter(IJSRuntime jsRuntime, IOptions<TonClientOptions> optionsAccessor,
+	                           ILogger<TonClientWebAdapter> logger) : base(logger) {
+		_jsRuntime = jsRuntime;
+		_optionsAccessor = optionsAccessor;
+		_logger = logger;
+	}
 
-        public override async ValueTask DisposeAsync()
-        {
-            if (_libWeb is not null)
-            {
-                await _libWeb.InvokeAsync<string>("destroyContext", ContextId);
-                await _libWeb.DisposeAsync();
-            }
-        }
+	public override async ValueTask DisposeAsync() {
+		if (_libWeb is not null) {
+			await _libWeb.InvokeAsync<string>("destroyContext", ContextId);
+			await _libWeb.DisposeAsync();
+		}
+	}
 
-        protected override async Task<uint> CreateContext(CancellationToken cancellationToken)
-        {
-            var module = await _jsRuntime.InvokeAsync<IJSObjectReference>("import", cancellationToken,
-                "/_content/ch1seL.TonNet.Adapter.Web/js/tonclient-adapter.js");
-            _libWeb = await module.InvokeAsync<IJSObjectReference>("init", cancellationToken, DotNetObjectReference.Create(this));
+	[JSInvokable]
+	public void ResponseHandler(uint requestId, string responseJson, uint responseType, bool finished) {
+		ResponseHandlerBase(requestId, responseJson, responseType, finished);
+	}
 
-            var configJson =
-                JsonSerializer.Serialize(_optionsAccessor.Value, JsonOptionsProvider.JsonSerializerOptions);
-            _logger.LogTrace("Creating context with options: {Config}", configJson);
-            var resultJson =
-                await _libWeb.InvokeAsync<string>("createContext", cancellationToken, configJson);
+	protected override async Task RequestImpl(uint requestId, string requestJson,
+	                                          string method,
+	                                          CancellationToken cancellationToken = default) {
+		await (_libWeb ?? throw new InvalidOperationException()).InvokeVoidAsync("sendRequest", cancellationToken,
+		                                                                         ContextId,
+		                                                                         requestId,
+		                                                                         method,
+		                                                                         requestJson);
+	}
 
-            var createContextResult =
-                JsonSerializer.Deserialize<CreateContextResponse>(resultJson,
-                    JsonOptionsProvider.JsonSerializerOptions);
-            ClientError? error = createContextResult?.Error;
-            if (error != null)
-                throw TonClientException.CreateExceptionWithCodeWithData(error.Code,
-                    error.Data?.ToObject<Dictionary<string, object>>(),
-                    error.Message);
-            if (createContextResult?.ContextId == null)
-                throw new TonClientException($"Raw result: {resultJson}",
-                    new NullReferenceException("Result of context creation or context number is null"));
+	protected override async Task<uint> CreateContext(CancellationToken cancellationToken) {
+		var module = await _jsRuntime.InvokeAsync<IJSObjectReference>("import", cancellationToken,
+		                                                              "/_content/ch1seL.TonNet.Adapter.Web/js/tonclient-adapter.js");
+		_libWeb = await module.InvokeAsync<IJSObjectReference>("init", cancellationToken, DotNetObjectReference.Create(this));
 
-            return (uint)createContextResult.ContextId;
-        }
+		string configJson =
+			JsonSerializer.Serialize(_optionsAccessor.Value, JsonOptionsProvider.JsonSerializerOptions);
+		_logger.LogTrace("Creating context with options: {Config}", configJson);
+		var resultJson =
+			await _libWeb.InvokeAsync<string>("createContext", cancellationToken, configJson);
 
-        [JSInvokable]
-        public void ResponseHandler(uint requestId, string responseJson, uint responseType, bool finished)
-        {
-            ResponseHandlerBase(requestId, responseJson, responseType, finished);
-        }
-    }
+		var createContextResult =
+			JsonSerializer.Deserialize<CreateContextResponse>(resultJson,
+			                                                  JsonOptionsProvider.JsonSerializerOptions);
+		ClientError? error = createContextResult?.Error;
+		if (error != null) {
+			throw TonClientException.CreateExceptionWithCodeWithData(error.Code,
+			                                                         error.Data?.ToObject<Dictionary<string, object>>(),
+			                                                         error.Message);
+		}
+		if (createContextResult?.ContextId == null) {
+			throw new TonClientException($"Raw result: {resultJson}",
+			                             new NullReferenceException("Result of context creation or context number is null"));
+		}
+
+		return (uint)createContextResult.ContextId;
+	}
 }

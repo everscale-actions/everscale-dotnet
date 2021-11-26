@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <Import Project="..\..\SDKVersion.targets" />
+    <Import Project="..\..\SDKVersion.targets"/>
 
     <ItemGroup>
-        <None Include="_contracts\**" CopyToOutputDirectory="PreserveNewest" />
+        <None Include="_contracts\**" CopyToOutputDirectory="PreserveNewest"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\ch1seL.TonNet.Client\ch1seL.TonNet.Client.csproj" />
-        <ProjectReference Include="..\..\src\ch1seL.TonNet.Client.Modules\ch1seL.TonNet.Client.Modules.csproj" />
-        <ProjectReference Include="..\..\src\ch1seL.TonNet.Serialization\ch1seL.TonNet.Serialization.csproj" />
+        <ProjectReference Include="..\..\src\ch1seL.TonNet.Client\ch1seL.TonNet.Client.csproj"/>
+        <ProjectReference Include="..\..\src\ch1seL.TonNet.Client.Modules\ch1seL.TonNet.Client.Modules.csproj"/>
+        <ProjectReference Include="..\..\src\ch1seL.TonNet.Serialization\ch1seL.TonNet.Serialization.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

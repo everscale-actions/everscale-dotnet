@@ -2,7 +2,6 @@
 
 TargetFramework: net5.0
 
-
 ### Generated folder provided by ch1seL.TonNet.ClientGenerator
 
 - Domain (Models)

@@ -15,87 +15,83 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 
-namespace ch1seL.TonNet.Adapter.Rust
-{
-    /// <summary>
-    ///     Rust adapter.
-    /// </summary>
-    public class TonClientRustAdapter : TonClientAdapterBase
-    {
-        private readonly ConcurrentDictionary<uint, CallbackDelegate> _callbackDelegates =
-            new ConcurrentDictionary<uint, CallbackDelegate>();
+namespace ch1seL.TonNet.Adapter.Rust;
 
-        private readonly ILogger<TonClientRustAdapter> _logger;
-        private readonly IOptions<TonClientOptions> _optionsAccessor;
+/// <summary>
+///     Rust adapter.
+/// </summary>
+public class TonClientRustAdapter : TonClientAdapterBase {
+	private readonly ConcurrentDictionary<uint, CallbackDelegate> _callbackDelegates =
+		new ConcurrentDictionary<uint, CallbackDelegate>();
 
-        public TonClientRustAdapter(IOptions<TonClientOptions> optionsAccessor, ILogger<TonClientRustAdapter> logger) :
-            base(logger)
-        {
-            _optionsAccessor = optionsAccessor;
-            _logger = logger;
-        }
+	private readonly ILogger<TonClientRustAdapter> _logger;
+	private readonly IOptions<TonClientOptions> _optionsAccessor;
 
-        public TonClientRustAdapter(IOptions<TonClientOptions> optionsAccessor) : base(NullLogger.Instance)
-        {
-            _optionsAccessor = optionsAccessor;
-            _logger = NullLogger<TonClientRustAdapter>.Instance;
-        }
+	public TonClientRustAdapter(IOptions<TonClientOptions> optionsAccessor, ILogger<TonClientRustAdapter> logger) :
+		base(logger) {
+		_optionsAccessor = optionsAccessor;
+		_logger = logger;
+	}
 
-        protected override Task<uint> CreateContext(CancellationToken cancellationToken)
-        {
-            var configJson =
-                JsonSerializer.Serialize(_optionsAccessor.Value, JsonOptionsProvider.JsonSerializerOptions);
-            _logger.LogTrace("Creating context with options: {Config}", configJson);
-            using var optionsInteropJson = configJson.ToInteropStringDisposable();
-            IntPtr resultPtr = RustInteropInterface.tc_create_context(optionsInteropJson);
+	public TonClientRustAdapter(IOptions<TonClientOptions> optionsAccessor) : base(NullLogger.Instance) {
+		_optionsAccessor = optionsAccessor;
+		_logger = NullLogger<TonClientRustAdapter>.Instance;
+	}
 
-            _logger.LogTrace("Reading context creation result");
-            InteropString resultInterop = RustInteropInterface.tc_read_string(resultPtr);
-            var resultJson = resultInterop.ToString();
-            RustInteropInterface.tc_destroy_string(resultPtr);
-            _logger.LogTrace("Got context creation result: {Result}", resultJson);
+	public override async ValueTask DisposeAsync() {
+		RustInteropInterface.tc_destroy_context(ContextId);
+		await base.DisposeAsync();
+	}
 
-            var createContextResult =
-                JsonSerializer.Deserialize<CreateContextResponse>(resultJson,
-                    JsonOptionsProvider.JsonSerializerOptions);
-            if (createContextResult?.ContextId == null)
-                throw new TonClientException($"Raw result: {resultJson}",
-                    new NullReferenceException("Result of context creation or context number is null"));
-            ClientError error = createContextResult.Error;
-            if (error != null)
-                throw TonClientException.CreateExceptionWithCodeWithData(error.Code,
-                    error.Data?.ToObject<Dictionary<string, object>>(),
-                    error.Message);
+	protected override Task<uint> CreateContext(CancellationToken cancellationToken) {
+		string configJson =
+			JsonSerializer.Serialize(_optionsAccessor.Value, JsonOptionsProvider.JsonSerializerOptions);
+		_logger.LogTrace("Creating context with options: {Config}", configJson);
+		using var optionsInteropJson = configJson.ToInteropStringDisposable();
+		IntPtr resultPtr = RustInteropInterface.tc_create_context(optionsInteropJson);
 
-            return Task.FromResult((uint)createContextResult.ContextId);
-        }
+		_logger.LogTrace("Reading context creation result");
+		InteropString resultInterop = RustInteropInterface.tc_read_string(resultPtr);
+		var resultJson = resultInterop.ToString();
+		RustInteropInterface.tc_destroy_string(resultPtr);
+		_logger.LogTrace("Got context creation result: {Result}", resultJson);
 
-        protected override Task RequestImpl(uint requestId, string requestJson, string method,
-            CancellationToken cancellationToken = default)
-        {
-            var callbackDelegate =
-                new CallbackDelegate((id, json, type, finished) =>
-                    ResponseHandler(id, json.ToString(), type, finished));
+		var createContextResult =
+			JsonSerializer.Deserialize<CreateContextResponse>(resultJson,
+			                                                  JsonOptionsProvider.JsonSerializerOptions);
+		if (createContextResult?.ContextId == null) {
+			throw new TonClientException($"Raw result: {resultJson}",
+			                             new NullReferenceException("Result of context creation or context number is null"));
+		}
+		ClientError error = createContextResult.Error;
+		if (error != null) {
+			throw TonClientException.CreateExceptionWithCodeWithData(error.Code,
+			                                                         error.Data?.ToObject<Dictionary<string, object>>(),
+			                                                         error.Message);
+		}
 
-            _callbackDelegates.AddOrUpdate(requestId, _ => callbackDelegate, (_, __) => callbackDelegate);
+		return Task.FromResult((uint)createContextResult.ContextId);
+	}
 
-            using var methodInteropString = method.ToInteropStringDisposable();
-            using var paramsJsonInteropString = requestJson.ToInteropStringDisposable();
-            RustInteropInterface.tc_request(ContextId, methodInteropString, paramsJsonInteropString, requestId,
-                callbackDelegate);
-            return Task.CompletedTask;
-        }
+	protected override Task RequestImpl(uint requestId, string requestJson, string method,
+	                                    CancellationToken cancellationToken = default) {
+		var callbackDelegate =
+			new CallbackDelegate((id, json, type, finished) =>
+				                     ResponseHandler(id, json.ToString(), type, finished));
 
-        private void ResponseHandler(uint requestId, string responseJson, uint responseType, bool finished)
-        {
-            if (finished) _callbackDelegates.Remove(requestId, out _);
-            ResponseHandlerBase(requestId, responseJson, responseType, finished);
-        }
+		_callbackDelegates.AddOrUpdate(requestId, _ => callbackDelegate, (_, _) => callbackDelegate);
 
-        public override async ValueTask DisposeAsync()
-        {
-            RustInteropInterface.tc_destroy_context(ContextId);
-            await base.DisposeAsync();
-        }
-    }
+		using var methodInteropString = method.ToInteropStringDisposable();
+		using var paramsJsonInteropString = requestJson.ToInteropStringDisposable();
+		RustInteropInterface.tc_request(ContextId, methodInteropString, paramsJsonInteropString, requestId,
+		                                callbackDelegate);
+		return Task.CompletedTask;
+	}
+
+	private void ResponseHandler(uint requestId, string responseJson, uint responseType, bool finished) {
+		if (finished) {
+			_callbackDelegates.Remove(requestId, out _);
+		}
+		ResponseHandlerBase(requestId, responseJson, responseType, finished);
+	}
 }

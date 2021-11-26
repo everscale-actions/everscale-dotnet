@@ -7,17 +7,17 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\ch1seL.TonNet.Client\ch1seL.TonNet.Client.csproj" />
-      <ProjectReference Include="..\..\src\ch1seL.TonNet.Utils\ch1seL.TonNet.Utils.csproj" />
+        <ProjectReference Include="..\..\src\ch1seL.TonNet.Client\ch1seL.TonNet.Client.csproj"/>
+        <ProjectReference Include="..\..\src\ch1seL.TonNet.Utils\ch1seL.TonNet.Utils.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Content Update="appsettings.Development.json">
-        <DependentUpon>appsettings.json</DependentUpon>
-      </Content>
-      <Content Include="..\README.MD">
-        <Link>README.MD</Link>
-      </Content>  
+        <Content Update="appsettings.Development.json">
+            <DependentUpon>appsettings.json</DependentUpon>
+        </Content>
+        <Content Include="..\README.MD">
+            <Link>README.MD</Link>
+        </Content>
     </ItemGroup>
-    
+
 </Project>

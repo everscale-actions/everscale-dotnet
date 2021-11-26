@@ -2,36 +2,33 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace ch1seL.TonNet.Adapter.Rust.RustInterop.Models
-{
-    //we have to use separate disposable struct to avoid use unmanaged shared resources
-    [StructLayout(LayoutKind.Sequential)]
-    public struct InteropStringDisposable : IDisposable
-    {
-        private IntPtr Pointer;
-        private uint Length;
+namespace ch1seL.TonNet.Adapter.Rust.RustInterop.Models;
 
-        private bool _disposed;
+//we have to use separate disposable struct to avoid use unmanaged shared resources
+[StructLayout(LayoutKind.Sequential)]
+public struct InteropStringDisposable : IDisposable {
+	private IntPtr Pointer;
+	private uint Length;
 
-        public static InteropStringDisposable CreateAndAlloc(string str)
-        {
-            str ??= string.Empty;
-            var bytes = Encoding.UTF8.GetBytes(str);
-            IntPtr pointer = Marshal.AllocHGlobal(bytes.Length);
-            Marshal.Copy(bytes, 0, pointer, bytes.Length);
-            return new InteropStringDisposable
-            {
-                Pointer = pointer,
-                Length = (uint)bytes.Length
-            };
-        }
+	private bool _disposed;
 
-        public void Dispose()
-        {
-            if (_disposed) return;
+	public static InteropStringDisposable CreateAndAlloc(string str) {
+		str ??= string.Empty;
+		byte[] bytes = Encoding.UTF8.GetBytes(str);
+		IntPtr pointer = Marshal.AllocHGlobal(bytes.Length);
+		Marshal.Copy(bytes, 0, pointer, bytes.Length);
+		return new InteropStringDisposable {
+			Pointer = pointer,
+			Length = (uint)bytes.Length
+		};
+	}
 
-            Marshal.FreeHGlobal(Pointer);
-            _disposed = true;
-        }
-    }
+	public void Dispose() {
+		if (_disposed) {
+			return;
+		}
+
+		Marshal.FreeHGlobal(Pointer);
+		_disposed = true;
+	}
 }

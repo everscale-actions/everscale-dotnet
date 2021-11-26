@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Dahomey.Json" Version="1.11.3" />
+        <PackageReference Include="Dahomey.Json" Version="1.11.3"/>
     </ItemGroup>
 
 </Project>

@@ -12,304 +12,267 @@ using FluentAssertions;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace ch1seL.TonNet.Client.Tests.Modules
-{
-    public class NetModuleTests : IClassFixture<TonClientTestsFixture>
-    {
-        private readonly TonClientTestsFixture _fixture;
-        private readonly ITestOutputHelper _outputHelper;
-        private readonly ITonClient _tonClient;
+namespace ch1seL.TonNet.Client.Tests.Modules;
 
-        public NetModuleTests(TonClientTestsFixture fixture, ITestOutputHelper outputHelper)
-        {
-            _fixture = fixture;
-            _outputHelper = outputHelper;
-            _tonClient = fixture.CreateClient(outputHelper, true);
-        }
+public class NetModuleTests : IClassFixture<TonClientTestsFixture> {
+	public NetModuleTests(TonClientTestsFixture fixture, ITestOutputHelper outputHelper) {
+		_fixture = fixture;
+		_outputHelper = outputHelper;
+		_tonClient = fixture.CreateClient(outputHelper, true);
+	}
 
-        private ITonClient GetNewClient()
-        {
-            return _fixture.CreateClient(_outputHelper, true);
-        }
+	private readonly TonClientTestsFixture _fixture;
+	private readonly ITestOutputHelper _outputHelper;
+	private readonly ITonClient _tonClient;
 
-        [Fact]
-        public async Task Query()
-        {
-            ResultOfQuery result = await _tonClient.Net.Query(new ParamsOfQuery
-            {
-                Query = "query{info{version}}"
-            });
+	private ITonClient GetNewClient() {
+		return _fixture.CreateClient(_outputHelper, true);
+	}
 
-            var resultParsed = result.Result!.Value.ToAnonymous(new {data = new {info = new {version = default(string)}}});
-            resultParsed.data.info.version.Split('.').Length.Should().Be(3);
-        }
+	[Fact]
+	public async Task AllAccounts() {
+		ResultOfQueryCollection result = await _tonClient.Net.QueryCollection(new ParamsOfQueryCollection {
+			Collection = "accounts",
+			Filter = new { }.ToJsonElement(),
+			Result = "id balance"
+		});
 
-        [Fact]
-        public async Task BlockSignatures()
-        {
-            ResultOfQueryCollection result = await _tonClient.Net.QueryCollection(new ParamsOfQueryCollection
-            {
-                Collection = "blocks_signatures",
-                Filter = new { }.ToJsonElement(),
-                Result = "id",
-                Limit = 1
-            });
+		result.Result.Should().NotBeNullOrEmpty();
+	}
 
-            result.Should().NotBeNull();
-        }
+	[Fact]
+	public async Task BlockSignatures() {
+		ResultOfQueryCollection result = await _tonClient.Net.QueryCollection(new ParamsOfQueryCollection {
+			Collection = "blocks_signatures",
+			Filter = new { }.ToJsonElement(),
+			Result = "id",
+			Limit = 1
+		});
 
-        [Fact]
-        public async Task AllAccounts()
-        {
-            ResultOfQueryCollection result = await _tonClient.Net.QueryCollection(new ParamsOfQueryCollection
-            {
-                Collection = "accounts",
-                Filter = new { }.ToJsonElement(),
-                Result = "id balance"
-            });
+		result.Should().NotBeNull();
+	}
 
-            result.Result.Should().NotBeNullOrEmpty();
-        }
+	[Fact]
+	public async Task FindLastShardBlock() {
+		ResultOfFindLastShardBlock block = await _tonClient.Net.FindLastShardBlock(new ParamsOfFindLastShardBlock {
+			Address = TestsEnv.LocalGiverAddress
+		});
 
-        [Fact]
-        public async Task Ranges()
-        {
-            ResultOfQueryCollection result = await _tonClient.Net.QueryCollection(new ParamsOfQueryCollection
-            {
-                Collection = "messages",
-                Filter = new {created_at = new {gt = 1562342740}}.ToJsonElement(),
-                Result = "body created_at"
-            });
+		block.BlockId.Should().NotBeNull();
+		block.BlockId.Length.Should().Be(64);
+	}
 
-            Assert.NotEmpty(result.Result);
-            Assert.True(result.Result?[0].Get<ulong>("created_at") > 1562342740);
-        }
+	[Fact]
+	public async Task Query() {
+		ResultOfQuery result = await _tonClient.Net.Query(new ParamsOfQuery {
+			Query = "query{info{version}}"
+		});
 
-        [Fact]
-        public async Task WaitFor()
-        {
-            var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-            // get new client here to avoid lock another tests
-            var request = GetNewClient().Net.WaitForCollection(new ParamsOfWaitForCollection
-            {
-                Collection = "transactions",
-                Filter = new {now = new {gt = now}}.ToJsonElement(),
-                Result = "id now"
-            });
+		var resultParsed = result.Result!.Value.ToAnonymous(new { data = new { info = new { version = default(string) } } });
+		resultParsed.data.info.version.Split('.').Length.Should().Be(3);
+	}
 
-            await Task.Delay(TimeSpan.FromSeconds(1));
+	[Fact]
+	public async Task Ranges() {
+		ResultOfQueryCollection result = await _tonClient.Net.QueryCollection(new ParamsOfQueryCollection {
+			Collection = "messages",
+			Filter = new { created_at = new { gt = 1562342740 } }.ToJsonElement(),
+			Result = "body created_at"
+		});
 
-            await _tonClient.SendGramsFromLocalGiver();
+		Assert.NotEmpty(result.Result);
+		Assert.True(result.Result?[0].Get<ulong>("created_at") > 1562342740);
+	}
 
-            ResultOfWaitForCollection result = await request;
-            result.Result.Get<long>("now").Should().BeGreaterThan(now);
-        }
+	[Fact]
+	public async Task SubscribeForMessages() {
+		var messagesLock = new object();
+		var messages = new List<JsonElement>();
 
-        [Fact]
-        public async Task SubscribeForTransactionsWithAddresses()
-        {
-            KeyPair keys = await _tonClient.Crypto.GenerateRandomSignKeys();
-            ITonClient subscriptionClient = _fixture.CreateClient(_outputHelper, true);
+		var callback = new Action<JsonElement, uint>((serdeJson, responseType) => {
+			JsonElement message = (ResponseType)responseType switch {
+				ResponseType.Custom => new { result = serdeJson }.ToJsonElement(),
+				_ => throw new TonClientException("bad callback gotten")
+			};
+			lock (messagesLock) {
+				messages.Add(message);
+			}
+		});
 
-            var deployParams = new ParamsOfEncodeMessage
-            {
-                Abi = TestsEnv.Packages.Hello.Abi,
-                DeploySet = new DeploySet {Tvc = TestsEnv.Packages.Hello.Tvc},
-                Signer = new Signer.Keys {KeysAccessor = keys},
-                CallSet = new CallSet {FunctionName = "constructor"}
-            };
+		//act
+		ResultOfSubscribeCollection handle = await _tonClient.Net.SubscribeCollection(new ParamsOfSubscribeCollection {
+			Collection = "messages",
+			Filter = new { dst = new { eq = "1" } }.ToJsonElement(),
+			Result = "id"
+		}, callback);
+		await _tonClient.SendGramsFromLocalGiver();
+		await _tonClient.Net.Unsubscribe(new ResultOfSubscribeCollection {
+			Handle = handle.Handle
+		});
 
-            ResultOfEncodeMessage msg = await _tonClient.Abi.EncodeMessage(deployParams);
-            var transactions = new List<string>();
-            var errorCodes = new List<uint>();
-            var @lock = new object();
+		// arrange
+		messages.Count.Should().Be(0);
+	}
 
-            var address = msg.Address;
+	[Fact]
+	public async Task SubscribeForTransactionsWithAddresses() {
+		KeyPair keys = await _tonClient.Crypto.GenerateRandomSignKeys();
+		ITonClient subscriptionClient = _fixture.CreateClient(_outputHelper, true);
 
-            var callback = new Action<JsonElement, uint>((serdeJson, responseType) =>
-            {
-                switch ((SubscriptionResponseType) responseType)
-                {
-                    case SubscriptionResponseType.Ok:
-                        JsonElement resultOk = serdeJson.GetProperty("result");
-                        resultOk.Get<string>("account_addr").Should().Be(address);
-                        lock (@lock)
-                        {
-                            transactions.Add(resultOk.Get<string>("id"));
-                        }
+		var deployParams = new ParamsOfEncodeMessage {
+			Abi = TestsEnv.Packages.Hello.Abi,
+			DeploySet = new DeploySet { Tvc = TestsEnv.Packages.Hello.Tvc },
+			Signer = new Signer.Keys { KeysAccessor = keys },
+			CallSet = new CallSet { FunctionName = "constructor" }
+		};
 
-                        break;
-                    case SubscriptionResponseType.Error:
-                        var error = serdeJson.ToObject<ClientError>();
-                        _outputHelper.WriteLine($">> {error}");
-                        lock (@lock)
-                        {
-                            errorCodes.Add(error.Code);
-                        }
+		ResultOfEncodeMessage msg = await _tonClient.Abi.EncodeMessage(deployParams);
+		var transactions = new List<string>();
+		var errorCodes = new List<uint>();
+		var @lock = new object();
 
-                        break;
-                    default:
-                        throw new TonClientException($"Unknown SubscriptionResponseType: {responseType}");
-                }
-            });
+		string address = msg.Address;
 
-            //act
-            ResultOfSubscribeCollection handle1 = await subscriptionClient.Net.SubscribeCollection(new ParamsOfSubscribeCollection
-            {
-                Collection = "transactions",
-                Filter = new
-                {
-                    account_addr = new {eq = address},
-                    status = new {eq = (int) TransactionProcessingStatus.Finalized}
-                }.ToJsonElement(),
-                Result = "id account_addr"
-            }, callback);
+		var callback = new Action<JsonElement, uint>((serdeJson, responseType) => {
+			switch ((SubscriptionResponseType)responseType) {
+				case SubscriptionResponseType.Ok:
+					JsonElement resultOk = serdeJson.GetProperty("result");
+					resultOk.Get<string>("account_addr").Should().Be(address);
+					lock (@lock) {
+						transactions.Add(resultOk.Get<string>("id"));
+					}
 
-            // send grams to create first transaction
-            await _tonClient.SendGramsFromLocalGiver(address);
+					break;
+				case SubscriptionResponseType.Error:
+					var error = serdeJson.ToObject<ClientError>();
+					_outputHelper.WriteLine($">> {error}");
+					lock (@lock) {
+						errorCodes.Add(error.Code);
+					}
 
-            // give some time for subscription to receive all data
-            await Task.Delay(TimeSpan.FromSeconds(1));
+					break;
+				default:
+					throw new TonClientException($"Unknown SubscriptionResponseType: {responseType}");
+			}
+		});
 
-            var transactionCount1 = transactions.Count;
+		//act
+		ResultOfSubscribeCollection handle1 = await subscriptionClient.Net.SubscribeCollection(new ParamsOfSubscribeCollection {
+			Collection = "transactions",
+			Filter = new {
+				account_addr = new { eq = address },
+				status = new { eq = (int)TransactionProcessingStatus.Finalized }
+			}.ToJsonElement(),
+			Result = "id account_addr"
+		}, callback);
 
-            // suspend subscription
-            await subscriptionClient.Net.Suspend();
+		// send grams to create first transaction
+		await _tonClient.SendGramsFromLocalGiver(address);
 
-            await Task.Delay(TimeSpan.FromSeconds(1));
+		// give some time for subscription to receive all data
+		await Task.Delay(TimeSpan.FromSeconds(1));
 
-            // deploy to create second transaction
-            await _tonClient.Processing.ProcessMessage(new ParamsOfProcessMessage
-            {
-                MessageEncodeParams = deployParams,
-                SendEvents = false
-            });
+		int transactionCount1 = transactions.Count;
 
-            //act
-            ResultOfSubscribeCollection handle2 = await subscriptionClient.Net.SubscribeCollection(new ParamsOfSubscribeCollection
-            {
-                Collection = "transactions",
-                Filter = new
-                {
-                    account_addr = new {eq = address},
-                    status = new {eq = (int) TransactionProcessingStatus.Finalized}
-                }.ToJsonElement(),
-                Result = "id account_addr"
-            }, callback);
+		// suspend subscription
+		await subscriptionClient.Net.Suspend();
 
-            await Task.Delay(TimeSpan.FromSeconds(1));
+		await Task.Delay(TimeSpan.FromSeconds(1));
 
-            // check that second transaction is not received when subscription suspended
-            var transactionCount2 = transactions.Count;
+		// deploy to create second transaction
+		await _tonClient.Processing.ProcessMessage(new ParamsOfProcessMessage {
+			MessageEncodeParams = deployParams,
+			SendEvents = false
+		});
 
-            // resume subscription
-            await subscriptionClient.Net.Resume();
+		//act
+		ResultOfSubscribeCollection handle2 = await subscriptionClient.Net.SubscribeCollection(new ParamsOfSubscribeCollection {
+			Collection = "transactions",
+			Filter = new {
+				account_addr = new { eq = address },
+				status = new { eq = (int)TransactionProcessingStatus.Finalized }
+			}.ToJsonElement(),
+			Result = "id account_addr"
+		}, callback);
 
-            await Task.Delay(TimeSpan.FromSeconds(1));
+		await Task.Delay(TimeSpan.FromSeconds(1));
 
-            // run contract function to create third transaction
-            await _tonClient.Processing.ProcessMessage(new ParamsOfProcessMessage
-            {
-                MessageEncodeParams = new ParamsOfEncodeMessage
-                {
-                    Abi = TestsEnv.Packages.Hello.Abi,
-                    Signer = new Signer.Keys {KeysAccessor = keys},
-                    Address = address,
-                    CallSet = new CallSet {FunctionName = "touch"}
-                },
-                SendEvents = false
-            });
+		// check that second transaction is not received when subscription suspended
+		int transactionCount2 = transactions.Count;
 
-            // give some time for subscription to receive all data
-            await Task.Delay(TimeSpan.FromSeconds(1));
+		// resume subscription
+		await subscriptionClient.Net.Resume();
 
-            await subscriptionClient.Net.Unsubscribe(new ResultOfSubscribeCollection
-            {
-                Handle = handle1.Handle
-            });
-            await subscriptionClient.Net.Unsubscribe(new ResultOfSubscribeCollection
-            {
-                Handle = handle2.Handle
-            });
+		await Task.Delay(TimeSpan.FromSeconds(1));
 
-            //check count before suspending 
-            transactionCount1.Should().Be(1);
+		// run contract function to create third transaction
+		await _tonClient.Processing.ProcessMessage(new ParamsOfProcessMessage {
+			MessageEncodeParams = new ParamsOfEncodeMessage {
+				Abi = TestsEnv.Packages.Hello.Abi,
+				Signer = new Signer.Keys { KeysAccessor = keys },
+				Address = address,
+				CallSet = new CallSet { FunctionName = "touch" }
+			},
+			SendEvents = false
+		});
 
-            //check count before resume
-            transactionCount2.Should().Be(1);
+		// give some time for subscription to receive all data
+		await Task.Delay(TimeSpan.FromSeconds(1));
 
-            // check that third transaction is now received after resume
-            transactions.Count.Should().Be(3);
-            transactions[0].Should().NotBe(transactions[2]);
+		await subscriptionClient.Net.Unsubscribe(new ResultOfSubscribeCollection {
+			Handle = handle1.Handle
+		});
+		await subscriptionClient.Net.Unsubscribe(new ResultOfSubscribeCollection {
+			Handle = handle2.Handle
+		});
 
-            // check errors
-            errorCodes.Count.Should().Be(4);
-            errorCodes.Take(2).Should().AllBeEquivalentTo((uint) NetErrorCode.NetworkModuleSuspended);
-            errorCodes.TakeLast(2).Should().AllBeEquivalentTo((uint) NetErrorCode.NetworkModuleResumed);
-        }
+		//check count before suspending 
+		transactionCount1.Should().Be(1);
 
-        [Fact]
-        public async Task SubscribeForMessages()
-        {
-            var messagesLock = new object();
-            var messages = new List<JsonElement>();
+		//check count before resume
+		transactionCount2.Should().Be(1);
 
-            var callback = new Action<JsonElement, uint>((serdeJson, responseType) =>
-            {
-                JsonElement message = (ResponseType) responseType switch
-                {
-                    ResponseType.Custom => new {result = serdeJson}.ToJsonElement(),
-                    _ => throw new TonClientException("bad callback gotten")
-                };
-                lock (messagesLock)
-                {
-                    messages.Add(message);
-                }
-            });
+		// check that third transaction is now received after resume
+		transactions.Count.Should().Be(3);
+		transactions[0].Should().NotBe(transactions[2]);
 
-            //act
-            ResultOfSubscribeCollection handle = await _tonClient.Net.SubscribeCollection(new ParamsOfSubscribeCollection
-            {
-                Collection = "messages",
-                Filter = new {dst = new {eq = "1"}}.ToJsonElement(),
-                Result = "id"
-            }, callback);
-            await _tonClient.SendGramsFromLocalGiver();
-            await _tonClient.Net.Unsubscribe(new ResultOfSubscribeCollection
-            {
-                Handle = handle.Handle
-            });
+		// check errors
+		errorCodes.Count.Should().Be(4);
+		errorCodes.Take(2).Should().AllBeEquivalentTo((uint)NetErrorCode.NetworkModuleSuspended);
+		errorCodes.TakeLast(2).Should().AllBeEquivalentTo((uint)NetErrorCode.NetworkModuleResumed);
+	}
 
-            // arrange
-            messages.Count.Should().Be(0);
-        }
+	[Fact]
+	public async Task WaitFor() {
+		long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+		// get new client here to avoid lock another tests
+		Task<ResultOfWaitForCollection> request = GetNewClient().Net.WaitForCollection(new ParamsOfWaitForCollection {
+			Collection = "transactions",
+			Filter = new { now = new { gt = now } }.ToJsonElement(),
+			Result = "id now"
+		});
 
-        [Fact]
-        public async Task FindLastShardBlock()
-        {
-            ResultOfFindLastShardBlock block = await _tonClient.Net.FindLastShardBlock(new ParamsOfFindLastShardBlock
-            {
-                Address = TestsEnv.LocalGiverAddress
-            });
+		await Task.Delay(TimeSpan.FromSeconds(1));
 
-            block.BlockId.Should().NotBeNull();
-            block.BlockId.Length.Should().Be(64);
-        }
+		await _tonClient.SendGramsFromLocalGiver();
 
-        // todo: not working yet https://t.me/ton_sdk/7063?thread=7032
-        // [Fact]
-        // public async Task TestEndpoints()
-        // {
-        //     ITonClient client = _fixture.CreateClient(_outputHelper,
-        //         configureOptions: options => options.Network.Endpoints = new[] {"cinet.tonlabs.io", "cinet2.tonlabs.io/"});
-        //
-        //     Func<Task> act = async () =>
-        //     {
-        //         EndpointsSet endpoints = await client.Net.FetchEndpoints();
-        //         await client.Net.SetEndpoints(endpoints);
-        //     };
-        //
-        //     await act.Should().NotThrowAsync();
-        // }
-    }
+		ResultOfWaitForCollection result = await request;
+		result.Result.Get<long>("now").Should().BeGreaterThan(now);
+	}
+
+	// todo: not working yet https://t.me/ton_sdk/7063?thread=7032
+	// [Fact]
+	// public async Task TestEndpoints()
+	// {
+	//     ITonClient client = _fixture.CreateClient(_outputHelper,
+	//         configureOptions: options => options.Network.Endpoints = new[] {"cinet.tonlabs.io", "cinet2.tonlabs.io/"});
+	//
+	//     Func<Task> act = async () =>
+	//     {
+	//         EndpointsSet endpoints = await client.Net.FetchEndpoints();
+	//         await client.Net.SetEndpoints(endpoints);
+	//     };
+	//
+	//     await act.Should().NotThrowAsync();
+	// }
 }
