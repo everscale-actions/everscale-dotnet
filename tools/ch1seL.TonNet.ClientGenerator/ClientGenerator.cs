@@ -22,8 +22,7 @@ internal static class ClientGenerator {
 	private static readonly string[] ModelsNamespaces =
 		{ "System", "System.Numerics", "System.Text.Json", "System.Text.Json.Serialization", "Dahomey.Json.Attributes" };
 
-	private static readonly JsonSerializerOptions Options = new JsonSerializerOptions
-		{ Converters = { new JsonStringEnumConverterWithAttributeSupport() } };
+	private static readonly JsonSerializerOptions Options = new() { Converters = { new JsonStringEnumConverterWithAttributeSupport() } };
 
 	public static async Task GenerateClient(string repositoryLocation) {
 		string outputAbstract = Path.Combine(repositoryLocation, "src", "ch1seL.TonNet.Abstract", "Generated");
@@ -40,11 +39,11 @@ internal static class ClientGenerator {
 
 		//Create ITonClient
 		UnitHelpers.CreateUnit("ITonClient", unitName =>
-			                       ClientClassHelpers.CreateTonClientInterface(unitName, tonApi), Path.Combine(outputAbstract, "ITonClient.cs"), "ch1seL.TonNet.Abstract.Modules");
+			                       ClientClassHelpers.CreateTonClientInterface(unitName, tonApi), Path.Combine(outputAbstract, "ITonClient.Generated.cs"), "ch1seL.TonNet.Abstract.Modules");
 
 		//Create TonClient
 		UnitHelpers.CreateUnit("TonClient", unitName =>
-			                       ClientClassHelpers.CreateTonClientClass(unitName, tonApi), Path.Combine(outputPathModules, "TonClient.cs"),
+			                       ClientClassHelpers.CreateTonClientClass(unitName, tonApi), Path.Combine(outputPathModules, "TonClient.Generated.cs"),
 		                       "System", "ch1seL.TonNet.Abstract", "ch1seL.TonNet.Abstract.Modules", "ch1seL.TonNet.Client.Modules");
 
 		//Save all used types
@@ -58,18 +57,18 @@ internal static class ClientGenerator {
 		foreach (Module module in tonApi!.Modules) {
 			//Create Interface for Modules
 			UnitHelpers.CreateUnit(module.Name, unitName => ModulesClassHelpers.CreateTonModuleInterface(unitName, module),
-			                       Path.Combine(outputAbstract, nameof(TonApi.Modules), $"I{NamingConventions.Normalize(module.Name)}Module.cs"), ModulesNamespaces);
+			                       Path.Combine(outputAbstract, nameof(TonApi.Modules), $"I{NamingConventions.Normalize(module.Name)}Module.Generated.cs"), ModulesNamespaces);
 
 			//Create Modules
 			UnitHelpers.CreateUnit(module.Name, unitName => ModulesClassHelpers.CreateTonModuleClass(unitName, module),
-			                       Path.Combine(outputPathModules, nameof(TonApi.Modules), $"{NamingConventions.Normalize(module.Name)}Module.cs"),
+			                       Path.Combine(outputPathModules, nameof(TonApi.Modules), $"{NamingConventions.Normalize(module.Name)}Module.Generated.cs"),
 			                       ModulesNamespaces.Union(new[] { "ch1seL.TonNet.Abstract", "ch1seL.TonNet.Abstract.Modules" }).ToArray());
 
 			//Create Models
 			var modelClassBuilder = new ModelsClassHelpers(numberTypesMapping, allTypes);
 			foreach (TypeElement typeElement in module.Types.Where(t => t.Type != TypeType.None && t.Type != TypeType.Number)) {
 				UnitHelpers.CreateUnit(module.Name, _ => modelClassBuilder.CreateTonModelClass(typeElement),
-				                       Path.Combine(outputPathModels, "Models", $"{NamingConventions.Normalize(typeElement.Name)}.cs"), ModelsNamespaces);
+				                       Path.Combine(outputPathModels, "Models", $"{NamingConventions.Normalize(typeElement.Name)}.Generated.cs"), ModelsNamespaces);
 			}
 		}
 	}
