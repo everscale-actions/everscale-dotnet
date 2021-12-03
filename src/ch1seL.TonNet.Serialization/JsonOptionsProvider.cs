@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using ch1seL.TonNet.Client.Models;
 using Dahomey.Json;
+using Dahomey.Json.Attributes;
 using Dahomey.Json.Serialization.Conventions;
 
 namespace ch1seL.TonNet.Serialization;
@@ -16,7 +17,7 @@ public static class JsonOptionsProvider {
 		var options = new JsonSerializerOptions {
 			MaxDepth = int.MaxValue,
 			Converters = { new JsonStringEnumConverter() },
-#if NET5_0_OR_GREATER
+#if NETSTANDARD2_1 || NET5_0_OR_GREATER
 			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
 #else
 			IgnoreNullValues = true
