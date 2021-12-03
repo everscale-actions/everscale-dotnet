@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk.Worker">
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0"/>
-        <PackageReference Include="Serilog.Extensions.Hosting" Version="4.2.0"/>
-        <PackageReference Include="Serilog.Sinks.Console" Version="4.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
+        <PackageReference Include="Serilog.Extensions.Hosting" Version="4.2.0" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\ch1seL.TonNet.Client\ch1seL.TonNet.Client.csproj"/>
-        <ProjectReference Include="..\..\src\ch1seL.TonNet.Utils\ch1seL.TonNet.Utils.csproj"/>
+        <ProjectReference Include="..\..\src\ch1seL.TonNet.Client\ch1seL.TonNet.Client.csproj" />
+        <ProjectReference Include="..\..\src\ch1seL.TonNet.Utils\ch1seL.TonNet.Utils.csproj" />
     </ItemGroup>
 
     <ItemGroup>
