@@ -25,6 +25,23 @@ public class TvmModuleTests : IClassFixture<TonClientTestsFixture> {
 	private readonly ITonClient _tonClient;
 
 	private async Task<string> TestRunMessage(Func<ResultOfEncodeMessage, Abi, string, Task<string>> run) {
+		KeyPair keys = await _tonClient.Crypto.GenerateRandomSignKeys();
+		const string walletAddress = "0:2222222222222222222222222222222222222222222222222222222222222222";
+
+		var encodeMessageParams = new ParamsOfEncodeMessage {
+			Abi = TestsEnv.Packages.Subscription.Abi,
+			DeploySet = new DeploySet { Tvc = TestsEnv.Packages.Subscription.Tvc },
+			CallSet = new CallSet {
+				FunctionName = "constructor",
+				Input = new { wallet = walletAddress }.ToJsonElement()
+			},
+			Signer = new Signer.Keys { KeysAccessor = keys }
+		};
+
+		string address = await _tonClient.DeployWithGiver(encodeMessageParams);
+		JsonElement? fetchAccount = await FetchAccount(address);
+		var account = fetchAccount.Get<string>("boc");
+
 		var subscribeParams = new {
 			subscriptionId = "0x1111111111111111111111111111111111111111111111111111111111111111",
 			pubkey = SubscribeParamsPubkey,
@@ -32,15 +49,6 @@ public class TvmModuleTests : IClassFixture<TonClientTestsFixture> {
 			value = "0x123",
 			period = "0x456"
 		};
-
-		KeyPair keys = await _tonClient.Crypto.GenerateRandomSignKeys();
-		const string walletAddress = "0:2222222222222222222222222222222222222222222222222222222222222222";
-
-		ParamsOfEncodeMessage encodeMessageParams =
-			GetParamsOfEncodeMessage(TestsEnv.Packages.Subscription, walletAddress, keys);
-		string address = await _tonClient.DeployWithGiver(encodeMessageParams);
-		JsonElement? fetchAccount = await FetchAccount(address);
-		var account = fetchAccount.Get<string>("boc");
 
 		ResultOfEncodeMessage message = await GetSubscribeMessage(address, subscribeParams.ToJsonElement(),
 		                                                          TestsEnv.Packages.Subscription, keys);
@@ -58,17 +66,6 @@ public class TvmModuleTests : IClassFixture<TonClientTestsFixture> {
 		});
 
 		return result.Decoded.Output.Get<JsonElement>("value0").Get<string>("pubkey");
-	}
-
-	private static ParamsOfEncodeMessage GetParamsOfEncodeMessage(Package subscriptionPackage, string walletAddress,
-	                                                              KeyPair keys) {
-		return new ParamsOfEncodeMessage {
-			Abi = subscriptionPackage.Abi,
-			DeploySet = new DeploySet { Tvc = subscriptionPackage.Tvc },
-			CallSet = new CallSet
-				{ FunctionName = "constructor", Input = new { wallet = walletAddress }.ToJsonElement() },
-			Signer = new Signer.Keys { KeysAccessor = keys }
-		};
 	}
 
 	private async Task<ResultOfEncodeMessage> GetSubscribeMessage(string address, JsonElement subscribeParams,

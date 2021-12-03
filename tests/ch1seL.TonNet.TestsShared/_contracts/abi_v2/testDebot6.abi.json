@@ -14,6 +14,17 @@
       ]
     },
     {
+      "name": "callSend",
+      "inputs": [
+        {
+          "name": "handle",
+          "type": "uint32"
+        }
+      ],
+      "outputs": [
+      ]
+    },
+    {
       "name": "onSuccess1",
       "inputs": [
       ],
@@ -80,6 +91,21 @@
       ]
     },
     {
+      "name": "onError4",
+      "inputs": [
+        {
+          "name": "sdkError",
+          "type": "uint32"
+        },
+        {
+          "name": "exitCode",
+          "type": "uint32"
+        }
+      ],
+      "outputs": [
+      ]
+    },
+    {
       "name": "send3",
       "inputs": [
       ],
@@ -109,7 +135,8 @@
       ]
     },
     {
-      "name": "getVersion",
+      "name": "getDebotInfo",
+      "id": "0xDEB",
       "inputs": [
       ],
       "outputs": [
@@ -118,8 +145,51 @@
           "type": "bytes"
         },
         {
-          "name": "semver",
-          "type": "uint24"
+          "name": "version",
+          "type": "bytes"
+        },
+        {
+          "name": "publisher",
+          "type": "bytes"
+        },
+        {
+          "name": "caption",
+          "type": "bytes"
+        },
+        {
+          "name": "author",
+          "type": "bytes"
+        },
+        {
+          "name": "support",
+          "type": "address"
+        },
+        {
+          "name": "hello",
+          "type": "bytes"
+        },
+        {
+          "name": "language",
+          "type": "bytes"
+        },
+        {
+          "name": "dabi",
+          "type": "bytes"
+        },
+        {
+          "name": "icon",
+          "type": "bytes"
+        }
+      ]
+    },
+    {
+      "name": "getRequiredInterfaces",
+      "inputs": [
+      ],
+      "outputs": [
+        {
+          "name": "interfaces",
+          "type": "uint256[]"
         }
       ]
     },
