@@ -43,7 +43,7 @@
           "type": "bytes"
         },
         {
-          "name": "key",
+          "name": "caption",
           "type": "bytes"
         },
         {
@@ -92,21 +92,6 @@
         }
       ],
       "outputs": [
-      ]
-    },
-    {
-      "name": "getVersion",
-      "inputs": [
-      ],
-      "outputs": [
-        {
-          "name": "name",
-          "type": "bytes"
-        },
-        {
-          "name": "semver",
-          "type": "uint24"
-        }
       ]
     },
     {

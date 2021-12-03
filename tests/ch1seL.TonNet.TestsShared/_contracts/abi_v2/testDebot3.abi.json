@@ -7,28 +7,69 @@
   ],
   "functions": [
     {
-      "name": "constructor",
-      "inputs": [
-      ],
-      "outputs": [
-      ]
-    },
-    {
-      "name": "setABI",
-      "inputs": [
-        {
-          "name": "dabi",
-          "type": "bytes"
-        }
-      ],
-      "outputs": [
-      ]
-    },
-    {
       "name": "start",
       "inputs": [
       ],
       "outputs": [
+      ]
+    },
+    {
+      "name": "getDebotInfo",
+      "id": "0xDEB",
+      "inputs": [
+      ],
+      "outputs": [
+        {
+          "name": "name",
+          "type": "bytes"
+        },
+        {
+          "name": "version",
+          "type": "bytes"
+        },
+        {
+          "name": "publisher",
+          "type": "bytes"
+        },
+        {
+          "name": "caption",
+          "type": "bytes"
+        },
+        {
+          "name": "author",
+          "type": "bytes"
+        },
+        {
+          "name": "support",
+          "type": "address"
+        },
+        {
+          "name": "hello",
+          "type": "bytes"
+        },
+        {
+          "name": "language",
+          "type": "bytes"
+        },
+        {
+          "name": "dabi",
+          "type": "bytes"
+        },
+        {
+          "name": "icon",
+          "type": "bytes"
+        }
+      ]
+    },
+    {
+      "name": "getRequiredInterfaces",
+      "inputs": [
+      ],
+      "outputs": [
+        {
+          "name": "interfaces",
+          "type": "uint256[]"
+        }
       ]
     },
     {
@@ -426,69 +467,32 @@
       ]
     },
     {
-      "name": "getVersion",
+      "name": "testSign",
       "inputs": [
       ],
       "outputs": [
-        {
-          "name": "name",
-          "type": "bytes"
-        },
-        {
-          "name": "semver",
-          "type": "uint24"
-        }
       ]
     },
     {
-      "name": "fetch",
+      "name": "setSigningBox",
       "inputs": [
+        {
+          "name": "handle",
+          "type": "uint32"
+        }
       ],
       "outputs": [
+      ]
+    },
+    {
+      "name": "setSignature",
+      "inputs": [
         {
-          "components": [
-            {
-              "name": "id",
-              "type": "uint8"
-            },
-            {
-              "name": "desc",
-              "type": "bytes"
-            },
-            {
-              "components": [
-                {
-                  "name": "desc",
-                  "type": "bytes"
-                },
-                {
-                  "name": "name",
-                  "type": "bytes"
-                },
-                {
-                  "name": "actionType",
-                  "type": "uint8"
-                },
-                {
-                  "name": "attrs",
-                  "type": "bytes"
-                },
-                {
-                  "name": "to",
-                  "type": "uint8"
-                },
-                {
-                  "name": "misc",
-                  "type": "cell"
-                }
-              ],
-              "name": "actions",
-              "type": "tuple[]"
-            }
-          ],
-          "name": "contexts",
-          "type": "tuple[]"
+          "name": "signature",
+          "type": "bytes"
         }
+      ],
+      "outputs": [
       ]
     },
     {
@@ -512,6 +516,24 @@
           "name": "targetAddr",
           "type": "address"
         }
+      ]
+    },
+    {
+      "name": "setABI",
+      "inputs": [
+        {
+          "name": "dabi",
+          "type": "bytes"
+        }
+      ],
+      "outputs": [
+      ]
+    },
+    {
+      "name": "constructor",
+      "inputs": [
+      ],
+      "outputs": [
       ]
     }
   ],
