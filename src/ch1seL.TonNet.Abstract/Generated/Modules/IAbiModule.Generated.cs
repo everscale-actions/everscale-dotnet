@@ -96,6 +96,12 @@ namespace ch1seL.TonNet.Abstract.Modules
         public Task<ResultOfUpdateInitialData> UpdateInitialData(ParamsOfUpdateInitialData @params, CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// <para>Encodes initial account data with initial values for the contract's static variables and owner's public key into a data BOC that can be passed to `encode_tvc` function afterwards.</para>
+        /// <para>This function is analogue of `tvm.buildDataInit` function in Solidity.</para>
+        /// </summary>
+        public Task<ResultOfEncodeInitialData> EncodeInitialData(ParamsOfEncodeInitialData @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Decodes initial values of a contract's static variables and owner's public key from account initial data This operation is applicable only for initial account data (before deploy). If the contract is already deployed, its data doesn't contain this data section any more.
         /// </summary>
         public Task<ResultOfDecodeInitialData> DecodeInitialData(ParamsOfDecodeInitialData @params, CancellationToken cancellationToken = default);

@@ -135,6 +135,15 @@ namespace ch1seL.TonNet.Client.Modules
         }
 
         /// <summary>
+        /// <para>Encodes initial account data with initial values for the contract's static variables and owner's public key into a data BOC that can be passed to `encode_tvc` function afterwards.</para>
+        /// <para>This function is analogue of `tvm.buildDataInit` function in Solidity.</para>
+        /// </summary>
+        public async Task<ResultOfEncodeInitialData> EncodeInitialData(ParamsOfEncodeInitialData @params, CancellationToken cancellationToken = default)
+        {
+            return await _tonClientAdapter.Request<ParamsOfEncodeInitialData, ResultOfEncodeInitialData>("abi.encode_initial_data", @params, cancellationToken);
+        }
+
+        /// <summary>
         /// Decodes initial values of a contract's static variables and owner's public key from account initial data This operation is applicable only for initial account data (before deploy). If the contract is already deployed, its data doesn't contain this data section any more.
         /// </summary>
         public async Task<ResultOfDecodeInitialData> DecodeInitialData(ParamsOfDecodeInitialData @params, CancellationToken cancellationToken = default)
