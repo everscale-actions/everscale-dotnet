@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <FirstTargetFramework Condition=" '$(TargetFrameworks)' == '' ">$(TargetFramework)</FirstTargetFramework>
-        <FirstTargetFramework Condition=" '$(FirstTargetFrameworks)' == '' ">$(TargetFrameworks.Split(';')[0])</FirstTargetFramework>
+        <FirstTargetFramework Condition=" '$(FirstTargetFramework)' == '' ">$(TargetFrameworks.Split(';')[0])</FirstTargetFramework>
     </PropertyGroup>
 
     <Target Name="DownloadContentFiles" Condition=" '$(TargetFramework)' == '$(FirstTargetFramework)' " BeforeTargets="BeforeBuild">
