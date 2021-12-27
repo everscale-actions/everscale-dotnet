@@ -1,9 +1,33 @@
 ﻿@page "/"
+@using ch1seL.TonNet.Abstract
+@using ch1seL.TonNet.Client.Models
 
 <PageTitle>Index</PageTitle>
 
 <h1>Hello, world!</h1>
 
+<p>Everscale client version: @Version</p>
+<p>Endpoints: @Endpoints</p>
+
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?"/>
+
+@code {
+
+	private string Version { get; set; }
+	public string Endpoints { get; set; }
+
+	protected override async Task OnInitializedAsync() {
+		Task<ResultOfVersion> resultOfVersionTask = TonClient.Client.Version();
+		Task<ResultOfGetEndpoints> resultOfGetEndpoints = TonClient.Net.GetEndpoints();
+
+		await Task.WhenAll(resultOfGetEndpoints, resultOfVersionTask);
+
+		Version = (await resultOfVersionTask).Version;
+		Endpoints = string.Join(',', (await resultOfGetEndpoints).Endpoints);
+	}
+
+	[Inject]
+	private ITonClient TonClient { get; set; }
+}
