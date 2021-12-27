@@ -5,7 +5,7 @@
         <!--    used by tools\ClientGenerator (tools/api.json) -->
         <!--    used by src\ch1seL.TonNet.RustAdapter (runtime binaries) see DownloadLib.targets -->
         <!--    used by src\ch1seL.TonNet.Adapter.Web (runtime binaries) see DownloadLib.targets -->
-        <SDKVersion>1.27.1</SDKVersion>
+        <SDKVersion>1.28.0</SDKVersion>
     </PropertyGroup>
 
 </Project>
