@@ -16,14 +16,14 @@ public abstract class TonClientAdapterBase : ITonClientAdapter {
 	private static readonly TimeSpan CoreExecutionTimeOut = TimeSpan.FromMinutes(1);
 
 	protected uint ContextId;
-	private readonly object _lock = new object();
+	private readonly object _lock = new();
 	private readonly ILogger _logger;
 
 	private readonly ConcurrentDictionary<uint, (TaskCompletionSource<string>, Action<string, uint>)>
 		_requestsDict = new ConcurrentDictionary<uint, (TaskCompletionSource<string>, Action<string, uint>)>();
 
-	private bool _initComplete;
 	private uint _requestId;
+	private readonly SemaphoreSlim _semaphore = new(1, 1);
 
 	protected TonClientAdapterBase(ILogger logger) {
 		_logger = logger;
@@ -162,9 +162,13 @@ public abstract class TonClientAdapterBase : ITonClientAdapter {
 	private async Task<string> Request(string method, string requestJson,
 	                                   Action<string, uint> callback = null,
 	                                   CancellationToken cancellationToken = default) {
-		if (!_initComplete) {
-			ContextId = await CreateContext(cancellationToken);
-			_initComplete = true;
+		await _semaphore.WaitAsync(cancellationToken);
+		try {
+			if (ContextId == 0) {
+				ContextId = await CreateContext(cancellationToken);
+			}
+		} finally {
+			_semaphore.Release();
 		}
 
 		uint requestId;
