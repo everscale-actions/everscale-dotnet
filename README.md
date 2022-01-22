@@ -7,7 +7,7 @@
 
 Everscale is secure and scalable network. Lets do this network convenient both for users and developers!
 
-- This client was automatically generated from [api.json](https://github.com/tonlabs/TON-SDK/blob/master/tools/api.json) (see [ClientGenerator](https://github.com/ton-actions/ton-client-dotnet/tree/master/tools/EverscaleNet.ClientGenerator)) 
+- This client was automatically generated from [api.json](https://github.com/tonlabs/TON-SDK/blob/master/tools/api.json) (see [ClientGenerator](https://github.com/everscale-actions/everscale-dotnet/tree/master/tools/EverscaleNet.ClientGenerator)) 
 - Fully supported methods provided in SDK documentation https://github.com/tonlabs/TON-SDK/tree/master/docs
 - No Newtonsoft.Json required, it is kinda legacy now, last release was over a year ago. New System.Text.Json is ten times faster
 - The most complete support of CancellationToken
@@ -39,15 +39,15 @@ public void ConfigureServices(IServiceCollection services)
 ## Ready to use everywhere 
 
 ```
-public class YourTonService {
-    private readonly ITonClient _tonClient;
+public class YourEverService {
+    private readonly IEverClient _everClient;
 
-    public YourTonService(ITonClient tonClient) {
-        _tonClient = tonClient;
+    public YourEverService(IEverClient everClient) {
+        _everClient = everClient;
     }
     
-    public string GetTonSecretPhase() {
-        var mnemonic = await _tonClient.Crypto.MnemonicFromRandom(new ParamsOfMnemonicFromRandom());
+    public string GetEverSecretPhase() {
+        var mnemonic = await _everClient.Crypto.MnemonicFromRandom(new ParamsOfMnemonicFromRandom());
         return mnemonic.Phrase;
     }
 }
@@ -85,16 +85,16 @@ Can be inherited or implemented self-owned: `services.AddTransient<IDebotBrowser
 
 See configuration parameters:
 
-* https://github.com/tonlabs/TON-SDK/blob/master/docs/mod_client.md#networkconfig
-* https://github.com/tonlabs/TON-SDK/blob/master/docs/mod_client.md#cryptoconfig
-* https://github.com/tonlabs/TON-SDK/blob/master/docs/mod_client.md#abiconfig
+* https://tonlabs.gitbook.io/ton-sdk/guides/installation/configure_sdk#network-config
+* https://tonlabs.gitbook.io/ton-sdk/guides/installation/configure_sdk#crypto-config
+* https://tonlabs.gitbook.io/ton-sdk/guides/installation/configure_sdk#abi-config
 
 ```
 public void ConfigureServices(IServiceCollection services)
 {
-    services.AddTonClient(config =>
+    services.AddEverClient(config =>
     {
-        config.Network.Endpoints = new[] { "net5.ton.dev" };
+        config.Network.Endpoints = new[] { // see avalable networks https://tonlabs.gitbook.io/ton-sdk/reference/ton-os-api/networks#networks // };
         config.Network.NetworkRetriesCount = 5;
     }, packageManagerConfig =>
     {
@@ -111,9 +111,9 @@ https://docs.microsoft.com/en-us/dotnet/core/extensions/configuration-providers
 
 ```
 {
-  "TonClient": {
+  "EverClient": {
     "Network": {
-      "Endpoints": [ "net.ton.dev" ],
+      "Endpoints": [ "https://eri01.net.everos.dev/", "https://rbx01.net.everos.dev/", "https://gra01.net.everos.dev/" ],
       "WaitForTimeout": 5000
     }
   },
@@ -126,8 +126,8 @@ https://docs.microsoft.com/en-us/dotnet/core/extensions/configuration-providers
 ```
 public void ConfigureServices(IServiceCollection services)
 {
-    services.AddTonClient()        
-        .Configure<TonClientOptions>(Configuration.GetSection("TonClient"))
+    services.AddEverClient()        
+        .Configure<EverClientOptions>(Configuration.GetSection("EverClient"))
         .Configure<PackageManagerOptions>(Configuration.GetSection("PackageManager"));
 }
 ```
@@ -144,7 +144,7 @@ And this client provide methods to easy convert this properties to/from Anonymou
 ### Convert to anonymous type example:
 
 ```
-ResultOfParse parseResult = await tonClient.Boc.ParseMessage(new ParamsOfParse
+ResultOfParse parseResult = await everClient.Boc.ParseMessage(new ParamsOfParse
 {
     Boc = "te6ccgEBAQEAWAAAq2n+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE/zMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzSsG8DgAAAAAjuOu9NAL7BxYpA"
 });
@@ -157,7 +157,7 @@ _logger.LogInformation("Parsed message id: {id} type: {type}", parsedMessage.id,
 ### Convert from anonymous type example:
 
 ```
-await tonClient.Net.WaitForCollection(new ParamsOfWaitForCollection
+await everClient.Net.WaitForCollection(new ParamsOfWaitForCollection
 {
     Collection = "transactions",
     Filter = new {in_msg = new {eq = parsedMessage.id}}.ToJsonElement(),
@@ -167,12 +167,10 @@ await tonClient.Net.WaitForCollection(new ParamsOfWaitForCollection
 
 ## Samples
 
-https://github.com/ton-actions/ton-client-dotnet/tree/master/samples/
+https://github.com/everscale-actions/everscale-dotnet/tree/master/samples/
 
 ***Enjoy!***
 
 ---
->My Coffee Surf address:
->>ton://surf/0:9b487d68e4f029ab6d92640892d99d1c549ae69b198df414e905350559a165bf
-
->https://ton.surf
+>My Ever Coffee:
+https://uri.ton.surf/surf/0:9b487d68e4f029ab6d92640892d99d1c549ae69b198df414e905350559a165bf
