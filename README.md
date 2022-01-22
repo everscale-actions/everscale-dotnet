@@ -1,11 +1,11 @@
 ![Main workflow](https://github.com/everscale-actions/everscale-dotnet/workflows/Main%20workflow/badge.svg)
-[![Chat on Telegram](https://img.shields.io/badge/chat-on%20telegram-9cf.svg)](https://t.me/ton_actions_chat)
+[![Chat on Telegram](https://img.shields.io/badge/chat-on%20telegram-9cf.svg)](https://t.me/everscale_actions_chat)
 [<img src="https://avatars3.githubusercontent.com/u/67861283?s=150&u=4536b61595a1b422604fab8a7012092d891278f6&v=4" align="right" width="150">](https://freeton.org/)
 
 # Everscale .NET Client 
 
 
-Free TON is modern and fast crypto network. Lets do this network convenient both for users and developers!
+Everscale is secure and scalable network. Lets do this network convenient both for users and developers!
 
 - This client was automatically generated from [api.json](https://github.com/tonlabs/TON-SDK/blob/master/tools/api.json) (see [ClientGenerator](https://github.com/ton-actions/ton-client-dotnet/tree/master/tools/EverscaleNet.ClientGenerator)) 
 - Fully supported methods provided in SDK documentation https://github.com/tonlabs/TON-SDK/tree/master/docs
