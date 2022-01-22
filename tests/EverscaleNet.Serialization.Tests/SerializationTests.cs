@@ -9,7 +9,7 @@ namespace EverscaleNet.Serialization.Tests;
 public class SerializationTests {
 	[Fact]
 	public void BigIntegerConverting() {
-		var objectWithBigInteger = new { bigIng = (ulong)1231231231231123123 };
+		var objectWithBigInteger = new { bigIng = 1_231_231_231_231_123_123m };
 
 		string json = JsonSerializer.Serialize(objectWithBigInteger, JsonOptionsProvider.JsonSerializerOptions);
 

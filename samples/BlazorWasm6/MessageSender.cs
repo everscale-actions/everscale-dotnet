@@ -1,10 +1,9 @@
-using System.Numerics;
-using System.Text;
 using System.Text.Json;
 using EverscaleNet.Abstract;
 using EverscaleNet.Client.Models;
 using EverscaleNet.Models;
 using EverscaleNet.Serialization;
+using EverscaleNet.Utils;
 
 namespace BlazorWasm6;
 
@@ -20,14 +19,6 @@ public class MessageSender {
 		_everPackageManager = everPackageManager;
 	}
 
-	private static decimal ToDecimalBalance(BigInteger bigInteger) {
-		return Math.Round((decimal)BigInteger.Divide(bigInteger, 1_000_000) / 1000, 2);
-	}
-
-	private static string ToHexString(string input) {
-		return BitConverter.ToString(Encoding.Default.GetBytes(input)).Replace("-", string.Empty);
-	}
-
 	public async Task SendMessage(string phrase, string recipient, string message) {
 		Package contract = await _everPackageManager.LoadPackage(SafeMultisigWallet);
 		Abi transferAbi = await _everPackageManager.LoadAbi(Transfer);
@@ -38,7 +29,7 @@ public class MessageSender {
 			Abi = transferAbi,
 			CallSet = new CallSet {
 				FunctionName = "transfer",
-				Input = new { comment = ToHexString(message) }.ToJsonElement()
+				Input = new { comment = message.ToHexString() }.ToJsonElement()
 			},
 			IsInternal = true,
 			Signer = new Signer.None()
@@ -90,7 +81,8 @@ public class MessageSender {
 		ResultOfQueryCollection result = await _everClient.Net.QueryCollection(new ParamsOfQueryCollection {
 			Collection = "accounts",
 			Filter = new { id = new { eq = address } }.ToJsonElement(),
-			Result = "acc_type balance"
+			Result = "acc_type balance(format: DEC)",
+			Limit = 1
 		});
 
 		if (result.Result.Length == 0) {
@@ -98,10 +90,10 @@ public class MessageSender {
 		}
 
 		JsonElement account = result.Result[0];
-		decimal balance = ToDecimalBalance(new BigInteger(Convert.ToUInt64(account.Get<string>("balance"), 16)));
+		decimal balance = account.Get<string>("balance").DecToBalance();
 		var accType = account.Get<int>("acc_type");
 		switch (accType) {
-			case 0 when balance < (decimal)0.5:
+			case 0 when balance < 0.5m:
 				throw new Exception($"You need to transfer at least 0.5 tokens for deploy to {address}");
 			case 1:
 				return (address, keyPair);

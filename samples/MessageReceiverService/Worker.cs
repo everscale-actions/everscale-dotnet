@@ -93,11 +93,11 @@ public class Worker : BackgroundService {
 		ResultOfQueryCollection result = await _everClient.Net.QueryCollection(new ParamsOfQueryCollection {
 			Collection = "accounts",
 			Filter = new { id = new { eq = encoded.Address } }.ToJsonElement(),
-			Result = "balance",
+			Result = "balance(format: DEC)",
 			Limit = 1
 		}, cancellationToken);
 
-		if (result.Result.Length == 0 || result.Result[0].Get<string>("balance").HexToDec() < 1_000_000_000_000ul) {
+		if (result.Result.Length == 0 || result.Result[0].Get<string>("balance").DecToBalance() < 10m) {
 			await SendGramsFromGiver(encoded.Address, cancellationToken);
 		}
 
