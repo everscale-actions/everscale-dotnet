@@ -14,7 +14,7 @@ namespace EverscaleNet.Adapter.Base;
 
 public abstract class EverClientAdapterBase : IEverClientAdapter {
 	private const string EmptyJson = "{}";
-	private static readonly TimeSpan CoreExecutionTimeOut = TimeSpan.FromMinutes(1);
+	private static readonly TimeSpan CoreExecutionTimeOut = TimeSpan.FromMinutes(2);
 
 	protected uint ContextId;
 	private readonly object _lock = new();
