@@ -1,7 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
-    <ItemGroup>
-        <ProjectReference Include="..\ch1seL.TonNet.Client.Models\ch1seL.TonNet.Client.Models.csproj"/>
-    </ItemGroup>
-
-</Project>

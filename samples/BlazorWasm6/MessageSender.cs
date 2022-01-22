@@ -1,10 +1,10 @@
 using System.Numerics;
 using System.Text;
 using System.Text.Json;
-using ch1seL.TonNet.Abstract;
-using ch1seL.TonNet.Client;
-using ch1seL.TonNet.Client.Models;
-using ch1seL.TonNet.Serialization;
+using EverscaleNet.Abstract;
+using EverscaleNet.Client.Models;
+using EverscaleNet.Models;
+using EverscaleNet.Serialization;
 
 namespace BlazorWasm6;
 
@@ -12,12 +12,12 @@ public class MessageSender {
 	private const string SafeMultisigWallet = "SafeMultisigWallet";
 	private const string Transfer = "transfer";
 
-	private readonly ITonClient _tonClient;
-	private readonly ITonPackageManager _tonPackageManager;
+	private readonly IEverClient _everClient;
+	private readonly IEverPackageManager _everPackageManager;
 
-	public MessageSender(ITonClient tonClient, ITonPackageManager tonPackageManager) {
-		_tonClient = tonClient;
-		_tonPackageManager = tonPackageManager;
+	public MessageSender(IEverClient everClient, IEverPackageManager everPackageManager) {
+		_everClient = everClient;
+		_everPackageManager = everPackageManager;
 	}
 
 	private static decimal ToDecimalBalance(BigInteger bigInteger) {
@@ -29,12 +29,12 @@ public class MessageSender {
 	}
 
 	public async Task SendMessage(string phrase, string recipient, string message) {
-		Package contract = await _tonPackageManager.LoadPackage(SafeMultisigWallet);
-		Abi transferAbi = await _tonPackageManager.LoadAbi(Transfer);
+		Package contract = await _everPackageManager.LoadPackage(SafeMultisigWallet);
+		Abi transferAbi = await _everPackageManager.LoadAbi(Transfer);
 
 		(string address, KeyPair keyPair) = await Deploy(phrase);
 
-		ResultOfEncodeMessageBody body = await _tonClient.Abi.EncodeMessageBody(new ParamsOfEncodeMessageBody {
+		ResultOfEncodeMessageBody body = await _everClient.Abi.EncodeMessageBody(new ParamsOfEncodeMessageBody {
 			Abi = transferAbi,
 			CallSet = new CallSet {
 				FunctionName = "transfer",
@@ -44,7 +44,7 @@ public class MessageSender {
 			Signer = new Signer.None()
 		});
 
-		await _tonClient.Processing.ProcessMessage(new ParamsOfProcessMessage {
+		await _everClient.Processing.ProcessMessage(new ParamsOfProcessMessage {
 			SendEvents = false,
 			MessageEncodeParams = new ParamsOfEncodeMessage {
 				Abi = contract.Abi,
@@ -66,9 +66,9 @@ public class MessageSender {
 
 	private async Task<(string, KeyPair)> Deploy(string phrase) {
 		KeyPair keyPair =
-			await _tonClient.Crypto.MnemonicDeriveSignKeys(new ParamsOfMnemonicDeriveSignKeys { Phrase = phrase });
+			await _everClient.Crypto.MnemonicDeriveSignKeys(new ParamsOfMnemonicDeriveSignKeys { Phrase = phrase });
 
-		Package contract = await _tonPackageManager.LoadPackage(SafeMultisigWallet);
+		Package contract = await _everPackageManager.LoadPackage(SafeMultisigWallet);
 
 		var paramsOfEncodedMessage = new ParamsOfEncodeMessage {
 			Abi = contract.Abi,
@@ -84,10 +84,10 @@ public class MessageSender {
 			ProcessingTryIndex = 1
 		};
 
-		ResultOfEncodeMessage encodeMessage = await _tonClient.Abi.EncodeMessage(paramsOfEncodedMessage);
+		ResultOfEncodeMessage encodeMessage = await _everClient.Abi.EncodeMessage(paramsOfEncodedMessage);
 		string address = encodeMessage.Address;
 
-		ResultOfQueryCollection result = await _tonClient.Net.QueryCollection(new ParamsOfQueryCollection {
+		ResultOfQueryCollection result = await _everClient.Net.QueryCollection(new ParamsOfQueryCollection {
 			Collection = "accounts",
 			Filter = new { id = new { eq = address } }.ToJsonElement(),
 			Result = "acc_type balance"
@@ -106,7 +106,7 @@ public class MessageSender {
 			case 1:
 				return (address, keyPair);
 			default:
-				await _tonClient.Processing.ProcessMessage(new ParamsOfProcessMessage {
+				await _everClient.Processing.ProcessMessage(new ParamsOfProcessMessage {
 					SendEvents = false,
 					MessageEncodeParams = paramsOfEncodedMessage
 				});

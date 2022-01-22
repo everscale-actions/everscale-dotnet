@@ -1,13 +1,13 @@
-![Main workflow](https://github.com/ton-actions/ton-client-dotnet/workflows/Main%20workflow/badge.svg)
+![Main workflow](https://github.com/everscale-actions/everscale-dotnet/workflows/Main%20workflow/badge.svg)
 [![Chat on Telegram](https://img.shields.io/badge/chat-on%20telegram-9cf.svg)](https://t.me/ton_actions_chat)
 [<img src="https://avatars3.githubusercontent.com/u/67861283?s=150&u=4536b61595a1b422604fab8a7012092d891278f6&v=4" align="right" width="150">](https://freeton.org/)
 
-# Free TON .NET Client 
+# Everscale .NET Client 
 
 
 Free TON is modern and fast crypto network. Lets do this network convenient both for users and developers!
 
-- This client was automatically generated from [api.json](https://github.com/tonlabs/TON-SDK/blob/master/tools/api.json) (see [ClientGenerator](https://github.com/ton-actions/ton-client-dotnet/tree/master/tools/ch1seL.TonNet.ClientGenerator)) 
+- This client was automatically generated from [api.json](https://github.com/tonlabs/TON-SDK/blob/master/tools/api.json) (see [ClientGenerator](https://github.com/ton-actions/ton-client-dotnet/tree/master/tools/EverscaleNet.ClientGenerator)) 
 - Fully supported methods provided in SDK documentation https://github.com/tonlabs/TON-SDK/tree/master/docs
 - No Newtonsoft.Json required, it is kinda legacy now, last release was over a year ago. New System.Text.Json is ten times faster
 - The most complete support of CancellationToken
@@ -18,8 +18,12 @@ Free TON is modern and fast crypto network. Lets do this network convenient both
 
 ## Add Nuget Package to your project
 
-```
-dotnet add package ch1seL.TonNet.Client
+```shell
+# Typical .Net application
+dotnet add package EverscaleNet.Client
+
+# Blazor WASM application
+dotnet add package EverscaleNet.WebClient
 ```
 
 ## Register in DI  
@@ -28,7 +32,7 @@ dotnet add package ch1seL.TonNet.Client
 ```
 public void ConfigureServices(IServiceCollection services)
 {
-    services.AddTonClient();
+    services.AddEverClient();
 }
 ```
 
@@ -61,7 +65,7 @@ Task<Abi> LoadAbi(string name);
 Task<string> LoadTvc(string name);
 ```
 
-Default contracts path is `_contracts`
+Default contracts path is `_contracts`. **Be careful**, Blazor WASM app will search for `_contracts` relative to `wwwroot`. 
 
 ## IDebotBrowser interface
 

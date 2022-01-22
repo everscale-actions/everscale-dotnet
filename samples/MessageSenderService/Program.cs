@@ -13,7 +13,7 @@ public static class Program {
 		return Host.CreateDefaultBuilder(args)
 		           .ConfigureServices((_, services) => {
 			           services.AddHostedService<Worker>();
-			           services.AddTonClient(config => {
+			           services.AddEverClient(config => {
 				           config.Network.Endpoints = new[] { "http://localhost:8080" };
 				           config.Network.WaitForTimeout = 5000;
 			           });

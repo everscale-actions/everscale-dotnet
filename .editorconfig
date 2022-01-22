@@ -2,9 +2,10 @@
 charset = utf-8
 end_of_line = crlf
 trim_trailing_whitespace = false
-insert_final_newline = false
+insert_final_newline = true
 indent_style = space
 tab_width = 2
+indent_size = 2
 
 # Microsoft .NET properties
 csharp_indent_braces = false
@@ -3416,18 +3417,8 @@ resharper_xaml_xaml_unknown_device_family_type_highlighting_highlighting = warni
 resharper_xaml_xaml_xamarin_forms_data_type_and_binding_context_type_mismatched_highlighting_highlighting = warning
 resharper_xaml_x_key_attribute_disallowed_highlighting = error
 resharper_xunit_xunit_test_with_console_output_highlighting = warning
-indent_size = 4
-
-[{*.har,*.inputactions,*.jsb2,*.jsb3,*.json,.babelrc,.eslintrc,.stylelintrc,bowerrc,jest.config}]
-indent_style = space
-indent_size = 2
 
 [*.{appxmanifest,asax,ascx,aspx,axaml,build,cs,cshtml,dtd,master,nuspec,paml,razor,skin,xaml,xamlx,xoml,xsd}]
 indent_style = tab
 indent_size = tab
-tab_width = 4
-
-[*.{cg,cginc,compute,fs,fsi,fsscript,fsx,hlsl,hlsli,hlslinc,ml,mli,resw,resx,shader,usf,ush,vb}]
-indent_style = space
-indent_size = 4
 tab_width = 4

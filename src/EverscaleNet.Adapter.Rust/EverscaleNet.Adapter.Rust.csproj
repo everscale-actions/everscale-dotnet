@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <Import Project="..\..\SDKVersion.targets" />
+    <Import Project="DownloadLib.targets" />
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\EverscaleNet\EverscaleNet.csproj" />
+        <ProjectReference Include="..\EverscaleNet.Adapter.Base\EverscaleNet.Adapter.Base.csproj" />
+        <ProjectReference Include="..\EverscaleNet.Serialization\EverscaleNet.Serialization.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+            <_Parameter1>EverscaleNet.Client</_Parameter1>
+        </AssemblyAttribute>
+        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+            <_Parameter1>EverscaleNet.RustAdapter.Tests</_Parameter1>
+        </AssemblyAttribute>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="..\runtimes\win-x64\native\tonclient.dll">
+            <Pack>true</Pack>
+            <PackagePath>runtimes\win-x64\native\tonclient.dll</PackagePath>
+            <Link>runtimes\win-x64\native\tonclient.dll</Link>
+        </None>
+        <None Include="..\runtimes\linux-x64\native\libtonclient.so">
+            <Pack>true</Pack>
+            <PackagePath>runtimes\linux-x64\native\libtonclient.so</PackagePath>
+            <Link>runtimes\linux-x64\native\libtonclient.so</Link>
+        </None>
+        <None Include="..\runtimes\osx-x64\native\libtonclient.dylib">
+            <Pack>true</Pack>
+            <PackagePath>runtimes\osx-x64\native\libtonclient.dylib</PackagePath>
+            <Link>runtimes\osx-x64\native\libtonclient.dylib</Link>
+        </None>
+        <None Include="..\runtimes\osx.11.0-arm64\native\libtonclient.dylib">
+            <Pack>true</Pack>
+            <PackagePath>runtimes\osx.11.0-arm64\native\libtonclient.dylib</PackagePath>
+            <Link>runtimes\osx.11.0-arm64\native\libtonclient.dylib</Link>
+        </None>
+    </ItemGroup>
+
+</Project>

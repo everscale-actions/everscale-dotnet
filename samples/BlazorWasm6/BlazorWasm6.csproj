@@ -10,7 +10,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\ch1seL.TonNet.Client.Web\ch1seL.TonNet.Client.Web.csproj" />
+        <ProjectReference Include="..\..\src\EverscaleNet.Utils\EverscaleNet.Utils.csproj" />
+        <ProjectReference Include="..\..\src\EverscaleNet.WebClient\EverscaleNet.WebClient.csproj" />
     </ItemGroup>
 
 </Project>

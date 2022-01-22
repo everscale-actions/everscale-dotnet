@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+        <ProjectReference Include="..\EverscaleNet\EverscaleNet.csproj" />
+        <ProjectReference Include="..\EverscaleNet.Serialization\EverscaleNet.Serialization.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <Import Project="..\..\SDKVersion.targets" />
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <OutputType>Exe</OutputType>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="EnumExtensions.System.Text.Json" Version="1.1.0" />
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.1" />
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.0.1" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <_TonSdkApiJson>https://raw.githubusercontent.com/tonlabs/TON-SDK/$(SDKVersion)/tools/api.json</_TonSdkApiJson>
+    </PropertyGroup>
+
+    <Target Name="DownloadContentFiles" BeforeTargets="CoreCompile">
+        <MakeDir Directories="$(MSBuildThisFileDirectory)\Resources\" />
+        <DownloadFile SourceUrl="$(_TonSdkApiJson)" DestinationFolder="$(MSBuildThisFileDirectory)\Resources\" DestinationFileName="api.json">
+            <Output TaskParameter="DownloadedFile" ItemName="None" />
+        </DownloadFile>
+    </Target>
+
+    <PropertyGroup>
+        <RepositoryLocation>$([System.IO.Path]::Combine($(MSBuildThisFileDirectory), "..", ".."))</RepositoryLocation>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <AssemblyAttribute Include="EverscaleNet.ClientGenerator.RepositoryLocationAttribute">
+            <_Parameter1>$(RepositoryLocation)</_Parameter1>
+        </AssemblyAttribute>
+    </ItemGroup>
+
+</Project>

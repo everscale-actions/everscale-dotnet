@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <Import Project="..\..\SDKVersion.targets" />
+    <Import Project="DownloadLib.targets" />
+
+    <ItemGroup>
+        <SupportedPlatform Include="browser" />
+    </ItemGroup>
+
+    <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.1" />
+        <PackageReference Include="Microsoft.JSInterop" Version="6.0.1" />
+    </ItemGroup>
+
+    <ItemGroup Condition=" '$(TargetFramework)' == 'net5.0' ">
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.0" />
+        <PackageReference Include="Microsoft.JSInterop" Version="5.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\EverscaleNet\EverscaleNet.csproj" />
+        <ProjectReference Include="..\EverscaleNet.Adapter.Base\EverscaleNet.Adapter.Base.csproj" />
+        <ProjectReference Include="..\EverscaleNet.Serialization\EverscaleNet.Serialization.csproj" />
+    </ItemGroup>
+
+</Project>

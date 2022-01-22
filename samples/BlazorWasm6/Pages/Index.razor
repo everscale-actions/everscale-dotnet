@@ -1,6 +1,6 @@
 ﻿@page "/"
-@using ch1seL.TonNet.Abstract
-@using ch1seL.TonNet.Client.Models
+@using EverscaleNet.Abstract
+@using EverscaleNet.Client.Models
 
 <PageTitle>Index</PageTitle>
 
@@ -19,8 +19,8 @@ Welcome to your new app.
 	public string Endpoints { get; set; }
 
 	protected override async Task OnInitializedAsync() {
-		Task<ResultOfVersion> resultOfVersionTask = TonClient.Client.Version();
-		Task<ResultOfGetEndpoints> resultOfGetEndpoints = TonClient.Net.GetEndpoints();
+		Task<ResultOfVersion> resultOfVersionTask = EverClient.Client.Version();
+		Task<ResultOfGetEndpoints> resultOfGetEndpoints = EverClient.Net.GetEndpoints();
 
 		await Task.WhenAll(resultOfGetEndpoints, resultOfVersionTask);
 
@@ -29,5 +29,5 @@ Welcome to your new app.
 	}
 
 	[Inject]
-	private ITonClient TonClient { get; set; }
+	private IEverClient EverClient { get; set; }
 }

@@ -1,4 +1,5 @@
 using BlazorWasm6;
+using EverscaleNet.Utils;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -12,6 +13,6 @@ await builder.Build().RunAsync();
 void ConfigureServices(IServiceCollection services, string hostEnvironmentBaseAddress) {
 	services
 		.AddScoped(_ => new HttpClient { BaseAddress = new Uri(hostEnvironmentBaseAddress) })
-		.AddTonClient(options => options.Network.Endpoints = new[] { "net5.ton.dev" })
+		.AddEverClient(options => options.Network.Endpoints = EverOS.Endpoints.Development)
 		.AddTransient<MessageSender>();
 }

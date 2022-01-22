@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+        <PackageReference Include="Dahomey.Json" Version="1.12.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\EverscaleNet\EverscaleNet.csproj" />
+    </ItemGroup>
+
+</Project>

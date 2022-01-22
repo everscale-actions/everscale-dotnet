@@ -1,0 +1,11 @@
+﻿namespace EverscaleNet.ClientGenerator.Models;
+
+public enum PurpleType {
+	Array,
+	BigInt,
+	Boolean,
+	Number,
+	Optional,
+	Ref,
+	String
+}

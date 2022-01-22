@@ -1,4 +1,4 @@
-﻿# Sample worker services for .NET FreeTON Client
+﻿# Sample worker services for Everscale network
 
 Used contacts:
 
@@ -20,13 +20,13 @@ MessageSenderService:
 
 ## Preparing
 
-Download and install .NET 5.0 SDK https://dotnet.microsoft.com/download
+Download and install .NET 6.0 SDK https://dotnet.microsoft.com/download
 
 ### Install and start local Node SE
 
 ```
-npm install -g ton-dev-cli
-ton start
+npm install -g everdev
+everdev se start
 ```
 
 ## Run MessageReceiverService

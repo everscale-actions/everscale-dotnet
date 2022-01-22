@@ -1,0 +1,20 @@
+using Dahomey.Json.Attributes;
+using System;
+using System.Numerics;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+namespace EverscaleNet.Client.Models
+{
+    /// <summary>
+    /// Not described yet..
+    /// </summary>
+    public class ParamsOfNaclSignKeyPairFromSecret
+    {
+        /// <summary>
+        /// Secret key - unprefixed 0-padded to 64 symbols hex string
+        /// </summary>
+        [JsonPropertyName("secret")]
+        public string Secret { get; set; }
+    }
+}

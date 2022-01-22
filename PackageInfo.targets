@@ -1,22 +1,22 @@
 <Project>
     <PropertyGroup>
         <Authors>Alexander Salamatov</Authors>
-        <Organization>ton-actions</Organization>
+        <Organization>everscale-actions</Organization>
         <Owner>ch1seL</Owner>
-        <Copyright>Copyright 2021 (c) Alexander Salamatov. All rights reserved.</Copyright>
+        <Copyright>Copyright 2022 (c) Alexander Salamatov. All rights reserved.</Copyright>
 
-        <Description>Free TON Client for .NET</Description>
+        <Description>Everscale .Net Client</Description>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
         <Version Condition="$(PackageVersion)!=''">$(PackageVersion)</Version>
 
-        <PackageTags>FREETON;TON;CSharp;dotnet;net5</PackageTags>
+        <PackageTags>Everscale;Ever;Blazor;Rust;Wasm</PackageTags>
         <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-        <PackageProjectUrl>https://github.com/ton-actions/ton-client-dotnet</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/everscale-actions/everscale-dotnet</PackageProjectUrl>
         <PackageIcon>icon.png</PackageIcon>
         <RepositoryType>git</RepositoryType>
-        <RepositoryUrl>https://github.com/ton-actions/ton-client-dotnet</RepositoryUrl>
+        <RepositoryUrl>https://github.com/everscale-actions/everscale-dotnet</RepositoryUrl>
 
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
