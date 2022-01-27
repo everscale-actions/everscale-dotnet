@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using EverscaleNet.Abstract;
 using EverscaleNet.Client.Models;
 using EverscaleNet.Serialization;
@@ -8,11 +7,6 @@ using EverscaleNet.TestsShared;
 namespace EverscaleNet.Client.Tests.Utils;
 
 public static class EverClientExtensions {
-	// todo: migrate to new giver contract after next SDK Release 
-	// https://t.me/ton_sdk/4616
-	// https://t.me/ton_sdk/4609
-	private static readonly SemaphoreSlim WorkaroundOldGiverSemaphore = new(1, 1);
-
 	public static async Task<string> SignDetached(this IEverClient everClient, KeyPair pair, string data) {
 		KeyPair keys = await everClient.Crypto.NaclSignKeypairFromSecretKey(new ParamsOfNaclSignKeyPairFromSecret {
 			Secret = pair.Secret
@@ -32,28 +26,24 @@ public static class EverClientExtensions {
 	/// <param name="everClient"></param>
 	/// <param name="account">the giver sends money to himself by default</param>
 	public static async Task SendGramsFromLocalGiver(this IEverClient everClient, string account = null) {
-		account ??= TestsEnv.LocalGiverAddress;
-
 		var processMessageParams = new ParamsOfProcessMessage {
 			MessageEncodeParams = new ParamsOfEncodeMessage {
-				Address = TestsEnv.LocalGiverAddress,
-				Abi = TestsEnv.Packages.GiverAbiV1,
+				Address = TestsEnv.SeGiver.Address,
+				Abi = TestsEnv.SeGiver.Abi,
 				CallSet = new CallSet {
-					FunctionName = "sendGrams",
-					Input = new { dest = account, amount = 1000000000 }.ToJsonElement()
+					FunctionName = "sendTransaction",
+					Input = new {
+						dest = account ?? TestsEnv.SeGiver.Address,
+						value = 1_000_000_000,
+						bounce = false
+					}.ToJsonElement()
 				},
-				Signer = new Signer.None()
+				Signer = TestsEnv.SeGiver.Signer
 			},
 			SendEvents = false
 		};
 
-		await WorkaroundOldGiverSemaphore.WaitAsync();
-		ResultOfProcessMessage resultOfProcessMessage;
-		try {
-			resultOfProcessMessage = await everClient.Processing.ProcessMessage(processMessageParams);
-		} finally {
-			WorkaroundOldGiverSemaphore.Release();
-		}
+		ResultOfProcessMessage resultOfProcessMessage = await everClient.Processing.ProcessMessage(processMessageParams);
 
 		foreach (string outMessage in resultOfProcessMessage.OutMessages) {
 			ResultOfParse parseResult = await everClient.Boc.ParseMessage(new ParamsOfParse {

@@ -11,18 +11,25 @@ using Microsoft.Extensions.Options;
 namespace EverscaleNet.TestsShared;
 
 public static class TestsEnv {
-	public const string LocalGiverAddress = "0:841288ed3b55d9cdafa806807f02a0ae0c169aa5edfe88a789a6482429756a94";
+	public static class SeGiver {
+		public const string Address = "0:ece57bcc6c530283becbbd8a3b24d3c5987cdddc3c8b7b33be6e4a6312490415";
+		public static readonly Signer Signer = new Signer.Keys {
+			KeysAccessor = new KeyPair {
+				Public = "2ada2e65ab8eeab09490e3521415f45b6e42df9c760a639bcf53957550b25a16",
+				Secret = "172af540e43a524763dd53b26a066d472a97c4de37d5498170564510608250c3"
+			}
+		};
+		public static readonly Abi Abi = EverPackageManager.LoadAbi("GiverV2").GetAwaiter().GetResult();
+	}
+
 	private const int DefaultAbiVersion = 2;
 	private const string ContractsPath = "_contracts";
-	private const string NetworkEndpoints = "EVERSCALE_NETWORK_ENDPOINTS";
+	private const string NetworkEndpointsEnvVariable = "EVERSCALE_NETWORK_ENDPOINTS";
 
 	private static readonly IEverPackageManager EverPackageManager = new FilePackageManager(Options.Create(
 		                                                                                        new FilePackageManagerOptions
 			                                                                                        { PackagesPath = Path.Join(ContractsPath, $"abi_v{CurrentAbiVersion}") }));
-	private static readonly IEverPackageManager EverPackageManagerAbi1 = new FilePackageManager(Options.Create(
-		                                                                                            new FilePackageManagerOptions
-			                                                                                            { PackagesPath = Path.Join(ContractsPath, "abi_v1") }));
-	public static readonly string[] EverscaleNetworkEndpoints = Environment.GetEnvironmentVariable(NetworkEndpoints)?.Split(";") ?? EverOS.Endpoints.NodeSE;
+	public static readonly string[] EverscaleNetworkEndpoints = Environment.GetEnvironmentVariable(NetworkEndpointsEnvVariable)?.Split(";") ?? EverOS.Endpoints.NodeSE;
 
 	public static readonly string SdkVersion = typeof(SdkVersionAttribute).Assembly!.GetCustomAttribute<SdkVersionAttribute>()?.SdkVersion;
 
@@ -36,8 +43,6 @@ public static class TestsEnv {
 
 		public static readonly Package Subscription =
 			EverPackageManager.LoadPackage("Subscription").GetAwaiter().GetResult();
-
-		public static readonly Abi GiverAbiV1 = EverPackageManagerAbi1.LoadAbi("Giver").GetAwaiter().GetResult();
 
 		public static readonly Package TestDebotTarget =
 			EverPackageManager.LoadPackage("testDebotTarget").GetAwaiter().GetResult();

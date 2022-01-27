@@ -13,6 +13,7 @@ public static class JsonExtensions {
 		return element.GetProperty(property).ToObject<T>();
 	}
 
+	// ReSharper disable once UnusedParameter.Global
 	public static T ToAnonymous<T>(this JsonElement element, T prototype) {
 		var bufferWriter = new ArrayBufferWriter<byte>();
 		using (var writer = new Utf8JsonWriter(bufferWriter)) {

@@ -56,7 +56,7 @@ public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 	[Fact]
 	public async Task FindLastShardBlock() {
 		ResultOfFindLastShardBlock block = await _everClient.Net.FindLastShardBlock(new ParamsOfFindLastShardBlock {
-			Address = TestsEnv.LocalGiverAddress
+			Address = TestsEnv.SeGiver.Address
 		});
 
 		block.BlockId.Should().NotBeNull();

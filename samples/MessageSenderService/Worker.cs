@@ -14,7 +14,17 @@ namespace MessageSenderService;
 
 public class Worker : BackgroundService {
 	private const string Mnemonic = "spin tilt boss upper random exit spice ankle leave grief short clever";
-	private const string GiverAddress = "0:841288ed3b55d9cdafa806807f02a0ae0c169aa5edfe88a789a6482429756a94";
+
+	private static class SeGiver {
+		public const string Address = "0:ece57bcc6c530283becbbd8a3b24d3c5987cdddc3c8b7b33be6e4a6312490415";
+		public static readonly Signer Signer = new Signer.Keys {
+			KeysAccessor = new KeyPair {
+				Public = "2ada2e65ab8eeab09490e3521415f45b6e42df9c760a639bcf53957550b25a16",
+				Secret = "172af540e43a524763dd53b26a066d472a97c4de37d5498170564510608250c3"
+			}
+		};
+	}
+
 	private const string SenderContractName = "15_MessageSender";
 	private const string ReceiverContractName = "15_MessageReceiver";
 	private readonly ILogger<Worker> _logger;
@@ -138,13 +148,17 @@ public class Worker : BackgroundService {
 
 	private async Task SendGramsFromGiver(string account, CancellationToken cancellationToken) {
 		var sendGramsEncodedMessage = new ParamsOfEncodeMessage {
-			Address = GiverAddress,
-			Abi = await _packageManager.LoadAbi("Giver"),
+			Address = SeGiver.Address,
+			Abi = await _packageManager.LoadAbi("GiverV2"),
 			CallSet = new CallSet {
-				FunctionName = "sendGrams",
-				Input = new { dest = account, amount = 100_000_000_000_000ul }.ToJsonElement()
+				FunctionName = "sendTransaction",
+				Input = new {
+					dest = account ?? SeGiver.Address,
+					value = 100_000_000_000_000,
+					bounce = false
+				}.ToJsonElement()
 			},
-			Signer = new Signer.None()
+			Signer = SeGiver.Signer
 		};
 		await ProcessAndWaitTransactions(sendGramsEncodedMessage, cancellationToken);
 	}

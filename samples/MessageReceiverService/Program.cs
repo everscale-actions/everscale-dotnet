@@ -14,7 +14,7 @@ public static class Program {
 		           .ConfigureServices((_, services) => {
 			           services.AddHostedService<Worker>();
 			           services.AddEverClient(config => {
-				           config.Network.Endpoints = new[] { "http://localhost:8080" };
+				           config.Network.Endpoints = new[] { "http://localhost" };
 				           config.Network.WaitForTimeout = 5000;
 			           });
 		           }).UseSerilog((_, configuration) => {
