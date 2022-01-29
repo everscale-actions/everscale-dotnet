@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using EverscaleNet.Abstract;
 using EverscaleNet.Client.Models;
@@ -19,9 +20,9 @@ public class FilePackageManager : IEverPackageManager {
 		_options = optionsAccessor.Value;
 	}
 
-	public async Task<Package> LoadPackage(string name) {
-		Task<Abi> getAbiTask = LoadAbi(name);
-		Task<string> getTvcTask = LoadTvc(name);
+	public async Task<Package> LoadPackage(string name, CancellationToken cancellationToken = default) {
+		Task<Abi> getAbiTask = LoadAbi(name, cancellationToken);
+		Task<string> getTvcTask = LoadTvc(name, cancellationToken);
 		// do it parallel 
 		await Task.WhenAll(getAbiTask, getTvcTask);
 
@@ -31,19 +32,19 @@ public class FilePackageManager : IEverPackageManager {
 		return new Package(abi, tvc);
 	}
 
-	public async Task<Abi> LoadAbi(string name) {
+	public async Task<Abi> LoadAbi(string name, CancellationToken cancellationToken = default) {
 		string filePath = Path.Join(_options.PackagesPath, string.Format(AbiFileTemplate, name));
 		var fileInfo = new FileInfo(filePath);
 		await using FileStream fs = fileInfo.OpenRead();
 		var abiContract =
-			await JsonSerializer.DeserializeAsync<AbiContract>(fs, JsonOptionsProvider.JsonSerializerOptions);
+			await JsonSerializer.DeserializeAsync<AbiContract>(fs, JsonOptionsProvider.JsonSerializerOptions, cancellationToken);
 
 		return new Abi.Contract { Value = abiContract };
 	}
 
-	public async Task<string> LoadTvc(string name) {
+	public async Task<string> LoadTvc(string name, CancellationToken cancellationToken = default) {
 		string filePath = Path.Join(_options.PackagesPath, string.Format(TvcFileTemplate, name));
-		byte[] bytes = await File.ReadAllBytesAsync(filePath);
+		byte[] bytes = await File.ReadAllBytesAsync(filePath, cancellationToken);
 		return Convert.ToBase64String(bytes);
 	}
 }

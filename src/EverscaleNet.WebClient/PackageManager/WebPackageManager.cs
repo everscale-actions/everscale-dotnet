@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using EverscaleNet.Abstract;
 using EverscaleNet.Client.Models;
@@ -27,9 +28,9 @@ public class WebPackageManager : IEverPackageManager {
 		return $"{uri1}/{uri2}";
 	}
 
-	public async Task<Package> LoadPackage(string name) {
-		Task<Abi> getAbiTask = LoadAbi(name);
-		Task<string> getTvcTask = LoadTvc(name);
+	public async Task<Package> LoadPackage(string name, CancellationToken cancellationToken = default) {
+		Task<Abi> getAbiTask = LoadAbi(name, cancellationToken);
+		Task<string> getTvcTask = LoadTvc(name, cancellationToken);
 		// do it parallel 
 		await Task.WhenAll(getAbiTask, getTvcTask);
 
@@ -39,16 +40,16 @@ public class WebPackageManager : IEverPackageManager {
 		return new Package(abi, tvc);
 	}
 
-	public async Task<Abi> LoadAbi(string name) {
+	public async Task<Abi> LoadAbi(string name, CancellationToken cancellationToken = default) {
 		string fileUrl = Combine(_optionsAccessor.Value.PackagesPath, string.Format(AbiFileTemplate, name));
 		var abiContract =
-			await _httpClient.GetFromJsonAsync<AbiContract>(fileUrl, JsonOptionsProvider.JsonSerializerOptions);
+			await _httpClient.GetFromJsonAsync<AbiContract>(fileUrl, JsonOptionsProvider.JsonSerializerOptions, cancellationToken: cancellationToken);
 		return new Abi.Contract { Value = abiContract };
 	}
 
-	public async Task<string> LoadTvc(string name) {
+	public async Task<string> LoadTvc(string name, CancellationToken cancellationToken = default) {
 		string fileUrl = Combine(_optionsAccessor.Value.PackagesPath, string.Format(TvcFileTemplate, name));
-		byte[] bytes = await _httpClient.GetByteArrayAsync(fileUrl);
+		byte[] bytes = await _httpClient.GetByteArrayAsync(fileUrl, cancellationToken);
 		return Convert.ToBase64String(bytes);
 	}
 }
