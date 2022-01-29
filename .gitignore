@@ -368,3 +368,6 @@ FodyWeavers.xsd
 /src/runtimes/*
 
 tools/EverscaleNet.ClientGenerator/Resources/api.json
+
+#see src/EverscaleNet.Adapter.Wasm/DownloadLib.targets
+package.json
