@@ -171,5 +171,13 @@ namespace EverscaleNet.Client.Modules
         {
             return await _everClientAdapter.Request<ParamsOfDecodeBoc, ResultOfDecodeBoc>("abi.decode_boc", @params, cancellationToken);
         }
+
+        /// <summary>
+        /// Encodes given parameters in JSON into a BOC using param types from ABI.
+        /// </summary>
+        public async Task<ResultOfAbiEncodeBoc> EncodeBoc(ParamsOfAbiEncodeBoc @params, CancellationToken cancellationToken = default)
+        {
+            return await _everClientAdapter.Request<ParamsOfAbiEncodeBoc, ResultOfAbiEncodeBoc>("abi.encode_boc", @params, cancellationToken);
+        }
     }
 }

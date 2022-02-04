@@ -123,5 +123,10 @@ namespace EverscaleNet.Abstract.Modules
         /// <para>with the full schema.</para>
         /// </summary>
         public Task<ResultOfDecodeBoc> DecodeBoc(ParamsOfDecodeBoc @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Encodes given parameters in JSON into a BOC using param types from ABI.
+        /// </summary>
+        public Task<ResultOfAbiEncodeBoc> EncodeBoc(ParamsOfAbiEncodeBoc @params, CancellationToken cancellationToken = default);
     }
 }

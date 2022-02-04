@@ -44,29 +44,42 @@ namespace EverscaleNet.Client.Models
         }
 
         /// <summary>
-        /// Append ref to nested cells
+        /// Append ref to nested cells.
         /// </summary>
         [JsonDiscriminator("Cell")]
         public class Cell : BuilderOp
         {
             /// <summary>
-            /// Append ref to nested cells
+            /// Append ref to nested cells.
             /// </summary>
             [JsonPropertyName("builder")]
             public BuilderOp[] Builder { get; set; }
         }
 
         /// <summary>
-        /// Append ref to nested cell
+        /// Append ref to nested cell.
         /// </summary>
         [JsonDiscriminator("CellBoc")]
         public class CellBoc : BuilderOp
         {
             /// <summary>
-            /// Append ref to nested cell
+            /// Append ref to nested cell.
             /// </summary>
             [JsonPropertyName("boc")]
             public string Boc { get; set; }
+        }
+
+        /// <summary>
+        /// Address.
+        /// </summary>
+        [JsonDiscriminator("Address")]
+        public class Address : BuilderOp
+        {
+            /// <summary>
+            /// Address.
+            /// </summary>
+            [JsonPropertyName("address")]
+            public string AddressAccessor { get; set; }
         }
     }
 }

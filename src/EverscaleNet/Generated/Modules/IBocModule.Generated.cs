@@ -75,7 +75,7 @@ namespace EverscaleNet.Abstract.Modules
         public Task CacheUnpin(ParamsOfBocCacheUnpin @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Encodes bag of cells (BOC) with builder operations. This method provides the same functionality as Solidity TvmBuilder. Resulting BOC of this method can be passed into Solidity and C++ contracts as TvmCell type
+        /// Encodes bag of cells (BOC) with builder operations. This method provides the same functionality as Solidity TvmBuilder. Resulting BOC of this method can be passed into Solidity and C++ contracts as TvmCell type.
         /// </summary>
         public Task<ResultOfEncodeBoc> EncodeBoc(ParamsOfEncodeBoc @params, CancellationToken cancellationToken = default);
 
