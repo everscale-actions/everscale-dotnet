@@ -51,7 +51,7 @@ namespace EverscaleNet.Abstract.Modules
         public Task Unsubscribe(ResultOfSubscribeCollection @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// <para>Creates a subscription</para>
+        /// <para>Creates a collection subscription</para>
         /// <para>Triggers for each insert/update of data that satisfies</para>
         /// <para>the `filter` conditions.</para>
         /// <para>The projection fields are limited to `result` fields.</para>
@@ -85,6 +85,37 @@ namespace EverscaleNet.Abstract.Modules
         /// <para>refresh all cached (or visible to user) lists where this sequences presents.</para>
         /// </summary>
         public Task<ResultOfSubscribeCollection> SubscribeCollection(ParamsOfSubscribeCollection @params, Action<JsonElement,uint> callback = null, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// <para>Creates a subscription</para>
+        /// <para>The subscription is a persistent communication channel between</para>
+        /// <para>client and Everscale Network.</para>
+        /// <para>### Important Notes on Subscriptions</para>
+        /// <para>Unfortunately sometimes the connection with the network brakes down.</para>
+        /// <para>In this situation the library attempts to reconnect to the network.</para>
+        /// <para>This reconnection sequence can take significant time.</para>
+        /// <para>All of this time the client is disconnected from the network.</para>
+        /// <para>Bad news is that all changes that happened while</para>
+        /// <para>the client was disconnected are lost.</para>
+        /// <para>Good news is that the client report errors to the callback when</para>
+        /// <para>it loses and resumes connection.</para>
+        /// <para>So, if the lost changes are important to the application then</para>
+        /// <para>the application must handle these error reports.</para>
+        /// <para>Library reports errors with `responseType` == 101</para>
+        /// <para>and the error object passed via `params`.</para>
+        /// <para>When the library has successfully reconnected</para>
+        /// <para>the application receives callback with</para>
+        /// <para>`responseType` == 101 and `params.code` == 614 (NetworkModuleResumed).</para>
+        /// <para>Application can use several ways to handle this situation:</para>
+        /// <para>- If application monitors changes for the single</para>
+        /// <para>object (for example specific account):  application</para>
+        /// <para>can perform a query for this object and handle actual data as a</para>
+        /// <para>regular data from the subscription.</para>
+        /// <para>- If application monitors sequence of some objects</para>
+        /// <para>(for example transactions of the specific account): application must</para>
+        /// <para>refresh all cached (or visible to user) lists where this sequences presents.</para>
+        /// </summary>
+        public Task<ResultOfSubscribeCollection> Subscribe(ParamsOfSubscribe @params, Action<JsonElement,uint> callback = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Suspends network module to stop any network activity

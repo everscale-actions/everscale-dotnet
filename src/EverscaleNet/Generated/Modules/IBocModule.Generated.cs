@@ -101,6 +101,12 @@ namespace EverscaleNet.Abstract.Modules
         public Task<ResultOfEncodeTvc> EncodeTvc(ParamsOfEncodeTvc @params, CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// <para>Encodes a message</para>
+        /// <para>Allows to encode any external inbound message.</para>
+        /// </summary>
+        public Task<ResultOfEncodeExternalInMessage> EncodeExternalInMessage(ParamsOfEncodeExternalInMessage @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Returns the compiler version used to compile the code.
         /// </summary>
         public Task<ResultOfGetCompilerVersion> GetCompilerVersion(ParamsOfGetCompilerVersion @params, CancellationToken cancellationToken = default);

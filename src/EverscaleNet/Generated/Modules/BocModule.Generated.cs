@@ -161,6 +161,15 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
+        /// <para>Encodes a message</para>
+        /// <para>Allows to encode any external inbound message.</para>
+        /// </summary>
+        public async Task<ResultOfEncodeExternalInMessage> EncodeExternalInMessage(ParamsOfEncodeExternalInMessage @params, CancellationToken cancellationToken = default)
+        {
+            return await _everClientAdapter.Request<ParamsOfEncodeExternalInMessage, ResultOfEncodeExternalInMessage>("boc.encode_external_in_message", @params, cancellationToken);
+        }
+
+        /// <summary>
         /// Returns the compiler version used to compile the code.
         /// </summary>
         public async Task<ResultOfGetCompilerVersion> GetCompilerVersion(ParamsOfGetCompilerVersion @params, CancellationToken cancellationToken = default)
