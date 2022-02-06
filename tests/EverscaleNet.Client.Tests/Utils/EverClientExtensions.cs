@@ -46,7 +46,7 @@ public static class EverClientExtensions {
 				Boc = outMessage
 			});
 			var parsedPrototype = new { type = default(int), id = default(string) };
-			var parsedMessage = parseResult.Parsed!.Value.ToAnonymous(parsedPrototype);
+			var parsedMessage = parseResult.Parsed.ToAnonymous(parsedPrototype);
 
 			if (parsedMessage.type == 0) {
 				await everClient.Net.WaitForCollection(new ParamsOfWaitForCollection {

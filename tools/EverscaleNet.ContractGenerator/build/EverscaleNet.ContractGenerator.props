@@ -1,0 +1,8 @@
+﻿<Project TreatAsLocalProperty="TaskAssembly">
+
+    <PropertyGroup>
+        <TaskAssembly>$(MSBuildThisFileDirectory)..\tasks\netstandard2.1\EverscaleNet.ContractGenerator.dll</TaskAssembly>
+    </PropertyGroup>
+
+    <UsingTask TaskName="ch1seL.MSBuildGzTool.UnGzip" AssemblyFile="$(TaskAssembly)" />
+</Project>

@@ -60,8 +60,8 @@ public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 			Query = "query{info{version}}"
 		});
 
-		var resultParsed = result.Result!.Value.ToAnonymous(new { data = new { info = new { version = default(string) } } });
-		resultParsed.data.info.version.Split('.').Length.Should().Be(3);
+		var resultParsed = result.Result.ToAnonymous(new { data = new { info = new { version = default(string) } } });
+		resultParsed!.data.info.version.Split('.').Length.Should().Be(3);
 	}
 
 	[Fact]
@@ -128,7 +128,7 @@ public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 		var callback = new Action<JsonElement, uint>((serdeJson, responseType) => {
 			switch ((SubscriptionResponseType)responseType) {
 				case SubscriptionResponseType.Ok:
-					var result = serdeJson.ToAnonymous(new { result = new { id = default(string), account_addr = default(string) } }).result;
+					var result = serdeJson.ToAnonymous(new { result = new { id = default(string), account_addr = default(string) } })!.result;
 					lock (@lock) {
 						transactions.Add(result.id);
 						addresses.Add(result.account_addr);
