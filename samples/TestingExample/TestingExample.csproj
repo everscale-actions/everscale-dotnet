@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <UserSecretsId>7c285cbe-394d-4339-b174-6a92ccf2a2a8</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FluentAssertions" Version="6.7.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+        <PackageReference Include="Serilog.Extensions.Logging" Version="3.1.0" />
+        <PackageReference Include="Serilog.Sinks.XUnit" Version="3.0.3" />
+        <PackageReference Include="Testcontainers" Version="2.1.0" />
+        <PackageReference Include="xunit" Version="2.4.1" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\EverscaleNet.Adapter.Rust\EverscaleNet.Adapter.Rust.csproj" />
+        <ProjectReference Include="..\..\src\EverscaleNet.Client\EverscaleNet.Client.csproj" />
+        <ProjectReference Include="..\..\src\EverscaleNet.Contracts\EverscaleNet.Contracts.csproj" />
+        <ProjectReference Include="..\..\src\EverscaleNet.WebClient\EverscaleNet.WebClient.csproj" />
+    </ItemGroup>
+
+    <Import Project="..\..\src\EverscaleNet.Contracts\build\EverscaleNet.Contracts.targets" />
+
+</Project>
