@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace EverscaleNet.Abstract.Modules
 {
+    /// <summary>
+    /// Net Module
+    /// </summary>
     public interface INetModule : IEverModule
     {
         /// <summary>

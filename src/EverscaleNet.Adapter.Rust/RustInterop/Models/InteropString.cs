@@ -7,7 +7,7 @@ namespace EverscaleNet.Adapter.Rust.RustInterop.Models;
 
 [StructLayout(LayoutKind.Sequential)]
 [SuppressMessage("ReSharper", "FieldCanBeMadeReadOnly.Local")]
-public struct InteropString {
+internal struct InteropString {
 	private IntPtr Pointer;
 	private uint Length;
 

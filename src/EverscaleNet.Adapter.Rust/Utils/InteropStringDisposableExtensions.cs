@@ -2,8 +2,8 @@
 
 namespace EverscaleNet.Adapter.Rust.Utils;
 
-public static class InteropStringDisposableExtensions {
-	public static InteropStringDisposable ToInteropStringDisposable(this string str) {
+internal static class InteropStringDisposableExtensions {
+	internal static InteropStringDisposable ToInteropStringDisposable(this string str) {
 		return InteropStringDisposable.CreateAndAlloc(str);
 	}
 }

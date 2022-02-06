@@ -2,6 +2,9 @@ using EverscaleNet.Abstract.Modules;
 
 namespace EverscaleNet.Abstract
 {
+    /// <summary>
+    /// IEverClient
+    /// </summary>
     public interface IEverClient
     {
         /// <summary>

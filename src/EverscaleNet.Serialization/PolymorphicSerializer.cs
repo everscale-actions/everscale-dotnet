@@ -4,11 +4,15 @@ using System.Text.Json;
 
 namespace EverscaleNet.Serialization;
 
+/// <summary>
+/// </summary>
 public static class PolymorphicSerializer {
-	public static TEvent Deserialize<TEvent>(string json) {
-		return Deserialize<TEvent>(JsonDocument.Parse(json).RootElement);
-	}
-
+	/// <summary>
+	///     Deserialize JsonElement to Polymorphic type
+	/// </summary>
+	/// <param name="jsonElement"></param>
+	/// <typeparam name="TEvent"></typeparam>
+	/// <returns></returns>
 	public static TEvent Deserialize<TEvent>(JsonElement jsonElement) {
 		if (typeof(TEvent) == typeof(JsonElement)) {
 			return (TEvent)(object)jsonElement;

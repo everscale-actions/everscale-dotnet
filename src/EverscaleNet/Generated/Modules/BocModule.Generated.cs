@@ -8,10 +8,16 @@ using System.Threading.Tasks;
 
 namespace EverscaleNet.Client.Modules
 {
+    /// <summary>
+    /// Boc Module
+    /// </summary>
     public class BocModule : IBocModule
     {
         private readonly IEverClientAdapter _everClientAdapter;
 
+        /// <summary>
+        /// .ctor
+        /// </summary>
         public BocModule(IEverClientAdapter everClientAdapter)
         {
             _everClientAdapter = everClientAdapter;

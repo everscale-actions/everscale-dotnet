@@ -8,10 +8,16 @@ using System.Threading.Tasks;
 
 namespace EverscaleNet.Client.Modules
 {
+    /// <summary>
+    /// Utils Module
+    /// </summary>
     public class UtilsModule : IUtilsModule
     {
         private readonly IEverClientAdapter _everClientAdapter;
 
+        /// <summary>
+        /// .ctor
+        /// </summary>
         public UtilsModule(IEverClientAdapter everClientAdapter)
         {
             _everClientAdapter = everClientAdapter;

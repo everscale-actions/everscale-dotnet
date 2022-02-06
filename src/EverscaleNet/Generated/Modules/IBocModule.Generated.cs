@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace EverscaleNet.Abstract.Modules
 {
+    /// <summary>
+    /// Boc Module
+    /// </summary>
     public interface IBocModule : IEverModule
     {
         /// <summary>

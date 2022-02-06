@@ -90,7 +90,7 @@ public class MessageSender {
 		}
 
 		JsonElement account = result.Result[0];
-		decimal balance = account.Get<string>("balance").DecToBalance();
+		decimal balance = account.Get<string>("balance").DecBalanceToCoins();
 		var accType = account.Get<int>("acc_type");
 		switch (accType) {
 			case 0 when balance < 0.5m:

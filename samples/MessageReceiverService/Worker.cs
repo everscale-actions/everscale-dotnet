@@ -96,7 +96,7 @@ public class Worker : BackgroundService {
 			Limit = 1
 		}, cancellationToken);
 
-		if (result.Result.Length == 0 || result.Result[0].Get<string>("balance").DecToBalance() < 10m) {
+		if (result.Result.Length == 0 || result.Result[0].Get<string>("balance").DecBalanceToCoins() < 10m) {
 			await SendGramsFromGiver(encoded.Address, cancellationToken);
 		}
 

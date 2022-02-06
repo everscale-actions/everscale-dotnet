@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace EverscaleNet.Abstract.Modules
 {
+    /// <summary>
+    /// Crypto Module
+    /// </summary>
     public interface ICryptoModule : IEverModule
     {
         /// <summary>

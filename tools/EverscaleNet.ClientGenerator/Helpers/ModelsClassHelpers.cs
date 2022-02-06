@@ -25,16 +25,22 @@ internal class ModelsClassHelpers {
 		return EnumDeclaration(Identifier(NamingConventions.Normalize(typeElement.Name)))
 		       .AddMembers(typeElement
 		                   .EnumConsts
-		                   .Select(e => e.Value == null
-			                                ? EnumMemberDeclaration(e.Name)
-			                                : EnumMemberDeclaration(e.Name)
-				                                .WithEqualsValue(EqualsValueClause(
-					                                                 LiteralExpression(
-						                                                 SyntaxKind.NumericLiteralExpression,
-						                                                 Literal(int.Parse(e.Value))))))
+		                   .Select(EnumSelector)
 		                   .ToArray())
 		       .AddModifiers(Token(SyntaxKind.PublicKeyword)
 			                     .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(summary)));
+	}
+
+	private static EnumMemberDeclarationSyntax EnumSelector(EnumConst e) {
+		EnumMemberDeclarationSyntax enumMember = e.Value == null
+			                                         ? EnumMemberDeclaration(e.Name)
+			                                         : EnumMemberDeclaration(e.Name)
+				                                         .WithEqualsValue(EqualsValueClause(
+					                                                          LiteralExpression(
+						                                                          SyntaxKind.NumericLiteralExpression,
+						                                                          Literal(int.Parse(e.Value)))));
+		return enumMember
+			.WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(null));
 	}
 
 	private static MemberDeclarationSyntax CreatePropertyForPurpleTypeOptionalOptional(string name,

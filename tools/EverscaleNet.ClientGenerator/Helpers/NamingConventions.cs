@@ -7,7 +7,7 @@ public static class NamingConventions {
 	private static readonly Regex FieldRegex = new(@"(^)(?'firstChar'\w)", RegexOptions.Compiled);
 
 	public static string Normalize(string name) {
-		if (name.Contains(".")) {
+		if (name.Contains('.')) {
 			name = name.Split(".")[1];
 		}
 

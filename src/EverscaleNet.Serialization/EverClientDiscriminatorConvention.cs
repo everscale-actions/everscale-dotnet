@@ -6,6 +6,8 @@ using System.Text.Json.Serialization;
 using Dahomey.Json;
 using Dahomey.Json.Serialization.Conventions;
 
+#pragma warning disable CS1591
+
 namespace EverscaleNet.Serialization;
 
 public class EverClientDiscriminatorConvention : IDiscriminatorConvention {

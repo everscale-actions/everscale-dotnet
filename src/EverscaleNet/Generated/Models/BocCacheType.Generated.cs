@@ -27,7 +27,7 @@ namespace EverscaleNet.Client.Models
         }
 
         /// <summary>
-        ///  
+        /// Not described yet..
         /// </summary>
         [JsonDiscriminator("Unpinned")]
         public class Unpinned : BocCacheType

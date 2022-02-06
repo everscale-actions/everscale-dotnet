@@ -11,7 +11,7 @@ internal static class CommentsHelpers {
 	private static readonly SyntaxToken XmlNewline = XmlTextNewLine(Environment.NewLine);
 
 	public static SyntaxTriviaList BuildCommentTrivia(string comment) {
-		if (string.IsNullOrEmpty(comment)) {
+		if (string.IsNullOrWhiteSpace(comment)) {
 			comment = "Not described yet..";
 		}
 

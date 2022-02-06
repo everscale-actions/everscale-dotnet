@@ -502,41 +502,30 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 		RegisteredSigningBox registeredSigningBox = await _everClient.Crypto.GetSigningBox(keys);
 		uint keyBoxHandle = registeredSigningBox.Handle;
 
-		var callback = new Action<JsonElement, uint>(async (request, _) => {
+		async void Action(JsonElement request, uint _) {
 			var paramsOfAppRequest = PolymorphicSerializer.Deserialize<ParamsOfAppRequest>(request);
 
 			switch (PolymorphicSerializer.Deserialize<ParamsOfAppSigningBox>(paramsOfAppRequest.RequestData!.Value)) {
 				case ParamsOfAppSigningBox.GetPublicKey _: {
-					ResultOfSigningBoxGetPublicKey resultOfSigningBoxGetPublicKey =
-						await _everClient.Crypto.SigningBoxGetPublicKey(new RegisteredSigningBox {
-							Handle = keyBoxHandle
-						});
+					ResultOfSigningBoxGetPublicKey resultOfSigningBoxGetPublicKey = await _everClient.Crypto.SigningBoxGetPublicKey(new RegisteredSigningBox { Handle = keyBoxHandle });
 					await _everClient.Client.ResolveAppRequest(new ParamsOfResolveAppRequest {
 						AppRequestId = paramsOfAppRequest.AppRequestId,
-						Result = new AppRequestResult.Ok {
-							Result = new ResultOfAppSigningBox.GetPublicKey
-								{ PublicKey = resultOfSigningBoxGetPublicKey.Pubkey }.ToJsonElement()
-						}
+						Result = new AppRequestResult.Ok { Result = new ResultOfAppSigningBox.GetPublicKey { PublicKey = resultOfSigningBoxGetPublicKey.Pubkey }.ToJsonElement() }
 					});
 					break;
 				}
 				case ParamsOfAppSigningBox.Sign sign: {
-					ResultOfSigningBoxSign resultOfSigningBoxSign = await _everClient.Crypto.SigningBoxSign(
-						                                                new ParamsOfSigningBoxSign {
-							                                                SigningBox = keyBoxHandle,
-							                                                Unsigned = sign.Unsigned
-						                                                });
+					ResultOfSigningBoxSign resultOfSigningBoxSign = await _everClient.Crypto.SigningBoxSign(new ParamsOfSigningBoxSign { SigningBox = keyBoxHandle, Unsigned = sign.Unsigned });
 					await _everClient.Client.ResolveAppRequest(new ParamsOfResolveAppRequest {
 						AppRequestId = paramsOfAppRequest.AppRequestId,
-						Result = new AppRequestResult.Ok {
-							Result = new ResultOfAppSigningBox.Sign { Signature = resultOfSigningBoxSign.Signature }
-								.ToJsonElement()
-						}
+						Result = new AppRequestResult.Ok { Result = new ResultOfAppSigningBox.Sign { Signature = resultOfSigningBoxSign.Signature }.ToJsonElement() }
 					});
 					break;
 				}
 			}
-		});
+		}
+
+		var callback = new Action<JsonElement, uint>(Action);
 
 		// act
 		RegisteredSigningBox externalBox = await _everClient.Crypto.RegisterSigningBox(callback);

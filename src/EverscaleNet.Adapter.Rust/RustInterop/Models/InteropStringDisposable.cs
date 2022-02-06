@@ -6,7 +6,7 @@ namespace EverscaleNet.Adapter.Rust.RustInterop.Models;
 
 //we have to use separate disposable struct to avoid use unmanaged shared resources
 [StructLayout(LayoutKind.Sequential)]
-public struct InteropStringDisposable : IDisposable {
+internal struct InteropStringDisposable : IDisposable {
 	private IntPtr Pointer;
 	private uint Length;
 

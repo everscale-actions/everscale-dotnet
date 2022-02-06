@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using EverscaleNet.Client.Models;
 
+#pragma warning disable CS1591
+
 namespace EverscaleNet.Debot.Models;
 
 public class DebotBrowserData {

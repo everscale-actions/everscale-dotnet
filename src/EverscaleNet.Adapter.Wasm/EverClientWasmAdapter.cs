@@ -11,12 +11,14 @@ using Microsoft.JSInterop;
 
 namespace EverscaleNet.Adapter.Wasm;
 
+/// <inheritdoc />
 public class EverClientWasmAdapter : EverClientAdapterBase {
 	private readonly IJSRuntime _jsRuntime;
 	private readonly ILogger<EverClientWasmAdapter> _logger;
 	private readonly IOptions<EverClientOptions> _optionsAccessor;
 	private IJSObjectReference? _libWeb;
 
+	/// <inheritdoc />
 	public EverClientWasmAdapter(IJSRuntime jsRuntime, IOptions<EverClientOptions> optionsAccessor,
 	                             ILogger<EverClientWasmAdapter> logger) : base(logger) {
 		_jsRuntime = jsRuntime;
@@ -24,6 +26,7 @@ public class EverClientWasmAdapter : EverClientAdapterBase {
 		_logger = logger;
 	}
 
+	/// <inheritdoc />
 	public override async ValueTask DisposeAsync() {
 		if (_libWeb is not null) {
 			await _libWeb.InvokeAsync<string>("destroyContext", ContextId);
@@ -31,11 +34,19 @@ public class EverClientWasmAdapter : EverClientAdapterBase {
 		}
 	}
 
+	/// <summary>
+	///     Method called by js client
+	/// </summary>
+	/// <param name="requestId"></param>
+	/// <param name="responseJson"></param>
+	/// <param name="responseType"></param>
+	/// <param name="finished"></param>
 	[JSInvokable]
 	public void ResponseHandler(uint requestId, string responseJson, uint responseType, bool finished) {
 		ResponseHandlerBase(requestId, responseJson, responseType, finished);
 	}
 
+	/// <inheritdoc />
 	protected override async Task RequestImpl(uint requestId, string requestJson,
 	                                          string method,
 	                                          CancellationToken cancellationToken = default) {
@@ -46,6 +57,7 @@ public class EverClientWasmAdapter : EverClientAdapterBase {
 		                                                                         requestJson);
 	}
 
+	/// <inheritdoc />
 	protected override async Task<uint> CreateContext(CancellationToken cancellationToken) {
 		var module = await _jsRuntime.InvokeAsync<IJSObjectReference>("import", cancellationToken,
 		                                                              "/_content/EverscaleNet.Adapter.Wasm/js/tonclient-adapter.js");
@@ -57,6 +69,6 @@ public class EverClientWasmAdapter : EverClientAdapterBase {
 		var resultJson =
 			await _libWeb.InvokeAsync<string>("createContext", cancellationToken, configJson);
 
-		return GetContextIdByJson(resultJson);
+		return GetContextIdByCreatedContextJson(resultJson);
 	}
 }

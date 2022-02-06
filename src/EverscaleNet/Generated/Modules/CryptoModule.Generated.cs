@@ -8,10 +8,16 @@ using System.Threading.Tasks;
 
 namespace EverscaleNet.Client.Modules
 {
+    /// <summary>
+    /// Crypto Module
+    /// </summary>
     public class CryptoModule : ICryptoModule
     {
         private readonly IEverClientAdapter _everClientAdapter;
 
+        /// <summary>
+        /// .ctor
+        /// </summary>
         public CryptoModule(IEverClientAdapter everClientAdapter)
         {
             _everClientAdapter = everClientAdapter;

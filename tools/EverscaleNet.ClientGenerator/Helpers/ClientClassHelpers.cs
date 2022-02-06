@@ -32,14 +32,16 @@ internal static class ClientClassHelpers {
 		                                                      .AddParameterListParameters(Parameter(Identifier("everClientAdapter"))
 			                                                                                  .WithType(IdentifierName("IEverClientAdapter")))
 		                                                      .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
-		                                                      .WithBody(Block(statementSyntax));
+		                                                      .WithBody(Block(statementSyntax))
+		                                                      .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(".ctor"));
 
 		ClassDeclarationSyntax item = ClassDeclaration(unitName)
 		                              .AddModifiers(Token(SyntaxKind.PublicKeyword))
 		                              .AddBaseListTypes(SimpleBaseType(IdentifierName("IEverClient")))
 		                              .AddMembers(fieldDeclaration)
 		                              .AddMembers(constructorDeclaration)
-		                              .AddMembers(propertyDeclarationSyntaxes);
+		                              .AddMembers(propertyDeclarationSyntaxes)
+		                              .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(unitName));
 
 		return NamespaceDeclaration(IdentifierName(ClientGenerator.Namespace))
 			.AddMembers(item);
@@ -50,7 +52,8 @@ internal static class ClientClassHelpers {
 
 		InterfaceDeclarationSyntax item = InterfaceDeclaration(unitName)
 		                                  .AddModifiers(Token(SyntaxKind.PublicKeyword))
-		                                  .AddMembers(propertyDeclarationSyntaxes);
+		                                  .AddMembers(propertyDeclarationSyntaxes)
+		                                  .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(unitName));
 
 		return NamespaceDeclaration(IdentifierName(ClientGenerator.NamespaceAbstract))
 			.AddMembers(item);

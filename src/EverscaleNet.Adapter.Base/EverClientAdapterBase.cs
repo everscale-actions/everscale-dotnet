@@ -12,10 +12,14 @@ using Microsoft.Extensions.Logging;
 
 namespace EverscaleNet.Adapter.Base;
 
+/// <inheritdoc />
 public abstract class EverClientAdapterBase : IEverClientAdapter {
 	private const string EmptyJson = "{}";
 	private static readonly TimeSpan CoreExecutionTimeOut = TimeSpan.FromMinutes(2);
 
+	/// <summary>
+	///     Current context id
+	/// </summary>
 	protected uint ContextId;
 	private readonly object _lock = new();
 	private readonly ILogger _logger;
@@ -26,11 +30,21 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 
 	private uint _requestId;
 
+	/// <summary>
+	///     Adapter .ctor
+	/// </summary>
+	/// <param name="logger"></param>
 	protected EverClientAdapterBase(ILogger logger) {
 		_logger = logger;
 	}
 
-	protected static uint GetContextIdByJson(string json) {
+	/// <summary>
+	///     Deserialize CreateContextResponse from json and return context id
+	/// </summary>
+	/// <param name="json">CreateContextResponse json string</param>
+	/// <returns>Context Id</returns>
+	/// <exception cref="EverClientException"></exception>
+	protected static uint GetContextIdByCreatedContextJson(string json) {
 		var createContextResult = JsonSerializer.Deserialize<CreateContextResponse>(json, JsonOptionsProvider.JsonSerializerOptions);
 		ClientError error = createContextResult?.Error;
 		if (error != null) {
@@ -45,9 +59,10 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 	}
 
 	private static Action<string, uint> DeserializeCallback<TEvent>(Action<TEvent, uint> callback) {
-		return (callbackResponseJson, responseType) => { callback?.Invoke(PolymorphicSerializer.Deserialize<TEvent>(callbackResponseJson), responseType); };
+		return (callbackResponseJson, responseType) => { callback?.Invoke(PolymorphicSerializer.Deserialize<TEvent>(JsonDocument.Parse(callbackResponseJson).RootElement), responseType); };
 	}
 
+	/// <inheritdoc />
 	public virtual async ValueTask DisposeAsync() {
 		bool waitDelegatesResult = await WaitForDelegates();
 		if (!waitDelegatesResult) {
@@ -58,10 +73,12 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 		_logger.LogTrace("Context {Context} disposed", ContextId);
 	}
 
+	/// <inheritdoc />
 	public async Task Request(string method, CancellationToken cancellationToken = default) {
 		await Request(method, EmptyJson, null, cancellationToken);
 	}
 
+	/// <inheritdoc />
 	public async Task<TResponse> Request<TResponse>(string method, CancellationToken cancellationToken = default)
 		where TResponse : new() {
 		string responseJson = await Request(method, EmptyJson, null, cancellationToken);
@@ -69,6 +86,7 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 		return JsonSerializer.Deserialize<TResponse>(responseJson, JsonOptionsProvider.JsonSerializerOptions);
 	}
 
+	/// <inheritdoc />
 	public async Task<TResponse> Request<TResponse, TEvent>(string method, Action<TEvent, uint> callback,
 	                                                        CancellationToken cancellationToken = default) where TResponse : new() {
 		string responseJson = await Request(method, EmptyJson, DeserializeCallback(callback), cancellationToken);
@@ -76,6 +94,7 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 		return JsonSerializer.Deserialize<TResponse>(responseJson, JsonOptionsProvider.JsonSerializerOptions);
 	}
 
+	/// <inheritdoc />
 	public async Task<TResponse> Request<TRequest, TResponse, TEvent>(string method, TRequest request,
 	                                                                  Action<TEvent, uint> callback,
 	                                                                  CancellationToken cancellationToken = default) where TRequest : new() where TResponse : new() {
@@ -86,6 +105,7 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 		return JsonSerializer.Deserialize<TResponse>(responseJson, JsonOptionsProvider.JsonSerializerOptions);
 	}
 
+	/// <inheritdoc />
 	public async Task Request<TRequest>(string method, TRequest request,
 	                                    CancellationToken cancellationToken = default) where TRequest : new() {
 		string requestJson = JsonSerializer.Serialize(request, JsonOptionsProvider.JsonSerializerOptions);
@@ -93,6 +113,7 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 		await Request(method, requestJson, null, cancellationToken);
 	}
 
+	/// <inheritdoc />
 	public async Task<TResponse> Request<TRequest, TResponse>(string method, TRequest request,
 	                                                          CancellationToken cancellationToken = default) where TRequest : new() where TResponse : new() {
 		string requestJson = JsonSerializer.Serialize(request, JsonOptionsProvider.JsonSerializerOptions);
@@ -102,11 +123,32 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 		return JsonSerializer.Deserialize<TResponse>(responseJson, JsonOptionsProvider.JsonSerializerOptions);
 	}
 
+	/// <summary>
+	///     Create context method
+	/// </summary>
+	/// <param name="cancellationToken"></param>
+	/// <returns>Created context Id</returns>
 	protected abstract Task<uint> CreateContext(CancellationToken cancellationToken);
 
+	/// <summary>
+	///     Raw request method implementation
+	/// </summary>
+	/// <param name="requestId"></param>
+	/// <param name="requestJson"></param>
+	/// <param name="method"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
 	protected abstract Task RequestImpl(uint requestId, string requestJson, string method,
 	                                    CancellationToken cancellationToken = default);
 
+	/// <summary>
+	///     Raw response handler implementation
+	/// </summary>
+	/// <param name="requestId"></param>
+	/// <param name="responseJson"></param>
+	/// <param name="responseType"></param>
+	/// <param name="finished"></param>
+	/// <exception cref="EverClientException"></exception>
 	protected void ResponseHandlerBase(uint requestId, string responseJson, uint responseType, bool finished) {
 		_logger.LogTrace(
 			"Got request response context:{Context} request:{Request} type:{ResponseType} finished:{Finished} body:{Body}",
@@ -146,6 +188,9 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 			// do nothing
 			case ResponseType.Nop:
 				return;
+			case ResponseType.AppRequest:
+			case ResponseType.AppNotify:
+			case ResponseType.Custom:
 			default:
 				// it is callback if responseType>=3 
 				_logger.LogTrace("Sending callback context:{Context} request:{Request} body:{Body}", ContextId,

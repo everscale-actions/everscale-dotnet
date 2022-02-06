@@ -8,10 +8,16 @@ using System.Threading.Tasks;
 
 namespace EverscaleNet.Client.Modules
 {
+    /// <summary>
+    /// Proofs Module
+    /// </summary>
     public class ProofsModule : IProofsModule
     {
         private readonly IEverClientAdapter _everClientAdapter;
 
+        /// <summary>
+        /// .ctor
+        /// </summary>
         public ProofsModule(IEverClientAdapter everClientAdapter)
         {
             _everClientAdapter = everClientAdapter;

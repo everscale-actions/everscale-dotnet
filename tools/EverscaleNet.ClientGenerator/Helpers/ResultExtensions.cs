@@ -22,6 +22,13 @@ internal static class ResultExtensions {
 				return null;
 			case GenericArgType.Ref:
 				return NamingConventions.Normalize(genericArg.RefName);
+			case GenericArgType.Boolean:
+			case GenericArgType.Optional:
+			case GenericArgType.String:
+			case GenericArgType.Struct:
+			case GenericArgType.Number:
+			case GenericArgType.Array:
+			case GenericArgType.BigInt:
 			default:
 				throw new ArgumentOutOfRangeException(nameof(Type), genericArg.Type, "Unsupported generic type");
 		}

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace EverscaleNet.Abstract.Modules
 {
+    /// <summary>
+    /// Debot Module
+    /// </summary>
     public interface IDebotModule : IEverModule
     {
         /// <summary>

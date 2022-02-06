@@ -25,22 +25,26 @@ public class EverClientRustAdapter : EverClientAdapterBase {
 	private readonly ILogger<EverClientRustAdapter> _logger;
 	private readonly IOptions<EverClientOptions> _optionsAccessor;
 
+	/// <inheritdoc />
 	public EverClientRustAdapter(IOptions<EverClientOptions> optionsAccessor, ILogger<EverClientRustAdapter> logger) :
 		base(logger) {
 		_optionsAccessor = optionsAccessor;
 		_logger = logger;
 	}
 
+	/// <inheritdoc />
 	public EverClientRustAdapter(IOptions<EverClientOptions> optionsAccessor) : base(NullLogger.Instance) {
 		_optionsAccessor = optionsAccessor;
 		_logger = NullLogger<EverClientRustAdapter>.Instance;
 	}
 
+	/// <inheritdoc />
 	public override async ValueTask DisposeAsync() {
 		RustInteropInterface.tc_destroy_context(ContextId);
 		await base.DisposeAsync();
 	}
 
+	/// <inheritdoc />
 	protected override Task<uint> CreateContext(CancellationToken cancellationToken) {
 		string configJson =
 			JsonSerializer.Serialize(_optionsAccessor.Value, JsonOptionsProvider.JsonSerializerOptions);
@@ -54,10 +58,11 @@ public class EverClientRustAdapter : EverClientAdapterBase {
 		RustInteropInterface.tc_destroy_string(resultPtr);
 		_logger.LogTrace("Got context creation result: {Result}", resultJson);
 
-		uint contextId = GetContextIdByJson(resultJson);
+		uint contextId = GetContextIdByCreatedContextJson(resultJson);
 		return Task.FromResult(contextId);
 	}
 
+	/// <inheritdoc />
 	protected override Task RequestImpl(uint requestId, string requestJson, string method,
 	                                    CancellationToken cancellationToken = default) {
 		var callbackDelegate =

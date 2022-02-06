@@ -25,7 +25,8 @@ internal static class ModulesClassHelpers {
 		                                                      .AddParameterListParameters(
 			                                                      Parameter(Identifier("everClientAdapter")).WithType(IdentifierName("IEverClientAdapter")))
 		                                                      .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
-		                                                      .WithBody(Block(statementSyntax));
+		                                                      .WithBody(Block(statementSyntax))
+		                                                      .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(".ctor"));
 
 		MemberDeclarationSyntax[] methods = module
 		                                    .Functions
@@ -37,7 +38,8 @@ internal static class ModulesClassHelpers {
 		                              .AddBaseListTypes(SimpleBaseType(IdentifierName(NamingConventions.ToInterfaceName(moduleName))))
 		                              .AddMembers(fieldDeclaration)
 		                              .AddMembers(constructorDeclaration)
-		                              .AddMembers(methods);
+		                              .AddMembers(methods)
+		                              .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia($"{unitName} Module"));
 
 		return NamespaceDeclaration(IdentifierName(ClientGenerator.NamespaceModules))
 			.AddMembers(item);
@@ -54,7 +56,8 @@ internal static class ModulesClassHelpers {
 		InterfaceDeclarationSyntax item = InterfaceDeclaration($"I{moduleName}")
 		                                  .AddModifiers(Token(SyntaxKind.PublicKeyword))
 		                                  .AddBaseListTypes(SimpleBaseType(IdentifierName("IEverModule")))
-		                                  .AddMembers(methods);
+		                                  .AddMembers(methods)
+		                                  .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia($"{unitName} Module"));
 
 		return NamespaceDeclaration(IdentifierName(ClientGenerator.NamespaceAbstractModules))
 			.AddMembers(item);

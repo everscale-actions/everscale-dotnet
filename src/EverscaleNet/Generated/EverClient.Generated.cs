@@ -5,10 +5,16 @@ using System;
 
 namespace EverscaleNet.Client
 {
+    /// <summary>
+    /// EverClient
+    /// </summary>
     public class EverClient : IEverClient
     {
         private readonly IEverClientAdapter _everClientAdapter;
 
+        /// <summary>
+        /// .ctor
+        /// </summary>
         public EverClient(IEverClientAdapter everClientAdapter)
         {
             _everClientAdapter = everClientAdapter;

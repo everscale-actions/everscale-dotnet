@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace EverscaleNet.Abstract.Modules
 {
+    /// <summary>
+    /// Abi Module
+    /// </summary>
     public interface IAbiModule : IEverModule
     {
         /// <summary>

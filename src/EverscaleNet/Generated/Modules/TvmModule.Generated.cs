@@ -8,10 +8,16 @@ using System.Threading.Tasks;
 
 namespace EverscaleNet.Client.Modules
 {
+    /// <summary>
+    /// Tvm Module
+    /// </summary>
     public class TvmModule : ITvmModule
     {
         private readonly IEverClientAdapter _everClientAdapter;
 
+        /// <summary>
+        /// .ctor
+        /// </summary>
         public TvmModule(IEverClientAdapter everClientAdapter)
         {
             _everClientAdapter = everClientAdapter;

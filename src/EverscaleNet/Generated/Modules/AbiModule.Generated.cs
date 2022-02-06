@@ -8,10 +8,16 @@ using System.Threading.Tasks;
 
 namespace EverscaleNet.Client.Modules
 {
+    /// <summary>
+    /// Abi Module
+    /// </summary>
     public class AbiModule : IAbiModule
     {
         private readonly IEverClientAdapter _everClientAdapter;
 
+        /// <summary>
+        /// .ctor
+        /// </summary>
         public AbiModule(IEverClientAdapter everClientAdapter)
         {
             _everClientAdapter = everClientAdapter;

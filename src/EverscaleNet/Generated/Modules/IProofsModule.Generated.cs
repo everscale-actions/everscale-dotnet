@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace EverscaleNet.Abstract.Modules
 {
+    /// <summary>
+    /// Proofs Module
+    /// </summary>
     public interface IProofsModule : IEverModule
     {
         /// <summary>

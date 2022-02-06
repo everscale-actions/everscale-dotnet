@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace EverscaleNet.Abstract.Modules
 {
+    /// <summary>
+    /// Client Module
+    /// </summary>
     public interface IClientModule : IEverModule
     {
         /// <summary>
