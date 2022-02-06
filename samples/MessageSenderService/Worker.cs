@@ -15,16 +15,6 @@ namespace MessageSenderService;
 public class Worker : BackgroundService {
 	private const string Mnemonic = "spin tilt boss upper random exit spice ankle leave grief short clever";
 
-	private static class SeGiver {
-		public const string Address = "0:ece57bcc6c530283becbbd8a3b24d3c5987cdddc3c8b7b33be6e4a6312490415";
-		public static readonly Signer Signer = new Signer.Keys {
-			KeysAccessor = new KeyPair {
-				Public = "2ada2e65ab8eeab09490e3521415f45b6e42df9c760a639bcf53957550b25a16",
-				Secret = "172af540e43a524763dd53b26a066d472a97c4de37d5498170564510608250c3"
-			}
-		};
-	}
-
 	private const string SenderContractName = "15_MessageSender";
 	private const string ReceiverContractName = "15_MessageReceiver";
 	private readonly ILogger<Worker> _logger;
@@ -41,8 +31,8 @@ public class Worker : BackgroundService {
 		while (!stoppingToken.IsCancellationRequested) {
 			try {
 				// load contracts from abi.json and tvc files 
-				Package senderContract = await _packageManager.LoadPackage(SenderContractName);
-				Package receiverContract = await _packageManager.LoadPackage(ReceiverContractName);
+				Package senderContract = await _packageManager.LoadPackage(SenderContractName, stoppingToken);
+				Package receiverContract = await _packageManager.LoadPackage(ReceiverContractName, stoppingToken);
 
 				// get keys by mnemonic
 				KeyPair keys =
@@ -149,7 +139,7 @@ public class Worker : BackgroundService {
 	private async Task SendGramsFromGiver(string account, CancellationToken cancellationToken) {
 		var sendGramsEncodedMessage = new ParamsOfEncodeMessage {
 			Address = SeGiver.Address,
-			Abi = await _packageManager.LoadAbi("GiverV2"),
+			Abi = await _packageManager.LoadAbi("GiverV2", cancellationToken),
 			CallSet = new CallSet {
 				FunctionName = "sendTransaction",
 				Input = new {
@@ -182,5 +172,15 @@ public class Worker : BackgroundService {
 				}, cancellationToken);
 			}
 		}));
+	}
+
+	private static class SeGiver {
+		public const string Address = "0:ece57bcc6c530283becbbd8a3b24d3c5987cdddc3c8b7b33be6e4a6312490415";
+		public static readonly Signer Signer = new Signer.Keys {
+			KeysAccessor = new KeyPair {
+				Public = "2ada2e65ab8eeab09490e3521415f45b6e42df9c760a639bcf53957550b25a16",
+				Secret = "172af540e43a524763dd53b26a066d472a97c4de37d5498170564510608250c3"
+			}
+		};
 	}
 }
