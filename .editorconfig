@@ -959,6 +959,7 @@ resharper_xml_space_before_self_closing = true
 resharper_xml_wrap_lines = true
 resharper_xml_wrap_tags_and_pi = true
 resharper_xml_wrap_text = false
+ij_xml_space_inside_empty_tag = true
 
 # ReSharper inspection severities
 resharper_access_rights_in_text_highlighting = warning
@@ -3418,7 +3419,6 @@ resharper_xaml_xaml_xamarin_forms_data_type_and_binding_context_type_mismatched_
 resharper_xaml_x_key_attribute_disallowed_highlighting = error
 resharper_xunit_xunit_test_with_console_output_highlighting = warning
 
-[*.{appxmanifest,asax,ascx,aspx,axaml,build,cs,cshtml,dtd,master,nuspec,paml,razor,skin,xaml,xamlx,xoml,xsd}]
-indent_style = tab
-indent_size = tab
+[*.{appxmanifest,asax,ascx,aspx,axaml,build,cs,cshtml,dtd,master,nuspec,paml,razor,skin,xaml,xamlx,xoml,xsd,csproj}]
 tab_width = 4
+indent_size = 4
