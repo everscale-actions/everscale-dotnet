@@ -16,11 +16,11 @@ public static class EverExceptionSerializer {
 	/// <param name="responseJson">Raw response</param>
 	/// <returns>EverClientException</returns>
 	public static EverClientException GetEverClientExceptionByResponse(string responseJson) {
-		ClientError clientError = null;
-		Exception innerException = null;
+		ClientError? clientError = null;
+		Exception? innerException = null;
 		try {
 			clientError = JsonSerializer.Deserialize<ClientError>(responseJson, JsonOptionsProvider.JsonSerializerOptions);
-		} catch (Exception e) {
+		} catch (Exception? e) {
 			innerException = e;
 		}
 

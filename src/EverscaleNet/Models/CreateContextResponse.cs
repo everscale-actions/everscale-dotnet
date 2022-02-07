@@ -17,5 +17,5 @@ public class CreateContextResponse {
 	///     Error if failed or null if context was created successfully
 	/// </summary>
 	[JsonPropertyName("error")]
-	public ClientError Error { get; set; }
+	public ClientError? Error { get; set; }
 }

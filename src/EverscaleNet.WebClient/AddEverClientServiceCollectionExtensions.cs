@@ -29,8 +29,8 @@ public static class AddEverClientServiceCollectionExtensions {
 	/// <returns></returns>
 	// ReSharper enable CommentTypo
 	public static IServiceCollection AddEverClient(this IServiceCollection services,
-	                                               Action<EverClientOptions> configureEverClientOptions = null,
-	                                               Action<WebPackageManagerOptions> configurePackageManagerOptions = null) {
+	                                               Action<EverClientOptions>? configureEverClientOptions = null,
+	                                               Action<WebPackageManagerOptions>? configurePackageManagerOptions = null) {
 		if (configureEverClientOptions != null) {
 			services.Configure(configureEverClientOptions);
 		}
