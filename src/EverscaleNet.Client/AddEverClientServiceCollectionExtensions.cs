@@ -27,8 +27,8 @@ public static class AddEverClientServiceCollectionExtensions {
 	/// </param>
 	/// <returns></returns>
 	public static IServiceCollection AddEverClient(this IServiceCollection services,
-	                                               Action<EverClientOptions> configureEverClientOptions = null,
-	                                               Action<FilePackageManagerOptions> configurePackageManagerOptions = null) {
+	                                               Action<EverClientOptions>? configureEverClientOptions = null,
+	                                               Action<FilePackageManagerOptions>? configurePackageManagerOptions = null) {
 		if (configureEverClientOptions != null) {
 			services.Configure(configureEverClientOptions);
 		}

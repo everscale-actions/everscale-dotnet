@@ -42,18 +42,18 @@ public class EverClientDiscriminatorConvention : IDiscriminatorConvention {
 	}
 
 	public Type ReadDiscriminator(ref Utf8JsonReader reader) {
-		string key = _jsonConverter.Read(ref reader, typeof(string), _options);
+		string? key = _jsonConverter.Read(ref reader, typeof(string), _options);
 		if (key == null) {
 			throw new JsonException("Null discriminator");
 		}
-		if (!_typesByDiscriminator.TryGetValue(key, out Type type)) {
+		if (!_typesByDiscriminator.TryGetValue(key, out Type? type)) {
 			throw new JsonException($"Unknown type discriminator: {key}");
 		}
 		return type;
 	}
 
 	public void WriteDiscriminator(Utf8JsonWriter writer, Type actualType) {
-		if (!_discriminatorsByType.TryGetValue(actualType, out string obj)) {
+		if (!_discriminatorsByType.TryGetValue(actualType, out string? obj)) {
 			throw new JsonException($"Unknown discriminator for type: {actualType}");
 		}
 

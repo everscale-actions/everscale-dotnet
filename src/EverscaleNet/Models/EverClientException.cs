@@ -8,7 +8,7 @@ namespace EverscaleNet.Models;
 /// </summary>
 public class EverClientException : Exception {
 	/// <inheritdoc />
-	public EverClientException(string message = null, Exception inner = null) : base(message, inner) { }
+	public EverClientException(string? message = null, Exception? inner = null) : base(message, inner) { }
 
 	/// <summary>
 	/// </summary>
@@ -22,8 +22,8 @@ public class EverClientException : Exception {
 	/// <param name="message"></param>
 	/// <param name="inner"></param>
 	/// <returns></returns>
-	public static EverClientException CreateExceptionWithCodeWithData(uint code, IDictionary<string, object> data = null, string message = null,
-	                                                                  Exception inner = null) {
+	public static EverClientException CreateExceptionWithCodeWithData(uint code, IDictionary<string, object>? data = null, string? message = null,
+	                                                                  Exception? inner = null) {
 		var exception = new EverClientException(message, inner) { Code = code };
 		if (data == null) {
 			return exception;

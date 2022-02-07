@@ -42,7 +42,7 @@ public static class JsonExtensions {
 		using (var writer = new Utf8JsonWriter(bufferWriter)) {
 			element.WriteTo(writer);
 		}
-		return JsonSerializer.Deserialize<T>(bufferWriter.WrittenSpan, JsonOptionsProvider.JsonSerializerOptions);
+		return JsonSerializer.Deserialize<T>(bufferWriter.WrittenSpan, JsonOptionsProvider.JsonSerializerOptions)!;
 	}
 
 	/// <summary>
@@ -55,7 +55,7 @@ public static class JsonExtensions {
 		using (var writer = new Utf8JsonWriter(bufferWriter)) {
 			element!.Value.WriteTo(writer);
 		}
-		return JsonSerializer.Deserialize<T>(bufferWriter.WrittenSpan, JsonOptionsProvider.JsonSerializerOptions);
+		return JsonSerializer.Deserialize<T>(bufferWriter.WrittenSpan, JsonOptionsProvider.JsonSerializerOptions)!;
 	}
 
 	/// <summary>
@@ -65,15 +65,15 @@ public static class JsonExtensions {
 	/// <param name="discriminatorType"></param>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
-	public static T ToObject<T>(this JsonElement element, Type discriminatorType = null) {
+	public static T ToObject<T>(this JsonElement element, Type? discriminatorType = null) {
 		var bufferWriter = new ArrayBufferWriter<byte>();
 		using (var writer = new Utf8JsonWriter(bufferWriter)) {
 			element.WriteTo(writer);
 		}
 
-		return discriminatorType != null
-			       ? (T)JsonSerializer.Deserialize(bufferWriter.WrittenSpan, discriminatorType)
-			       : JsonSerializer.Deserialize<T>(bufferWriter.WrittenSpan, JsonOptionsProvider.JsonSerializerOptions);
+		return (discriminatorType != null
+			        ? (T)JsonSerializer.Deserialize(bufferWriter.WrittenSpan, discriminatorType)!
+			        : JsonSerializer.Deserialize<T>(bufferWriter.WrittenSpan, JsonOptionsProvider.JsonSerializerOptions))!;
 	}
 
 	/// <summary>

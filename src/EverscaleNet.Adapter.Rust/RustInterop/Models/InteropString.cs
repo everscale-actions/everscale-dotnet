@@ -14,7 +14,6 @@ internal struct InteropString {
 	public override string ToString() {
 		var bytes = new byte[Length];
 		Marshal.Copy(Pointer, bytes, 0, (int)Length);
-		string res = Encoding.UTF8.GetString(bytes);
-		return string.IsNullOrEmpty(res) ? null : res;
+		return Encoding.UTF8.GetString(bytes);
 	}
 }
