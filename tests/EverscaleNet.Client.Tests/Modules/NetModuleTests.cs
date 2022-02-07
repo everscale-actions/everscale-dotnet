@@ -120,29 +120,28 @@ public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 		KeyPair keys = await _everClient.Crypto.GenerateRandomSignKeys();
 		IEverClient subscriptionClient = _fixture.CreateClient(_outputHelper, true);
 
+		var transactions = new List<string>();
+		var addresses = new List<string>();
+		var errorCodes = new List<uint>();
+		var @lock = new object();
+
 		var deployParams = new ParamsOfEncodeMessage {
 			Abi = TestsEnv.Packages.Hello.Abi,
 			DeploySet = new DeploySet { Tvc = TestsEnv.Packages.Hello.Tvc },
 			Signer = new Signer.Keys { KeysAccessor = keys },
 			CallSet = new CallSet { FunctionName = "constructor" }
 		};
-
 		ResultOfEncodeMessage msg = await _everClient.Abi.EncodeMessage(deployParams);
-		var transactions = new List<string>();
-		var errorCodes = new List<uint>();
-		var @lock = new object();
-
 		string address = msg.Address;
 
 		var callback = new Action<JsonElement, uint>((serdeJson, responseType) => {
 			switch ((SubscriptionResponseType)responseType) {
 				case SubscriptionResponseType.Ok:
-					JsonElement resultOk = serdeJson.GetProperty("result");
-					resultOk.Get<string>("account_addr").Should().Be(address);
+					var result = serdeJson.ToAnonymous(new { result = new { id = default(string), account_addr = default(string) } }).result;
 					lock (@lock) {
-						transactions.Add(resultOk.Get<string>("id"));
+						transactions.Add(result.id);
+						addresses.Add(result.account_addr);
 					}
-
 					break;
 				case SubscriptionResponseType.Error:
 					var error = serdeJson.ToObject<ClientError>();
@@ -150,7 +149,6 @@ public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 					lock (@lock) {
 						errorCodes.Add(error.Code);
 					}
-
 					break;
 				default:
 					throw new EverClientException($"Unknown SubscriptionResponseType: {responseType}");
@@ -178,15 +176,7 @@ public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 		// suspend subscription
 		await subscriptionClient.Net.Suspend();
 
-		await Task.Delay(TimeSpan.FromSeconds(1));
-
-		// deploy to create second transaction
-		await _everClient.Processing.ProcessMessage(new ParamsOfProcessMessage {
-			MessageEncodeParams = deployParams,
-			SendEvents = false
-		});
-
-		//act
+		// second handler
 		ResultOfSubscribeCollection handle2 = await subscriptionClient.Net.SubscribeCollection(new ParamsOfSubscribeCollection {
 			Collection = "transactions",
 			Filter = new {
@@ -196,6 +186,13 @@ public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 			Result = "id account_addr"
 		}, callback);
 
+		// deploy to create second transaction
+		await _everClient.Processing.ProcessMessage(new ParamsOfProcessMessage {
+			MessageEncodeParams = deployParams,
+			SendEvents = false
+		});
+
+		// give some time for subscription to receive all data
 		await Task.Delay(TimeSpan.FromSeconds(1));
 
 		// check that second transaction is not received when subscription suspended
@@ -203,8 +200,6 @@ public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 
 		// resume subscription
 		await subscriptionClient.Net.Resume();
-
-		await Task.Delay(TimeSpan.FromSeconds(1));
 
 		// run contract function to create third transaction
 		await _everClient.Processing.ProcessMessage(new ParamsOfProcessMessage {
@@ -216,31 +211,31 @@ public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 			},
 			SendEvents = false
 		});
-
+		
 		// give some time for subscription to receive all data
 		await Task.Delay(TimeSpan.FromSeconds(1));
 
-		await subscriptionClient.Net.Unsubscribe(new ResultOfSubscribeCollection {
-			Handle = handle1.Handle
-		});
-		await subscriptionClient.Net.Unsubscribe(new ResultOfSubscribeCollection {
-			Handle = handle2.Handle
-		});
+		await Task.WhenAll(
+			subscriptionClient.Net.Unsubscribe(new ResultOfSubscribeCollection { Handle = handle1.Handle }),
+			subscriptionClient.Net.Unsubscribe(new ResultOfSubscribeCollection { Handle = handle2.Handle })
+		);
 
-		//check count before suspending 
+		// check count before suspending 
 		transactionCount1.Should().Be(1);
 
-		//check count before resume
+		// check count before resume
 		transactionCount2.Should().Be(1);
 
-		// check that third transaction is now received after resume
-		transactions.Count.Should().Be(3);
-		transactions[0].Should().NotBe(transactions[2]);
+		// ensure that all transactions have correct address
+		addresses.Should().AllBe(address);
 
 		// check errors
 		errorCodes.Count.Should().Be(4);
 		errorCodes.Take(2).Should().AllBeEquivalentTo((uint)NetErrorCode.NetworkModuleSuspended);
 		errorCodes.TakeLast(2).Should().AllBeEquivalentTo((uint)NetErrorCode.NetworkModuleResumed);
+
+		// check that second and third transaction are received by all handlers
+		transactions.Count.Should().Be(3);
 	}
 
 	[Fact]
