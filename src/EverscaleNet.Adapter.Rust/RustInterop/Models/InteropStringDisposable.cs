@@ -13,7 +13,6 @@ internal struct InteropStringDisposable : IDisposable {
 	private bool _disposed;
 
 	public static InteropStringDisposable CreateAndAlloc(string str) {
-		str ??= string.Empty;
 		byte[] bytes = Encoding.UTF8.GetBytes(str);
 		IntPtr pointer = Marshal.AllocHGlobal(bytes.Length);
 		Marshal.Copy(bytes, 0, pointer, bytes.Length);
