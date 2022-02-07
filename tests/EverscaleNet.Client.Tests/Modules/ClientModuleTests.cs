@@ -1,7 +1,4 @@
-﻿using System.Threading.Tasks;
-using EverscaleNet.Abstract;
-using EverscaleNet.Client.Models;
-using EverscaleNet.TestsShared;
+﻿using EverscaleNet.TestsShared;
 using FluentAssertions;
 using Xunit;
 using Xunit.Abstractions;

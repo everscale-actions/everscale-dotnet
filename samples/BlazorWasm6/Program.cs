@@ -1,5 +1,4 @@
 using BlazorWasm6;
-using EverscaleNet.Utils;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 

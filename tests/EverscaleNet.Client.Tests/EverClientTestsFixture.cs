@@ -1,9 +1,4 @@
-﻿using System;
-using EverscaleNet.Abstract;
-using EverscaleNet.Adapter.Rust;
-using EverscaleNet.Client.Models;
-using EverscaleNet.Models;
-using EverscaleNet.TestsShared;
+﻿using EverscaleNet.TestsShared;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Serilog;

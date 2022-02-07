@@ -1,9 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using EverscaleNet.Abstract;
-using EverscaleNet.Client.Models;
-using EverscaleNet.Models;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentAssertions.Specialized;
 using Xunit;
 using Xunit.Abstractions;

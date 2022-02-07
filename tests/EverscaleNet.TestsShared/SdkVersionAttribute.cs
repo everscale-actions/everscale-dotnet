@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EverscaleNet.TestsShared;
+﻿namespace EverscaleNet.TestsShared;
 
 [AttributeUsage(AttributeTargets.Assembly)]
 public sealed class SdkVersionAttribute : Attribute {

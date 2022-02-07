@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace EverscaleNet.ClientGenerator.Helpers;
+﻿namespace EverscaleNet.ClientGenerator.Helpers;
 
 internal static class StringUtils {
 	public static string GetGenericParametersDeclaration(params string[] genericParameters) {

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Text.Json;
-using System.Threading.Tasks;
-using EverscaleNet.Abstract;
-using EverscaleNet.Client.Models;
-using EverscaleNet.Client.Tests.Utils;
-using EverscaleNet.Models;
-using EverscaleNet.Serialization;
+﻿using EverscaleNet.Client.Tests.Utils;
 using EverscaleNet.TestsShared;
 using FluentAssertions;
 using Xunit;

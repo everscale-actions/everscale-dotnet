@@ -1,8 +1,4 @@
-﻿using System.Threading.Tasks;
-using EverscaleNet.Abstract;
-using EverscaleNet.Client.Models;
-using EverscaleNet.Serialization;
-using EverscaleNet.TestsShared;
+﻿using EverscaleNet.TestsShared;
 
 namespace EverscaleNet.Client.Tests.Utils;
 

@@ -1,9 +1,4 @@
 using System.Text.Json;
-using EverscaleNet.Abstract;
-using EverscaleNet.Client.Models;
-using EverscaleNet.Models;
-using EverscaleNet.Serialization;
-using EverscaleNet.Utils;
 
 namespace BlazorWasm6;
 

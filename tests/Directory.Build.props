@@ -3,5 +3,15 @@
         <TargetFrameworks>net6.0;net5.0;netcoreapp3.1</TargetFrameworks>
         <IsPackable>false</IsPackable>
         <LangVersion>10</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
+
+    <ItemGroup>
+        <Using Include="EverscaleNet.Abstract" />
+        <Using Include="EverscaleNet.Adapter.Rust" />
+        <Using Include="EverscaleNet.Client.Models" />
+        <Using Include="EverscaleNet.Models" />
+        <Using Include="EverscaleNet.Serialization" />
+        <Using Include="System.Text.Json" />
+    </ItemGroup>
 </Project>

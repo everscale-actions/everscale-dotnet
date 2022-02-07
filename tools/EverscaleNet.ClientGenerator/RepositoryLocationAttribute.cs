@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EverscaleNet.ClientGenerator;
+﻿namespace EverscaleNet.ClientGenerator;
 
 [AttributeUsage(AttributeTargets.Assembly)]
 internal sealed class RepositoryLocationAttribute : Attribute {

@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-using EverscaleNet.Client.Models;
-using EverscaleNet.TestsShared;
+﻿using EverscaleNet.TestsShared;
 using FluentAssertions;
 using Xunit;
 

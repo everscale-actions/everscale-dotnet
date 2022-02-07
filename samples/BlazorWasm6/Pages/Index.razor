@@ -1,6 +1,4 @@
 ﻿@page "/"
-@using EverscaleNet.Abstract
-@using EverscaleNet.Client.Models
 
 <PageTitle>Index</PageTitle>
 
@@ -16,7 +14,7 @@ Welcome to your new app.
 @code {
 
 	private string Version { get; set; }
-	public string Endpoints { get; set; }
+	private string Endpoints { get; set; }
 
 	protected override async Task OnInitializedAsync() {
 		Task<ResultOfVersion> resultOfVersionTask = EverClient.Client.Version();

@@ -1,5 +1,4 @@
-﻿using System;
-using EverscaleNet.ClientGenerator.Models;
+﻿using EverscaleNet.ClientGenerator.Models;
 
 namespace EverscaleNet.ClientGenerator.Helpers;
 

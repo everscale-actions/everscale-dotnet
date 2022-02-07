@@ -1,15 +1,3 @@
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using EverscaleNet.Abstract;
-using EverscaleNet.Client.Models;
-using EverscaleNet.Models;
-using EverscaleNet.Serialization;
-using EverscaleNet.Utils;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-
 namespace MessageReceiverService;
 
 public class Worker : BackgroundService {

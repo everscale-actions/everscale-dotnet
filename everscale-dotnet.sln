@@ -7,6 +7,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverscaleNet.Client", "src\EverscaleNet.Client\EverscaleNet.Client.csproj", "{FE34D05D-2956-43D4-9E06-103AA2FACB00}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{6187011F-F7CB-4CE0-8A31-803667A9EE59}"
+	ProjectSection(SolutionItems) = preProject
+		samples\Directory.Build.props = samples\Directory.Build.props
+		samples\README.MD = samples\README.MD
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageSenderService", "samples\MessageSenderService\MessageSenderService.csproj", "{3ECAD1EB-3AA6-4035-AB31-18F9F74479C3}"
 EndProject
@@ -19,6 +23,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverscaleNet.Serialization", "src\EverscaleNet.Serialization\EverscaleNet.Serialization.csproj", "{5D76F927-6D5D-4B4A-9DF3-CFFC0D4B585A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{D2AD0D49-D487-4214-AF76-5AB6D64C8E3F}"
+	ProjectSection(SolutionItems) = preProject
+		tools\Directory.Build.props = tools\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{26096843-5ED8-41E9-A080-1E8C2A20FE00}"
 ProjectSection(SolutionItems) = preProject
