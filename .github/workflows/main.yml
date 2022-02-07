@@ -61,10 +61,9 @@ jobs:
       - name: Test
         env:
           EVERSCALE_NETWORK_ENDPOINTS: http://localhost:5555
+          VSTestVerbosity: normal
         run: |
-          dotnet test --no-restore --no-build -c Release -f netcoreapp3.1
-          dotnet test --no-restore --no-build -c Release -f net5.0
-          dotnet test --no-restore --no-build -c Release -f net6.0
+          dotnet test --no-restore --no-build -c Release -m:1
 
       - name: Pack
         if: github.event_name != 'pull_request'
