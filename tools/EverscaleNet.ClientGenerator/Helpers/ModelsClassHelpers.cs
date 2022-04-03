@@ -17,8 +17,7 @@ internal class ModelsClassHelpers {
 	}
 
 	private static EnumDeclarationSyntax GenerateEnumOfConsts(TypeElement typeElement) {
-		string summary = typeElement.Summary + '\n' +
-		                 (typeElement.Description != null ? $"\n{typeElement.Description}" : null);
+		string summary = typeElement.Summary + (typeElement.Description != null ? $"\n{typeElement.Description}" : null);
 		return EnumDeclaration(Identifier(NamingConventions.Normalize(typeElement.Name)))
 		       .AddMembers(typeElement
 		                   .EnumConsts

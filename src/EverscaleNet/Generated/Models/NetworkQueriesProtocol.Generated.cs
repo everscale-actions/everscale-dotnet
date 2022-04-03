@@ -8,7 +8,6 @@ namespace EverscaleNet.Client.Models
 {
     /// <summary>
     /// Network protocol used to perform GraphQL queries.
-
     /// </summary>
     public enum NetworkQueriesProtocol
     {
