@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Encryption box information
+    /// Encryption box information.
     /// </summary>
     public class EncryptionBoxInfo
     {

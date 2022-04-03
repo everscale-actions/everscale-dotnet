@@ -14,5 +14,7 @@ public enum Name {
 	[EnumMember(Value = "request")]
 	Request,
 	[EnumMember(Value = "app_object")]
-	AppObject
+	AppObject,
+	[EnumMember(Value = "password_provider")]
+	PasswordProvider
 }

@@ -15,6 +15,24 @@ namespace EverscaleNet.Client.Models
         /// Not described yet..
         /// </summary>
         [JsonPropertyName("AES")]
-        public AesParams AES { get; set; }
+        public AesParamsEB AES { get; set; }
+
+        /// <summary>
+        /// Not described yet..
+        /// </summary>
+        [JsonPropertyName("ChaCha20")]
+        public ChaCha20ParamsEB ChaCha20 { get; set; }
+
+        /// <summary>
+        /// Not described yet..
+        /// </summary>
+        [JsonPropertyName("NaclBox")]
+        public NaclBoxParamsEB NaclBox { get; set; }
+
+        /// <summary>
+        /// Not described yet..
+        /// </summary>
+        [JsonPropertyName("NaclSecretBox")]
+        public NaclSecretBoxParamsEB NaclSecretBox { get; set; }
     }
 }

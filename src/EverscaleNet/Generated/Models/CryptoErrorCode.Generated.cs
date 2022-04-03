@@ -118,6 +118,22 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// Not described yet..
         /// </summary>
-        IvRequired = 129
+        IvRequired = 129,
+        /// <summary>
+        /// Not described yet..
+        /// </summary>
+        CryptoBoxNotRegistered = 130,
+        /// <summary>
+        /// Not described yet..
+        /// </summary>
+        InvalidCryptoBoxType = 131,
+        /// <summary>
+        /// Not described yet..
+        /// </summary>
+        CryptoBoxSecretSerializationError = 132,
+        /// <summary>
+        /// Not described yet..
+        /// </summary>
+        CryptoBoxSecretDeserializationError = 133
     }
 }

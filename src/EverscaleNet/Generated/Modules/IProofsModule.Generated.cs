@@ -46,8 +46,9 @@ namespace EverscaleNet.Abstract.Modules
         /// <para>The trusted block is the authority root, as well, as the zero-state. Each trusted block is the</para>
         /// <para>`id` (e.g. `root_hash`) of the already proven key-block. There can be plenty of trusted</para>
         /// <para>blocks, so there can be a lot of authority roots. The hashes of trusted blocks for MainNet</para>
-        /// <para>and DevNet are hardcoded in SDK in a separated binary file (trusted_key_blocks.bin) and can</para>
-        /// <para>be updated for each release.</para>
+        /// <para>and DevNet are hardcoded in SDK in a separated binary file (trusted_key_blocks.bin) and is</para>
+        /// <para>being updated for each release by using `update_trusted_blocks` utility.</para>
+        /// <para>See [update_trusted_blocks](../../../tools/update_trusted_blocks) directory for more info.</para>
         /// <para>In future SDK releases, one will also be able to provide their hashes of trusted blocks for</para>
         /// <para>other networks, besides for MainNet and DevNet.</para>
         /// <para>By using trusted key-blocks, in order to prove any block, we can prove chain of key-blocks to</para>

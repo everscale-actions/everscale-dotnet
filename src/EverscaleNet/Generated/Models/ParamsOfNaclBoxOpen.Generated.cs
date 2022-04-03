@@ -19,7 +19,7 @@ namespace EverscaleNet.Client.Models
         public string Encrypted { get; set; }
 
         /// <summary>
-        /// Not described yet..
+        /// Nonce
         /// </summary>
         [JsonPropertyName("nonce")]
         public string Nonce { get; set; }

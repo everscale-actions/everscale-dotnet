@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Encryption box callbacks.
+    /// Interface for data encryption/decryption
     /// </summary>
     public abstract class ParamsOfAppEncryptionBox
     {

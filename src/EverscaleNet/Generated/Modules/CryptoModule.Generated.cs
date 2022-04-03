@@ -322,6 +322,75 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
+        /// <para>Creates a Crypto Box instance.</para>
+        /// <para>Crypto Box is a root crypto object, that encapsulates some secret (seed phrase usually)</para>
+        /// <para>in encrypted form and acts as a factory for all crypto primitives used in SDK:</para>
+        /// <para>keys for signing and encryption, derived from this secret.</para>
+        /// <para>Crypto Box encrypts original Seed Phrase with salt and password that is retrieved</para>
+        /// <para>from `password_provider` callback, implemented on Application side.</para>
+        /// <para>When used, decrypted secret shows up in core library's memory for a very short period</para>
+        /// <para>of time and then is immediately overwritten with zeroes.</para>
+        /// </summary>
+        public async Task<RegisteredCryptoBox> CreateCryptoBox(ParamsOfCreateCryptoBox @params, Action<JsonElement,uint> appObject = null, CancellationToken cancellationToken = default)
+        {
+            return await _everClientAdapter.Request<ParamsOfCreateCryptoBox, RegisteredCryptoBox, JsonElement>("crypto.create_crypto_box", @params, appObject, cancellationToken);
+        }
+
+        /// <summary>
+        /// Removes Crypto Box. Clears all secret data.
+        /// </summary>
+        public async Task RemoveCryptoBox(RegisteredCryptoBox @params, CancellationToken cancellationToken = default)
+        {
+            await _everClientAdapter.Request<RegisteredCryptoBox>("crypto.remove_crypto_box", @params, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get Crypto Box Info. Used to get `encrypted_secret` that should be used for all the cryptobox initializations except the first one.
+        /// </summary>
+        public async Task<ResultOfGetCryptoBoxInfo> GetCryptoBoxInfo(RegisteredCryptoBox @params, CancellationToken cancellationToken = default)
+        {
+            return await _everClientAdapter.Request<RegisteredCryptoBox, ResultOfGetCryptoBoxInfo>("crypto.get_crypto_box_info", @params, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Get Crypto Box Seed Phrase.</para>
+        /// <para>Attention! Store this data in your application for a very short period of time and overwrite it with zeroes ASAP.</para>
+        /// </summary>
+        public async Task<ResultOfGetCryptoBoxSeedPhrase> GetCryptoBoxSeedPhrase(RegisteredCryptoBox @params, CancellationToken cancellationToken = default)
+        {
+            return await _everClientAdapter.Request<RegisteredCryptoBox, ResultOfGetCryptoBoxSeedPhrase>("crypto.get_crypto_box_seed_phrase", @params, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get handle of Signing Box derived from Crypto Box.
+        /// </summary>
+        public async Task<RegisteredSigningBox> GetSigningBoxFromCryptoBox(ParamsOfGetSigningBoxFromCryptoBox @params, CancellationToken cancellationToken = default)
+        {
+            return await _everClientAdapter.Request<ParamsOfGetSigningBoxFromCryptoBox, RegisteredSigningBox>("crypto.get_signing_box_from_crypto_box", @params, cancellationToken);
+        }
+
+        /// <summary>
+        /// <para>Gets Encryption Box from Crypto Box.</para>
+        /// <para>Derives encryption keypair from cryptobox secret and hdpath and</para>
+        /// <para>stores it in cache for `secret_lifetime`</para>
+        /// <para>or until explicitly cleared by `clear_crypto_box_secret_cache` method.</para>
+        /// <para>If `secret_lifetime` is not specified - overwrites encryption secret with zeroes immediately after</para>
+        /// <para>encryption operation.</para>
+        /// </summary>
+        public async Task<RegisteredEncryptionBox> GetEncryptionBoxFromCryptoBox(ParamsOfGetEncryptionBoxFromCryptoBox @params, CancellationToken cancellationToken = default)
+        {
+            return await _everClientAdapter.Request<ParamsOfGetEncryptionBoxFromCryptoBox, RegisteredEncryptionBox>("crypto.get_encryption_box_from_crypto_box", @params, cancellationToken);
+        }
+
+        /// <summary>
+        /// Removes cached secrets (overwrites with zeroes) from all signing and encryption boxes, derived from crypto box.
+        /// </summary>
+        public async Task ClearCryptoBoxSecretCache(RegisteredCryptoBox @params, CancellationToken cancellationToken = default)
+        {
+            await _everClientAdapter.Request<RegisteredCryptoBox>("crypto.clear_crypto_box_secret_cache", @params, cancellationToken);
+        }
+
+        /// <summary>
         /// Register an application implemented signing box.
         /// </summary>
         public async Task<RegisteredSigningBox> RegisterSigningBox(Action<JsonElement,uint> appObject = null, CancellationToken cancellationToken = default)

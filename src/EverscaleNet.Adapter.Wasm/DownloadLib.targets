@@ -6,11 +6,11 @@
   </PropertyGroup>
 
   <Target Name="DownloadContentFiles" Condition=" '$(TargetFramework)' == '$(FirstTargetFramework)' " BeforeTargets="BeforeBuild">
-    <Message Importance="high" Text="SDKVersion: $(SDKVersion)" />
-    <Exec Command="npm init -y" />
-    <Exec Command="npm install --no-save @tonclient/lib-web@$(SDKVersion)" />
-    <Copy SourceFiles="node_modules/@tonclient/lib-web/index.js" DestinationFiles="wwwroot/js/tonclient.js" OverwriteReadOnlyFiles="true" />
-    <Copy SourceFiles="node_modules/@tonclient/lib-web/tonclient.wasm" DestinationFiles="wwwroot/tonclient.wasm" OverwriteReadOnlyFiles="true" />
+      <Message Importance="high" Text="SDKVersion: $(SDKVersion)" />
+      <Exec Command="npm init -y" />
+      <Exec Command="npm install --no-save @eversdk/lib-web@$(SDKVersion)" />
+      <Copy SourceFiles="node_modules/@eversdk/lib-web/index.js" DestinationFiles="wwwroot/js/eversdk.js" OverwriteReadOnlyFiles="true" />
+      <Copy SourceFiles="node_modules/@eversdk/lib-web/eversdk.wasm" DestinationFiles="wwwroot/eversdk.wasm" OverwriteReadOnlyFiles="true" />
   </Target>
 
 </Project>

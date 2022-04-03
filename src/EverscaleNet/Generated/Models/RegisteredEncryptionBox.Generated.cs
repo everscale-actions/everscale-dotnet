@@ -12,7 +12,7 @@ namespace EverscaleNet.Client.Models
     public class RegisteredEncryptionBox
     {
         /// <summary>
-        /// Handle of the encryption box
+        /// Handle of the encryption box.
         /// </summary>
         [JsonPropertyName("handle")]
         public uint Handle { get; set; }

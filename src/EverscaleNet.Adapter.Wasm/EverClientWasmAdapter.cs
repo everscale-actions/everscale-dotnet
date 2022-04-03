@@ -60,7 +60,7 @@ public class EverClientWasmAdapter : EverClientAdapterBase {
 	/// <inheritdoc />
 	protected override async Task<uint> CreateContext(CancellationToken cancellationToken) {
 		var module = await _jsRuntime.InvokeAsync<IJSObjectReference>("import", cancellationToken,
-		                                                              "/_content/EverscaleNet.Adapter.Wasm/js/tonclient-adapter.js");
+		                                                              "/_content/EverscaleNet.Adapter.Wasm/js/eversdk-adapter.js");
 		_libWeb = await module.InvokeAsync<IJSObjectReference>("init", cancellationToken, DotNetObjectReference.Create(this));
 
 		string configJson =

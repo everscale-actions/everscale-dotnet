@@ -211,6 +211,54 @@ namespace EverscaleNet.Abstract.Modules
         public Task<ResultOfChaCha20> Chacha20(ParamsOfChaCha20 @params, CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// <para>Creates a Crypto Box instance.</para>
+        /// <para>Crypto Box is a root crypto object, that encapsulates some secret (seed phrase usually)</para>
+        /// <para>in encrypted form and acts as a factory for all crypto primitives used in SDK:</para>
+        /// <para>keys for signing and encryption, derived from this secret.</para>
+        /// <para>Crypto Box encrypts original Seed Phrase with salt and password that is retrieved</para>
+        /// <para>from `password_provider` callback, implemented on Application side.</para>
+        /// <para>When used, decrypted secret shows up in core library's memory for a very short period</para>
+        /// <para>of time and then is immediately overwritten with zeroes.</para>
+        /// </summary>
+        public Task<RegisteredCryptoBox> CreateCryptoBox(ParamsOfCreateCryptoBox @params, Action<JsonElement,uint> appObject = null, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Removes Crypto Box. Clears all secret data.
+        /// </summary>
+        public Task RemoveCryptoBox(RegisteredCryptoBox @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get Crypto Box Info. Used to get `encrypted_secret` that should be used for all the cryptobox initializations except the first one.
+        /// </summary>
+        public Task<ResultOfGetCryptoBoxInfo> GetCryptoBoxInfo(RegisteredCryptoBox @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// <para>Get Crypto Box Seed Phrase.</para>
+        /// <para>Attention! Store this data in your application for a very short period of time and overwrite it with zeroes ASAP.</para>
+        /// </summary>
+        public Task<ResultOfGetCryptoBoxSeedPhrase> GetCryptoBoxSeedPhrase(RegisteredCryptoBox @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get handle of Signing Box derived from Crypto Box.
+        /// </summary>
+        public Task<RegisteredSigningBox> GetSigningBoxFromCryptoBox(ParamsOfGetSigningBoxFromCryptoBox @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// <para>Gets Encryption Box from Crypto Box.</para>
+        /// <para>Derives encryption keypair from cryptobox secret and hdpath and</para>
+        /// <para>stores it in cache for `secret_lifetime`</para>
+        /// <para>or until explicitly cleared by `clear_crypto_box_secret_cache` method.</para>
+        /// <para>If `secret_lifetime` is not specified - overwrites encryption secret with zeroes immediately after</para>
+        /// <para>encryption operation.</para>
+        /// </summary>
+        public Task<RegisteredEncryptionBox> GetEncryptionBoxFromCryptoBox(ParamsOfGetEncryptionBoxFromCryptoBox @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Removes cached secrets (overwrites with zeroes) from all signing and encryption boxes, derived from crypto box.
+        /// </summary>
+        public Task ClearCryptoBoxSecretCache(RegisteredCryptoBox @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Register an application implemented signing box.
         /// </summary>
         public Task<RegisteredSigningBox> RegisterSigningBox(Action<JsonElement,uint> appObject = null, CancellationToken cancellationToken = default);
