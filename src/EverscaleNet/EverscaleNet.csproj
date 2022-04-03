@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <ItemGroup>
-        <PackageReference Include="Dahomey.Json" Version="1.12.1" />
+        <PackageReference Include="Dahomey.Json" Version="1.12.2" />
     </ItemGroup>
 </Project>
