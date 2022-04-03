@@ -155,8 +155,8 @@ await everClient.Net.WaitForCollection(new ParamsOfWaitForCollection
 
 https://github.com/everscale-actions/everscale-dotnet/tree/master/samples/
 
-***Enjoy!***
+## Support us
 
----
->My Ever Coffee:
-https://uri.ton.surf/surf/0:9b487d68e4f029ab6d92640892d99d1c549ae69b198df414e905350559a165bf
+This project has no funding, but everyone can support.
+
+Surf Wallet: [0:9b487d68e4f029ab6d92640892d99d1c549ae69b198df414e905350559a165bf](https://uri.ever.surf/surf/0:9b487d68e4f029ab6d92640892d99d1c549ae69b198df414e905350559a165bf)
