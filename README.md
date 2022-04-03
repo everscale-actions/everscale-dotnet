@@ -67,20 +67,6 @@ Task<string> LoadTvc(string name);
 
 Default contracts path is `_contracts`. **Be careful**, Blazor WASM app will search for `_contracts` relative to `wwwroot`. 
 
-## IDebotBrowser interface
-
-**Attention!** DeBot module is UNSTABLE yet, see TON SDK description
-
-More information:
-
-- https://ru.freeton.wiki/Технические_характеристики_DeBot
-
-- https://github.com/tonlabs/ton-labs-contracts/tree/master/solidity/debots
-
-As default IDebotBrowser will resolve instance of DefaultDebotBrowser.
-
-Can be inherited or implemented self-owned: `services.AddTransient<IDebotBrowser, MyDebotBrowser>()`
-
 ## Advanced client configuration
 
 See configuration parameters:
