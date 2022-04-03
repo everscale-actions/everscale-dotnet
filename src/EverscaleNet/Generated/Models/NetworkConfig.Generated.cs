@@ -108,6 +108,14 @@ namespace EverscaleNet.Client.Models
         public uint? QueryTimeout { get; set; }
 
         /// <summary>
+        /// <para>Queries protocol.</para>
+        /// <para>`HTTP` or `WS`. </para>
+        /// <para>Default is `HTTP`.</para>
+        /// </summary>
+        [JsonPropertyName("queries_protocol")]
+        public NetworkQueriesProtocol QueriesProtocol { get; set; }
+
+        /// <summary>
         /// <para>Access key to GraphQL API.</para>
         /// <para>At the moment is not used in production.</para>
         /// </summary>
