@@ -10,14 +10,11 @@ namespace EverscaleNet.Client
     /// </summary>
     public class EverClient : IEverClient
     {
-        private readonly IEverClientAdapter _everClientAdapter;
-
         /// <summary>
         /// .ctor
         /// </summary>
         public EverClient(IEverClientAdapter everClientAdapter)
         {
-            _everClientAdapter = everClientAdapter;
             Client = new ClientModule(everClientAdapter);
             Crypto = new CryptoModule(everClientAdapter);
             Abi = new AbiModule(everClientAdapter);

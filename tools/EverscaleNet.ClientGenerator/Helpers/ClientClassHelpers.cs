@@ -11,20 +11,10 @@ internal static class ClientClassHelpers {
 		MemberDeclarationSyntax[] propertyDeclarationSyntaxes = GetProperties(everApi);
 		string[] moduleNames = everApi.Modules.Select(m => m.Name).ToArray();
 
-		VariableDeclarationSyntax variableDeclaration = VariableDeclaration(ParseTypeName("IEverClientAdapter"))
-			.AddVariables(VariableDeclarator("_everClientAdapter"));
-		FieldDeclarationSyntax fieldDeclaration = FieldDeclaration(variableDeclaration)
-			.AddModifiers(Token(SyntaxKind.PrivateKeyword), Token(SyntaxKind.ReadOnlyKeyword));
-
 		StatementSyntax[] statementSyntax =
-			new[] {
-					ParseStatement("_everClientAdapter = everClientAdapter;")
-						.WithTrailingTrivia(LineFeed)
-				}
-				.Union(moduleNames
-					       .Select(m => ParseStatement(
-							               $"{NamingConventions.Normalize(m)} = new {NamingConventions.Normalize(m)}Module(everClientAdapter);")
-						               .WithTrailingTrivia(LineFeed)))
+			moduleNames
+				.Select(m => ParseStatement($"{NamingConventions.Normalize(m)} = new {NamingConventions.Normalize(m)}Module(everClientAdapter);")
+					        .WithTrailingTrivia(LineFeed))
 				.ToArray();
 
 		ConstructorDeclarationSyntax constructorDeclaration = ConstructorDeclaration(unitName)
@@ -37,7 +27,6 @@ internal static class ClientClassHelpers {
 		ClassDeclarationSyntax item = ClassDeclaration(unitName)
 		                              .AddModifiers(Token(SyntaxKind.PublicKeyword))
 		                              .AddBaseListTypes(SimpleBaseType(IdentifierName("IEverClient")))
-		                              .AddMembers(fieldDeclaration)
 		                              .AddMembers(constructorDeclaration)
 		                              .AddMembers(propertyDeclarationSyntaxes)
 		                              .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(unitName));
