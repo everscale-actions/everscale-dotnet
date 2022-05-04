@@ -67,7 +67,9 @@ jobs:
 
       - name: Pack
         if: github.event_name != 'pull_request'
-        run: dotnet pack -v normal -c Release --no-restore --no-build --include-symbols --include-source -p:PackageVersion=$GITHUB_RUN_ID -o pack
+        run: |
+          version=GITHUB_SHA
+          dotnet pack -v normal -c Release --no-restore --no-build --include-symbols --include-source -p:PackageVersion=${GITHUB_RUN_ID: -9} -o pack
 
       - name: Upload Artifact
         if: github.event_name != 'pull_request'
