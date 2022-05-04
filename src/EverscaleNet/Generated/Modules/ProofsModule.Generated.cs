@@ -54,7 +54,7 @@ namespace EverscaleNet.Client.Modules
         /// <para>a trusted validator set. So we need to check all key-blocks' proofs, started from the zero-state</para>
         /// <para>and until the block, which we want to prove. But it can take a lot of time and traffic to</para>
         /// <para>download and prove all key-blocks on a client. For solving this, special trusted blocks are used</para>
-        /// <para>in TON-SDK.</para>
+        /// <para>in Ever-SDK.</para>
         /// <para>The trusted block is the authority root, as well, as the zero-state. Each trusted block is the</para>
         /// <para>`id` (e.g. `root_hash`) of the already proven key-block. There can be plenty of trusted</para>
         /// <para>blocks, so there can be a lot of authority roots. The hashes of trusted blocks for MainNet</para>

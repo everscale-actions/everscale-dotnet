@@ -308,5 +308,118 @@ namespace EverscaleNet.Client.Models
             [JsonPropertyName("error")]
             public ClientError Error { get; set; }
         }
+
+        /// <summary>
+        /// Notifies the app that the message has been delivered to the thread's validators
+        /// </summary>
+        [JsonDiscriminator("RempSentToValidators")]
+        public class RempSentToValidators : ProcessingEvent
+        {
+            /// <summary>
+            /// Notifies the app that the message has been delivered to the thread's validators
+            /// </summary>
+            [JsonPropertyName("message_id")]
+            public string MessageId { get; set; }
+
+            /// <summary>
+            /// Notifies the app that the message has been delivered to the thread's validators
+            /// </summary>
+            [JsonPropertyName("timestamp")]
+            public ulong Timestamp { get; set; }
+
+            /// <summary>
+            /// Notifies the app that the message has been delivered to the thread's validators
+            /// </summary>
+            [JsonPropertyName("json")]
+            public JsonElement? Json { get; set; }
+        }
+
+        /// <summary>
+        /// Notifies the app that the message has been successfully included into a block candidate by the thread's collator
+        /// </summary>
+        [JsonDiscriminator("RempIncludedIntoBlock")]
+        public class RempIncludedIntoBlock : ProcessingEvent
+        {
+            /// <summary>
+            /// Notifies the app that the message has been successfully included into a block candidate by the thread's collator
+            /// </summary>
+            [JsonPropertyName("message_id")]
+            public string MessageId { get; set; }
+
+            /// <summary>
+            /// Notifies the app that the message has been successfully included into a block candidate by the thread's collator
+            /// </summary>
+            [JsonPropertyName("timestamp")]
+            public ulong Timestamp { get; set; }
+
+            /// <summary>
+            /// Notifies the app that the message has been successfully included into a block candidate by the thread's collator
+            /// </summary>
+            [JsonPropertyName("json")]
+            public JsonElement? Json { get; set; }
+        }
+
+        /// <summary>
+        /// Notifies the app that the block candicate with the message has been accepted by the thread's validators
+        /// </summary>
+        [JsonDiscriminator("RempIncludedIntoAcceptedBlock")]
+        public class RempIncludedIntoAcceptedBlock : ProcessingEvent
+        {
+            /// <summary>
+            /// Notifies the app that the block candicate with the message has been accepted by the thread's validators
+            /// </summary>
+            [JsonPropertyName("message_id")]
+            public string MessageId { get; set; }
+
+            /// <summary>
+            /// Notifies the app that the block candicate with the message has been accepted by the thread's validators
+            /// </summary>
+            [JsonPropertyName("timestamp")]
+            public ulong Timestamp { get; set; }
+
+            /// <summary>
+            /// Notifies the app that the block candicate with the message has been accepted by the thread's validators
+            /// </summary>
+            [JsonPropertyName("json")]
+            public JsonElement? Json { get; set; }
+        }
+
+        /// <summary>
+        /// Notifies the app about some other minor REMP statuses occurring during message processing
+        /// </summary>
+        [JsonDiscriminator("RempOther")]
+        public class RempOther : ProcessingEvent
+        {
+            /// <summary>
+            /// Notifies the app about some other minor REMP statuses occurring during message processing
+            /// </summary>
+            [JsonPropertyName("message_id")]
+            public string MessageId { get; set; }
+
+            /// <summary>
+            /// Notifies the app about some other minor REMP statuses occurring during message processing
+            /// </summary>
+            [JsonPropertyName("timestamp")]
+            public ulong Timestamp { get; set; }
+
+            /// <summary>
+            /// Notifies the app about some other minor REMP statuses occurring during message processing
+            /// </summary>
+            [JsonPropertyName("json")]
+            public JsonElement? Json { get; set; }
+        }
+
+        /// <summary>
+        /// Notifies the app about any problem that has occured in REMP processing - in this case library switches to the fallback transaction awaiting scenario (sequential block reading).
+        /// </summary>
+        [JsonDiscriminator("RempError")]
+        public class RempError : ProcessingEvent
+        {
+            /// <summary>
+            /// Notifies the app about any problem that has occured in REMP processing - in this case library switches to the fallback transaction awaiting scenario (sequential block reading).
+            /// </summary>
+            [JsonPropertyName("error")]
+            public ClientError Error { get; set; }
+        }
     }
 }

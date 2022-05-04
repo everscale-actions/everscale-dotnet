@@ -62,6 +62,18 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// Not described yet..
         /// </summary>
-        ExternalSignerMustNotBeUsed = 513
+        ExternalSignerMustNotBeUsed = 513,
+        /// <summary>
+        /// Not described yet..
+        /// </summary>
+        MessageRejected = 514,
+        /// <summary>
+        /// Not described yet..
+        /// </summary>
+        InvalidRempStatus = 515,
+        /// <summary>
+        /// Not described yet..
+        /// </summary>
+        NextRempStatusTimeout = 516
     }
 }

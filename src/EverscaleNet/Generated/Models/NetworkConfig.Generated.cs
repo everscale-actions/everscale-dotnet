@@ -12,14 +12,15 @@ namespace EverscaleNet.Client.Models
     public class NetworkConfig
     {
         /// <summary>
-        /// DApp Server public address. For instance, for `net.ton.dev/graphql` GraphQL endpoint the server address will be net.ton.dev
+        /// **This field is deprecated, but left for backward-compatibility.** DApp Server public address.
         /// </summary>
         [JsonPropertyName("server_address")]
         public string ServerAddress { get; set; }
 
         /// <summary>
         /// <para>List of DApp Server addresses.</para>
-        /// <para>Any correct URL format can be specified, including IP addresses This parameter is prevailing over `server_address`.</para>
+        /// <para>Any correct URL format can be specified, including IP addresses. This parameter is prevailing over `server_address`.</para>
+        /// <para>Check the full list of [supported network endpoints](../ton-os-api/networks.md).</para>
         /// </summary>
         [JsonPropertyName("endpoints")]
         public string[] Endpoints { get; set; }
@@ -76,7 +77,7 @@ namespace EverscaleNet.Client.Models
 
         /// <summary>
         /// <para>Maximum number of randomly chosen endpoints the library uses to broadcast a message.</para>
-        /// <para>Default is 2.</para>
+        /// <para>Default is 1.</para>
         /// </summary>
         [JsonPropertyName("sending_endpoint_count")]
         public byte? SendingEndpointCount { get; set; }
@@ -114,6 +115,22 @@ namespace EverscaleNet.Client.Models
         /// </summary>
         [JsonPropertyName("queries_protocol")]
         public NetworkQueriesProtocol QueriesProtocol { get; set; }
+
+        /// <summary>
+        /// <para>UNSTABLE.</para>
+        /// <para>First REMP status awaiting timeout. If no status recieved during the timeout than fallback transaction scenario is activated.</para>
+        /// <para>Must be specified in milliseconds. Default is 1000 (1 sec).</para>
+        /// </summary>
+        [JsonPropertyName("first_remp_status_timeout")]
+        public uint? FirstRempStatusTimeout { get; set; }
+
+        /// <summary>
+        /// <para>UNSTABLE.</para>
+        /// <para>Subsequent REMP status awaiting timeout. If no status recieved during the timeout than fallback transaction scenario is activated.</para>
+        /// <para>Must be specified in milliseconds. Default is 5000 (5 sec).</para>
+        /// </summary>
+        [JsonPropertyName("next_remp_status_timeout")]
+        public uint? NextRempStatusTimeout { get; set; }
 
         /// <summary>
         /// <para>Access key to GraphQL API.</para>

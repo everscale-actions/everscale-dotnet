@@ -134,6 +134,10 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// Not described yet..
         /// </summary>
-        CryptoBoxSecretDeserializationError = 133
+        CryptoBoxSecretDeserializationError = 133,
+        /// <summary>
+        /// Not described yet..
+        /// </summary>
+        InvalidNonceSize = 134
     }
 }
