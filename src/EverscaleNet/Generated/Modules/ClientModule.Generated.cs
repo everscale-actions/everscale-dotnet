@@ -40,6 +40,14 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
+        /// Returns Core Library API reference
+        /// </summary>
+        public async Task<ClientConfig> Config(CancellationToken cancellationToken = default)
+        {
+            return await _everClientAdapter.Request<ClientConfig>("client.config", cancellationToken);
+        }
+
+        /// <summary>
         /// Returns detailed information about this build.
         /// </summary>
         public async Task<ResultOfBuildInfo> BuildInfo(CancellationToken cancellationToken = default)

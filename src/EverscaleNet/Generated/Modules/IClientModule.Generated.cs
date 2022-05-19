@@ -22,6 +22,11 @@ namespace EverscaleNet.Abstract.Modules
         public Task<ResultOfVersion> Version(CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Returns Core Library API reference
+        /// </summary>
+        public Task<ClientConfig> Config(CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Returns detailed information about this build.
         /// </summary>
         public Task<ResultOfBuildInfo> BuildInfo(CancellationToken cancellationToken = default);
