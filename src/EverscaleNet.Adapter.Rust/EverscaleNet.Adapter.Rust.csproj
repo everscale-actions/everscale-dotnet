@@ -36,15 +36,15 @@
             <PackagePath>runtimes\linux-x64\native\libtonclient.so</PackagePath>
             <Link>runtimes\linux-x64\native\libtonclient.so</Link>
         </None>
-        <None Include="..\runtimes\osx-x64\native\libtonclient.dylib">
+        <None Include="..\runtimes\osx-x64\native\libtonclient">
             <Pack>true</Pack>
-            <PackagePath>runtimes\osx-x64\native\libtonclient.dylib</PackagePath>
-            <Link>runtimes\osx-x64\native\libtonclient.dylib</Link>
+            <PackagePath>runtimes\osx-x64\native\libtonclient</PackagePath>
+            <Link>runtimes\osx-x64\native\libtonclient</Link>
         </None>
-        <None Include="..\runtimes\osx.11.0-arm64\native\libtonclient.dylib">
+        <None Include="..\runtimes\osx-arm64\native\libtonclient">
             <Pack>true</Pack>
-            <PackagePath>runtimes\osx.11.0-arm64\native\libtonclient.dylib</PackagePath>
-            <Link>runtimes\osx.11.0-arm64\native\libtonclient.dylib</Link>
+            <PackagePath>runtimes\osx-arm64\native\libtonclient</PackagePath>
+            <Link>runtimes\osx-arm64\native\libtonclient</Link>
         </None>
     </ItemGroup>
 

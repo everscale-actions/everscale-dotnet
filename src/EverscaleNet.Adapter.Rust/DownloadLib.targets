@@ -7,24 +7,27 @@
 
     <PropertyGroup>
         <_SDKVersionDenormalized>$([System.String]::Copy('$(SDKVersion)').Replace('.', '_'))</_SDKVersionDenormalized>
-
-        <_TonLibDownloadUrlWin>https://binaries.tonlabs.io/tonclient_$(_SDKVersionDenormalized)_win32_dll.gz</_TonLibDownloadUrlWin>
-        <_TonLibDownloadUrlLinux>https://binaries.tonlabs.io/tonclient_$(_SDKVersionDenormalized)_linux.gz</_TonLibDownloadUrlLinux>
-        <_TonLibDownloadUrlMacOS>https://binaries.tonlabs.io/tonclient_$(_SDKVersionDenormalized)_darwin.gz</_TonLibDownloadUrlMacOS>
-        <_TonLibDownloadUrlMacOSArm64>https://binaries.tonlabs.io/tonclient_$(_SDKVersionDenormalized)_darwin_arm64.gz</_TonLibDownloadUrlMacOSArm64>
+        
+        <_GitHubReleaseUrl>https://github.com/tonlabs/ever-sdk/releases/download/$(SDKVersion)</_GitHubReleaseUrl>
+        <_TonLibDownloadUrlWin>$(_GitHubReleaseUrl)/tonclient_$(_SDKVersionDenormalized)_win32_dll.gz</_TonLibDownloadUrlWin>
+        <_TonLibDownloadUrlLinux>$(_GitHubReleaseUrl)/tonclient_$(_SDKVersionDenormalized)_linux.gz</_TonLibDownloadUrlLinux>
+        <_TonLibDownloadUrlMacOS>$(_GitHubReleaseUrl)/tonclient_$(_SDKVersionDenormalized)_darwin.gz</_TonLibDownloadUrlMacOS>
+        <_TonLibDownloadUrlMacOSArm64>$(_GitHubReleaseUrl)/tonclient_$(_SDKVersionDenormalized)_darwin_arm64.gz</_TonLibDownloadUrlMacOSArm64>
 
         <_IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</_IsWindows>
         <_IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</_IsLinux>
         <_IsMacOS Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</_IsMacOS>
 
-        <_NativeRuntime Condition=" '$(_NativeRuntime)' == '' And '$(_IsWindows)' == 'true' And ('$(Prefer32Bit)' == 'false' Or '$(PlatformTarget)' == 'x64')">win-x64</_NativeRuntime>
-        <_NativeRuntime Condition=" '$(_NativeRuntime)' == '' And '$(_IsLinux)' == 'true' And ('$(Prefer32Bit)' == 'false' Or '$(PlatformTarget)' == 'x64')">linux-x64</_NativeRuntime>
-        <_NativeRuntime Condition=" '$(_NativeRuntime)' == '' And '$(_IsMacOS)' == 'true' And ('$(Prefer32Bit)' == 'false' Or '$(PlatformTarget)' == 'x64')">osx-x64</_NativeRuntime>
-        <_NativeRuntime Condition=" '$(_NativeRuntime)' == '' And '$(_IsMacOS)' == 'true' And ('$(Prefer32Bit)' == 'false' Or '$(PlatformTarget)' == 'arm64')">osx.11.0-arm64</_NativeRuntime>
+        <_ProcessArchitecture>$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture)</_ProcessArchitecture>
+
+        <_NativeRuntime Condition=" '$(_NativeRuntime)' == '' And '$(_IsWindows)' == 'true' And '$(_ProcessArchitecture)' == 'X64'">win-x64</_NativeRuntime>
+        <_NativeRuntime Condition=" '$(_NativeRuntime)' == '' And '$(_IsLinux)' == 'true' And '$(_ProcessArchitecture)' == 'X64'">linux-x64</_NativeRuntime>
+        <_NativeRuntime Condition=" '$(_NativeRuntime)' == '' And '$(_IsMacOS)' == 'true' And '$(_ProcessArchitecture)' == 'X64'">osx-x64</_NativeRuntime>
+        <_NativeRuntime Condition=" '$(_NativeRuntime)' == '' And '$(_IsMacOS)' == 'true' And '$(_ProcessArchitecture)' == 'Arm64'">osx-arm64</_NativeRuntime>
 
         <_NativeLibName Condition="'$(_NativeRuntime)' == 'win-x64'">tonclient.dll</_NativeLibName>
         <_NativeLibName Condition="'$(_NativeRuntime)' == 'linux-x64'">libtonclient.so</_NativeLibName>
-        <_NativeLibName Condition="'$(_NativeRuntime)' == 'osx-x64' Or '$(_NativeRuntime)' == 'osx.11.0-arm64'">libtonclient.dylib</_NativeLibName>
+        <_NativeLibName Condition="'$(_NativeRuntime)' == 'osx-x64' Or '$(_NativeRuntime)' == 'osx-arm64'">libtonclient</_NativeLibName>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -44,26 +47,31 @@
         <DownloadFile SourceUrl="$(_TonLibDownloadUrlLinux)" DestinationFolder="$(MSBuildThisFileDirectory)..\downloads\" DestinationFileName="tonclient_linux.gz">
             <Output TaskParameter="DownloadedFile" ItemName="None" />
         </DownloadFile>
-        <UnGzip SourceFile="$(MSBuildThisFileDirectory)..\downloads\tonclient_linux.gz" DestinationFile="$(MSBuildThisFileDirectory)..\runtimes\linux-x64\native\libtonclient.so"/>
+        <UnGzip SourceFile="$(MSBuildThisFileDirectory)..\downloads\tonclient_linux.gz" DestinationFile="$(MSBuildThisFileDirectory)..\runtimes\linux-x64\native\libtonclient.so" />
 
         <MakeDir Directories="$(MSBuildThisFileDirectory)..\runtimes\osx-x64\native\" />
         <DownloadFile SourceUrl="$(_TonLibDownloadUrlMacOS)" DestinationFolder="$(MSBuildThisFileDirectory)..\downloads\" DestinationFileName="tonclient_darwin.gz">
             <Output TaskParameter="DownloadedFile" ItemName="None" />
         </DownloadFile>
-        <UnGzip SourceFile="$(MSBuildThisFileDirectory)..\downloads\tonclient_darwin.gz" DestinationFile="$(MSBuildThisFileDirectory)..\runtimes\osx-x64\native\libtonclient.dylib" />
+        <UnGzip SourceFile="$(MSBuildThisFileDirectory)..\downloads\tonclient_darwin.gz" DestinationFile="$(MSBuildThisFileDirectory)..\runtimes\osx-x64\native\libtonclient" />
 
-        <MakeDir Directories="$(MSBuildThisFileDirectory)..\runtimes\osx.11.0-arm64\native\" />
+        <MakeDir Directories="$(MSBuildThisFileDirectory)..\runtimes\osx-arm64\native\" />
         <DownloadFile SourceUrl="$(_TonLibDownloadUrlMacOSArm64)" DestinationFolder="$(MSBuildThisFileDirectory)..\downloads\" DestinationFileName="tonclient_darwin_arm64.gz">
             <Output TaskParameter="DownloadedFile" ItemName="None" />
         </DownloadFile>
-        <UnGzip SourceFile="$(MSBuildThisFileDirectory)..\downloads\tonclient_darwin_arm64.gz" DestinationFile="$(MSBuildThisFileDirectory)..\runtimes\osx.11.0-arm64\native\libtonclient.dylib" />
+        <UnGzip SourceFile="$(MSBuildThisFileDirectory)..\downloads\tonclient_darwin_arm64.gz" DestinationFile="$(MSBuildThisFileDirectory)..\runtimes\osx-arm64\native\libtonclient" />
+    </Target>
+    
+    
+    <Target Name="Debug" AfterTargets="Build">
+        <Message Importance="high" Text="Runtime ---  $(_NativeRuntime)"/>
     </Target>
 
     <ItemGroup>
-      <None Condition="'$(_NativeRuntime)' != ''" Include="$(MSBuildThisFileDirectory)..\runtimes\$(_NativeRuntime)\native\$(_NativeLibName)">
-        <Link>$(_NativeLibName)</Link>
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
+        <None Condition="'$(_NativeRuntime)' != ''" Include="$(MSBuildThisFileDirectory)..\runtimes\$(_NativeRuntime)\native\$(_NativeLibName)">
+            <Link>$(_NativeLibName)</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
-
+    
 </Project>
