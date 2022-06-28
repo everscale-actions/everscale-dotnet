@@ -185,5 +185,13 @@ namespace EverscaleNet.Client.Modules
         {
             return await _everClientAdapter.Request<ParamsOfAbiEncodeBoc, ResultOfAbiEncodeBoc>("abi.encode_boc", @params, cancellationToken);
         }
+
+        /// <summary>
+        /// Calculates contract function ID by contract ABI
+        /// </summary>
+        public async Task<ResultOfCalcFunctionId> CalcFunctionId(ParamsOfCalcFunctionId @params, CancellationToken cancellationToken = default)
+        {
+            return await _everClientAdapter.Request<ParamsOfCalcFunctionId, ResultOfCalcFunctionId>("abi.calc_function_id", @params, cancellationToken);
+        }
     }
 }

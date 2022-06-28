@@ -131,5 +131,10 @@ namespace EverscaleNet.Abstract.Modules
         /// Encodes given parameters in JSON into a BOC using param types from ABI.
         /// </summary>
         public Task<ResultOfAbiEncodeBoc> EncodeBoc(ParamsOfAbiEncodeBoc @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Calculates contract function ID by contract ABI
+        /// </summary>
+        public Task<ResultOfCalcFunctionId> CalcFunctionId(ParamsOfCalcFunctionId @params, CancellationToken cancellationToken = default);
     }
 }

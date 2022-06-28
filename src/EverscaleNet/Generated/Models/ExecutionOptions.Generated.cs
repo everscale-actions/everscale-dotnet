@@ -34,5 +34,11 @@ namespace EverscaleNet.Client.Models
         /// </summary>
         [JsonPropertyName("transaction_lt")]
         public ulong? TransactionLt { get; set; }
+
+        /// <summary>
+        /// Overrides standard TVM behaviour. If set to `true` then CHKSIG always will return `true`.
+        /// </summary>
+        [JsonPropertyName("chksig_always_succeed")]
+        public bool? ChksigAlwaysSucceed { get; set; }
     }
 }

@@ -66,6 +66,10 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// Not described yet..
         /// </summary>
-        EncodeInitialDataFailed = 314
+        EncodeInitialDataFailed = 314,
+        /// <summary>
+        /// Not described yet..
+        /// </summary>
+        InvalidFunctionName = 315
     }
 }
