@@ -21,7 +21,8 @@ public class EverClientTestsFixture : IDisposable {
 
 		var options = new EverClientOptions {
 			Network = new NetworkConfig {
-				Endpoints = useNodeSe ? TestsEnv.EverscaleNetworkEndpoints : null
+				Endpoints = useNodeSe ? TestsEnv.EverscaleNetworkEndpoints : null,
+				QueriesProtocol = NetworkQueriesProtocol.WS
 			}
 		};
 
