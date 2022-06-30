@@ -17,9 +17,9 @@ public static class AddEverClientServiceCollectionExtensions {
 	/// <param name="services"></param>
 	/// <param name="configureEverClientOptions">
 	///     Configure network <see cref="EverClientOptions" />
-	///     https://github.com/tonlabs/TON-SDK/blob/master/docs/mod_client.md#networkconfig
-	///     https://github.com/tonlabs/TON-SDK/blob/master/docs/mod_client.md#cryptoconfig
-	///     https://github.com/tonlabs/TON-SDK/blob/master/docs/mod_client.md#abiconfig
+	///     https://github.com/tonlabs/ever-sdk/blob/master/docs/mod_client.md#networkconfig
+	///     https://github.com/tonlabs/ever-sdk/blob/master/docs/mod_client.md#cryptoconfig
+	///     https://github.com/tonlabs/ever-sdk/blob/master/docs/mod_client.md#abiconfig
 	/// </param>
 	/// <param name="configurePackageManagerOptions">
 	///     Configure package manager, contracts path and etc.
