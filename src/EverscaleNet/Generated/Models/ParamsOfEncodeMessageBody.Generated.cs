@@ -47,5 +47,14 @@ namespace EverscaleNet.Client.Models
         /// </summary>
         [JsonPropertyName("processing_try_index")]
         public byte? ProcessingTryIndex { get; set; }
+
+        /// <summary>
+        /// <para>Destination address of the message</para>
+        /// <para>Since ABI version 2.3 destination address of external inbound message is used in message</para>
+        /// <para>body signature calculation. Should be provided when signed external inbound message body is</para>
+        /// <para>created. Otherwise can be omitted.</para>
+        /// </summary>
+        [JsonPropertyName("address")]
+        public string Address { get; set; }
     }
 }
