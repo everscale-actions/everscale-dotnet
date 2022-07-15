@@ -1,7 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using EverscaleNet.Client.Models;
-using EverscaleNet.Models;
 
 namespace EverscaleNet.Abstract;
 
@@ -9,11 +8,6 @@ namespace EverscaleNet.Abstract;
 ///     Load package from abi and tvm files. Default path is _contracts/abi_v{AbiVersion}/
 /// </summary>
 public interface IEverPackageManager {
-	/// <summary>
-	///     Load package from abi and tvm files. Default path is _contracts/abi_v{AbiVersion}/
-	/// </summary>
-	public Task<Package> LoadPackage(string name, CancellationToken cancellationToken = default);
-
 	/// <summary>
 	///     Load Abi from abi file. Default path is _contracts/abi_v{AbiVersion}/{PackageName}.abi
 	/// </summary>

@@ -26,19 +26,6 @@ public class FilePackageManager : IEverPackageManager {
 	}
 
 	/// <inheritdoc />
-	public async Task<Package> LoadPackage(string name, CancellationToken cancellationToken = default) {
-		Task<Abi> getAbiTask = LoadAbi(name, cancellationToken);
-		Task<string> getTvcTask = LoadTvc(name, cancellationToken);
-		// do it parallel 
-		await Task.WhenAll(getAbiTask, getTvcTask);
-
-		Abi abi = await getAbiTask;
-		string tvc = await getTvcTask;
-
-		return new Package(abi, tvc);
-	}
-
-	/// <inheritdoc />
 	public async Task<Abi> LoadAbi(string name, CancellationToken cancellationToken = default) {
 		string filePath = Path.Join(_options.PackagesPath, string.Format(AbiFileTemplate, name));
 		var fileInfo = new FileInfo(filePath);
