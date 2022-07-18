@@ -187,7 +187,7 @@ public class AbiModuleTests : IClassFixture<EverClientTestsFixture> {
 		result.BodyType.Should().Be(MessageBodyType.Input);
 		result.Name.Should().Be("returnValue");
 		result.Value.Should().NotBeNull();
-		result.Value!.Value.GetProperty("id").GetString().Should().Be("0x0000000000000000000000000000000000000000000000000000000000000000");
+		result.Value.Get<string>("id").Should().Be("0x0000000000000000000000000000000000000000000000000000000000000000");
 		result.Header.Expire.Should().Be(Expire);
 		result.Header.Time.Should().Be(Time);
 		result.Header.Pubkey.Should().Be("4c7c408ff1ddebb8d6405ee979c716a14fdd6cc08124107a61d3c25597099499");
@@ -204,7 +204,7 @@ public class AbiModuleTests : IClassFixture<EverClientTestsFixture> {
 		result.BodyType.Should().Be(MessageBodyType.Event);
 		result.Name.Should().Be("EventThrown");
 		result.Value.Should().NotBeNull();
-		result.Value!.Value.GetProperty("id").GetString().Should().Be("0x0000000000000000000000000000000000000000000000000000000000000000");
+		result.Value.Get<string>("id").Should().Be("0x0000000000000000000000000000000000000000000000000000000000000000");
 		result.Header.Should().BeNull();
 	}
 
@@ -219,7 +219,7 @@ public class AbiModuleTests : IClassFixture<EverClientTestsFixture> {
 		result.BodyType.Should().Be(MessageBodyType.Input);
 		result.Name.Should().Be("returnValue");
 		result.Value.Should().NotBeNull();
-		result.Value!.Value.GetProperty("id").GetString().Should().Be("0x0000000000000000000000000000000000000000000000000000000000000000");
+		result.Value.Get<string>("id").Should().Be("0x0000000000000000000000000000000000000000000000000000000000000000");
 		result.Header.Expire.Should().Be(Expire);
 		result.Header.Time.Should().Be(Time);
 		result.Header.Pubkey.Should().Be("4c7c408ff1ddebb8d6405ee979c716a14fdd6cc08124107a61d3c25597099499");
