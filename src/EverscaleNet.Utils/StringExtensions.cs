@@ -34,4 +34,14 @@ public static class StringExtensions {
 	public static string ToHexString(this string input) {
 		return BitConverter.ToString(Encoding.Default.GetBytes(input)).Replace("-", string.Empty);
 	}
+
+	/// <summary>
+	/// Convert decimal nano to coins
+	/// </summary>
+	/// <param name="nano"></param>
+	/// <returns></returns>
+	public static decimal NanoToCoins(this string nano) {
+		decimal nanoDecimal = decimal.Parse(nano, NumberStyles.Number);
+		return nanoDecimal.NanoToCoins();
+	}
 }
