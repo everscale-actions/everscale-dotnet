@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Buffers;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace EverscaleNet.Serialization;
@@ -14,8 +15,11 @@ public static class JsonExtensions {
 	/// <param name="property"></param>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
-	public static T Get<T>(this JsonElement? element, string property) {
-		return element!.Value.GetProperty(property).ToObject<T>();
+	public static T Get<T>([DisallowNull] this JsonElement? element, string property) {
+		if (element == null) {
+			throw new ArgumentNullException(nameof(element));
+		}
+		return element.Value.GetProperty(property).ToObject<T>();
 	}
 
 	/// <summary>
@@ -38,24 +42,20 @@ public static class JsonExtensions {
 	/// <returns></returns>
 	// ReSharper disable once UnusedParameter.Global
 	public static T ToAnonymous<T>(this JsonElement element, T prototype) {
-		var bufferWriter = new ArrayBufferWriter<byte>();
-		using (var writer = new Utf8JsonWriter(bufferWriter)) {
-			element.WriteTo(writer);
-		}
-		return JsonSerializer.Deserialize<T>(bufferWriter.WrittenSpan, JsonOptionsProvider.JsonSerializerOptions)!;
+		return ToObject<T>(element);
 	}
 
 	/// <summary>
 	/// </summary>
 	/// <param name="element"></param>
+	/// <param name="discriminatorType"></param>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
-	public static T ToObject<T>(this JsonElement? element) {
-		var bufferWriter = new ArrayBufferWriter<byte>();
-		using (var writer = new Utf8JsonWriter(bufferWriter)) {
-			element!.Value.WriteTo(writer);
+	public static T ToObject<T>([DisallowNull] this JsonElement? element, Type? discriminatorType = null) {
+		if (element == null) {
+			throw new ArgumentNullException(nameof(element));
 		}
-		return JsonSerializer.Deserialize<T>(bufferWriter.WrittenSpan, JsonOptionsProvider.JsonSerializerOptions)!;
+		return ToObject<T>(element.Value, discriminatorType);
 	}
 
 	/// <summary>
@@ -70,10 +70,9 @@ public static class JsonExtensions {
 		using (var writer = new Utf8JsonWriter(bufferWriter)) {
 			element.WriteTo(writer);
 		}
-
-		return (discriminatorType != null
-			        ? (T)JsonSerializer.Deserialize(bufferWriter.WrittenSpan, discriminatorType)!
-			        : JsonSerializer.Deserialize<T>(bufferWriter.WrittenSpan, JsonOptionsProvider.JsonSerializerOptions))!;
+		return discriminatorType != null
+			       ? (T)JsonSerializer.Deserialize(bufferWriter.WrittenSpan, discriminatorType)!
+			       : JsonSerializer.Deserialize<T>(bufferWriter.WrittenSpan, JsonOptionsProvider.JsonSerializerOptions)!;
 	}
 
 	/// <summary>
