@@ -7,6 +7,7 @@
     <ItemGroup>
         <ProjectReference Include="..\EverscaleNet\EverscaleNet.csproj" />
         <ProjectReference Include="..\EverscaleNet.Adapter.Wasm\EverscaleNet.Adapter.Wasm.csproj" />
+        <ProjectReference Include="..\EverscaleNet.WebPackageManager\EverscaleNet.WebPackageManager.csproj" />
     </ItemGroup>
 
 </Project>

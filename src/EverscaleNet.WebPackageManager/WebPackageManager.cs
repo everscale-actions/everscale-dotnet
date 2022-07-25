@@ -5,16 +5,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using EverscaleNet.Abstract;
 using EverscaleNet.Client.Models;
-using EverscaleNet.Models;
 using EverscaleNet.Serialization;
 using Microsoft.Extensions.Options;
 
-namespace EverscaleNet.WebClient.PackageManager;
+namespace EverscaleNet.WebPackageManager;
 
 /// <inheritdoc />
 public class WebPackageManager : IEverPackageManager {
-	private const string AbiFileTemplate = "{0}.abi.json";
-	private const string TvcFileTemplate = "{0}.tvc";
 	private readonly HttpClient _httpClient;
 	private readonly IOptions<WebPackageManagerOptions> _optionsAccessor;
 
@@ -35,15 +32,17 @@ public class WebPackageManager : IEverPackageManager {
 
 	/// <inheritdoc />
 	public async Task<Abi> LoadAbi(string name, CancellationToken cancellationToken = default) {
-		string fileUrl = Combine(_optionsAccessor.Value.PackagesPath, string.Format(AbiFileTemplate, name));
+		WebPackageManagerOptions options = _optionsAccessor.Value;
+		string fileUrl = Combine(options.PackagesPath, string.Format(options.AbiFileTemplate, name));
 		var abiContract =
-			await _httpClient.GetFromJsonAsync<AbiContract>(fileUrl, JsonOptionsProvider.JsonSerializerOptions, cancellationToken: cancellationToken);
+			await _httpClient.GetFromJsonAsync<AbiContract>(fileUrl, JsonOptionsProvider.JsonSerializerOptions, cancellationToken);
 		return new Abi.Contract { Value = abiContract };
 	}
 
 	/// <inheritdoc />
 	public async Task<string> LoadTvc(string name, CancellationToken cancellationToken = default) {
-		string fileUrl = Combine(_optionsAccessor.Value.PackagesPath, string.Format(TvcFileTemplate, name));
+		WebPackageManagerOptions options = _optionsAccessor.Value;
+		string fileUrl = Combine(_optionsAccessor.Value.PackagesPath, string.Format(options.TvcFileTemplate, name));
 		byte[] bytes = await _httpClient.GetByteArrayAsync(fileUrl, cancellationToken);
 		return Convert.ToBase64String(bytes);
 	}

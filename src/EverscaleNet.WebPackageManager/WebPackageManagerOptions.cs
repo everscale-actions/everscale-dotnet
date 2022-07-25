@@ -1,11 +1,10 @@
-﻿namespace EverscaleNet.Client.PackageManager;
+﻿namespace EverscaleNet.WebPackageManager;
 
 /// <summary>
-///     Setup path to contracts folder
 /// </summary>
-public class FilePackageManagerOptions {
+public class WebPackageManagerOptions {
 	/// <summary>
-	/// Path that will be used to load packages. Default is "_contracts"
+	/// Path that will be used to load packages. Default is "_contracts". So _contracts will reflect to wwwroot/_contracts 
 	/// </summary>
 	public string PackagesPath { get; set; } = "_contracts";
 

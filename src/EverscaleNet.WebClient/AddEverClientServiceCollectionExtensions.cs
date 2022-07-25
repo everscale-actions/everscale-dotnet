@@ -3,7 +3,7 @@ using EverscaleNet.Abstract;
 using EverscaleNet.Adapter.Wasm;
 using EverscaleNet.Client;
 using EverscaleNet.Models;
-using EverscaleNet.WebClient.PackageManager;
+using EverscaleNet.WebPackageManager;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;
@@ -24,7 +24,7 @@ public static class AddEverClientServiceCollectionExtensions {
 	/// </param>
 	/// <param name="configurePackageManagerOptions">
 	///     Configure package manager, contracts path and etc.
-	///     <see cref="WebPackageManager" />
+	///     <see cref="EverscaleNet.WebPackageManager.WebPackageManager" />
 	/// </param>
 	/// <returns></returns>
 	// ReSharper enable CommentTypo
