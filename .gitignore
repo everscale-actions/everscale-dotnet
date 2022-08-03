@@ -368,5 +368,3 @@ FodyWeavers.xsd
 /src/downloads/*
 /src/runtimes/*
 /src/EverscaleNet.Adapter.Wasm/package.json
-/src/EverscaleNet.Adapter.Wasm/wwwroot/js/eversdk.js
-/src/EverscaleNet.Adapter.Wasm/wwwroot/eversdk.wasm
