@@ -134,7 +134,7 @@ namespace EverscaleNet.Client.Models
 
         /// <summary>
         /// <para>Access key to GraphQL API.</para>
-        /// <para>At the moment is not used in production.</para>
+        /// <para>You can specify here Evercloud project secret ot serialized JWT.</para>
         /// </summary>
         [JsonPropertyName("access_key")]
         public string AccessKey { get; set; }
