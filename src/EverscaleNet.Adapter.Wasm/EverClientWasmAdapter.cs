@@ -15,14 +15,16 @@ namespace EverscaleNet.Adapter.Wasm;
 public class EverClientWasmAdapter : EverClientAdapterBase {
 	private readonly IJSRuntime _jsRuntime;
 	private readonly ILogger<EverClientWasmAdapter> _logger;
-	private readonly IOptions<EverClientOptions> _optionsAccessor;
+	private readonly IOptions<EverClientOptions> _everOptionsAccessor;
+	private readonly IOptions<LibWebOptions> _libWebOptionsAccessor;
 	private IJSObjectReference? _libWeb;
 
 	/// <inheritdoc />
-	public EverClientWasmAdapter(IJSRuntime jsRuntime, IOptions<EverClientOptions> optionsAccessor,
+	public EverClientWasmAdapter(IJSRuntime jsRuntime, IOptions<EverClientOptions> everOptionsAccessor, IOptions<LibWebOptions> libWebOptionsAccessor,
 	                             ILogger<EverClientWasmAdapter> logger) : base(logger) {
 		_jsRuntime = jsRuntime;
-		_optionsAccessor = optionsAccessor;
+		_everOptionsAccessor = everOptionsAccessor;
+		_libWebOptionsAccessor = libWebOptionsAccessor;
 		_logger = logger;
 	}
 
@@ -61,10 +63,10 @@ public class EverClientWasmAdapter : EverClientAdapterBase {
 	protected override async Task<uint> CreateContext(CancellationToken cancellationToken) {
 		var module = await _jsRuntime.InvokeAsync<IJSObjectReference>("import", cancellationToken,
 		                                                              "/_content/EverscaleNet.Adapter.Wasm/js/eversdk-adapter.js");
-		_libWeb = await module.InvokeAsync<IJSObjectReference>("init", cancellationToken, DotNetObjectReference.Create(this));
+		_libWeb = await module.InvokeAsync<IJSObjectReference>("init", cancellationToken, DotNetObjectReference.Create(this), _libWebOptionsAccessor.Value);
 
 		string configJson =
-			JsonSerializer.Serialize(_optionsAccessor.Value, JsonOptionsProvider.JsonSerializerOptions);
+			JsonSerializer.Serialize(_everOptionsAccessor.Value, JsonOptionsProvider.JsonSerializerOptions);
 		_logger.LogTrace("Creating context with options: {Config}", configJson);
 		var resultJson =
 			await _libWeb.InvokeAsync<string>("createContext", cancellationToken, configJson);
