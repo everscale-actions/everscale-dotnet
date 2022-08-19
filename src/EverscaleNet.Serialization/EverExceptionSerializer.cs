@@ -25,7 +25,8 @@ public static class EverExceptionSerializer {
 		}
 
 		return clientError != null
-			       ? EverClientException.CreateExceptionWithCodeWithData(clientError.Code, clientError.Data.ToObject<Dictionary<string, object>>(),
+			       ? EverClientException.CreateExceptionWithCodeWithData(clientError.Code, 
+			                                                             clientError.Data?.ToObject<Dictionary<string, object>>(),
 			                                                             clientError.Message)
 			       : new EverClientException($"Raw result: {responseJson}",
 			                                 innerException ?? new NullReferenceException("Result of error response is null or not valid"));

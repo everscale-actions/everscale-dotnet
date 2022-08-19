@@ -28,7 +28,6 @@ public class EverClientException : Exception {
 		if (data == null) {
 			return exception;
 		}
-
 		foreach ((string key, object value) in data) {
 			exception.Data.Add(key, value);
 		}
