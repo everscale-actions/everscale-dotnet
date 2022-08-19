@@ -9,6 +9,15 @@ namespace EverscaleNet.Abstract;
 /// </summary>
 public interface IEverPackageManager {
 	/// <summary>
+	/// Abi file name template
+	/// </summary>
+	protected const string AbiFileTemplate = "{0}.abi.json";
+	/// <summary>
+	/// Tvc file name template
+	/// </summary>
+	protected const string TvcFileTemplate = "{0}.tvc";
+
+	/// <summary>
 	///     Load Abi from abi file. Default path is _contracts/abi_v{AbiVersion}/{PackageName}.abi
 	/// </summary>
 	/// <param name="name">Package name</param>
