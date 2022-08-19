@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using EverscaleNet.Abstract;
 using EverscaleNet.Client.Models;
-using EverscaleNet.Models;
 using EverscaleNet.Serialization;
 using Microsoft.Extensions.Options;
 

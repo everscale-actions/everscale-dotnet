@@ -46,6 +46,21 @@ public static class JsonExtensions {
 	}
 
 	/// <summary>
+	///     Convert JsonElement to prototype
+	/// </summary>
+	/// <param name="element"></param>
+	/// <param name="prototype"></param>
+	/// <typeparam name="T"></typeparam>
+	/// <returns></returns>
+	// ReSharper disable once UnusedParameter.Global
+	public static T ToAnonymous<T>([DisallowNull] this JsonElement? element, T prototype) {
+		if (element == null) {
+			throw new ArgumentNullException(nameof(element));
+		}
+		return ToObject<T>(element);
+	}
+
+	/// <summary>
 	/// </summary>
 	/// <param name="element"></param>
 	/// <param name="discriminatorType"></param>

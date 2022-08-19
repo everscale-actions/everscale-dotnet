@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using EverscaleNet.Abstract;
 using EverscaleNet.Client.Models;
-using EverscaleNet.Models;
 using EverscaleNet.Serialization;
 using Microsoft.Extensions.Options;
 
@@ -27,17 +26,11 @@ public class WebPackageManager : IEverPackageManager {
 		_optionsAccessor = optionsAccessor;
 	}
 
-	private static string Combine(string uri1, string uri2) {
-		uri1 = uri1.TrimEnd('/');
-		uri2 = uri2.TrimStart('/');
-		return $"{uri1}/{uri2}";
-	}
-
 	/// <inheritdoc />
 	public async Task<Abi> LoadAbi(string name, CancellationToken cancellationToken = default) {
 		string fileUrl = Combine(_optionsAccessor.Value.PackagesPath, string.Format(AbiFileTemplate, name));
 		var abiContract =
-			await _httpClient.GetFromJsonAsync<AbiContract>(fileUrl, JsonOptionsProvider.JsonSerializerOptions, cancellationToken: cancellationToken);
+			await _httpClient.GetFromJsonAsync<AbiContract>(fileUrl, JsonOptionsProvider.JsonSerializerOptions, cancellationToken);
 		return new Abi.Contract { Value = abiContract };
 	}
 
@@ -46,5 +39,11 @@ public class WebPackageManager : IEverPackageManager {
 		string fileUrl = Combine(_optionsAccessor.Value.PackagesPath, string.Format(TvcFileTemplate, name));
 		byte[] bytes = await _httpClient.GetByteArrayAsync(fileUrl, cancellationToken);
 		return Convert.ToBase64String(bytes);
+	}
+
+	private static string Combine(string uri1, string uri2) {
+		uri1 = uri1.TrimEnd('/');
+		uri2 = uri2.TrimStart('/');
+		return $"{uri1}/{uri2}";
 	}
 }

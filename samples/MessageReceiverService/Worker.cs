@@ -3,9 +3,9 @@ namespace MessageReceiverService;
 public class Worker : BackgroundService {
 	private const string Mnemonic = "spin tilt boss upper random exit spice ankle leave grief short clever";
 	private const string ReceiverContractName = "15_MessageReceiver";
+	private readonly IEverClient _everClient;
 	private readonly ILogger<Worker> _logger;
 	private readonly IEverPackageManager _packageManager;
-	private readonly IEverClient _everClient;
 
 	public Worker(ILogger<Worker> logger, IEverClient everClient, IEverPackageManager packageManager) {
 		_logger = logger;
@@ -105,7 +105,7 @@ public class Worker : BackgroundService {
 				FunctionName = "sendTransaction",
 				Input = new {
 					dest = account ?? SeGiver.Address,
-					value = 100_000_000_000_000,
+					value = 100m.CoinsToNano(),
 					bounce = false
 				}.ToJsonElement()
 			},
@@ -125,7 +125,7 @@ public class Worker : BackgroundService {
 			ResultOfParse parseResult =
 				await _everClient.Boc.ParseMessage(new ParamsOfParse { Boc = message }, cancellationToken);
 			var parsedPrototype = new { type = default(int), id = default(string) };
-			var parsedMessage = parseResult.Parsed!.Value.ToAnonymous(parsedPrototype);
+			var parsedMessage = parseResult.Parsed.ToAnonymous(parsedPrototype);
 			if (parsedMessage.type == 0) {
 				await _everClient.Net.WaitForCollection(new ParamsOfWaitForCollection {
 					Collection = "transactions",
