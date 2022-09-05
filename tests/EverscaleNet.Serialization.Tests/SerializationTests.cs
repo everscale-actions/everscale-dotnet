@@ -43,7 +43,7 @@ public class SerializationTests {
 	}
 
 	[Fact]
-	public void SerializeEncodeMessageRequest() {
+	public void SerializeEncodeMessageRequestTest() {
 		var messageRequest = new ParamsOfEncodeMessage {
 			Abi = TestsEnv.Packages.Events.Abi,
 			DeploySet = new DeploySet {
@@ -73,8 +73,7 @@ public class SerializationTests {
 		jsonElement.TryGetProperty("signer", out JsonElement signer).Should().BeTrue();
 		signer.TryGetProperty("type", out JsonElement signerType).Should().BeTrue();
 		signerType.GetString().Should().Be("External");
-
-		json.Should().Contain("4c7c408ff1ddebb8d6405ee979c716a14fdd6cc08124107a61d3c25597099499");
+		signer.Get<string>("public_key").Should().Be("4c7c408ff1ddebb8d6405ee979c716a14fdd6cc08124107a61d3c25597099499");
 	}
 
 	[Fact]
