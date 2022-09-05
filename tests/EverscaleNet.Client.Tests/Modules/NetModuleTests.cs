@@ -7,15 +7,16 @@ using Xunit.Abstractions;
 namespace EverscaleNet.Client.Tests.Modules;
 
 public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
+	private readonly IEverClient _everClient;
+
+	private readonly EverClientTestsFixture _fixture;
+	private readonly ITestOutputHelper _outputHelper;
+
 	public NetModuleTests(EverClientTestsFixture fixture, ITestOutputHelper outputHelper) {
 		_fixture = fixture;
 		_outputHelper = outputHelper;
 		_everClient = fixture.CreateClient(outputHelper, true);
 	}
-
-	private readonly EverClientTestsFixture _fixture;
-	private readonly ITestOutputHelper _outputHelper;
-	private readonly IEverClient _everClient;
 
 	private IEverClient GetNewClient() {
 		return _fixture.CreateClient(_outputHelper, true);
@@ -60,8 +61,8 @@ public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 			Query = "query{info{version}}"
 		});
 
-		var resultParsed = result.Result!.Value.ToAnonymous(new { data = new { info = new { version = default(string) } } });
-		resultParsed.data.info.version.Split('.').Length.Should().Be(3);
+		var resultParsed = result.Result.ToPrototype(new { data = new { info = new { version = default(string) } } });
+		resultParsed!.data.info.version.Split('.').Length.Should().Be(3);
 	}
 
 	[Fact]
@@ -128,7 +129,7 @@ public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 		var callback = new Action<JsonElement, uint>((serdeJson, responseType) => {
 			switch ((SubscriptionResponseType)responseType) {
 				case SubscriptionResponseType.Ok:
-					var result = serdeJson.ToAnonymous(new { result = new { id = default(string), account_addr = default(string) } }).result;
+					var result = serdeJson.ToPrototype(new { result = new { id = default(string), account_addr = default(string) } }).result;
 					lock (@lock) {
 						transactions.Add(result.id);
 						addresses.Add(result.account_addr);
@@ -202,7 +203,7 @@ public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 			},
 			SendEvents = false
 		});
-		
+
 		// give some time for subscription to receive all data
 		await Task.Delay(TimeSpan.FromSeconds(1));
 

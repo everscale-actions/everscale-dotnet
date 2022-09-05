@@ -151,7 +151,7 @@ public class Worker : BackgroundService {
 			ResultOfParse parseResult =
 				await _everClient.Boc.ParseMessage(new ParamsOfParse { Boc = message }, cancellationToken);
 			var parsedPrototype = new { msg_type = default(int), id = default(string) };
-			var parsedMessage = parseResult.Parsed.ToAnonymous(parsedPrototype);
+			var parsedMessage = parseResult.Parsed.ToPrototype(parsedPrototype);
 			if (parsedMessage.msg_type == 0) {
 				await _everClient.Net.WaitForCollection(new ParamsOfWaitForCollection {
 					Collection = "transactions",
