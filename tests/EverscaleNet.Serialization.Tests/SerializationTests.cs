@@ -84,4 +84,40 @@ public class SerializationTests {
 
 		json.Should().Be("{\"dictionary\":111}");
 	}
+
+	[Theory]
+	[ClassData(typeof(AccountTypeTestData))]
+	public void AccountTypeGetPropertyTest(string json, AccountType? expectedAccountType) {
+		AccountType? accountType = JsonDocument.Parse(json).RootElement.TryGet("acc_type", out AccountType result) ? result : null;
+
+		accountType.Should().Be(expectedAccountType);
+	}
+
+	[Theory]
+	[ClassData(typeof(AccountTypeTestData))]
+	public void AccountTypeAnonymousTypeTest(string json, AccountType? expectedAccountType) {
+		var prototype = new { acc_type = default(AccountType?) };
+
+		var result = JsonSerializerExtensions.DeserializePrototype(json, prototype);
+
+		result.acc_type.Should().Be(expectedAccountType);
+	}
+
+	[Fact]
+	public void AccountTypeDeserializationKeyNotFoundExceptionTest() {
+		var getAccountType = new Func<AccountType>(() => JsonDocument.Parse("{}").RootElement.Get<AccountType>("acc_type"));
+
+		getAccountType.Should().ThrowExactly<KeyNotFoundException>("acc_type is not presented");
+	}
+
+	private class AccountTypeTestData : TheoryData<string, AccountType?> {
+		public AccountTypeTestData() {
+			Add("{ }", null); // be careful JsonSerializer returns 0 value if not nullable enum type provided
+			Add("{ \"acc_type\": 0 }", AccountType.Uninit);
+			Add("{ \"acc_type\": 1 }", AccountType.Active);
+			Add("{ \"acc_type\": 2 }", AccountType.Frozen);
+			Add("{ \"acc_type\": 3 }", AccountType.NonExist);
+			Add("{ \"acc_type\": 4 }", (AccountType)4);
+		}
+	}
 }

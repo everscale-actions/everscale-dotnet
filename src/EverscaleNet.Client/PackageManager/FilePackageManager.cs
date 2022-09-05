@@ -39,4 +39,14 @@ public class FilePackageManager : IEverPackageManager {
 		byte[] bytes = await File.ReadAllBytesAsync(filePath, cancellationToken);
 		return Convert.ToBase64String(bytes);
 	}
+
+	/// <inheritdoc />
+	public async Task<KeyPair> LoadKeyPair(string name, CancellationToken cancellationToken = default) {
+		string filePath = Path.Join(_options.PackagesPath, string.Format(IEverPackageManager.KeyPairFileTemplate, name));
+		var fileInfo = new FileInfo(filePath);
+		await using FileStream fs = fileInfo.OpenRead();
+		var keyPair =
+			await JsonSerializer.DeserializeAsync<KeyPair>(fs, JsonOptionsProvider.JsonSerializerOptions, cancellationToken);
+		return keyPair ?? throw new NullReferenceException("Key pair should not be null");
+	}
 }
