@@ -42,7 +42,7 @@ public static class JsonExtensions {
 	/// <returns></returns>
 	// ReSharper disable once UnusedParameter.Global
 	public static T ToAnonymous<T>(this JsonElement element, T prototype) {
-		return ToObject<T>(element);
+		return ToObject<T>(element, typeof(T));
 	}
 
 	/// <summary>
@@ -57,7 +57,7 @@ public static class JsonExtensions {
 		if (element == null) {
 			throw new ArgumentNullException(nameof(element));
 		}
-		return ToObject<T>(element);
+		return ToObject<T>(element, typeof(T));
 	}
 
 	/// <summary>
