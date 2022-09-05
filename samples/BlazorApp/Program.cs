@@ -1,4 +1,6 @@
 using BlazorApp;
+using BlazorApp.Contracts;
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -13,5 +15,6 @@ void ConfigureServices(IServiceCollection services, string hostEnvironmentBaseAd
 	services
 		.AddScoped(_ => new HttpClient { BaseAddress = new Uri(hostEnvironmentBaseAddress) })
 		.AddEverClient(options => options.Network.Endpoints = EverOS.Endpoints.Development)
-		.AddTransient<MessageSender>();
+		.AddTransient<SafeMultisigWallet>()
+		.AddBlazoredLocalStorage();
 }

@@ -1,0 +1,139 @@
+@page "/counter"
+@using Blazored.LocalStorage
+
+<h1>Counter</h1>
+
+<p>
+	<label>
+		Seed phrase:
+		<input id="phrase" value="@Phrase" @onchange="@PhraseChanged" size="80"/>
+	</label>
+</p>
+<p>
+	<label>
+		Accumulator address:
+		<input id="address" value="@Address" readonly size="80"/>
+	</label>
+</p>
+<p>
+	<label>
+		Balance: @(Balance?.ToString("F"))
+	</label>
+</p>
+<p>
+	<label>
+		Count: @Count
+	</label>
+</p>
+<button disabled="@(!ReadyToCount)" @onclick="Increment">Increment</button>
+<button disabled="@(!ReadyToCount)" @onclick="Decrement">Decrement</button>
+
+@if (Error != null) {
+	<p>
+		<label>
+			Error: @Error
+		</label>
+	</p>
+}
+
+@code {
+
+	AccumulatorContract Accumulator { get; set; }
+
+	[Inject]
+	IEverClient EverClient { get; set; }
+
+	[Inject]
+	IEverPackageManager PackageManager { get; set; }
+
+	[Inject]
+	ILocalStorageService LocalStorageService { get; set; }
+
+	protected override async Task OnInitializedAsync() {
+		Phrase = await LocalStorageService.GetItemAsStringAsync("Accumulator_Phrase");
+		Phrase ??= (await EverClient.Crypto.MnemonicFromRandom(new ParamsOfMnemonicFromRandom())).Phrase;
+		await PhraseChanged(new ChangeEventArgs { Value = Phrase });
+	}
+
+	public string Phrase { get; set; }
+
+	private async Task Increment() {
+		Counting = true;
+		try {
+			await Accumulator.Add(1);
+			await UpdateCountAndBalance();
+			Error = null;
+		} catch (Exception e) {
+			Error = e.Message;
+		} finally {
+			Counting = false;
+		}
+	}
+
+	private async Task Decrement() {
+		Counting = true;
+		try {
+			await Accumulator.Subtract(1);
+			await UpdateCountAndBalance();
+			Error = null;
+		} catch (Exception e) {
+			Error = e.Message;
+		} finally {
+			Counting = false;
+		}
+	}
+
+	private async Task UpdateCountAndBalance() {
+		Count = await Accumulator.GetSum();
+		Balance = await Accumulator.GetBalance();
+	}
+
+	private bool Counting { get; set; }
+	private bool Checking { get; set; }
+	public string Address { get; set; }
+	public string Error { get; set; }
+	public long Count { get; set; }
+
+	private async Task PhraseChanged(ChangeEventArgs obj) {
+		Checking = true;
+		StateHasChanged();
+		Phrase = obj.Value!.ToString();
+		try {
+			KeyPair keyPair = await EverClient.Crypto.MnemonicDeriveSignKeys(new ParamsOfMnemonicDeriveSignKeys { Phrase = Phrase });
+			Accumulator = new AccumulatorContract(EverClient, PackageManager, keyPair);
+			await Accumulator.Init(keyPair.Public);
+			Address = Accumulator.Address;
+			await LocalStorageService.SetItemAsStringAsync("Accumulator_Phrase", Phrase);
+			AccountType? accountType = await Accumulator.GetAccountType();
+			switch (accountType) {
+				case AccountType.Frozen:
+					throw new Exception("Accumulator contract has been frozen");
+				case AccountType.NonExist when await Accumulator.GetBalance() < 1M:
+				case AccountType.Active when await Accumulator.GetBalance() < 1M:
+				case AccountType.Uninit when await Accumulator.GetBalance() < 1M:
+				case null:
+					throw new Exception("Balance to low, send 1 or more Evers to address");
+				case AccountType.Uninit:
+				case AccountType.NonExist:
+					await Accumulator.Deploy();
+					break;
+				case AccountType.Active:
+					break;
+				default:
+					throw new Exception("Unknown contact state/type");
+			}
+			await UpdateCountAndBalance();
+			Checking = false;
+			Error = null;
+		} catch (Exception e) {
+			Count = 0;
+			Balance = null;
+			Error = e.Message;
+		}
+	}
+
+	public bool ReadyToCount => !Checking && !Counting;
+
+	public decimal? Balance { get; set; }
+
+}
