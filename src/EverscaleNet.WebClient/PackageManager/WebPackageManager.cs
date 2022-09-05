@@ -39,6 +39,14 @@ public class WebPackageManager : IEverPackageManager {
 		return Convert.ToBase64String(bytes);
 	}
 
+	/// <inheritdoc />
+	public async Task<KeyPair> LoadKeyPair(string name, CancellationToken cancellationToken = default) {
+		string fileUrl = Combine(_optionsAccessor.Value.PackagesPath, string.Format(IEverPackageManager.KeyPairFileTemplate, name));
+		var keyPair =
+			await _httpClient.GetFromJsonAsync<KeyPair>(fileUrl, JsonOptionsProvider.JsonSerializerOptions, cancellationToken);
+		return keyPair ?? throw new NullReferenceException("Key pair should not be null");
+	}
+
 	private static string Combine(string uri1, string uri2) {
 		uri1 = uri1.TrimEnd('/');
 		uri2 = uri2.TrimStart('/');

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>EverscaleNet</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\EverscaleNet.Serialization\EverscaleNet.Serialization.csproj" />
+        <ProjectReference Include="..\EverscaleNet.Utils\EverscaleNet.Utils.csproj" />
+        <ProjectReference Include="..\EverscaleNet\EverscaleNet.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="build\EverscaleNet.Contracts.targets" PackagePath="build\" />
+    </ItemGroup>
+
+</Project>
