@@ -7,7 +7,7 @@
 
     <PropertyGroup>
         <_SDKVersionDenormalized>$([System.String]::Copy('$(SDKVersion)').Replace('.', '_'))</_SDKVersionDenormalized>
-        
+
         <_GitHubReleaseUrl>https://github.com/tonlabs/ever-sdk/releases/download/$(SDKVersion)</_GitHubReleaseUrl>
         <_TonLibDownloadUrlWin>$(_GitHubReleaseUrl)/tonclient_$(_SDKVersionDenormalized)_win32_dll.gz</_TonLibDownloadUrlWin>
         <_TonLibDownloadUrlLinux>$(_GitHubReleaseUrl)/tonclient_$(_SDKVersionDenormalized)_linux.gz</_TonLibDownloadUrlLinux>
@@ -35,7 +35,11 @@
         <FirstTargetFramework Condition=" '$(FirstTargetFramework)' == '' ">$(TargetFrameworks.Split(';')[0])</FirstTargetFramework>
     </PropertyGroup>
 
-    <Target Name="DownloadContentFiles" Condition=" '$(TargetFramework)' == '$(FirstTargetFramework)' " BeforeTargets="BeforeBuild">
+    <ItemGroup>
+        <LibFiles Include="$(MSBuildThisFileDirectory)..\runtimes\**\*" />
+    </ItemGroup>
+
+    <Target Name="DownloadContentFiles" Condition=" '$(TargetFramework)' == '$(FirstTargetFramework)' " BeforeTargets="BeforeBuild" Inputs="..\..\SDKVersion.targets" Outputs="@(LibFiles)">
         <Message Importance="high" Text="SDKVersion: $(SDKVersion)" />
         <MakeDir Directories="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\" />
         <DownloadFile SourceUrl="$(_TonLibDownloadUrlWin)" DestinationFolder="$(MSBuildThisFileDirectory)..\downloads\" DestinationFileName="tonclient_win32_dll.gz">
@@ -68,5 +72,5 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
-    
+
 </Project>

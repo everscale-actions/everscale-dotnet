@@ -5,7 +5,7 @@
     <FirstTargetFramework Condition=" '$(FirstTargetFramework)' == '' ">$(TargetFrameworks.Split(';')[0])</FirstTargetFramework>
   </PropertyGroup>
 
-  <Target Name="DownloadContentFiles" Condition=" '$(TargetFramework)' == '$(FirstTargetFramework)' " BeforeTargets="BeforeBuild">
+  <Target Name="DownloadContentFiles" Condition="'$(TargetFramework)' == '$(FirstTargetFramework)'" BeforeTargets="BeforeBuild" Inputs="..\..\SDKVersion.targets" Outputs="wwwroot/js/eversdk.js;wwwroot/eversdk.wasm">
       <Message Importance="high" Text="SDKVersion: $(SDKVersion)" />
       <Exec Command="npm init -y" />
       <Exec Command="npm install --no-save @eversdk/lib-web@$(SDKVersion)" />
