@@ -15,12 +15,7 @@ namespace EverscaleNet.Adapter.Base;
 /// <inheritdoc />
 public abstract class EverClientAdapterBase : IEverClientAdapter {
 	private const string EmptyJson = "{}";
-	private static readonly TimeSpan CoreExecutionTimeOut = TimeSpan.FromMinutes(2);
-
-	/// <summary>
-	///     Current context id
-	/// </summary>
-	protected uint ContextId;
+	private static readonly TimeSpan CoreExecutionTimeOut = TimeSpan.FromMinutes(5);
 	private readonly object _lock = new();
 	private readonly ILogger _logger;
 
@@ -31,35 +26,16 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 	private uint _requestId;
 
 	/// <summary>
+	///     Current context id
+	/// </summary>
+	protected uint ContextId;
+
+	/// <summary>
 	///     Adapter .ctor
 	/// </summary>
 	/// <param name="logger"></param>
 	protected EverClientAdapterBase(ILogger logger) {
 		_logger = logger;
-	}
-
-	/// <summary>
-	///     Deserialize CreateContextResponse from json and return context id
-	/// </summary>
-	/// <param name="json">CreateContextResponse json string</param>
-	/// <returns>Context Id</returns>
-	/// <exception cref="EverClientException"></exception>
-	protected static uint GetContextIdByCreatedContextJson(string json) {
-		var createContextResult = JsonSerializer.Deserialize<CreateContextResponse>(json, JsonOptionsProvider.JsonSerializerOptions);
-		ClientError? error = createContextResult?.Error;
-		if (error != null) {
-			throw EverClientException.CreateExceptionWithCodeWithData(error.Code,
-			                                                          error.Data?.ToObject<Dictionary<string, object>>(),
-			                                                          error.Message);
-		}
-		if (createContextResult?.ContextId == null) {
-			throw new EverClientException($"Raw result: {json}", new NullReferenceException("Result of context creation or context number is null"));
-		}
-		return (uint)createContextResult.ContextId;
-	}
-
-	private static Action<string, uint> DeserializeCallback<TEvent>(Action<TEvent?, uint>? callback) {
-		return (json, responseType) => { callback?.Invoke(PolymorphicSerializer.Deserialize<TEvent>(JsonDocument.Parse(json).RootElement), responseType); };
 	}
 
 	/// <inheritdoc />
@@ -121,6 +97,30 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 		string responseJson = await Request(method, requestJson, null, cancellationToken);
 
 		return JsonSerializer.Deserialize<TResponse>(responseJson, JsonOptionsProvider.JsonSerializerOptions)!;
+	}
+
+	/// <summary>
+	///     Deserialize CreateContextResponse from json and return context id
+	/// </summary>
+	/// <param name="json">CreateContextResponse json string</param>
+	/// <returns>Context Id</returns>
+	/// <exception cref="EverClientException"></exception>
+	protected static uint GetContextIdByCreatedContextJson(string json) {
+		var createContextResult = JsonSerializer.Deserialize<CreateContextResponse>(json, JsonOptionsProvider.JsonSerializerOptions);
+		ClientError? error = createContextResult?.Error;
+		if (error != null) {
+			throw EverClientException.CreateExceptionWithCodeWithData(error.Code,
+			                                                          error.Data?.ToObject<Dictionary<string, object>>(),
+			                                                          error.Message);
+		}
+		if (createContextResult?.ContextId == null) {
+			throw new EverClientException($"Raw result: {json}", new NullReferenceException("Result of context creation or context number is null"));
+		}
+		return (uint)createContextResult.ContextId;
+	}
+
+	private static Action<string, uint> DeserializeCallback<TEvent>(Action<TEvent?, uint>? callback) {
+		return (json, responseType) => { callback?.Invoke(PolymorphicSerializer.Deserialize<TEvent>(JsonDocument.Parse(json).RootElement), responseType); };
 	}
 
 	/// <summary>
