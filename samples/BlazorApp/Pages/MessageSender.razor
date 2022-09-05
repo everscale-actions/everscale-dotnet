@@ -1,4 +1,4 @@
-@page "/send-message"
+@page "/message-sender"
 @using System.ComponentModel.DataAnnotations
 
 <h1>Message sender</h1>
@@ -50,12 +50,12 @@
 	}
 
 	[Inject]
-	MessageSender MessageSender { get; set; }
+	SafeMultisigWallet SafeMultisigWallet { get; set; }
 
 	private async Task Submit() {
 		Sending = true;
 		try {
-			await MessageSender.SendMessage(_sendMessageModel.Phrase, _sendMessageModel.Recipient, _sendMessageModel.Message);
+			await SafeMultisigWallet.SendMessage(_sendMessageModel.Phrase, _sendMessageModel.Recipient, _sendMessageModel.Message);
 			Error = null;
 		} catch (Exception e) {
 			Error = e.Message;

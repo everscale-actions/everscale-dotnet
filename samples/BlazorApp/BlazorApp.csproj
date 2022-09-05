@@ -1,11 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
     <ItemGroup>
+        <PackageReference Include="Blazored.LocalStorage" Version="4.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.7" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.7" PrivateAssets="all" />
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\src\EverscaleNet.Contracts\EverscaleNet.Contracts.csproj" />
         <ProjectReference Include="..\..\src\EverscaleNet.Utils\EverscaleNet.Utils.csproj" />
         <ProjectReference Include="..\..\src\EverscaleNet.WebClient\EverscaleNet.WebClient.csproj" />
     </ItemGroup>
