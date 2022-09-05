@@ -17,16 +17,6 @@ public static class StringExtensions {
 	}
 
 	/// <summary>
-	///     Convert balance in DEC to decimal of coins
-	/// </summary>
-	/// <param name="balance"></param>
-	/// <returns></returns>
-	public static decimal DecBalanceToCoins(this string balance) {
-		decimal dec = decimal.Parse(balance, NumberStyles.Number);
-		return dec / 1_000_000_000m;
-	}
-
-	/// <summary>
 	///     Convert string to hex
 	/// </summary>
 	/// <param name="input"></param>

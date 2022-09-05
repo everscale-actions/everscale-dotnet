@@ -84,12 +84,12 @@ public class Worker : BackgroundService {
 			Limit = 1
 		}, cancellationToken);
 
-		if (result.Result.Length == 0 || result.Result[0].Get<string>("balance").DecBalanceToCoins() < 10m) {
+		if (result.Result.Length == 0 || result.Result[0].Get<string>("balance").NanoToCoins() < 10m) {
 			await SendGramsFromGiver(encoded.Address, cancellationToken);
 		}
 
 		try {
-			await ProcessAndWaitTransactions(deployParams, cancellationToken);
+			await _everClient.ProcessAndWaitInternalMessages(deployParams, cancellationToken);
 		} catch (EverClientException e) when (e.Code == 414) {
 			_logger.LogInformation("Contract already has been deployed");
 		}
@@ -111,29 +111,7 @@ public class Worker : BackgroundService {
 			},
 			Signer = SeGiver.Signer
 		};
-		await ProcessAndWaitTransactions(sendGramsEncodedMessage, cancellationToken);
-	}
-
-	private async Task ProcessAndWaitTransactions(ParamsOfEncodeMessage encodedMessage,
-	                                              CancellationToken cancellationToken) {
-		ResultOfProcessMessage resultOfProcessMessage = await _everClient.Processing.ProcessMessage(
-			                                                new ParamsOfProcessMessage {
-				                                                MessageEncodeParams = encodedMessage
-			                                                }, cancellationToken: cancellationToken);
-
-		await Task.WhenAll(resultOfProcessMessage.OutMessages.Select(async message => {
-			ResultOfParse parseResult =
-				await _everClient.Boc.ParseMessage(new ParamsOfParse { Boc = message }, cancellationToken);
-			var parsedPrototype = new { type = default(int), id = default(string) };
-			var parsedMessage = parseResult.Parsed.ToPrototype(parsedPrototype);
-			if (parsedMessage.type == 0) {
-				await _everClient.Net.WaitForCollection(new ParamsOfWaitForCollection {
-					Collection = "transactions",
-					Filter = new { in_msg = new { eq = parsedMessage.id } }.ToJsonElement(),
-					Result = "id"
-				}, cancellationToken);
-			}
-		}));
+		await _everClient.ProcessAndWaitInternalMessages(sendGramsEncodedMessage, cancellationToken);
 	}
 
 	private static class SeGiver {
