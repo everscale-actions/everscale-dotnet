@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace BlazorWasm6;
+namespace BlazorApp;
 
 public class MessageSender {
 	private const string SafeMultisigWallet = "SafeMultisigWallet";

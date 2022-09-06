@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "BlazorWasm6": {
+    "BlazorApp": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

@@ -55,7 +55,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverscaleNet.Adapter.Wasm",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverscaleNet.WebClient", "src\EverscaleNet.WebClient\EverscaleNet.WebClient.csproj", "{EEFF217C-451E-47B4-8D3D-94BA77022C65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorWasm6", "samples\BlazorWasm6\BlazorWasm6.csproj", "{5266B4DB-D141-4FB3-93BE-FED64F2E0EB6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp", "samples\BlazorApp\BlazorApp.csproj", "{5266B4DB-D141-4FB3-93BE-FED64F2E0EB6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverscaleNet.Adapter.Base", "src\EverscaleNet.Adapter.Base\EverscaleNet.Adapter.Base.csproj", "{6A525C3F-429A-44B3-B17A-343F7EC3F201}"
 EndProject
