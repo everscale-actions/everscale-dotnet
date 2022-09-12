@@ -13,7 +13,7 @@ namespace EverscaleNet.Client.Models
     {
         /// <summary>
         /// <para>Deprecated.</para>
-        /// <para>Left for backward compatibility. Does not participate in account transaction fees calculation.</para>
+        /// <para>Contains the same data as ext_in_msg_fee field</para>
         /// </summary>
         [JsonPropertyName("in_msg_fwd_fee")]
         public ulong InMsgFwdFee { get; set; }
@@ -39,12 +39,7 @@ namespace EverscaleNet.Client.Models
 
         /// <summary>
         /// <para>Deprecated.</para>
-        /// <para>This is the field that is named as `total_fees` in GraphQL API Transaction type. `total_account_fees` name is misleading, because it does not mean account fees, instead it means</para>
-        /// <para>validators total fees received for the transaction execution. It does not include some forward fees that account</para>
-        /// <para>actually pays now, but validators will receive later during value delivery to another account (not even in the receiving</para>
-        /// <para>transaction).</para>
-        /// <para>Because of all of this, this field is not interesting for those who wants to understand</para>
-        /// <para>the real account fees, this is why it is deprecated and left for backward compatibility.</para>
+        /// <para>Contains the same data as account_fees field</para>
         /// </summary>
         [JsonPropertyName("total_account_fees")]
         public ulong TotalAccountFees { get; set; }

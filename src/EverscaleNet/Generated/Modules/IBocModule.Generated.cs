@@ -67,13 +67,12 @@ namespace EverscaleNet.Abstract.Modules
         public Task<ResultOfBocCacheGet> CacheGet(ParamsOfBocCacheGet @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Save BOC into cache
+        /// Save BOC into cache or increase pin counter for existing pinned BOC
         /// </summary>
         public Task<ResultOfBocCacheSet> CacheSet(ParamsOfBocCacheSet @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// <para>Unpin BOCs with specified pin.</para>
-        /// <para>BOCs which don't have another pins will be removed from cache</para>
+        /// Unpin BOCs with specified pin defined in the `cache_set`. Decrease pin reference counter for BOCs with specified pin defined in the `cache_set`. BOCs which have only 1 pin and its reference counter become 0 will be removed from cache
         /// </summary>
         public Task CacheUnpin(ParamsOfBocCacheUnpin @params, CancellationToken cancellationToken = default);
 

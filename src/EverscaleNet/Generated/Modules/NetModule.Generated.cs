@@ -127,7 +127,7 @@ namespace EverscaleNet.Client.Modules
         /// <para>The subscription is a persistent communication channel between</para>
         /// <para>client and Everscale Network.</para>
         /// <para>### Important Notes on Subscriptions</para>
-        /// <para>Unfortunately sometimes the connection with the network brakes down.</para>
+        /// <para>Unfortunately sometimes the connection with the network breakes down.</para>
         /// <para>In this situation the library attempts to reconnect to the network.</para>
         /// <para>This reconnection sequence can take significant time.</para>
         /// <para>All of this time the client is disconnected from the network.</para>
