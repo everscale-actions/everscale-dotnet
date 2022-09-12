@@ -36,7 +36,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <LibFiles Include="$(MSBuildThisFileDirectory)..\runtimes\**\*" />
+        <LibFiles Include="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\tonclient.dll;$(MSBuildThisFileDirectory)..\runtimes\linux-x64\native\libtonclient.so;$(MSBuildThisFileDirectory)..\runtimes\osx-x64\native\libtonclient;$(MSBuildThisFileDirectory)..\runtimes\osx-arm64\native\libtonclient" />
     </ItemGroup>
 
     <Target Name="DownloadContentFiles" Condition=" '$(TargetFramework)' == '$(FirstTargetFramework)' " BeforeTargets="BeforeBuild" Inputs="..\..\SDKVersion.targets" Outputs="@(LibFiles)">
@@ -72,5 +72,4 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
-
 </Project>
