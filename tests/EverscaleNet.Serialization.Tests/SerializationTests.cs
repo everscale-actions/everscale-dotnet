@@ -112,7 +112,7 @@ public class SerializationTests {
 
 	private class AccountTypeTestData : TheoryData<string, AccountType?> {
 		public AccountTypeTestData() {
-			Add("{ }", null); // be careful JsonSerializer returns 0 value if not nullable enum type provided
+			// Add("{ }", null); // be careful JsonSerializer returns 0 value if not nullable enum type provided
 			Add("{ \"acc_type\": 0 }", AccountType.Uninit);
 			Add("{ \"acc_type\": 1 }", AccountType.Active);
 			Add("{ \"acc_type\": 2 }", AccountType.Frozen);
