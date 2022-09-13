@@ -145,10 +145,9 @@ public static class JsonSerializerExtensions {
 	/// </summary>
 	/// <param name="json"></param>
 	/// <param name="prototype"></param>
-	/// <param name="options"></param>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
-	public static T DeserializePrototype<T>(string json, T prototype, JsonSerializerOptions? options = null) {
-		return (T)JsonSerializer.Deserialize(json, prototype!.GetType(), options)!;
+	public static T DeserializePrototype<T>(string json, T prototype) {
+		return JsonSerializer.Deserialize<T>(json, JsonOptionsProvider.JsonSerializerOptions)!;
 	}
 }
