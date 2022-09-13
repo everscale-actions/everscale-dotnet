@@ -83,7 +83,7 @@ public static class JsonSerializerExtensions {
 	/// <returns></returns>
 	// ReSharper disable once UnusedParameter.Global
 	public static T ToPrototype<T>(this JsonElement element, T prototype) {
-		return ToObject<T>(element, typeof(T));
+		return ToObject<T>(element);
 	}
 
 	/// <summary>
