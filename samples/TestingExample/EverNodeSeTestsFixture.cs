@@ -16,6 +16,8 @@ public class EverNodeSeTestsFixture : IEverTestsFixture {
 	// if you want to start new node se container per fixture set true
 	// todo: init by configuration file or env variables
 	private const bool RunNodeSeContainer = false;
+
+	private const string NetworkEndpointsEnvVariable = "EVERSCALE_NETWORK_ENDPOINTS";
 	private readonly WebPackageManager _giverPackageManager;
 	private EverClientRustAdapter _adapter;
 	private TestcontainersContainer _everNodeSeContainer;
@@ -74,12 +76,9 @@ public class EverNodeSeTestsFixture : IEverTestsFixture {
 	}
 
 	private IEverClient CreateClient(ILogger<EverClientRustAdapter> logger) {
-		string[] endpoints = EverOS.Endpoints.NodeSE;
-
-		if (_everNodeSeContainer != null) {
-			ushort everNodeSePort = _everNodeSeContainer.GetMappedPublicPort(80);
-			endpoints = endpoints.Select(e => $"{e}:{everNodeSePort}").ToArray();
-		}
+		string[] endpoints = _everNodeSeContainer == null
+			                     ? Environment.GetEnvironmentVariable(NetworkEndpointsEnvVariable)?.Split(";") ?? EverOS.Endpoints.NodeSE
+			                     : EverOS.Endpoints.NodeSE.Select(e => $"{e}:{_everNodeSeContainer.GetMappedPublicPort(80)}").ToArray();
 
 		var options = new EverClientOptions {
 			Network = new NetworkConfig {
