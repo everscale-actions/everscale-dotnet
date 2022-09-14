@@ -9,7 +9,7 @@ Everscale is secure and scalable network. Lets do this network convenient both f
 
 - This client was automatically generated from [api.json](https://github.com/tonlabs/TON-SDK/blob/master/tools/api.json) (see [ClientGenerator](https://github.com/everscale-actions/everscale-dotnet/tree/master/tools/EverscaleNet.ClientGenerator)) 
 - Fully supported methods provided in SDK documentation https://github.com/tonlabs/TON-SDK/tree/master/docs
-- No Newtonsoft.Json required, it is kinda legacy now, last release was over a year ago. New System.Text.Json is ten times faster
+- No Newtonsoft.Json required
 - The most complete support of CancellationToken
 - Net Standard 2.1 compatible
 
