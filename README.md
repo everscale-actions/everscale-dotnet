@@ -122,12 +122,12 @@ public void ConfigureServices(IServiceCollection services)
 
 Fully compatible with https://docs.microsoft.com/en-us/dotnet/core/extensions/logging 
 
-## Anonymous type extensions
+## Prototype type extensions
 
 There are a few properties with type JsonElement in data models. 
-And this client provide methods to easy convert this properties to/from Anonymous prototype.
+And this client provide methods to easy convert this properties to/from Prototype.
 
-### Convert to anonymous type example:
+### Convert to Prototype example:
 
 ```
 ResultOfParse parseResult = await everClient.Boc.ParseMessage(new ParamsOfParse
@@ -135,12 +135,12 @@ ResultOfParse parseResult = await everClient.Boc.ParseMessage(new ParamsOfParse
     Boc = "te6ccgEBAQEAWAAAq2n+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE/zMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzSsG8DgAAAAAjuOu9NAL7BxYpA"
 });
 var parsedPrototype = new {type = default(int), id = default(string)};
-var parsedMessage = parseResult.Parsed!.Value.ToAnonymous(parsedPrototype);
+var parsedMessage = parseResult.Parsed!.Value.ToPrototype(parsedPrototype);
 
 _logger.LogInformation("Parsed message id: {id} type: {type}", parsedMessage.id, parsedMessage.type);
 ```
 
-### Convert from anonymous type example:
+### Convert from Prototype example:
 
 ```
 await everClient.Net.WaitForCollection(new ParamsOfWaitForCollection
