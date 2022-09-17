@@ -63,7 +63,7 @@ jobs:
           EVERSCALE_NETWORK_ENDPOINTS: http://localhost:5555
           VSTestVerbosity: normal
         run: |
-          dotnet test --no-restore --no-build -c Release -m:1
+          dotnet test --no-restore --no-build -c Release
 
       - name: Pack
         if: github.event_name != 'pull_request'
