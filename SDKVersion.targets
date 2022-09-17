@@ -1,11 +1,11 @@
 <Project>
 
     <PropertyGroup>
-        <!--    TON SDK version -->
+        <!--    EVER SDK version -->
         <!--    used by tools\ClientGenerator (tools/api.json) -->
         <!--    used by src\EverscaleNet.Adapter.Rust (runtime binaries) see DownloadLib.targets -->
         <!--    used by src\EverscaleNet.Adapter.Wasm (runtime binaries) see DownloadLib.targets -->
-        <SDKVersion>1.37.1</SDKVersion>
+        <SDKVersion>1.37.2</SDKVersion>
     </PropertyGroup>
 
 </Project>

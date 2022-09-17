@@ -14,25 +14,53 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// Not described yet..
         /// </summary>
-        [JsonPropertyName("AES")]
-        public AesParamsEB AES { get; set; }
+        [JsonDiscriminator("AES")]
+        public class AES : EncryptionAlgorithm
+        {
+            /// <summary>
+            /// Not described yet..
+            /// </summary>
+            [JsonPropertyName("value")]
+            public AesParamsEB Value { get; set; }
+        }
 
         /// <summary>
         /// Not described yet..
         /// </summary>
-        [JsonPropertyName("ChaCha20")]
-        public ChaCha20ParamsEB ChaCha20 { get; set; }
+        [JsonDiscriminator("ChaCha20")]
+        public class ChaCha20 : EncryptionAlgorithm
+        {
+            /// <summary>
+            /// Not described yet..
+            /// </summary>
+            [JsonPropertyName("value")]
+            public ChaCha20ParamsEB Value { get; set; }
+        }
 
         /// <summary>
         /// Not described yet..
         /// </summary>
-        [JsonPropertyName("NaclBox")]
-        public NaclBoxParamsEB NaclBox { get; set; }
+        [JsonDiscriminator("NaclBox")]
+        public class NaclBox : EncryptionAlgorithm
+        {
+            /// <summary>
+            /// Not described yet..
+            /// </summary>
+            [JsonPropertyName("value")]
+            public NaclBoxParamsEB Value { get; set; }
+        }
 
         /// <summary>
         /// Not described yet..
         /// </summary>
-        [JsonPropertyName("NaclSecretBox")]
-        public NaclSecretBoxParamsEB NaclSecretBox { get; set; }
+        [JsonDiscriminator("NaclSecretBox")]
+        public class NaclSecretBox : EncryptionAlgorithm
+        {
+            /// <summary>
+            /// Not described yet..
+            /// </summary>
+            [JsonPropertyName("value")]
+            public NaclSecretBoxParamsEB Value { get; set; }
+        }
     }
 }

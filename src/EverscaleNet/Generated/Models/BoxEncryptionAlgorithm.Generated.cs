@@ -14,19 +14,40 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// Not described yet..
         /// </summary>
-        [JsonPropertyName("ChaCha20")]
-        public ChaCha20ParamsCB ChaCha20 { get; set; }
+        [JsonDiscriminator("ChaCha20")]
+        public class ChaCha20 : BoxEncryptionAlgorithm
+        {
+            /// <summary>
+            /// Not described yet..
+            /// </summary>
+            [JsonPropertyName("value")]
+            public ChaCha20ParamsCB Value { get; set; }
+        }
 
         /// <summary>
         /// Not described yet..
         /// </summary>
-        [JsonPropertyName("NaclBox")]
-        public NaclBoxParamsCB NaclBox { get; set; }
+        [JsonDiscriminator("NaclBox")]
+        public class NaclBox : BoxEncryptionAlgorithm
+        {
+            /// <summary>
+            /// Not described yet..
+            /// </summary>
+            [JsonPropertyName("value")]
+            public NaclBoxParamsCB Value { get; set; }
+        }
 
         /// <summary>
         /// Not described yet..
         /// </summary>
-        [JsonPropertyName("NaclSecretBox")]
-        public NaclSecretBoxParamsCB NaclSecretBox { get; set; }
+        [JsonDiscriminator("NaclSecretBox")]
+        public class NaclSecretBox : BoxEncryptionAlgorithm
+        {
+            /// <summary>
+            /// Not described yet..
+            /// </summary>
+            [JsonPropertyName("value")]
+            public NaclSecretBoxParamsCB Value { get; set; }
+        }
     }
 }
