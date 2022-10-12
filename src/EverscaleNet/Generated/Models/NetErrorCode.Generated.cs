@@ -66,6 +66,10 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// Not described yet..
         /// </summary>
-        NetworkModuleResumed = 614
+        NetworkModuleResumed = 614,
+        /// <summary>
+        /// Not described yet..
+        /// </summary>
+        Unauthorized = 615
     }
 }

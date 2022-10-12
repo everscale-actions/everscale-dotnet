@@ -12,15 +12,15 @@ namespace EverscaleNet.Client.Models
     public class NetworkConfig
     {
         /// <summary>
-        /// **This field is deprecated, but left for backward-compatibility.** DApp Server public address.
+        /// **This field is deprecated, but left for backward-compatibility.** Evernode endpoint.
         /// </summary>
         [JsonPropertyName("server_address")]
         public string ServerAddress { get; set; }
 
         /// <summary>
-        /// <para>List of DApp Server addresses.</para>
+        /// <para>List of Evernode endpoints.</para>
         /// <para>Any correct URL format can be specified, including IP addresses. This parameter is prevailing over `server_address`.</para>
-        /// <para>Check the full list of [supported network endpoints](../ton-os-api/networks.md).</para>
+        /// <para>Check the full list of [supported network endpoints](https://docs.everos.dev/ever-sdk/reference/ever-os-api/networks).</para>
         /// </summary>
         [JsonPropertyName("endpoints")]
         public string[] Endpoints { get; set; }
@@ -133,10 +133,7 @@ namespace EverscaleNet.Client.Models
         public uint? NextRempStatusTimeout { get; set; }
 
         /// <summary>
-        /// <para>Access key to GraphQL API.</para>
-        /// <para>You can specify here Basic Auth secret (Evercloud project secret) in hex string</para>
-        /// <para>or serialized JWT in base64 string.</para>
-        /// <para>Will be passed on as Authorization: Basic ... or Authorization: Bearer ... header.</para>
+        /// Access key to GraphQL API (Project secret)
         /// </summary>
         [JsonPropertyName("access_key")]
         public string AccessKey { get; set; }
