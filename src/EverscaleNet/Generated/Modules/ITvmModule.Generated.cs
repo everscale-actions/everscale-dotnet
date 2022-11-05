@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace EverscaleNet.Abstract.Modules
 {
     /// <summary>
-    /// Tvm Module
+    /// <para>Tvm Module</para>
     /// </summary>
     public interface ITvmModule : IEverModule
     {

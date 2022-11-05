@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,30 +6,30 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class ParamsOfEncodeAccount
     {
         /// <summary>
-        /// Source of the account state init.
+        /// <para>Source of the account state init.</para>
         /// </summary>
         [JsonPropertyName("state_init")]
         public StateInitSource StateInit { get; set; }
 
         /// <summary>
-        /// Initial balance.
+        /// <para>Initial balance.</para>
         /// </summary>
         [JsonPropertyName("balance")]
         public ulong? Balance { get; set; }
 
         /// <summary>
-        /// Initial value for the `last_trans_lt`.
+        /// <para>Initial value for the `last_trans_lt`.</para>
         /// </summary>
         [JsonPropertyName("last_trans_lt")]
         public ulong? LastTransLt { get; set; }
 
         /// <summary>
-        /// Initial value for the `last_paid`.
+        /// <para>Initial value for the `last_paid`.</para>
         /// </summary>
         [JsonPropertyName("last_paid")]
         public uint? LastPaid { get; set; }

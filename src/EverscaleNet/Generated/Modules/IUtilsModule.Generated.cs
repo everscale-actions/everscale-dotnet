@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 namespace EverscaleNet.Abstract.Modules
 {
     /// <summary>
-    /// Utils Module
+    /// <para>Utils Module</para>
     /// </summary>
     public interface IUtilsModule : IEverModule
     {
         /// <summary>
-        /// Converts address from any TON format to any TON format
+        /// <para>Converts address from any TON format to any TON format</para>
         /// </summary>
         public Task<ResultOfConvertAddress> ConvertAddress(ParamsOfConvertAddress @params, CancellationToken cancellationToken = default);
 
@@ -29,17 +29,17 @@ namespace EverscaleNet.Abstract.Modules
         public Task<ResultOfGetAddressType> GetAddressType(ParamsOfGetAddressType @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Calculates storage fee for an account over a specified time period
+        /// <para>Calculates storage fee for an account over a specified time period</para>
         /// </summary>
         public Task<ResultOfCalcStorageFee> CalcStorageFee(ParamsOfCalcStorageFee @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Compresses data using Zstandard algorithm
+        /// <para>Compresses data using Zstandard algorithm</para>
         /// </summary>
         public Task<ResultOfCompressZstd> CompressZstd(ParamsOfCompressZstd @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Decompresses data using Zstandard algorithm
+        /// <para>Decompresses data using Zstandard algorithm</para>
         /// </summary>
         public Task<ResultOfDecompressZstd> DecompressZstd(ParamsOfDecompressZstd @params, CancellationToken cancellationToken = default);
     }

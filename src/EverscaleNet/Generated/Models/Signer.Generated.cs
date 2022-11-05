@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,53 +6,68 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
+#if NET7_0_OR_GREATER
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
+    [JsonDerivedType(typeof(None), nameof(None))]
+    [JsonDerivedType(typeof(External), nameof(External))]
+    [JsonDerivedType(typeof(Keys), nameof(Keys))]
+    [JsonDerivedType(typeof(SigningBox), nameof(SigningBox))]
+#endif
     public abstract class Signer
     {
         /// <summary>
         /// <para>No keys are provided.</para>
         /// <para>Creates an unsigned message.</para>
         /// </summary>
-        [JsonDiscriminator("None")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("None")]
+#endif
         public class None : Signer
         {
         }
 
         /// <summary>
-        /// Only public key is provided in unprefixed hex string format to generate unsigned message and `data_to_sign` which can be signed later.
+        /// <para>Only public key is provided in unprefixed hex string format to generate unsigned message and `data_to_sign` which can be signed later.</para>
         /// </summary>
-        [JsonDiscriminator("External")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("External")]
+#endif
         public class External : Signer
         {
             /// <summary>
-            /// Only public key is provided in unprefixed hex string format to generate unsigned message and `data_to_sign` which can be signed later.
+            /// <para>Only public key is provided in unprefixed hex string format to generate unsigned message and `data_to_sign` which can be signed later.</para>
             /// </summary>
             [JsonPropertyName("public_key")]
             public string PublicKey { get; set; }
         }
 
         /// <summary>
-        /// Key pair is provided for signing
+        /// <para>Key pair is provided for signing</para>
         /// </summary>
-        [JsonDiscriminator("Keys")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("Keys")]
+#endif
         public class Keys : Signer
         {
             /// <summary>
-            /// Key pair is provided for signing
+            /// <para>Key pair is provided for signing</para>
             /// </summary>
             [JsonPropertyName("keys")]
             public KeyPair KeysAccessor { get; set; }
         }
 
         /// <summary>
-        /// Signing Box interface is provided for signing, allows Dapps to sign messages using external APIs, such as HSM, cold wallet, etc.
+        /// <para>Signing Box interface is provided for signing, allows Dapps to sign messages using external APIs, such as HSM, cold wallet, etc.</para>
         /// </summary>
-        [JsonDiscriminator("SigningBox")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("SigningBox")]
+#endif
         public class SigningBox : Signer
         {
             /// <summary>
-            /// Signing Box interface is provided for signing, allows Dapps to sign messages using external APIs, such as HSM, cold wallet, etc.
+            /// <para>Signing Box interface is provided for signing, allows Dapps to sign messages using external APIs, such as HSM, cold wallet, etc.</para>
             /// </summary>
             [JsonPropertyName("handle")]
             public uint Handle { get; set; }

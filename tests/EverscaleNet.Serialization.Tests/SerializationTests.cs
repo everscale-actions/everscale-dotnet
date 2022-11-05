@@ -61,8 +61,7 @@ public class SerializationTests {
 			}
 		};
 
-		string json = JsonSerializer.Serialize(messageRequest, JsonOptionsProvider.JsonSerializerOptions);
-		JsonElement jsonElement = JsonDocument.Parse(json).RootElement;
+		var jsonElement = messageRequest.ToJsonElement();
 
 		jsonElement.Should().NotBeNull();
 
@@ -108,6 +107,19 @@ public class SerializationTests {
 		var getAccountType = new Func<AccountType>(() => JsonDocument.Parse("{}").RootElement.Get<AccountType>("acc_type"));
 
 		getAccountType.Should().ThrowExactly<KeyNotFoundException>("acc_type is not presented");
+	}
+
+	[Fact]
+	public void NestedPolymorphicTypeContainsTypeFieldTest() {
+		var appRequestResult = new AppRequestResult.Ok {
+			Result = new ResultOfAppSigningBox.GetPublicKey {
+				PublicKey = "Pubkey"
+			}.ToJsonElement()
+		};
+
+		string json = JsonSerializer.Serialize<AppRequestResult>(appRequestResult, JsonOptionsProvider.JsonSerializerOptions);
+
+		json.Should().Be("{\"type\":\"Ok\",\"result\":{\"type\":\"GetPublicKey\",\"public_key\":\"Pubkey\"}}");
 	}
 
 	private class AccountTypeTestData : TheoryData<string, AccountType?> {

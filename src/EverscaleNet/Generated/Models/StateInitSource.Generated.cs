@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,43 +6,53 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
+#if NET7_0_OR_GREATER
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
+    [JsonDerivedType(typeof(Message), nameof(Message))]
+    [JsonDerivedType(typeof(StateInit), nameof(StateInit))]
+    [JsonDerivedType(typeof(Tvc), nameof(Tvc))]
+#endif
     public abstract class StateInitSource
     {
         /// <summary>
-        /// Deploy message.
+        /// <para>Deploy message.</para>
         /// </summary>
-        [JsonDiscriminator("Message")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("Message")]
+#endif
         public class Message : StateInitSource
         {
             /// <summary>
-            /// Deploy message.
+            /// <para>Deploy message.</para>
             /// </summary>
             [JsonPropertyName("source")]
             public MessageSource Source { get; set; }
         }
 
         /// <summary>
-        /// State init data.
+        /// <para>State init data.</para>
         /// </summary>
-        [JsonDiscriminator("StateInit")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("StateInit")]
+#endif
         public class StateInit : StateInitSource
         {
             /// <summary>
-            /// State init data.
+            /// <para>State init data.</para>
             /// </summary>
             [JsonPropertyName("code")]
             public string Code { get; set; }
 
             /// <summary>
-            /// State init data.
+            /// <para>State init data.</para>
             /// </summary>
             [JsonPropertyName("data")]
             public string Data { get; set; }
 
             /// <summary>
-            /// State init data.
+            /// <para>State init data.</para>
             /// </summary>
             [JsonPropertyName("library")]
             public string Library { get; set; }
@@ -53,7 +62,9 @@ namespace EverscaleNet.Client.Models
         /// <para>Content of the TVC file.</para>
         /// <para>Encoded in `base64`.</para>
         /// </summary>
-        [JsonDiscriminator("Tvc")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("Tvc")]
+#endif
         public class Tvc : StateInitSource
         {
             /// <summary>

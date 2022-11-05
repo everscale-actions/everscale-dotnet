@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,18 +6,18 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class ResultOfSign
     {
         /// <summary>
-        /// Signed data combined with signature encoded in `base64`.
+        /// <para>Signed data combined with signature encoded in `base64`.</para>
         /// </summary>
         [JsonPropertyName("signed")]
         public string Signed { get; set; }
 
         /// <summary>
-        /// Signature encoded in `hex`.
+        /// <para>Signature encoded in `hex`.</para>
         /// </summary>
         [JsonPropertyName("signature")]
         public string Signature { get; set; }

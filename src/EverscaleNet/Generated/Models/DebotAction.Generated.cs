@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,7 +6,7 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// [UNSTABLE](UNSTABLE.md) Describes a debot action in a Debot Context.
+    /// <para>[UNSTABLE](UNSTABLE.md) Describes a debot action in a Debot Context.</para>
     /// </summary>
     public class DebotAction
     {
@@ -26,13 +25,13 @@ namespace EverscaleNet.Client.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Action type.
+        /// <para>Action type.</para>
         /// </summary>
         [JsonPropertyName("action_type")]
         public byte ActionType { get; set; }
 
         /// <summary>
-        /// ID of debot context to switch after action execution.
+        /// <para>ID of debot context to switch after action execution.</para>
         /// </summary>
         [JsonPropertyName("to")]
         public byte To { get; set; }

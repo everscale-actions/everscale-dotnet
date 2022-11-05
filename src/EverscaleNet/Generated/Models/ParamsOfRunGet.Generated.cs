@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,30 +6,30 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class ParamsOfRunGet
     {
         /// <summary>
-        /// Account BOC in `base64`
+        /// <para>Account BOC in `base64`</para>
         /// </summary>
         [JsonPropertyName("account")]
         public string Account { get; set; }
 
         /// <summary>
-        /// Function name
+        /// <para>Function name</para>
         /// </summary>
         [JsonPropertyName("function_name")]
         public string FunctionName { get; set; }
 
         /// <summary>
-        /// Input parameters
+        /// <para>Input parameters</para>
         /// </summary>
         [JsonPropertyName("input")]
         public JsonElement? Input { get; set; }
 
         /// <summary>
-        /// Execution options
+        /// <para>Execution options</para>
         /// </summary>
         [JsonPropertyName("execution_options")]
         public ExecutionOptions ExecutionOptions { get; set; }

@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,8 +6,14 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Crypto Box Secret.
+    /// <para>Crypto Box Secret.</para>
     /// </summary>
+#if NET7_0_OR_GREATER
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
+    [JsonDerivedType(typeof(RandomSeedPhrase), nameof(RandomSeedPhrase))]
+    [JsonDerivedType(typeof(PredefinedSeedPhrase), nameof(PredefinedSeedPhrase))]
+    [JsonDerivedType(typeof(EncryptedSecret), nameof(EncryptedSecret))]
+#endif
     public abstract class CryptoBoxSecret
     {
         /// <summary>
@@ -17,7 +22,9 @@ namespace EverscaleNet.Client.Models
         /// <para>should use `EncryptedSecret` type instead.</para>
         /// <para>Get `encrypted_secret` with `get_crypto_box_info` function and store it on your side.</para>
         /// </summary>
-        [JsonDiscriminator("RandomSeedPhrase")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("RandomSeedPhrase")]
+#endif
         public class RandomSeedPhrase : CryptoBoxSecret
         {
             /// <summary>
@@ -45,7 +52,9 @@ namespace EverscaleNet.Client.Models
         /// <para>initializations should use `EncryptedSecret` type instead.</para>
         /// <para>Get `encrypted_secret` with `get_crypto_box_info` function and store it on your side.</para>
         /// </summary>
-        [JsonDiscriminator("PredefinedSeedPhrase")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("PredefinedSeedPhrase")]
+#endif
         public class PredefinedSeedPhrase : CryptoBoxSecret
         {
             /// <summary>
@@ -84,7 +93,9 @@ namespace EverscaleNet.Client.Models
         /// <para>the wallet with `PredefinedSeedPhrase`, then get `EncryptedSecret` via `get_crypto_box_info`,</para>
         /// <para>store it somewhere, and only after that initialize the wallet with `EncryptedSecret` type.</para>
         /// </summary>
-        [JsonDiscriminator("EncryptedSecret")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("EncryptedSecret")]
+#endif
         public class EncryptedSecret : CryptoBoxSecret
         {
             /// <summary>

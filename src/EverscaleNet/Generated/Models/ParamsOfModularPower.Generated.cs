@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,24 +6,24 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class ParamsOfModularPower
     {
         /// <summary>
-        /// `base` argument of calculation.
+        /// <para>`base` argument of calculation.</para>
         /// </summary>
         [JsonPropertyName("base")]
         public string Base { get; set; }
 
         /// <summary>
-        /// `exponent` argument of calculation.
+        /// <para>`exponent` argument of calculation.</para>
         /// </summary>
         [JsonPropertyName("exponent")]
         public string Exponent { get; set; }
 
         /// <summary>
-        /// `modulus` argument of calculation.
+        /// <para>`modulus` argument of calculation.</para>
         /// </summary>
         [JsonPropertyName("modulus")]
         public string Modulus { get; set; }

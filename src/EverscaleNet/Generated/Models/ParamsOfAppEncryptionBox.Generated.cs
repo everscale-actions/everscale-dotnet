@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,39 +6,51 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Interface for data encryption/decryption
+    /// <para>Interface for data encryption/decryption</para>
     /// </summary>
+#if NET7_0_OR_GREATER
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
+    [JsonDerivedType(typeof(GetInfo), nameof(GetInfo))]
+    [JsonDerivedType(typeof(Encrypt), nameof(Encrypt))]
+    [JsonDerivedType(typeof(Decrypt), nameof(Decrypt))]
+#endif
     public abstract class ParamsOfAppEncryptionBox
     {
         /// <summary>
-        /// Get encryption box info
+        /// <para>Get encryption box info</para>
         /// </summary>
-        [JsonDiscriminator("GetInfo")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("GetInfo")]
+#endif
         public class GetInfo : ParamsOfAppEncryptionBox
         {
         }
 
         /// <summary>
-        /// Encrypt data
+        /// <para>Encrypt data</para>
         /// </summary>
-        [JsonDiscriminator("Encrypt")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("Encrypt")]
+#endif
         public class Encrypt : ParamsOfAppEncryptionBox
         {
             /// <summary>
-            /// Encrypt data
+            /// <para>Encrypt data</para>
             /// </summary>
             [JsonPropertyName("data")]
             public string Data { get; set; }
         }
 
         /// <summary>
-        /// Decrypt data
+        /// <para>Decrypt data</para>
         /// </summary>
-        [JsonDiscriminator("Decrypt")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("Decrypt")]
+#endif
         public class Decrypt : ParamsOfAppEncryptionBox
         {
             /// <summary>
-            /// Decrypt data
+            /// <para>Decrypt data</para>
             /// </summary>
             [JsonPropertyName("data")]
             public string Data { get; set; }

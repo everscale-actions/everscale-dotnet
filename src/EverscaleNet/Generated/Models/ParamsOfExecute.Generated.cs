@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,18 +6,18 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// [UNSTABLE](UNSTABLE.md) Parameters for executing debot action.
+    /// <para>[UNSTABLE](UNSTABLE.md) Parameters for executing debot action.</para>
     /// </summary>
     public class ParamsOfExecute
     {
         /// <summary>
-        /// Debot handle which references an instance of debot engine.
+        /// <para>Debot handle which references an instance of debot engine.</para>
         /// </summary>
         [JsonPropertyName("debot_handle")]
         public uint DebotHandle { get; set; }
 
         /// <summary>
-        /// Debot Action that must be executed.
+        /// <para>Debot Action that must be executed.</para>
         /// </summary>
         [JsonPropertyName("action")]
         public DebotAction Action { get; set; }

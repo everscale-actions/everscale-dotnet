@@ -1,7 +1,7 @@
 {
   "version": 1,
   "dependencies": {
-    "net6.0": {
+    "net7.0": {
       "Blazored.LocalStorage": {
         "type": "Direct",
         "requested": "[4.2.0, )",
@@ -29,19 +29,6 @@
         "requested": "[6.0.10, )",
         "resolved": "6.0.10",
         "contentHash": "Y9nqDxlcvIPrYCZ+NJFk5uxdGQk+3tZSr2gLXRXnE9hSipDaJ2WAmWtofb7ll762ZkBnt8xixkTEV9AAlb5+RQ=="
-      },
-      "Dahomey.Json": {
-        "type": "Transitive",
-        "resolved": "1.12.2",
-        "contentHash": "lguY4WN14f6kQuKJTGX+nsTT0V31PWHa+jcPx86B/xmOBgm4FwdLKtymMFBKAE5yBDDKhO7iQIvFwQNHufWLRw==",
-        "dependencies": {
-          "Dahomey.Json.Attributes": "1.0.1"
-        }
-      },
-      "Dahomey.Json.Attributes": {
-        "type": "Transitive",
-        "resolved": "1.0.1",
-        "contentHash": "5V73KuRVnyvyB8+BEkCvxpbI3MZpG6PQNdfKGxeKFBabotepbrnJ+Xz00P84BD4zdg7UPGybo9Nsl988Y8/tfw=="
       },
       "Microsoft.AspNetCore.Authorization": {
         "type": "Transitive",
@@ -214,8 +201,8 @@
       },
       "Microsoft.JSInterop": {
         "type": "Transitive",
-        "resolved": "6.0.10",
-        "contentHash": "t/63fnJiLzw2hKsReEAej0oSaHx2L/9wn3Wczip89RX+/FuPopssenWHtj9o0oJedbWgLuu6AbMJed/aIYLnxA=="
+        "resolved": "7.0.0-rc.2.22476.2",
+        "contentHash": "oh6r1Nu0l+7uKsXWt3WiwHde/cbJ0u8++nIOBFDlriYGb7BzZKCGt4xGPiFi3BNyW0b1vavpY7V7vxotaGAc1A=="
       },
       "Microsoft.JSInterop.WebAssembly": {
         "type": "Transitive",
@@ -245,25 +232,21 @@
       },
       "System.Text.Encodings.Web": {
         "type": "Transitive",
-        "resolved": "6.0.0",
-        "contentHash": "Vg8eB5Tawm1IFqj4TVK1czJX89rhFxJo9ELqc/Eiq0eXy13RK00eubyU6TJE6y+GQXjyV5gSfiewDUZjQgSE0w==",
-        "dependencies": {
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
-        }
+        "resolved": "7.0.0",
+        "contentHash": "OP6umVGxc0Z0MvZQBVigj4/U31Pw72ITihDWP9WiWDm+q5aoe0GaJivsfYGq53o6dxH7DcXWiCTl7+0o2CGdmg=="
       },
       "System.Text.Json": {
         "type": "Transitive",
-        "resolved": "6.0.0",
-        "contentHash": "zaJsHfESQvJ11vbXnNlkrR46IaMULk/gHxYsJphzSF+07kTjPHv+Oc14w6QEOfo3Q4hqLJgStUaYB9DBl0TmWg==",
+        "resolved": "7.0.0",
+        "contentHash": "DaGSsVqKsn/ia6RG8frjwmJonfos0srquhw09TlT8KRw5I43E+4gs+/bZj4K0vShJ5H9imCuXupb4RmS+dBy3w==",
         "dependencies": {
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0",
-          "System.Text.Encodings.Web": "6.0.0"
+          "System.Text.Encodings.Web": "7.0.0"
         }
       },
       "everscalenet": {
         "type": "Project",
         "dependencies": {
-          "Dahomey.Json": "[1.12.2, )"
+          "System.Text.Json": "[7.0.0, )"
         }
       },
       "everscalenet.adapter.base": {
@@ -281,7 +264,7 @@
           "EverscaleNet.Adapter.Base": "[1.0.0, )",
           "EverscaleNet.Serialization": "[1.0.0, )",
           "Microsoft.Extensions.Options": "[6.0.0, )",
-          "Microsoft.JSInterop": "[6.0.10, )"
+          "Microsoft.JSInterop": "[7.0.0-rc.2.22476.2, )"
         }
       },
       "everscalenet.contracts": {
@@ -295,7 +278,6 @@
       "everscalenet.serialization": {
         "type": "Project",
         "dependencies": {
-          "Dahomey.Json": "[1.12.2, )",
           "EverscaleNet": "[1.0.0, )"
         }
       },
@@ -314,14 +296,11 @@
         }
       }
     },
-    "net6.0/browser-wasm": {
+    "net7.0/browser-wasm": {
       "System.Text.Encodings.Web": {
         "type": "Transitive",
-        "resolved": "6.0.0",
-        "contentHash": "Vg8eB5Tawm1IFqj4TVK1czJX89rhFxJo9ELqc/Eiq0eXy13RK00eubyU6TJE6y+GQXjyV5gSfiewDUZjQgSE0w==",
-        "dependencies": {
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
-        }
+        "resolved": "7.0.0",
+        "contentHash": "OP6umVGxc0Z0MvZQBVigj4/U31Pw72ITihDWP9WiWDm+q5aoe0GaJivsfYGq53o6dxH7DcXWiCTl7+0o2CGdmg=="
       }
     }
   }

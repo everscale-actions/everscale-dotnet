@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 namespace EverscaleNet.Client.Modules
 {
     /// <summary>
-    /// Boc Module
+    /// <para>Boc Module</para>
     /// </summary>
     public class BocModule : IBocModule
     {
         private readonly IEverClientAdapter _everClientAdapter;
 
         /// <summary>
-        /// .ctor
+        /// <para>.ctor</para>
         /// </summary>
         public BocModule(IEverClientAdapter everClientAdapter)
         {
@@ -69,7 +69,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Extract blockchain configuration from key block and also from zerostate.
+        /// <para>Extract blockchain configuration from key block and also from zerostate.</para>
         /// </summary>
         public async Task<ResultOfGetBlockchainConfig> GetBlockchainConfig(ParamsOfGetBlockchainConfig @params, CancellationToken cancellationToken = default)
         {
@@ -77,7 +77,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Calculates BOC root hash
+        /// <para>Calculates BOC root hash</para>
         /// </summary>
         public async Task<ResultOfGetBocHash> GetBocHash(ParamsOfGetBocHash @params, CancellationToken cancellationToken = default)
         {
@@ -85,7 +85,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Calculates BOC depth
+        /// <para>Calculates BOC depth</para>
         /// </summary>
         public async Task<ResultOfGetBocDepth> GetBocDepth(ParamsOfGetBocDepth @params, CancellationToken cancellationToken = default)
         {
@@ -93,7 +93,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Extracts code from TVC contract image
+        /// <para>Extracts code from TVC contract image</para>
         /// </summary>
         public async Task<ResultOfGetCodeFromTvc> GetCodeFromTvc(ParamsOfGetCodeFromTvc @params, CancellationToken cancellationToken = default)
         {
@@ -101,7 +101,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Get BOC from cache
+        /// <para>Get BOC from cache</para>
         /// </summary>
         public async Task<ResultOfBocCacheGet> CacheGet(ParamsOfBocCacheGet @params, CancellationToken cancellationToken = default)
         {
@@ -109,7 +109,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Save BOC into cache or increase pin counter for existing pinned BOC
+        /// <para>Save BOC into cache or increase pin counter for existing pinned BOC</para>
         /// </summary>
         public async Task<ResultOfBocCacheSet> CacheSet(ParamsOfBocCacheSet @params, CancellationToken cancellationToken = default)
         {
@@ -117,7 +117,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Unpin BOCs with specified pin defined in the `cache_set`. Decrease pin reference counter for BOCs with specified pin defined in the `cache_set`. BOCs which have only 1 pin and its reference counter become 0 will be removed from cache
+        /// <para>Unpin BOCs with specified pin defined in the `cache_set`. Decrease pin reference counter for BOCs with specified pin defined in the `cache_set`. BOCs which have only 1 pin and its reference counter become 0 will be removed from cache</para>
         /// </summary>
         public async Task CacheUnpin(ParamsOfBocCacheUnpin @params, CancellationToken cancellationToken = default)
         {
@@ -125,7 +125,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Encodes bag of cells (BOC) with builder operations. This method provides the same functionality as Solidity TvmBuilder. Resulting BOC of this method can be passed into Solidity and C++ contracts as TvmCell type.
+        /// <para>Encodes bag of cells (BOC) with builder operations. This method provides the same functionality as Solidity TvmBuilder. Resulting BOC of this method can be passed into Solidity and C++ contracts as TvmCell type.</para>
         /// </summary>
         public async Task<ResultOfEncodeBoc> EncodeBoc(ParamsOfEncodeBoc @params, CancellationToken cancellationToken = default)
         {
@@ -133,7 +133,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Returns the contract code's salt if it is present.
+        /// <para>Returns the contract code's salt if it is present.</para>
         /// </summary>
         public async Task<ResultOfGetCodeSalt> GetCodeSalt(ParamsOfGetCodeSalt @params, CancellationToken cancellationToken = default)
         {
@@ -150,7 +150,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Decodes tvc into code, data, libraries and special options.
+        /// <para>Decodes tvc into code, data, libraries and special options.</para>
         /// </summary>
         public async Task<ResultOfDecodeTvc> DecodeTvc(ParamsOfDecodeTvc @params, CancellationToken cancellationToken = default)
         {
@@ -158,7 +158,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Encodes tvc from code, data, libraries ans special options (see input params)
+        /// <para>Encodes tvc from code, data, libraries ans special options (see input params)</para>
         /// </summary>
         public async Task<ResultOfEncodeTvc> EncodeTvc(ParamsOfEncodeTvc @params, CancellationToken cancellationToken = default)
         {
@@ -175,7 +175,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Returns the compiler version used to compile the code.
+        /// <para>Returns the compiler version used to compile the code.</para>
         /// </summary>
         public async Task<ResultOfGetCompilerVersion> GetCompilerVersion(ParamsOfGetCompilerVersion @params, CancellationToken cancellationToken = default)
         {

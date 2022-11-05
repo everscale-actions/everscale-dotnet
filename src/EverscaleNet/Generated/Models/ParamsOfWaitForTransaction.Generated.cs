@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,7 +6,7 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class ParamsOfWaitForTransaction
     {
@@ -35,7 +34,7 @@ namespace EverscaleNet.Client.Models
         public string ShardBlockId { get; set; }
 
         /// <summary>
-        /// Flag that enables/disables intermediate events
+        /// <para>Flag that enables/disables intermediate events</para>
         /// </summary>
         [JsonPropertyName("send_events")]
         public bool SendEvents { get; set; }

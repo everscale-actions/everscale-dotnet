@@ -3,27 +3,27 @@ using EverscaleNet.Abstract.Modules;
 namespace EverscaleNet.Abstract
 {
     /// <summary>
-    /// IEverClient
+    /// <para>IEverClient</para>
     /// </summary>
     public interface IEverClient
     {
         /// <summary>
-        /// Provides information about library.
+        /// <para>Provides information about library.</para>
         /// </summary>
         public IClientModule Client { get; }
 
         /// <summary>
-        /// Crypto functions.
+        /// <para>Crypto functions.</para>
         /// </summary>
         public ICryptoModule Crypto { get; }
 
         /// <summary>
-        /// Provides message encoding and decoding according to the ABI specification.
+        /// <para>Provides message encoding and decoding according to the ABI specification.</para>
         /// </summary>
         public IAbiModule Abi { get; }
 
         /// <summary>
-        /// BOC manipulation module.
+        /// <para>BOC manipulation module.</para>
         /// </summary>
         public IBocModule Boc { get; }
 
@@ -35,27 +35,27 @@ namespace EverscaleNet.Abstract
         public IProcessingModule Processing { get; }
 
         /// <summary>
-        /// Misc utility Functions.
+        /// <para>Misc utility Functions.</para>
         /// </summary>
         public IUtilsModule Utils { get; }
 
         /// <summary>
-        /// Not described yet..
+        /// <para>Not described yet..</para>
         /// </summary>
         public ITvmModule Tvm { get; }
 
         /// <summary>
-        /// Network access.
+        /// <para>Network access.</para>
         /// </summary>
         public INetModule Net { get; }
 
         /// <summary>
-        /// [UNSTABLE](UNSTABLE.md) Module for working with debot.
+        /// <para>[UNSTABLE](UNSTABLE.md) Module for working with debot.</para>
         /// </summary>
         public IDebotModule Debot { get; }
 
         /// <summary>
-        /// [UNSTABLE](UNSTABLE.md) Module for proving data, retrieved from TONOS API.
+        /// <para>[UNSTABLE](UNSTABLE.md) Module for proving data, retrieved from TONOS API.</para>
         /// </summary>
         public IProofsModule Proofs { get; }
     }

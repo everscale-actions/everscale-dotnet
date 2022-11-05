@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,12 +6,12 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class CallSet
     {
         /// <summary>
-        /// Function name that is being called. Or function id encoded as string in hex (starting with 0x).
+        /// <para>Function name that is being called. Or function id encoded as string in hex (starting with 0x).</para>
         /// </summary>
         [JsonPropertyName("function_name")]
         public string FunctionName { get; set; }
@@ -27,7 +26,7 @@ namespace EverscaleNet.Client.Models
         public FunctionHeader Header { get; set; }
 
         /// <summary>
-        /// Function input parameters according to ABI.
+        /// <para>Function input parameters according to ABI.</para>
         /// </summary>
         [JsonPropertyName("input")]
         public JsonElement? Input { get; set; }

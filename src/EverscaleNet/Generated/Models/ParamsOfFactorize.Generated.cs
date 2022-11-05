@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,12 +6,12 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class ParamsOfFactorize
     {
         /// <summary>
-        /// Hexadecimal representation of u64 composite number.
+        /// <para>Hexadecimal representation of u64 composite number.</para>
         /// </summary>
         [JsonPropertyName("composite")]
         public string Composite { get; set; }

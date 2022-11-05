@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 namespace EverscaleNet.Client.Modules
 {
     /// <summary>
-    /// Utils Module
+    /// <para>Utils Module</para>
     /// </summary>
     public class UtilsModule : IUtilsModule
     {
         private readonly IEverClientAdapter _everClientAdapter;
 
         /// <summary>
-        /// .ctor
+        /// <para>.ctor</para>
         /// </summary>
         public UtilsModule(IEverClientAdapter everClientAdapter)
         {
@@ -24,7 +24,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Converts address from any TON format to any TON format
+        /// <para>Converts address from any TON format to any TON format</para>
         /// </summary>
         public async Task<ResultOfConvertAddress> ConvertAddress(ParamsOfConvertAddress @params, CancellationToken cancellationToken = default)
         {
@@ -47,7 +47,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Calculates storage fee for an account over a specified time period
+        /// <para>Calculates storage fee for an account over a specified time period</para>
         /// </summary>
         public async Task<ResultOfCalcStorageFee> CalcStorageFee(ParamsOfCalcStorageFee @params, CancellationToken cancellationToken = default)
         {
@@ -55,7 +55,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Compresses data using Zstandard algorithm
+        /// <para>Compresses data using Zstandard algorithm</para>
         /// </summary>
         public async Task<ResultOfCompressZstd> CompressZstd(ParamsOfCompressZstd @params, CancellationToken cancellationToken = default)
         {
@@ -63,7 +63,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Decompresses data using Zstandard algorithm
+        /// <para>Decompresses data using Zstandard algorithm</para>
         /// </summary>
         public async Task<ResultOfDecompressZstd> DecompressZstd(ParamsOfDecompressZstd @params, CancellationToken cancellationToken = default)
         {

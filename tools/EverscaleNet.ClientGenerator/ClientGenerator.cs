@@ -16,7 +16,7 @@ internal static class ClientGenerator {
 		{ "System", "System.Text.Json", "System.Threading", "System.Threading.Tasks", "EverscaleNet.Client.Models" };
 
 	private static readonly string[] ModelsNamespaces =
-		{ "System", "System.Numerics", "System.Text.Json", "System.Text.Json.Serialization", "Dahomey.Json.Attributes" };
+		{ "System", "System.Numerics", "System.Text.Json", "System.Text.Json.Serialization" };
 
 	private static readonly JsonSerializerOptions Options = new() { Converters = { new JsonStringEnumConverterWithAttributeSupport() } };
 

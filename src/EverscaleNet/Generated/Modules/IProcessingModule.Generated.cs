@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace EverscaleNet.Abstract.Modules
 {
     /// <summary>
-    /// Processing Module
+    /// <para>Processing Module</para>
     /// </summary>
     public interface IProcessingModule : IEverModule
     {

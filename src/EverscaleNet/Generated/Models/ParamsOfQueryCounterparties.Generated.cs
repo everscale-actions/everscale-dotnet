@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,30 +6,30 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class ParamsOfQueryCounterparties
     {
         /// <summary>
-        /// Account address
+        /// <para>Account address</para>
         /// </summary>
         [JsonPropertyName("account")]
         public string Account { get; set; }
 
         /// <summary>
-        /// Projection (result) string
+        /// <para>Projection (result) string</para>
         /// </summary>
         [JsonPropertyName("result")]
         public string Result { get; set; }
 
         /// <summary>
-        /// Number of counterparties to return
+        /// <para>Number of counterparties to return</para>
         /// </summary>
         [JsonPropertyName("first")]
         public uint? First { get; set; }
 
         /// <summary>
-        /// `cursor` field of the last received result
+        /// <para>`cursor` field of the last received result</para>
         /// </summary>
         [JsonPropertyName("after")]
         public string After { get; set; }

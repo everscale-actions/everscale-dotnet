@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,12 +6,12 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class MessageNode
     {
         /// <summary>
-        /// Message id.
+        /// <para>Message id.</para>
         /// </summary>
         [JsonPropertyName("id")]
         public string Id { get; set; }
@@ -32,25 +31,25 @@ namespace EverscaleNet.Client.Models
         public string DstTransactionId { get; set; }
 
         /// <summary>
-        /// Source address.
+        /// <para>Source address.</para>
         /// </summary>
         [JsonPropertyName("src")]
         public string Src { get; set; }
 
         /// <summary>
-        /// Destination address.
+        /// <para>Destination address.</para>
         /// </summary>
         [JsonPropertyName("dst")]
         public string Dst { get; set; }
 
         /// <summary>
-        /// Transferred tokens value.
+        /// <para>Transferred tokens value.</para>
         /// </summary>
         [JsonPropertyName("value")]
         public string Value { get; set; }
 
         /// <summary>
-        /// Bounce flag.
+        /// <para>Bounce flag.</para>
         /// </summary>
         [JsonPropertyName("bounce")]
         public bool Bounce { get; set; }

@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 namespace EverscaleNet.Client.Modules
 {
     /// <summary>
-    /// Net Module
+    /// <para>Net Module</para>
     /// </summary>
     public class NetModule : INetModule
     {
         private readonly IEverClientAdapter _everClientAdapter;
 
         /// <summary>
-        /// .ctor
+        /// <para>.ctor</para>
         /// </summary>
         public NetModule(IEverClientAdapter everClientAdapter)
         {
@@ -24,7 +24,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Performs DAppServer GraphQL query.
+        /// <para>Performs DAppServer GraphQL query.</para>
         /// </summary>
         public async Task<ResultOfQuery> Query(ParamsOfQuery @params, CancellationToken cancellationToken = default)
         {
@@ -32,7 +32,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Performs multiple queries per single fetch.
+        /// <para>Performs multiple queries per single fetch.</para>
         /// </summary>
         public async Task<ResultOfBatchQuery> BatchQuery(ParamsOfBatchQuery @params, CancellationToken cancellationToken = default)
         {
@@ -157,7 +157,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Suspends network module to stop any network activity
+        /// <para>Suspends network module to stop any network activity</para>
         /// </summary>
         public async Task Suspend(CancellationToken cancellationToken = default)
         {
@@ -165,7 +165,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Resumes network module to enable network activity
+        /// <para>Resumes network module to enable network activity</para>
         /// </summary>
         public async Task Resume(CancellationToken cancellationToken = default)
         {
@@ -173,7 +173,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Returns ID of the last block in a specified account shard
+        /// <para>Returns ID of the last block in a specified account shard</para>
         /// </summary>
         public async Task<ResultOfFindLastShardBlock> FindLastShardBlock(ParamsOfFindLastShardBlock @params, CancellationToken cancellationToken = default)
         {
@@ -181,7 +181,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Requests the list of alternative endpoints from server
+        /// <para>Requests the list of alternative endpoints from server</para>
         /// </summary>
         public async Task<EndpointsSet> FetchEndpoints(CancellationToken cancellationToken = default)
         {
@@ -189,7 +189,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Sets the list of endpoints to use on reinit
+        /// <para>Sets the list of endpoints to use on reinit</para>
         /// </summary>
         public async Task SetEndpoints(EndpointsSet @params, CancellationToken cancellationToken = default)
         {
@@ -197,7 +197,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Requests the list of alternative endpoints from server
+        /// <para>Requests the list of alternative endpoints from server</para>
         /// </summary>
         public async Task<ResultOfGetEndpoints> GetEndpoints(CancellationToken cancellationToken = default)
         {
