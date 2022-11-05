@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,46 +6,58 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
+#if NET7_0_OR_GREATER
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
+    [JsonDerivedType(typeof(AccountId), nameof(AccountId))]
+    [JsonDerivedType(typeof(Hex), nameof(Hex))]
+    [JsonDerivedType(typeof(Base64), nameof(Base64))]
+#endif
     public abstract class AddressStringFormat
     {
         /// <summary>
-        /// Not described yet..
+        /// <para>Not described yet..</para>
         /// </summary>
-        [JsonDiscriminator("AccountId")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("AccountId")]
+#endif
         public class AccountId : AddressStringFormat
         {
         }
 
         /// <summary>
-        /// Not described yet..
+        /// <para>Not described yet..</para>
         /// </summary>
-        [JsonDiscriminator("Hex")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("Hex")]
+#endif
         public class Hex : AddressStringFormat
         {
         }
 
         /// <summary>
-        /// Not described yet..
+        /// <para>Not described yet..</para>
         /// </summary>
-        [JsonDiscriminator("Base64")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("Base64")]
+#endif
         public class Base64 : AddressStringFormat
         {
             /// <summary>
-            /// Not described yet..
+            /// <para>Not described yet..</para>
             /// </summary>
             [JsonPropertyName("url")]
             public bool Url { get; set; }
 
             /// <summary>
-            /// Not described yet..
+            /// <para>Not described yet..</para>
             /// </summary>
             [JsonPropertyName("test")]
             public bool Test { get; set; }
 
             /// <summary>
-            /// Not described yet..
+            /// <para>Not described yet..</para>
             /// </summary>
             [JsonPropertyName("bounce")]
             public bool Bounce { get; set; }

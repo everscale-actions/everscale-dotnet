@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,7 +6,7 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class ParamsOfEncodeInternalMessage
     {
@@ -26,7 +25,7 @@ namespace EverscaleNet.Client.Models
         public string Address { get; set; }
 
         /// <summary>
-        /// Source address of the message.
+        /// <para>Source address of the message.</para>
         /// </summary>
         [JsonPropertyName("src_address")]
         public string SrcAddress { get; set; }
@@ -48,7 +47,7 @@ namespace EverscaleNet.Client.Models
         public CallSet CallSet { get; set; }
 
         /// <summary>
-        /// Value in nanotokens to be sent with message.
+        /// <para>Value in nanotokens to be sent with message.</para>
         /// </summary>
         [JsonPropertyName("value")]
         public string Value { get; set; }

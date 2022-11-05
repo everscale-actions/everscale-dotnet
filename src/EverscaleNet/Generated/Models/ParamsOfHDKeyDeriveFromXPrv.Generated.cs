@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,24 +6,24 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class ParamsOfHDKeyDeriveFromXPrv
     {
         /// <summary>
-        /// Serialized extended private key
+        /// <para>Serialized extended private key</para>
         /// </summary>
         [JsonPropertyName("xprv")]
         public string Xprv { get; set; }
 
         /// <summary>
-        /// Child index (see BIP-0032)
+        /// <para>Child index (see BIP-0032)</para>
         /// </summary>
         [JsonPropertyName("child_index")]
         public uint ChildIndex { get; set; }
 
         /// <summary>
-        /// Indicates the derivation of hardened/not-hardened key (see BIP-0032)
+        /// <para>Indicates the derivation of hardened/not-hardened key (see BIP-0032)</para>
         /// </summary>
         [JsonPropertyName("hardened")]
         public bool Hardened { get; set; }

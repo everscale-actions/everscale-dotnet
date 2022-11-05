@@ -7,32 +7,32 @@ using System.Threading.Tasks;
 namespace EverscaleNet.Abstract.Modules
 {
     /// <summary>
-    /// Client Module
+    /// <para>Client Module</para>
     /// </summary>
     public interface IClientModule : IEverModule
     {
         /// <summary>
-        /// Returns Core Library API reference
+        /// <para>Returns Core Library API reference</para>
         /// </summary>
         public Task<ResultOfGetApiReference> GetApiReference(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Returns Core Library version
+        /// <para>Returns Core Library version</para>
         /// </summary>
         public Task<ResultOfVersion> Version(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Returns Core Library API reference
+        /// <para>Returns Core Library API reference</para>
         /// </summary>
         public Task<ClientConfig> Config(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Returns detailed information about this build.
+        /// <para>Returns detailed information about this build.</para>
         /// </summary>
         public Task<ResultOfBuildInfo> BuildInfo(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Resolves application request processing result
+        /// <para>Resolves application request processing result</para>
         /// </summary>
         public Task ResolveAppRequest(ParamsOfResolveAppRequest @params, CancellationToken cancellationToken = default);
     }

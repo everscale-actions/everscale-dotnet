@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !NET7_0_OR_GREATER
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
@@ -63,3 +64,4 @@ public class EverClientDiscriminatorConvention : IDiscriminatorConvention {
 		_jsonConverter.Write(writer, discriminator, _options);
 	}
 }
+#endif

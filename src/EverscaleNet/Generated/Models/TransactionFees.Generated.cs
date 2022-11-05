@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,7 +6,7 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class TransactionFees
     {
@@ -19,13 +18,13 @@ namespace EverscaleNet.Client.Models
         public ulong InMsgFwdFee { get; set; }
 
         /// <summary>
-        /// Fee for account storage
+        /// <para>Fee for account storage</para>
         /// </summary>
         [JsonPropertyName("storage_fee")]
         public ulong StorageFee { get; set; }
 
         /// <summary>
-        /// Fee for processing
+        /// <para>Fee for processing</para>
         /// </summary>
         [JsonPropertyName("gas_fee")]
         public ulong GasFee { get; set; }
@@ -45,25 +44,25 @@ namespace EverscaleNet.Client.Models
         public ulong TotalAccountFees { get; set; }
 
         /// <summary>
-        /// Deprecated because it means total value sent in the transaction, which does not relate to any fees.
+        /// <para>Deprecated because it means total value sent in the transaction, which does not relate to any fees.</para>
         /// </summary>
         [JsonPropertyName("total_output")]
         public ulong TotalOutput { get; set; }
 
         /// <summary>
-        /// Fee for inbound external message import.
+        /// <para>Fee for inbound external message import.</para>
         /// </summary>
         [JsonPropertyName("ext_in_msg_fee")]
         public ulong ExtInMsgFee { get; set; }
 
         /// <summary>
-        /// Total fees the account pays for message forwarding
+        /// <para>Total fees the account pays for message forwarding</para>
         /// </summary>
         [JsonPropertyName("total_fwd_fees")]
         public ulong TotalFwdFees { get; set; }
 
         /// <summary>
-        /// Total account fees for the transaction execution. Compounds of storage_fee + gas_fee + ext_in_msg_fee + total_fwd_fees
+        /// <para>Total account fees for the transaction execution. Compounds of storage_fee + gas_fee + ext_in_msg_fee + total_fwd_fees</para>
         /// </summary>
         [JsonPropertyName("account_fees")]
         public ulong AccountFees { get; set; }

@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,18 +6,18 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class ParamsOfUpdateInitialData
     {
         /// <summary>
-        /// Contract ABI
+        /// <para>Contract ABI</para>
         /// </summary>
         [JsonPropertyName("abi")]
         public Abi Abi { get; set; }
 
         /// <summary>
-        /// Data BOC or BOC handle
+        /// <para>Data BOC or BOC handle</para>
         /// </summary>
         [JsonPropertyName("data")]
         public string Data { get; set; }
@@ -31,13 +30,13 @@ namespace EverscaleNet.Client.Models
         public JsonElement? InitialData { get; set; }
 
         /// <summary>
-        /// Initial account owner's public key to set into account data
+        /// <para>Initial account owner's public key to set into account data</para>
         /// </summary>
         [JsonPropertyName("initial_pubkey")]
         public string InitialPubkey { get; set; }
 
         /// <summary>
-        /// Cache type to put the result. The BOC itself returned if no cache type provided.
+        /// <para>Cache type to put the result. The BOC itself returned if no cache type provided.</para>
         /// </summary>
         [JsonPropertyName("boc_cache")]
         public BocCacheType BocCache { get; set; }

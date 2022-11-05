@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 namespace EverscaleNet.Client.Modules
 {
     /// <summary>
-    /// Proofs Module
+    /// <para>Proofs Module</para>
     /// </summary>
     public class ProofsModule : IProofsModule
     {
         private readonly IEverClientAdapter _everClientAdapter;
 
         /// <summary>
-        /// .ctor
+        /// <para>.ctor</para>
         /// </summary>
         public ProofsModule(IEverClientAdapter everClientAdapter)
         {

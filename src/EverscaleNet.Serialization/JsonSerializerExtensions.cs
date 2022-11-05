@@ -135,9 +135,32 @@ public static class JsonSerializerExtensions {
 	///     Serialize Object to JsonElement
 	/// </summary>
 	/// <param name="element"></param>
+	/// <param name="discriminatorType"></param>
 	/// <returns></returns>
-	public static JsonElement ToJsonElement(this object element) {
-		return JsonDocument.Parse(JsonSerializer.Serialize(element, JsonOptionsProvider.JsonSerializerOptions)).RootElement;
+	public static JsonElement ToJsonElement(this object element, Type? discriminatorType = null) {
+		if (discriminatorType == null && element.GetType().BaseType != null) {
+			discriminatorType = element.GetType().BaseType;
+		}
+
+#if NET6_0_OR_GREATER
+		return discriminatorType == null
+			       ? JsonSerializer.SerializeToElement(element, JsonOptionsProvider.JsonSerializerOptions)
+			       : JsonSerializer.SerializeToElement(element, discriminatorType, JsonOptionsProvider.JsonSerializerOptions);
+#else
+		string json = discriminatorType == null
+			              ? JsonSerializer.Serialize(element, JsonOptionsProvider.JsonSerializerOptions)
+			              : JsonSerializer.Serialize(element, discriminatorType, JsonOptionsProvider.JsonSerializerOptions);
+		return JsonDocument.Parse(json).RootElement;
+#endif
+	}
+
+	/// <summary>
+	///     Serialize Object to JsonElement with generic discriminatorType
+	/// </summary>
+	/// <param name="element"></param>
+	/// <returns></returns>
+	public static JsonElement ToJsonElement<T>(this object element) {
+		return ToJsonElement(element, typeof(T));
 	}
 
 	/// <summary>

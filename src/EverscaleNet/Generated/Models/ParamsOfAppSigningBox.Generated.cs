@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,26 +6,35 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Signing box callbacks.
+    /// <para>Signing box callbacks.</para>
     /// </summary>
+#if NET7_0_OR_GREATER
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
+    [JsonDerivedType(typeof(GetPublicKey), nameof(GetPublicKey))]
+    [JsonDerivedType(typeof(Sign), nameof(Sign))]
+#endif
     public abstract class ParamsOfAppSigningBox
     {
         /// <summary>
-        /// Get signing box public key
+        /// <para>Get signing box public key</para>
         /// </summary>
-        [JsonDiscriminator("GetPublicKey")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("GetPublicKey")]
+#endif
         public class GetPublicKey : ParamsOfAppSigningBox
         {
         }
 
         /// <summary>
-        /// Sign data
+        /// <para>Sign data</para>
         /// </summary>
-        [JsonDiscriminator("Sign")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("Sign")]
+#endif
         public class Sign : ParamsOfAppSigningBox
         {
             /// <summary>
-            /// Sign data
+            /// <para>Sign data</para>
             /// </summary>
             [JsonPropertyName("unsigned")]
             public string Unsigned { get; set; }

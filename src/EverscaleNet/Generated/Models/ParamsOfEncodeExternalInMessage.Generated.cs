@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,30 +6,30 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class ParamsOfEncodeExternalInMessage
     {
         /// <summary>
-        /// Source address.
+        /// <para>Source address.</para>
         /// </summary>
         [JsonPropertyName("src")]
         public string Src { get; set; }
 
         /// <summary>
-        /// Destination address.
+        /// <para>Destination address.</para>
         /// </summary>
         [JsonPropertyName("dst")]
         public string Dst { get; set; }
 
         /// <summary>
-        /// Bag of cells with state init (used in deploy messages).
+        /// <para>Bag of cells with state init (used in deploy messages).</para>
         /// </summary>
         [JsonPropertyName("init")]
         public string Init { get; set; }
 
         /// <summary>
-        /// Bag of cells with the message body encoded as base64.
+        /// <para>Bag of cells with the message body encoded as base64.</para>
         /// </summary>
         [JsonPropertyName("body")]
         public string Body { get; set; }

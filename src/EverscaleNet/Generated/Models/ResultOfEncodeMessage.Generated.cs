@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,12 +6,12 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class ResultOfEncodeMessage
     {
         /// <summary>
-        /// Message BOC encoded with `base64`.
+        /// <para>Message BOC encoded with `base64`.</para>
         /// </summary>
         [JsonPropertyName("message")]
         public string Message { get; set; }
@@ -27,13 +26,13 @@ namespace EverscaleNet.Client.Models
         public string DataToSign { get; set; }
 
         /// <summary>
-        /// Destination address.
+        /// <para>Destination address.</para>
         /// </summary>
         [JsonPropertyName("address")]
         public string Address { get; set; }
 
         /// <summary>
-        /// Message id.
+        /// <para>Message id.</para>
         /// </summary>
         [JsonPropertyName("message_id")]
         public string MessageId { get; set; }

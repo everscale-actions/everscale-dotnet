@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <ItemGroup>
+    <ItemGroup Condition=" '$(TargetFramework)' != 'net7.0' ">
         <PackageReference Include="Dahomey.Json" Version="1.12.2" />
     </ItemGroup>
 

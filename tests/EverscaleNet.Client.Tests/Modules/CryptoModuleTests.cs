@@ -7,11 +7,11 @@ using Xunit.Abstractions;
 namespace EverscaleNet.Client.Tests.Modules;
 
 public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
+	private readonly IEverClient _everClient;
+
 	public CryptoModuleTests(EverClientTestsFixture fixture, ITestOutputHelper outputHelper) {
 		_everClient = fixture.CreateClient(outputHelper);
 	}
-
-	private readonly IEverClient _everClient;
 
 	[Theory]
 	[InlineData("Test Message", true)]
@@ -59,30 +59,6 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 		});
 
 		verifyResult.Valid.Should().BeTrue();
-	}
-
-	private class MnemonicFromRandomData : IEnumerable<object[]> {
-		// ReSharper disable once RedundantEmptyObjectCreationArgumentList
-		private readonly List<object[]> _data = GetData();
-
-		private static List<object[]> GetData() {
-			IEnumerable<int> dict = Enumerable.Range(1, 8);
-			int[] words = { 12, 15, 18, 21, 24 };
-
-			return (from d in dict
-			        from w in words
-			        select new object[] {
-				        d, w
-			        }).ToList();
-		}
-
-		public IEnumerator<object[]> GetEnumerator() {
-			return _data.GetEnumerator();
-		}
-
-		IEnumerator IEnumerable.GetEnumerator() {
-			return GetEnumerator();
-		}
 	}
 
 	[Fact]
@@ -498,11 +474,15 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 			var paramsOfAppRequest = PolymorphicSerializer.Deserialize<ParamsOfAppRequest>(request);
 
 			switch (PolymorphicSerializer.Deserialize<ParamsOfAppSigningBox>(paramsOfAppRequest.RequestData!.Value)) {
-				case ParamsOfAppSigningBox.GetPublicKey _: {
+				case ParamsOfAppSigningBox.GetPublicKey: {
 					ResultOfSigningBoxGetPublicKey resultOfSigningBoxGetPublicKey = await _everClient.Crypto.SigningBoxGetPublicKey(new RegisteredSigningBox { Handle = keyBoxHandle });
 					await _everClient.Client.ResolveAppRequest(new ParamsOfResolveAppRequest {
 						AppRequestId = paramsOfAppRequest.AppRequestId,
-						Result = new AppRequestResult.Ok { Result = new ResultOfAppSigningBox.GetPublicKey { PublicKey = resultOfSigningBoxGetPublicKey.Pubkey }.ToJsonElement() }
+						Result = new AppRequestResult.Ok {
+							Result = new ResultOfAppSigningBox.GetPublicKey {
+								PublicKey = resultOfSigningBoxGetPublicKey.Pubkey
+							}.ToJsonElement()
+						}
 					});
 					break;
 				}
@@ -510,7 +490,11 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 					ResultOfSigningBoxSign resultOfSigningBoxSign = await _everClient.Crypto.SigningBoxSign(new ParamsOfSigningBoxSign { SigningBox = keyBoxHandle, Unsigned = sign.Unsigned });
 					await _everClient.Client.ResolveAppRequest(new ParamsOfResolveAppRequest {
 						AppRequestId = paramsOfAppRequest.AppRequestId,
-						Result = new AppRequestResult.Ok { Result = new ResultOfAppSigningBox.Sign { Signature = resultOfSigningBoxSign.Signature }.ToJsonElement() }
+						Result = new AppRequestResult.Ok {
+							Result = new ResultOfAppSigningBox.Sign {
+								Signature = resultOfSigningBoxSign.Signature
+							}.ToJsonElement()
+						}
 					});
 					break;
 				}
@@ -571,5 +555,29 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 		});
 
 		verified.Unsigned.FromBase64().Should().Be("Test Message");
+	}
+
+	private class MnemonicFromRandomData : IEnumerable<object[]> {
+		// ReSharper disable once RedundantEmptyObjectCreationArgumentList
+		private readonly List<object[]> _data = GetData();
+
+		public IEnumerator<object[]> GetEnumerator() {
+			return _data.GetEnumerator();
+		}
+
+		IEnumerator IEnumerable.GetEnumerator() {
+			return GetEnumerator();
+		}
+
+		private static List<object[]> GetData() {
+			IEnumerable<int> dict = Enumerable.Range(1, 8);
+			int[] words = { 12, 15, 18, 21, 24 };
+
+			return (from d in dict
+			        from w in words
+			        select new object[] {
+				        d, w
+			        }).ToList();
+		}
 	}
 }

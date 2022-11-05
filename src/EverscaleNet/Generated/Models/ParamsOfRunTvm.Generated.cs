@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,7 +6,7 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class ParamsOfRunTvm
     {
@@ -26,13 +25,13 @@ namespace EverscaleNet.Client.Models
         public string Account { get; set; }
 
         /// <summary>
-        /// Execution options.
+        /// <para>Execution options.</para>
         /// </summary>
         [JsonPropertyName("execution_options")]
         public ExecutionOptions ExecutionOptions { get; set; }
 
         /// <summary>
-        /// Contract ABI for decoding output messages
+        /// <para>Contract ABI for decoding output messages</para>
         /// </summary>
         [JsonPropertyName("abi")]
         public Abi Abi { get; set; }

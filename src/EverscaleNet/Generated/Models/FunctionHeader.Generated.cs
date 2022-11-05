@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -16,7 +15,7 @@ namespace EverscaleNet.Client.Models
     public class FunctionHeader
     {
         /// <summary>
-        /// Message expiration time in seconds. If not specified - calculated automatically from message_expiration_timeout(), try_index and message_expiration_timeout_grow_factor() (if ABI includes `expire` header).
+        /// <para>Message expiration time in seconds. If not specified - calculated automatically from message_expiration_timeout(), try_index and message_expiration_timeout_grow_factor() (if ABI includes `expire` header).</para>
         /// </summary>
         [JsonPropertyName("expire")]
         public uint? Expire { get; set; }

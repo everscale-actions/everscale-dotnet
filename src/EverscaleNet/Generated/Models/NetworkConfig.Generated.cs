@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,12 +6,12 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class NetworkConfig
     {
         /// <summary>
-        /// **This field is deprecated, but left for backward-compatibility.** Evernode endpoint.
+        /// <para>**This field is deprecated, but left for backward-compatibility.** Evernode endpoint.</para>
         /// </summary>
         [JsonPropertyName("server_address")]
         public string ServerAddress { get; set; }
@@ -40,7 +39,7 @@ namespace EverscaleNet.Client.Models
         public uint? MaxReconnectTimeout { get; set; }
 
         /// <summary>
-        /// Deprecated
+        /// <para>Deprecated</para>
         /// </summary>
         [JsonPropertyName("reconnect_timeout")]
         public uint? ReconnectTimeout { get; set; }
@@ -133,7 +132,7 @@ namespace EverscaleNet.Client.Models
         public uint? NextRempStatusTimeout { get; set; }
 
         /// <summary>
-        /// Access key to GraphQL API (Project secret)
+        /// <para>Access key to GraphQL API (Project secret)</para>
         /// </summary>
         [JsonPropertyName("access_key")]
         public string AccessKey { get; set; }

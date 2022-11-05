@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,12 +6,12 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class DeploySet
     {
         /// <summary>
-        /// Content of TVC file encoded in `base64`.
+        /// <para>Content of TVC file encoded in `base64`.</para>
         /// </summary>
         [JsonPropertyName("tvc")]
         public string Tvc { get; set; }
@@ -25,7 +24,7 @@ namespace EverscaleNet.Client.Models
         public int? WorkchainId { get; set; }
 
         /// <summary>
-        /// List of initial values for contract's public variables.
+        /// <para>List of initial values for contract's public variables.</para>
         /// </summary>
         [JsonPropertyName("initial_data")]
         public JsonElement? InitialData { get; set; }

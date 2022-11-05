@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,7 +6,7 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class ResultOfIteratorNext
     {
@@ -22,7 +21,7 @@ namespace EverscaleNet.Client.Models
         public JsonElement[] Items { get; set; }
 
         /// <summary>
-        /// Indicates that there are more available items in iterated range.
+        /// <para>Indicates that there are more available items in iterated range.</para>
         /// </summary>
         [JsonPropertyName("has_more")]
         public bool HasMore { get; set; }

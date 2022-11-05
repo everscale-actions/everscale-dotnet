@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,76 +6,94 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Cell builder operation.
+    /// <para>Cell builder operation.</para>
     /// </summary>
+#if NET7_0_OR_GREATER
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
+    [JsonDerivedType(typeof(Integer), nameof(Integer))]
+    [JsonDerivedType(typeof(BitString), nameof(BitString))]
+    [JsonDerivedType(typeof(Cell), nameof(Cell))]
+    [JsonDerivedType(typeof(CellBoc), nameof(CellBoc))]
+    [JsonDerivedType(typeof(Address), nameof(Address))]
+#endif
     public abstract class BuilderOp
     {
         /// <summary>
-        /// Append integer to cell data.
+        /// <para>Append integer to cell data.</para>
         /// </summary>
-        [JsonDiscriminator("Integer")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("Integer")]
+#endif
         public class Integer : BuilderOp
         {
             /// <summary>
-            /// Append integer to cell data.
+            /// <para>Append integer to cell data.</para>
             /// </summary>
             [JsonPropertyName("size")]
             public uint Size { get; set; }
 
             /// <summary>
-            /// Append integer to cell data.
+            /// <para>Append integer to cell data.</para>
             /// </summary>
             [JsonPropertyName("value")]
             public JsonElement? Value { get; set; }
         }
 
         /// <summary>
-        /// Append bit string to cell data.
+        /// <para>Append bit string to cell data.</para>
         /// </summary>
-        [JsonDiscriminator("BitString")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("BitString")]
+#endif
         public class BitString : BuilderOp
         {
             /// <summary>
-            /// Append bit string to cell data.
+            /// <para>Append bit string to cell data.</para>
             /// </summary>
             [JsonPropertyName("value")]
             public string Value { get; set; }
         }
 
         /// <summary>
-        /// Append ref to nested cells.
+        /// <para>Append ref to nested cells.</para>
         /// </summary>
-        [JsonDiscriminator("Cell")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("Cell")]
+#endif
         public class Cell : BuilderOp
         {
             /// <summary>
-            /// Append ref to nested cells.
+            /// <para>Append ref to nested cells.</para>
             /// </summary>
             [JsonPropertyName("builder")]
             public BuilderOp[] Builder { get; set; }
         }
 
         /// <summary>
-        /// Append ref to nested cell.
+        /// <para>Append ref to nested cell.</para>
         /// </summary>
-        [JsonDiscriminator("CellBoc")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("CellBoc")]
+#endif
         public class CellBoc : BuilderOp
         {
             /// <summary>
-            /// Append ref to nested cell.
+            /// <para>Append ref to nested cell.</para>
             /// </summary>
             [JsonPropertyName("boc")]
             public string Boc { get; set; }
         }
 
         /// <summary>
-        /// Address.
+        /// <para>Address.</para>
         /// </summary>
-        [JsonDiscriminator("Address")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("Address")]
+#endif
         public class Address : BuilderOp
         {
             /// <summary>
-            /// Address.
+            /// <para>Address.</para>
             /// </summary>
             [JsonPropertyName("address")]
             public string AddressAccessor { get; set; }

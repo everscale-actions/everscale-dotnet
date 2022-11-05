@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,12 +6,12 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class ResultOfFindLastShardBlock
     {
         /// <summary>
-        /// Account shard last block ID
+        /// <para>Account shard last block ID</para>
         /// </summary>
         [JsonPropertyName("block_id")]
         public string BlockId { get; set; }

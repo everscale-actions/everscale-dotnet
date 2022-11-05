@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,12 +6,12 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class ParamsOfSendMessage
     {
         /// <summary>
-        /// Message BOC.
+        /// <para>Message BOC.</para>
         /// </summary>
         [JsonPropertyName("message")]
         public string Message { get; set; }
@@ -32,7 +31,7 @@ namespace EverscaleNet.Client.Models
         public Abi Abi { get; set; }
 
         /// <summary>
-        /// Flag for requesting events sending
+        /// <para>Flag for requesting events sending</para>
         /// </summary>
         [JsonPropertyName("send_events")]
         public bool SendEvents { get; set; }

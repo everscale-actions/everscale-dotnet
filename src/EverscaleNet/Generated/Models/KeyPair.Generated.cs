@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,18 +6,18 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class KeyPair
     {
         /// <summary>
-        /// Public key - 64 symbols hex string
+        /// <para>Public key - 64 symbols hex string</para>
         /// </summary>
         [JsonPropertyName("public")]
         public string Public { get; set; }
 
         /// <summary>
-        /// Private key - u64 symbols hex string
+        /// <para>Private key - u64 symbols hex string</para>
         /// </summary>
         [JsonPropertyName("secret")]
         public string Secret { get; set; }

@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,12 +6,12 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class ParamsOfIteratorNext
     {
         /// <summary>
-        /// Iterator handle
+        /// <para>Iterator handle</para>
         /// </summary>
         [JsonPropertyName("iterator")]
         public uint Iterator { get; set; }
@@ -25,7 +24,7 @@ namespace EverscaleNet.Client.Models
         public uint? Limit { get; set; }
 
         /// <summary>
-        /// Indicates that function must return the iterator state that can be used for resuming iteration.
+        /// <para>Indicates that function must return the iterator state that can be used for resuming iteration.</para>
         /// </summary>
         [JsonPropertyName("return_resume_state")]
         public bool? ReturnResumeState { get; set; }

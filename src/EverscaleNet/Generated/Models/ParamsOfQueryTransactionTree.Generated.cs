@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,18 +6,18 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class ParamsOfQueryTransactionTree
     {
         /// <summary>
-        /// Input message id.
+        /// <para>Input message id.</para>
         /// </summary>
         [JsonPropertyName("in_msg")]
         public string InMsg { get; set; }
 
         /// <summary>
-        /// List of contract ABIs that will be used to decode message bodies. Library will try to decode each returned message body using any ABI from the registry.
+        /// <para>List of contract ABIs that will be used to decode message bodies. Library will try to decode each returned message body using any ABI from the registry.</para>
         /// </summary>
         [JsonPropertyName("abi_registry")]
         public Abi[] AbiRegistry { get; set; }

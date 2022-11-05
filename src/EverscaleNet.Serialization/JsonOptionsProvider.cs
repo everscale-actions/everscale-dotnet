@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using EverscaleNet.Client.Models;
+#if !NET7_0_OR_GREATER
 using Dahomey.Json;
 using Dahomey.Json.Attributes;
 using Dahomey.Json.Serialization.Conventions;
-using EverscaleNet.Client.Models;
+#endif
 
 namespace EverscaleNet.Serialization;
 
@@ -30,18 +32,19 @@ public static class JsonOptionsProvider {
 #endif
 		};
 
+#if !NET7_0_OR_GREATER
+		IEnumerable<Type> nestedTypes = typeof(Abi.Contract).Assembly.GetTypes().Where(t => t.IsNestedPublic);
 		options.SetupExtensions();
 		DiscriminatorConventionRegistry registry = options.GetDiscriminatorConventionRegistry();
 		registry.ClearConventions();
 		registry.RegisterConvention(new EverClientDiscriminatorConvention(options));
 		registry.DiscriminatorPolicy = DiscriminatorPolicy.Always;
 
-		IEnumerable<Type> nestedTypes = typeof(Abi.Contract).Assembly.GetTypes().Where(t => t.IsNestedPublic);
-
 		// register all nested types from models
 		foreach (Type type in nestedTypes) {
 			registry.RegisterType(type);
 		}
+#endif
 
 		return options;
 	}

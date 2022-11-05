@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,18 +6,18 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class ParamsOfConvertAddress
     {
         /// <summary>
-        /// Account address in any TON format.
+        /// <para>Account address in any TON format.</para>
         /// </summary>
         [JsonPropertyName("address")]
         public string Address { get; set; }
 
         /// <summary>
-        /// Specify the format to convert to.
+        /// <para>Specify the format to convert to.</para>
         /// </summary>
         [JsonPropertyName("output_format")]
         public AddressStringFormat OutputFormat { get; set; }

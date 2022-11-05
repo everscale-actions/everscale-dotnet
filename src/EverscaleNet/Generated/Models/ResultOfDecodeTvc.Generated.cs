@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,48 +6,48 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class ResultOfDecodeTvc
     {
         /// <summary>
-        /// Contract code BOC encoded as base64 or BOC handle
+        /// <para>Contract code BOC encoded as base64 or BOC handle</para>
         /// </summary>
         [JsonPropertyName("code")]
         public string Code { get; set; }
 
         /// <summary>
-        /// Contract code hash
+        /// <para>Contract code hash</para>
         /// </summary>
         [JsonPropertyName("code_hash")]
         public string CodeHash { get; set; }
 
         /// <summary>
-        /// Contract code depth
+        /// <para>Contract code depth</para>
         /// </summary>
         [JsonPropertyName("code_depth")]
         public uint? CodeDepth { get; set; }
 
         /// <summary>
-        /// Contract data BOC encoded as base64 or BOC handle
+        /// <para>Contract data BOC encoded as base64 or BOC handle</para>
         /// </summary>
         [JsonPropertyName("data")]
         public string Data { get; set; }
 
         /// <summary>
-        /// Contract data hash
+        /// <para>Contract data hash</para>
         /// </summary>
         [JsonPropertyName("data_hash")]
         public string DataHash { get; set; }
 
         /// <summary>
-        /// Contract data depth
+        /// <para>Contract data depth</para>
         /// </summary>
         [JsonPropertyName("data_depth")]
         public uint? DataDepth { get; set; }
 
         /// <summary>
-        /// Contract library BOC encoded as base64 or BOC handle
+        /// <para>Contract library BOC encoded as base64 or BOC handle</para>
         /// </summary>
         [JsonPropertyName("library")]
         public string Library { get; set; }
@@ -68,13 +67,13 @@ namespace EverscaleNet.Client.Models
         public bool? Tock { get; set; }
 
         /// <summary>
-        /// Is present and non-zero only in instances of large smart contracts
+        /// <para>Is present and non-zero only in instances of large smart contracts</para>
         /// </summary>
         [JsonPropertyName("split_depth")]
         public uint? SplitDepth { get; set; }
 
         /// <summary>
-        /// Compiler version, for example 'sol 0.49.0'
+        /// <para>Compiler version, for example 'sol 0.49.0'</para>
         /// </summary>
         [JsonPropertyName("compiler_version")]
         public string CompilerVersion { get; set; }
