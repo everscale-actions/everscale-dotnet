@@ -31,14 +31,14 @@ jobs:
       
       - name: Checkout
         uses: actions/checkout@v3
-
+      
       - uses: actions/cache@v3
         with:
           path: ~/.nuget/packages
           key: nuget-${{ hashFiles('**/packages.lock.json') }}
           restore-keys: |
             nuget-
-
+      
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v3
         with:
@@ -46,18 +46,19 @@ jobs:
             3.x
             5.x
             6.x
+            7.x
       
       - name: Restore
         run: dotnet restore --locked-mode
       - name: Build
         run: dotnet build -c Release --no-restore -v n -ds
-
+      
       - name: Wait for Node SE
         run: |
           wget https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh
           chmod +x wait-for-it.sh
           ./wait-for-it.sh -s -t 120 localhost:5555
-
+      
       - name: Test
         env:
           EVERSCALE_NETWORK_ENDPOINTS: http://localhost:5555
@@ -74,7 +75,7 @@ jobs:
           reporter: dotnet-trx
           list-suites: failed
           list-tests: failed
-
+      
       - name: Pack
         if: github.event_name != 'pull_request'
         run: |
@@ -115,7 +116,7 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 6.x
+          dotnet-version: 7.x
       - name: Create Release NuGet package
         run: |
           arrTag=(${GITHUB_REF//\// })
