@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 namespace EverscaleNet.Client.Modules
 {
     /// <summary>
-    /// Client Module
+    /// <para>Client Module</para>
     /// </summary>
     public class ClientModule : IClientModule
     {
         private readonly IEverClientAdapter _everClientAdapter;
 
         /// <summary>
-        /// .ctor
+        /// <para>.ctor</para>
         /// </summary>
         public ClientModule(IEverClientAdapter everClientAdapter)
         {
@@ -24,7 +24,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Returns Core Library API reference
+        /// <para>Returns Core Library API reference</para>
         /// </summary>
         public async Task<ResultOfGetApiReference> GetApiReference(CancellationToken cancellationToken = default)
         {
@@ -32,7 +32,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Returns Core Library version
+        /// <para>Returns Core Library version</para>
         /// </summary>
         public async Task<ResultOfVersion> Version(CancellationToken cancellationToken = default)
         {
@@ -40,7 +40,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Returns Core Library API reference
+        /// <para>Returns Core Library API reference</para>
         /// </summary>
         public async Task<ClientConfig> Config(CancellationToken cancellationToken = default)
         {
@@ -48,7 +48,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Returns detailed information about this build.
+        /// <para>Returns detailed information about this build.</para>
         /// </summary>
         public async Task<ResultOfBuildInfo> BuildInfo(CancellationToken cancellationToken = default)
         {
@@ -56,7 +56,7 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
-        /// Resolves application request processing result
+        /// <para>Resolves application request processing result</para>
         /// </summary>
         public async Task ResolveAppRequest(ParamsOfResolveAppRequest @params, CancellationToken cancellationToken = default)
         {

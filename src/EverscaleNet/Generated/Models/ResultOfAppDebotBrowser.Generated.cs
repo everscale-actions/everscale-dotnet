@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,52 +6,67 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// [UNSTABLE](UNSTABLE.md) Returning values from Debot Browser callbacks.
+    /// <para>[UNSTABLE](UNSTABLE.md) Returning values from Debot Browser callbacks.</para>
     /// </summary>
+#if NET7_0_OR_GREATER
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
+    [JsonDerivedType(typeof(Input), nameof(Input))]
+    [JsonDerivedType(typeof(GetSigningBox), nameof(GetSigningBox))]
+    [JsonDerivedType(typeof(InvokeDebot), nameof(InvokeDebot))]
+    [JsonDerivedType(typeof(Approve), nameof(Approve))]
+#endif
     public abstract class ResultOfAppDebotBrowser
     {
         /// <summary>
-        /// Result of user input.
+        /// <para>Result of user input.</para>
         /// </summary>
-        [JsonDiscriminator("Input")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("Input")]
+#endif
         public class Input : ResultOfAppDebotBrowser
         {
             /// <summary>
-            /// Result of user input.
+            /// <para>Result of user input.</para>
             /// </summary>
             [JsonPropertyName("value")]
             public string Value { get; set; }
         }
 
         /// <summary>
-        /// Result of getting signing box.
+        /// <para>Result of getting signing box.</para>
         /// </summary>
-        [JsonDiscriminator("GetSigningBox")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("GetSigningBox")]
+#endif
         public class GetSigningBox : ResultOfAppDebotBrowser
         {
             /// <summary>
-            /// Result of getting signing box.
+            /// <para>Result of getting signing box.</para>
             /// </summary>
             [JsonPropertyName("signing_box")]
             public uint SigningBox { get; set; }
         }
 
         /// <summary>
-        /// Result of debot invoking.
+        /// <para>Result of debot invoking.</para>
         /// </summary>
-        [JsonDiscriminator("InvokeDebot")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("InvokeDebot")]
+#endif
         public class InvokeDebot : ResultOfAppDebotBrowser
         {
         }
 
         /// <summary>
-        /// Result of `approve` callback.
+        /// <para>Result of `approve` callback.</para>
         /// </summary>
-        [JsonDiscriminator("Approve")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("Approve")]
+#endif
         public class Approve : ResultOfAppDebotBrowser
         {
             /// <summary>
-            /// Result of `approve` callback.
+            /// <para>Result of `approve` callback.</para>
             /// </summary>
             [JsonPropertyName("approved")]
             public bool Approved { get; set; }

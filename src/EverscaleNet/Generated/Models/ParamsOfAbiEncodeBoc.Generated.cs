@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,18 +6,18 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class ParamsOfAbiEncodeBoc
     {
         /// <summary>
-        /// Parameters to encode into BOC
+        /// <para>Parameters to encode into BOC</para>
         /// </summary>
         [JsonPropertyName("params")]
         public AbiParam[] @params { get; set; }
 
         /// <summary>
-        /// Parameters and values as a JSON structure
+        /// <para>Parameters and values as a JSON structure</para>
         /// </summary>
         [JsonPropertyName("data")]
         public JsonElement? Data { get; set; }

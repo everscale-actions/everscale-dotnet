@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,31 +6,37 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
+#if NET7_0_OR_GREATER
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
+    [JsonDerivedType(typeof(Encoded), nameof(Encoded))]
+#endif
     public abstract class MessageSource
     {
         /// <summary>
-        /// Not described yet..
+        /// <para>Not described yet..</para>
         /// </summary>
-        [JsonDiscriminator("Encoded")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("Encoded")]
+#endif
         public class Encoded : MessageSource
         {
             /// <summary>
-            /// Not described yet..
+            /// <para>Not described yet..</para>
             /// </summary>
             [JsonPropertyName("message")]
             public string Message { get; set; }
 
             /// <summary>
-            /// Not described yet..
+            /// <para>Not described yet..</para>
             /// </summary>
             [JsonPropertyName("abi")]
             public Abi Abi { get; set; }
         }
 
         /// <summary>
-        /// Not described yet..
+        /// <para>Not described yet..</para>
         /// </summary>
         [JsonPropertyName("EncodingParams")]
         public ParamsOfEncodeMessage EncodingParams { get; set; }

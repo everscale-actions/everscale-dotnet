@@ -73,13 +73,14 @@ internal class ModelsClassHelpers {
 
 		MemberDeclarationSyntax[] enumTypes = typeElement
 		                                      .EnumTypes
-		                                      .Select(subClass => {
+		                                      .SelectMany(subClass => {
 			                                      string subClassSummary = subClass.Summary +
 			                                                               (subClass.Description != null ? $"\n{subClass.Description}" : null);
 
 			                                      switch (subClass.Type) {
 				                                      case GenericArgType.Ref:
-					                                      return CreatePropertyForRef(subClass.RefName, subClass.Name, subClassSummary);
+					                                      return new[] { CreatePropertyForRef(subClass.RefName, subClass.Name, subClassSummary) };
+
 				                                      case GenericArgType.Struct:
 					                                      var properties = new List<MemberDeclarationSyntax>();
 					                                      properties.AddRange(subClass.StructFields.Select(sf => {
@@ -89,16 +90,21 @@ internal class ModelsClassHelpers {
 						                                                                       subClassSummary, sf.NumberType,
 						                                                                       sf.NumberSize, addPostfix: addPostfix, arrayItem: sf.ArrayItem);
 					                                      }));
-					                                      return ClassDeclaration(NamingConventions.Normalize(subClass.Name))
-					                                             .AddAttributeLists(AttributeList(
-						                                                                SeparatedList(
-							                                                                new[] {
-								                                                                Attribute(IdentifierName($"JsonDiscriminator(\"{subClass.Name}\")"))
-							                                                                }))).WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(subClassSummary))
-					                                             .AddModifiers(Token(SyntaxKind.PublicKeyword))
-					                                             .AddBaseListTypes(
-						                                             SimpleBaseType(IdentifierName(NamingConventions.Normalize(typeElement.Name))))
-					                                             .AddMembers(properties.ToArray());
+					                                      return new[] {
+						                                      ClassDeclaration(NamingConventions.Normalize(subClass.Name))
+							                                      .AddModifiers(Token(SyntaxKind.PublicKeyword))
+							                                      .AddBaseListTypes(
+								                                      SimpleBaseType(IdentifierName(NamingConventions.Normalize(typeElement.Name))))
+							                                      .AddMembers(properties.ToArray())
+							                                      .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(subClassSummary)
+							                                                                        .Add(DisabledText("#if !NET7_0_OR_GREATER"))
+							                                                                        .Add(ElasticCarriageReturnLineFeed)
+							                                                                        .Add(DisabledText($"        [Dahomey.Json.Attributes.JsonDiscriminator(\"{subClass.Name}\")]"))
+							                                                                        .Add(ElasticCarriageReturnLineFeed)
+							                                                                        .Add(DisabledText("#endif"))
+							                                                                        .Add(ElasticCarriageReturnLineFeed))
+					                                      };
+
 				                                      default:
 					                                      throw new ArgumentOutOfRangeException(nameof(subClass.Type), subClass.Type,
 					                                                                            "EnumOfTypes doesn't support this type");
@@ -106,11 +112,18 @@ internal class ModelsClassHelpers {
 		                                      })
 		                                      .ToArray();
 
+		IEnumerable<SyntaxTrivia> polymAttributes = typeElement.EnumTypes
+		                                                       .Where(e => e.Type == GenericArgType.Struct)
+		                                                       .SelectMany(e => new[] { DisabledText($"    [JsonDerivedType(typeof({e.Name}), nameof({e.Name}))]"), ElasticCarriageReturnLineFeed });
+
 		return ClassDeclaration(NamingConventions.Normalize(typeElement.Name))
-		       .AddModifiers(Token(SyntaxKind.PublicKeyword)
-			                     .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(typeElementSummary))
-		                     , Token(SyntaxKind.AbstractKeyword))
-		       .AddMembers(enumTypes);
+		       .AddModifiers(Token(SyntaxKind.PublicKeyword), Token(SyntaxKind.AbstractKeyword))
+		       .AddMembers(enumTypes)
+		       .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(typeElementSummary)
+		                                         .Add(DisabledText("#if NET7_0_OR_GREATER")).Add(ElasticCarriageReturnLineFeed)
+		                                         .Add(DisabledText("    [JsonPolymorphic(TypeDiscriminatorPropertyName = \"type\")]")).Add(ElasticCarriageReturnLineFeed)
+		                                         .AddRange(polymAttributes)
+		                                         .Add(DisabledText("#endif")).Add(ElasticCarriageReturnLineFeed));
 	}
 
 	private MemberDeclarationSyntax CreatePropertyForRef(string typeName, string name, string description,
@@ -198,8 +211,7 @@ internal class ModelsClassHelpers {
 			PurpleType.String => CreatePropertyDeclaration("string", name, description),
 			PurpleType.Optional => CreatePropertyForPurpleTypeOptionalOptional(name, optionalInner.OptionalInner,
 			                                                                   description),
-			_ => throw new ArgumentOutOfRangeException(nameof(optionalInner.Type), optionalInner.Type,
-			                                           "Not supported type detected")
+			_ => throw new ArgumentOutOfRangeException(nameof(optionalInner.Type), optionalInner.Type, "Not supported type detected")
 		};
 	}
 

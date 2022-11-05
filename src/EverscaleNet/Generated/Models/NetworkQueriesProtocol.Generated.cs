@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,16 +6,16 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Network protocol used to perform GraphQL queries.
+    /// <para>Network protocol used to perform GraphQL queries.</para>
     /// </summary>
     public enum NetworkQueriesProtocol
     {
         /// <summary>
-        /// Not described yet..
+        /// <para>Not described yet..</para>
         /// </summary>
         HTTP,
         /// <summary>
-        /// Not described yet..
+        /// <para>Not described yet..</para>
         /// </summary>
         WS
     }

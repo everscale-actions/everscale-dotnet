@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace EverscaleNet.Abstract.Modules
 {
     /// <summary>
-    /// Crypto Module
+    /// <para>Crypto Module</para>
     /// </summary>
     public interface ICryptoModule : IEverModule
     {
@@ -27,42 +27,42 @@ namespace EverscaleNet.Abstract.Modules
         public Task<ResultOfModularPower> ModularPower(ParamsOfModularPower @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Calculates CRC16 using TON algorithm.
+        /// <para>Calculates CRC16 using TON algorithm.</para>
         /// </summary>
         public Task<ResultOfTonCrc16> TonCrc16(ParamsOfTonCrc16 @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Generates random byte array of the specified length and returns it in `base64` format
+        /// <para>Generates random byte array of the specified length and returns it in `base64` format</para>
         /// </summary>
         public Task<ResultOfGenerateRandomBytes> GenerateRandomBytes(ParamsOfGenerateRandomBytes @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Converts public key to ton safe_format
+        /// <para>Converts public key to ton safe_format</para>
         /// </summary>
         public Task<ResultOfConvertPublicKeyToTonSafeFormat> ConvertPublicKeyToTonSafeFormat(ParamsOfConvertPublicKeyToTonSafeFormat @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Generates random ed25519 key pair.
+        /// <para>Generates random ed25519 key pair.</para>
         /// </summary>
         public Task<KeyPair> GenerateRandomSignKeys(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Signs a data using the provided keys.
+        /// <para>Signs a data using the provided keys.</para>
         /// </summary>
         public Task<ResultOfSign> Sign(ParamsOfSign @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Verifies signed data using the provided public key. Raises error if verification is failed.
+        /// <para>Verifies signed data using the provided public key. Raises error if verification is failed.</para>
         /// </summary>
         public Task<ResultOfVerifySignature> VerifySignature(ParamsOfVerifySignature @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Calculates SHA256 hash of the specified data.
+        /// <para>Calculates SHA256 hash of the specified data.</para>
         /// </summary>
         public Task<ResultOfHash> Sha256(ParamsOfHash @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Calculates SHA512 hash of the specified data.
+        /// <para>Calculates SHA512 hash of the specified data.</para>
         /// </summary>
         public Task<ResultOfHash> Sha512(ParamsOfHash @params, CancellationToken cancellationToken = default);
 
@@ -94,7 +94,7 @@ namespace EverscaleNet.Abstract.Modules
         public Task<KeyPair> NaclSignKeypairFromSecretKey(ParamsOfNaclSignKeyPairFromSecret @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Signs data using the signer's secret key.
+        /// <para>Signs data using the signer's secret key.</para>
         /// </summary>
         public Task<ResultOfNaclSign> NaclSign(ParamsOfNaclSign @params, CancellationToken cancellationToken = default);
 
@@ -114,17 +114,17 @@ namespace EverscaleNet.Abstract.Modules
         public Task<ResultOfNaclSignDetached> NaclSignDetached(ParamsOfNaclSign @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Verifies the signature with public key and `unsigned` data.
+        /// <para>Verifies the signature with public key and `unsigned` data.</para>
         /// </summary>
         public Task<ResultOfNaclSignDetachedVerify> NaclSignDetachedVerify(ParamsOfNaclSignDetachedVerify @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Generates a random NaCl key pair
+        /// <para>Generates a random NaCl key pair</para>
         /// </summary>
         public Task<KeyPair> NaclBoxKeypair(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Generates key pair from a secret key
+        /// <para>Generates key pair from a secret key</para>
         /// </summary>
         public Task<KeyPair> NaclBoxKeypairFromSecretKey(ParamsOfNaclBoxKeyPairFromSecret @params, CancellationToken cancellationToken = default);
 
@@ -136,22 +136,22 @@ namespace EverscaleNet.Abstract.Modules
         public Task<ResultOfNaclBox> NaclBox(ParamsOfNaclBox @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Decrypt and verify the cipher text using the receivers secret key, the senders public key, and the nonce.
+        /// <para>Decrypt and verify the cipher text using the receivers secret key, the senders public key, and the nonce.</para>
         /// </summary>
         public Task<ResultOfNaclBoxOpen> NaclBoxOpen(ParamsOfNaclBoxOpen @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Encrypt and authenticate message using nonce and secret key.
+        /// <para>Encrypt and authenticate message using nonce and secret key.</para>
         /// </summary>
         public Task<ResultOfNaclBox> NaclSecretBox(ParamsOfNaclSecretBox @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Decrypts and verifies cipher text using `nonce` and secret `key`.
+        /// <para>Decrypts and verifies cipher text using `nonce` and secret `key`.</para>
         /// </summary>
         public Task<ResultOfNaclBoxOpen> NaclSecretBoxOpen(ParamsOfNaclSecretBoxOpen @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Prints the list of words from the specified dictionary
+        /// <para>Prints the list of words from the specified dictionary</para>
         /// </summary>
         public Task<ResultOfMnemonicWords> MnemonicWords(ParamsOfMnemonicWords @params, CancellationToken cancellationToken = default);
 
@@ -162,7 +162,7 @@ namespace EverscaleNet.Abstract.Modules
         public Task<ResultOfMnemonicFromRandom> MnemonicFromRandom(ParamsOfMnemonicFromRandom @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Generates mnemonic from pre-generated entropy
+        /// <para>Generates mnemonic from pre-generated entropy</para>
         /// </summary>
         public Task<ResultOfMnemonicFromEntropy> MnemonicFromEntropy(ParamsOfMnemonicFromEntropy @params, CancellationToken cancellationToken = default);
 
@@ -181,32 +181,32 @@ namespace EverscaleNet.Abstract.Modules
         public Task<KeyPair> MnemonicDeriveSignKeys(ParamsOfMnemonicDeriveSignKeys @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Generates an extended master private key that will be the root for all the derived keys
+        /// <para>Generates an extended master private key that will be the root for all the derived keys</para>
         /// </summary>
         public Task<ResultOfHDKeyXPrvFromMnemonic> HdkeyXprvFromMnemonic(ParamsOfHDKeyXPrvFromMnemonic @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Returns extended private key derived from the specified extended private key and child index
+        /// <para>Returns extended private key derived from the specified extended private key and child index</para>
         /// </summary>
         public Task<ResultOfHDKeyDeriveFromXPrv> HdkeyDeriveFromXprv(ParamsOfHDKeyDeriveFromXPrv @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Derives the extended private key from the specified key and path
+        /// <para>Derives the extended private key from the specified key and path</para>
         /// </summary>
         public Task<ResultOfHDKeyDeriveFromXPrvPath> HdkeyDeriveFromXprvPath(ParamsOfHDKeyDeriveFromXPrvPath @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Extracts the private key from the serialized extended private key
+        /// <para>Extracts the private key from the serialized extended private key</para>
         /// </summary>
         public Task<ResultOfHDKeySecretFromXPrv> HdkeySecretFromXprv(ParamsOfHDKeySecretFromXPrv @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Extracts the public key from the serialized extended private key
+        /// <para>Extracts the public key from the serialized extended private key</para>
         /// </summary>
         public Task<ResultOfHDKeyPublicFromXPrv> HdkeyPublicFromXprv(ParamsOfHDKeyPublicFromXPrv @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Performs symmetric `chacha20` encryption.
+        /// <para>Performs symmetric `chacha20` encryption.</para>
         /// </summary>
         public Task<ResultOfChaCha20> Chacha20(ParamsOfChaCha20 @params, CancellationToken cancellationToken = default);
 
@@ -223,12 +223,12 @@ namespace EverscaleNet.Abstract.Modules
         public Task<RegisteredCryptoBox> CreateCryptoBox(ParamsOfCreateCryptoBox @params, Action<JsonElement,uint> appObject = null, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Removes Crypto Box. Clears all secret data.
+        /// <para>Removes Crypto Box. Clears all secret data.</para>
         /// </summary>
         public Task RemoveCryptoBox(RegisteredCryptoBox @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get Crypto Box Info. Used to get `encrypted_secret` that should be used for all the cryptobox initializations except the first one.
+        /// <para>Get Crypto Box Info. Used to get `encrypted_secret` that should be used for all the cryptobox initializations except the first one.</para>
         /// </summary>
         public Task<ResultOfGetCryptoBoxInfo> GetCryptoBoxInfo(RegisteredCryptoBox @params, CancellationToken cancellationToken = default);
 
@@ -239,7 +239,7 @@ namespace EverscaleNet.Abstract.Modules
         public Task<ResultOfGetCryptoBoxSeedPhrase> GetCryptoBoxSeedPhrase(RegisteredCryptoBox @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get handle of Signing Box derived from Crypto Box.
+        /// <para>Get handle of Signing Box derived from Crypto Box.</para>
         /// </summary>
         public Task<RegisteredSigningBox> GetSigningBoxFromCryptoBox(ParamsOfGetSigningBoxFromCryptoBox @params, CancellationToken cancellationToken = default);
 
@@ -254,47 +254,47 @@ namespace EverscaleNet.Abstract.Modules
         public Task<RegisteredEncryptionBox> GetEncryptionBoxFromCryptoBox(ParamsOfGetEncryptionBoxFromCryptoBox @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Removes cached secrets (overwrites with zeroes) from all signing and encryption boxes, derived from crypto box.
+        /// <para>Removes cached secrets (overwrites with zeroes) from all signing and encryption boxes, derived from crypto box.</para>
         /// </summary>
         public Task ClearCryptoBoxSecretCache(RegisteredCryptoBox @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Register an application implemented signing box.
+        /// <para>Register an application implemented signing box.</para>
         /// </summary>
         public Task<RegisteredSigningBox> RegisterSigningBox(Action<JsonElement,uint> appObject = null, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Creates a default signing box implementation.
+        /// <para>Creates a default signing box implementation.</para>
         /// </summary>
         public Task<RegisteredSigningBox> GetSigningBox(KeyPair @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Returns public key of signing key pair.
+        /// <para>Returns public key of signing key pair.</para>
         /// </summary>
         public Task<ResultOfSigningBoxGetPublicKey> SigningBoxGetPublicKey(RegisteredSigningBox @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Returns signed user data.
+        /// <para>Returns signed user data.</para>
         /// </summary>
         public Task<ResultOfSigningBoxSign> SigningBoxSign(ParamsOfSigningBoxSign @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Removes signing box from SDK.
+        /// <para>Removes signing box from SDK.</para>
         /// </summary>
         public Task RemoveSigningBox(RegisteredSigningBox @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Register an application implemented encryption box.
+        /// <para>Register an application implemented encryption box.</para>
         /// </summary>
         public Task<RegisteredEncryptionBox> RegisterEncryptionBox(Action<JsonElement,uint> appObject = null, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Removes encryption box from SDK
+        /// <para>Removes encryption box from SDK</para>
         /// </summary>
         public Task RemoveEncryptionBox(RegisteredEncryptionBox @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Queries info from the given encryption box
+        /// <para>Queries info from the given encryption box</para>
         /// </summary>
         public Task<ResultOfEncryptionBoxGetInfo> EncryptionBoxGetInfo(ParamsOfEncryptionBoxGetInfo @params, CancellationToken cancellationToken = default);
 
@@ -313,7 +313,7 @@ namespace EverscaleNet.Abstract.Modules
         public Task<ResultOfEncryptionBoxDecrypt> EncryptionBoxDecrypt(ParamsOfEncryptionBoxDecrypt @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Creates encryption box with specified algorithm
+        /// <para>Creates encryption box with specified algorithm</para>
         /// </summary>
         public Task<RegisteredEncryptionBox> CreateEncryptionBox(ParamsOfCreateEncryptionBox @params, CancellationToken cancellationToken = default);
     }

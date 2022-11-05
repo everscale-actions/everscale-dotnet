@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,44 +6,56 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Returning values from signing box callbacks.
+    /// <para>Returning values from signing box callbacks.</para>
     /// </summary>
+#if NET7_0_OR_GREATER
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
+    [JsonDerivedType(typeof(GetInfo), nameof(GetInfo))]
+    [JsonDerivedType(typeof(Encrypt), nameof(Encrypt))]
+    [JsonDerivedType(typeof(Decrypt), nameof(Decrypt))]
+#endif
     public abstract class ResultOfAppEncryptionBox
     {
         /// <summary>
-        /// Result of getting encryption box info
+        /// <para>Result of getting encryption box info</para>
         /// </summary>
-        [JsonDiscriminator("GetInfo")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("GetInfo")]
+#endif
         public class GetInfo : ResultOfAppEncryptionBox
         {
             /// <summary>
-            /// Result of getting encryption box info
+            /// <para>Result of getting encryption box info</para>
             /// </summary>
             [JsonPropertyName("info")]
             public EncryptionBoxInfo Info { get; set; }
         }
 
         /// <summary>
-        /// Result of encrypting data
+        /// <para>Result of encrypting data</para>
         /// </summary>
-        [JsonDiscriminator("Encrypt")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("Encrypt")]
+#endif
         public class Encrypt : ResultOfAppEncryptionBox
         {
             /// <summary>
-            /// Result of encrypting data
+            /// <para>Result of encrypting data</para>
             /// </summary>
             [JsonPropertyName("data")]
             public string Data { get; set; }
         }
 
         /// <summary>
-        /// Result of decrypting data
+        /// <para>Result of decrypting data</para>
         /// </summary>
-        [JsonDiscriminator("Decrypt")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("Decrypt")]
+#endif
         public class Decrypt : ResultOfAppEncryptionBox
         {
             /// <summary>
-            /// Result of decrypting data
+            /// <para>Result of decrypting data</para>
             /// </summary>
             [JsonPropertyName("data")]
             public string Data { get; set; }

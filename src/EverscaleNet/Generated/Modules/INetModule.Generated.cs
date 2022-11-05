@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 namespace EverscaleNet.Abstract.Modules
 {
     /// <summary>
-    /// Net Module
+    /// <para>Net Module</para>
     /// </summary>
     public interface INetModule : IEverModule
     {
         /// <summary>
-        /// Performs DAppServer GraphQL query.
+        /// <para>Performs DAppServer GraphQL query.</para>
         /// </summary>
         public Task<ResultOfQuery> Query(ParamsOfQuery @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Performs multiple queries per single fetch.
+        /// <para>Performs multiple queries per single fetch.</para>
         /// </summary>
         public Task<ResultOfBatchQuery> BatchQuery(ParamsOfBatchQuery @params, CancellationToken cancellationToken = default);
 
@@ -121,32 +121,32 @@ namespace EverscaleNet.Abstract.Modules
         public Task<ResultOfSubscribeCollection> Subscribe(ParamsOfSubscribe @params, Action<JsonElement,uint> callback = null, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Suspends network module to stop any network activity
+        /// <para>Suspends network module to stop any network activity</para>
         /// </summary>
         public Task Suspend(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Resumes network module to enable network activity
+        /// <para>Resumes network module to enable network activity</para>
         /// </summary>
         public Task Resume(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Returns ID of the last block in a specified account shard
+        /// <para>Returns ID of the last block in a specified account shard</para>
         /// </summary>
         public Task<ResultOfFindLastShardBlock> FindLastShardBlock(ParamsOfFindLastShardBlock @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Requests the list of alternative endpoints from server
+        /// <para>Requests the list of alternative endpoints from server</para>
         /// </summary>
         public Task<EndpointsSet> FetchEndpoints(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Sets the list of endpoints to use on reinit
+        /// <para>Sets the list of endpoints to use on reinit</para>
         /// </summary>
         public Task SetEndpoints(EndpointsSet @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Requests the list of alternative endpoints from server
+        /// <para>Requests the list of alternative endpoints from server</para>
         /// </summary>
         public Task<ResultOfGetEndpoints> GetEndpoints(CancellationToken cancellationToken = default);
 

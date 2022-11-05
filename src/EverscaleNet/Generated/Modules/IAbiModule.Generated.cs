@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 namespace EverscaleNet.Abstract.Modules
 {
     /// <summary>
-    /// Abi Module
+    /// <para>Abi Module</para>
     /// </summary>
     public interface IAbiModule : IEverModule
     {
         /// <summary>
-        /// Encodes message body according to ABI function call.
+        /// <para>Encodes message body according to ABI function call.</para>
         /// </summary>
         public Task<ResultOfEncodeMessageBody> EncodeMessageBody(ParamsOfEncodeMessageBody @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Not described yet..
+        /// <para>Not described yet..</para>
         /// </summary>
         public Task<ResultOfAttachSignatureToMessageBody> AttachSignatureToMessageBody(ParamsOfAttachSignatureToMessageBody @params, CancellationToken cancellationToken = default);
 
@@ -65,17 +65,17 @@ namespace EverscaleNet.Abstract.Modules
         public Task<ResultOfEncodeInternalMessage> EncodeInternalMessage(ParamsOfEncodeInternalMessage @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Combines `hex`-encoded `signature` with `base64`-encoded `unsigned_message`. Returns signed message encoded in `base64`.
+        /// <para>Combines `hex`-encoded `signature` with `base64`-encoded `unsigned_message`. Returns signed message encoded in `base64`.</para>
         /// </summary>
         public Task<ResultOfAttachSignature> AttachSignature(ParamsOfAttachSignature @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Decodes message body using provided message BOC and ABI.
+        /// <para>Decodes message body using provided message BOC and ABI.</para>
         /// </summary>
         public Task<DecodedMessageBody> DecodeMessage(ParamsOfDecodeMessage @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Decodes message body using provided body BOC and ABI.
+        /// <para>Decodes message body using provided body BOC and ABI.</para>
         /// </summary>
         public Task<DecodedMessageBody> DecodeMessageBody(ParamsOfDecodeMessageBody @params, CancellationToken cancellationToken = default);
 
@@ -94,7 +94,7 @@ namespace EverscaleNet.Abstract.Modules
         public Task<ResultOfDecodeAccountData> DecodeAccountData(ParamsOfDecodeAccountData @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Updates initial account data with initial values for the contract's static variables and owner's public key. This operation is applicable only for initial account data (before deploy). If the contract is already deployed, its data doesn't contain this data section any more.
+        /// <para>Updates initial account data with initial values for the contract's static variables and owner's public key. This operation is applicable only for initial account data (before deploy). If the contract is already deployed, its data doesn't contain this data section any more.</para>
         /// </summary>
         public Task<ResultOfUpdateInitialData> UpdateInitialData(ParamsOfUpdateInitialData @params, CancellationToken cancellationToken = default);
 
@@ -105,7 +105,7 @@ namespace EverscaleNet.Abstract.Modules
         public Task<ResultOfEncodeInitialData> EncodeInitialData(ParamsOfEncodeInitialData @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Decodes initial values of a contract's static variables and owner's public key from account initial data This operation is applicable only for initial account data (before deploy). If the contract is already deployed, its data doesn't contain this data section any more.
+        /// <para>Decodes initial values of a contract's static variables and owner's public key from account initial data This operation is applicable only for initial account data (before deploy). If the contract is already deployed, its data doesn't contain this data section any more.</para>
         /// </summary>
         public Task<ResultOfDecodeInitialData> DecodeInitialData(ParamsOfDecodeInitialData @params, CancellationToken cancellationToken = default);
 
@@ -128,12 +128,12 @@ namespace EverscaleNet.Abstract.Modules
         public Task<ResultOfDecodeBoc> DecodeBoc(ParamsOfDecodeBoc @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Encodes given parameters in JSON into a BOC using param types from ABI.
+        /// <para>Encodes given parameters in JSON into a BOC using param types from ABI.</para>
         /// </summary>
         public Task<ResultOfAbiEncodeBoc> EncodeBoc(ParamsOfAbiEncodeBoc @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Calculates contract function ID by contract ABI
+        /// <para>Calculates contract function ID by contract ABI</para>
         /// </summary>
         public Task<ResultOfCalcFunctionId> CalcFunctionId(ParamsOfCalcFunctionId @params, CancellationToken cancellationToken = default);
     }

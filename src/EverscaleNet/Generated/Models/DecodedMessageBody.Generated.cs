@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,30 +6,30 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class DecodedMessageBody
     {
         /// <summary>
-        /// Type of the message body content.
+        /// <para>Type of the message body content.</para>
         /// </summary>
         [JsonPropertyName("body_type")]
         public MessageBodyType BodyType { get; set; }
 
         /// <summary>
-        /// Function or event name.
+        /// <para>Function or event name.</para>
         /// </summary>
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Parameters or result value.
+        /// <para>Parameters or result value.</para>
         /// </summary>
         [JsonPropertyName("value")]
         public JsonElement? Value { get; set; }
 
         /// <summary>
-        /// Function header.
+        /// <para>Function header.</para>
         /// </summary>
         [JsonPropertyName("header")]
         public FunctionHeader Header { get; set; }

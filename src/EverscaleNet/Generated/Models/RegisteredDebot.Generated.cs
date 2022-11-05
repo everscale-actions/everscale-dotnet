@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,24 +6,24 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// [UNSTABLE](UNSTABLE.md) Structure for storing debot handle returned from `init` function.
+    /// <para>[UNSTABLE](UNSTABLE.md) Structure for storing debot handle returned from `init` function.</para>
     /// </summary>
     public class RegisteredDebot
     {
         /// <summary>
-        /// Debot handle which references an instance of debot engine.
+        /// <para>Debot handle which references an instance of debot engine.</para>
         /// </summary>
         [JsonPropertyName("debot_handle")]
         public uint DebotHandle { get; set; }
 
         /// <summary>
-        /// Debot abi as json string.
+        /// <para>Debot abi as json string.</para>
         /// </summary>
         [JsonPropertyName("debot_abi")]
         public string DebotAbi { get; set; }
 
         /// <summary>
-        /// Debot metadata.
+        /// <para>Debot metadata.</para>
         /// </summary>
         [JsonPropertyName("info")]
         public DebotInfo Info { get; set; }

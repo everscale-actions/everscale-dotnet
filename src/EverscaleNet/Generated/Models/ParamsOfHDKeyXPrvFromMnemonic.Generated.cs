@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,24 +6,24 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class ParamsOfHDKeyXPrvFromMnemonic
     {
         /// <summary>
-        /// String with seed phrase
+        /// <para>String with seed phrase</para>
         /// </summary>
         [JsonPropertyName("phrase")]
         public string Phrase { get; set; }
 
         /// <summary>
-        /// Dictionary identifier
+        /// <para>Dictionary identifier</para>
         /// </summary>
         [JsonPropertyName("dictionary")]
         public byte? Dictionary { get; set; }
 
         /// <summary>
-        /// Mnemonic word count
+        /// <para>Mnemonic word count</para>
         /// </summary>
         [JsonPropertyName("word_count")]
         public byte? WordCount { get; set; }

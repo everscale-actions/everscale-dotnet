@@ -19,7 +19,7 @@
       "everscalenet": {
         "type": "Project",
         "dependencies": {
-          "Dahomey.Json": "[1.12.2, )"
+          "Dahomey.Json.Attributes": "[1.0.1, )"
         }
       }
     },
@@ -117,7 +117,7 @@
       "everscalenet": {
         "type": "Project",
         "dependencies": {
-          "Dahomey.Json": "[1.12.2, )"
+          "Dahomey.Json.Attributes": "[1.0.1, )"
         }
       }
     },
@@ -139,7 +139,7 @@
       "everscalenet": {
         "type": "Project",
         "dependencies": {
-          "Dahomey.Json": "[1.12.2, )"
+          "Dahomey.Json.Attributes": "[1.0.1, )"
         }
       }
     },
@@ -161,7 +161,28 @@
       "everscalenet": {
         "type": "Project",
         "dependencies": {
-          "Dahomey.Json": "[1.12.2, )"
+          "Dahomey.Json.Attributes": "[1.0.1, )"
+        }
+      }
+    },
+    "net7.0": {
+      "System.Text.Encodings.Web": {
+        "type": "Transitive",
+        "resolved": "7.0.0-rc.2.22472.3",
+        "contentHash": "o9O/FcXxh8L3Y9k4rPRPc5zp8c0DO4YUUDbOYnrLKufMGn/K4ZHYNURYbCqoMmYRiviiny6EYC4r2YMrf8SIYQ=="
+      },
+      "System.Text.Json": {
+        "type": "Transitive",
+        "resolved": "7.0.0-rc.2.22472.3",
+        "contentHash": "/fSjSM1v79RTMCn9PjifYevLdOKwo37+KrNKYJES+UeqxHuNmGt3syOdCYikE6/MDOKnii65bBygG2MsCtyP1A==",
+        "dependencies": {
+          "System.Text.Encodings.Web": "7.0.0-rc.2.22472.3"
+        }
+      },
+      "everscalenet": {
+        "type": "Project",
+        "dependencies": {
+          "System.Text.Json": "[7.0.0-rc.2.22472.3, )"
         }
       }
     }

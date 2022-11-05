@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,28 +6,28 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public enum AggregationFn
     {
         /// <summary>
-        /// Not described yet..
+        /// <para>Not described yet..</para>
         /// </summary>
         COUNT,
         /// <summary>
-        /// Not described yet..
+        /// <para>Not described yet..</para>
         /// </summary>
         MIN,
         /// <summary>
-        /// Not described yet..
+        /// <para>Not described yet..</para>
         /// </summary>
         MAX,
         /// <summary>
-        /// Not described yet..
+        /// <para>Not described yet..</para>
         /// </summary>
         SUM,
         /// <summary>
-        /// Not described yet..
+        /// <para>Not described yet..</para>
         /// </summary>
         AVERAGE
     }

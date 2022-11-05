@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 namespace EverscaleNet.Client.Modules
 {
     /// <summary>
-    /// Debot Module
+    /// <para>Debot Module</para>
     /// </summary>
     public class DebotModule : IDebotModule
     {
         private readonly IEverClientAdapter _everClientAdapter;
 
         /// <summary>
-        /// .ctor
+        /// <para>.ctor</para>
         /// </summary>
         public DebotModule(IEverClientAdapter everClientAdapter)
         {

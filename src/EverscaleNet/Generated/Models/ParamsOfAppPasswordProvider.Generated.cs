@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -16,16 +15,22 @@ namespace EverscaleNet.Client.Models
     /// <para>and encrypt the password with naclbox function using nacl_box_keypair.secret</para>
     /// <para>and encryption_public_key keys + nonce = 24-byte prefix of encryption_public_key.</para>
     /// </summary>
+#if NET7_0_OR_GREATER
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
+    [JsonDerivedType(typeof(GetPassword), nameof(GetPassword))]
+#endif
     public abstract class ParamsOfAppPasswordProvider
     {
         /// <summary>
-        /// Not described yet..
+        /// <para>Not described yet..</para>
         /// </summary>
-        [JsonDiscriminator("GetPassword")]
+#if !NET7_0_OR_GREATER
+        [Dahomey.Json.Attributes.JsonDiscriminator("GetPassword")]
+#endif
         public class GetPassword : ParamsOfAppPasswordProvider
         {
             /// <summary>
-            /// Not described yet..
+            /// <para>Not described yet..</para>
             /// </summary>
             [JsonPropertyName("encryption_public_key")]
             public string EncryptionPublicKey { get; set; }

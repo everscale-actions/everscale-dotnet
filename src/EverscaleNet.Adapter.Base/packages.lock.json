@@ -38,7 +38,7 @@
       "everscalenet": {
         "type": "Project",
         "dependencies": {
-          "Dahomey.Json": "[1.12.2, )"
+          "Dahomey.Json.Attributes": "[1.0.1, )"
         }
       },
       "everscalenet.serialization": {
@@ -152,7 +152,7 @@
       "everscalenet": {
         "type": "Project",
         "dependencies": {
-          "Dahomey.Json": "[1.12.2, )"
+          "Dahomey.Json.Attributes": "[1.0.1, )"
         }
       },
       "everscalenet.serialization": {
@@ -200,7 +200,7 @@
       "everscalenet": {
         "type": "Project",
         "dependencies": {
-          "Dahomey.Json": "[1.12.2, )"
+          "Dahomey.Json.Attributes": "[1.0.1, )"
         }
       },
       "everscalenet.serialization": {
@@ -234,13 +234,46 @@
       "everscalenet": {
         "type": "Project",
         "dependencies": {
-          "Dahomey.Json": "[1.12.2, )"
+          "Dahomey.Json.Attributes": "[1.0.1, )"
         }
       },
       "everscalenet.serialization": {
         "type": "Project",
         "dependencies": {
           "Dahomey.Json": "[1.12.2, )",
+          "EverscaleNet": "[1.0.0, )"
+        }
+      }
+    },
+    "net7.0": {
+      "Microsoft.Extensions.Logging.Abstractions": {
+        "type": "Direct",
+        "requested": "[6.0.2, )",
+        "resolved": "6.0.2",
+        "contentHash": "pwXCZKaA7m5wgmCj49dW+H1RPSY7U62SKLTQYCcavf/k3Nyt/WnBgAjG4jMGnwy9rElfAZ2KvxvM5CJzJWG0hg=="
+      },
+      "System.Text.Encodings.Web": {
+        "type": "Transitive",
+        "resolved": "7.0.0-rc.2.22472.3",
+        "contentHash": "o9O/FcXxh8L3Y9k4rPRPc5zp8c0DO4YUUDbOYnrLKufMGn/K4ZHYNURYbCqoMmYRiviiny6EYC4r2YMrf8SIYQ=="
+      },
+      "System.Text.Json": {
+        "type": "Transitive",
+        "resolved": "7.0.0-rc.2.22472.3",
+        "contentHash": "/fSjSM1v79RTMCn9PjifYevLdOKwo37+KrNKYJES+UeqxHuNmGt3syOdCYikE6/MDOKnii65bBygG2MsCtyP1A==",
+        "dependencies": {
+          "System.Text.Encodings.Web": "7.0.0-rc.2.22472.3"
+        }
+      },
+      "everscalenet": {
+        "type": "Project",
+        "dependencies": {
+          "System.Text.Json": "[7.0.0-rc.2.22472.3, )"
+        }
+      },
+      "everscalenet.serialization": {
+        "type": "Project",
+        "dependencies": {
           "EverscaleNet": "[1.0.0, )"
         }
       }

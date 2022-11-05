@@ -81,7 +81,7 @@
       "everscalenet": {
         "type": "Project",
         "dependencies": {
-          "Dahomey.Json": "[1.12.2, )"
+          "Dahomey.Json.Attributes": "[1.0.1, )"
         }
       },
       "everscalenet.adapter.base": {
@@ -206,7 +206,7 @@
       "everscalenet": {
         "type": "Project",
         "dependencies": {
-          "Dahomey.Json": "[1.12.2, )"
+          "Dahomey.Json.Attributes": "[1.0.1, )"
         }
       },
       "everscalenet.adapter.base": {
@@ -317,7 +317,7 @@
       "everscalenet": {
         "type": "Project",
         "dependencies": {
-          "Dahomey.Json": "[1.12.2, )"
+          "Dahomey.Json.Attributes": "[1.0.1, )"
         }
       },
       "everscalenet.adapter.base": {
@@ -351,6 +351,107 @@
         "type": "Project",
         "dependencies": {
           "Dahomey.Json": "[1.12.2, )",
+          "EverscaleNet": "[1.0.0, )"
+        }
+      },
+      "everscalenet.utils": {
+        "type": "Project",
+        "dependencies": {
+          "EverscaleNet": "[1.0.0, )",
+          "EverscaleNet.Serialization": "[1.0.0, )"
+        }
+      }
+    },
+    "net7.0": {
+      "Microsoft.Extensions.Configuration.Abstractions": {
+        "type": "Transitive",
+        "resolved": "7.0.0-rc.2.22472.3",
+        "contentHash": "Wa2RZr15BZJKPOwIN/K5YXVAaIk1cVCEEnZrGZrSGEY0DckpkUQi6CaqIl6gm6hmTOdfWrDKxqywizlo0IkgyQ==",
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "7.0.0-rc.2.22472.3"
+        }
+      },
+      "Microsoft.Extensions.DependencyInjection": {
+        "type": "Transitive",
+        "resolved": "7.0.0-rc.2.22472.3",
+        "contentHash": "z9XJWJ9JUUkSdN45DX7rD4+jhkoGl/YNYCpyPxk0atlY8SzaeHGRpZnQ6cVGjn2M2CaJUZNzLmzxvt7ZOXd2Cg==",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0-rc.2.22472.3"
+        }
+      },
+      "Microsoft.Extensions.DependencyInjection.Abstractions": {
+        "type": "Transitive",
+        "resolved": "7.0.0-rc.2.22472.3",
+        "contentHash": "lHFpZa182Ea84j7A4mViU+fp5Hji45jmzw7Jg+Ay/ID7HkxPz2zpSHh4rwHqeElufcPXhUl0FDuLrxiF76htfw=="
+      },
+      "Microsoft.Extensions.Logging.Abstractions": {
+        "type": "Transitive",
+        "resolved": "7.0.0-rc.2.22472.3",
+        "contentHash": "2BjU2gAupioo+bEYIeRvqND+JGs/3jtuw9/uba35StZcqGekq5ew0omakVEuP0j+P39YdzUnHEzVPAiKlW/lXw=="
+      },
+      "Microsoft.Extensions.Options": {
+        "type": "Transitive",
+        "resolved": "7.0.0-rc.2.22472.3",
+        "contentHash": "wDIbcTUTUI/yjaCQNtO2Kv/DbWwWiJ1ISj//XXjyUhoIXRf/mbxmOBO9cEEe3BlMEAIEAipf4TpSLy2ax+1OBw==",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0-rc.2.22472.3",
+          "Microsoft.Extensions.Primitives": "7.0.0-rc.2.22472.3"
+        }
+      },
+      "Microsoft.Extensions.Primitives": {
+        "type": "Transitive",
+        "resolved": "7.0.0-rc.2.22472.3",
+        "contentHash": "XoBFPCoDP+WVF/UJ3s3OrJIsNkqbmMSu+voMXQwwUqTQW3vze7+HtEWWATaG2EPjJz+GdcpaNddVagNcVpvoKQ=="
+      },
+      "System.Text.Encodings.Web": {
+        "type": "Transitive",
+        "resolved": "7.0.0-rc.2.22472.3",
+        "contentHash": "o9O/FcXxh8L3Y9k4rPRPc5zp8c0DO4YUUDbOYnrLKufMGn/K4ZHYNURYbCqoMmYRiviiny6EYC4r2YMrf8SIYQ=="
+      },
+      "System.Text.Json": {
+        "type": "Transitive",
+        "resolved": "7.0.0-rc.2.22472.3",
+        "contentHash": "/fSjSM1v79RTMCn9PjifYevLdOKwo37+KrNKYJES+UeqxHuNmGt3syOdCYikE6/MDOKnii65bBygG2MsCtyP1A==",
+        "dependencies": {
+          "System.Text.Encodings.Web": "7.0.0-rc.2.22472.3"
+        }
+      },
+      "everscalenet": {
+        "type": "Project",
+        "dependencies": {
+          "System.Text.Json": "[7.0.0-rc.2.22472.3, )"
+        }
+      },
+      "everscalenet.adapter.base": {
+        "type": "Project",
+        "dependencies": {
+          "EverscaleNet": "[1.0.0, )",
+          "EverscaleNet.Serialization": "[1.0.0, )",
+          "Microsoft.Extensions.Logging.Abstractions": "[6.0.2, )"
+        }
+      },
+      "everscalenet.adapter.rust": {
+        "type": "Project",
+        "dependencies": {
+          "EverscaleNet": "[1.0.0, )",
+          "EverscaleNet.Adapter.Base": "[1.0.0, )",
+          "EverscaleNet.Serialization": "[1.0.0, )",
+          "Microsoft.Extensions.Configuration.Abstractions": "[7.0.0-rc.2.22472.3, )",
+          "Microsoft.Extensions.DependencyInjection": "[7.0.0-rc.2.22472.3, )",
+          "Microsoft.Extensions.Logging.Abstractions": "[7.0.0-rc.2.22472.3, )",
+          "Microsoft.Extensions.Options": "[7.0.0-rc.2.22472.3, )"
+        }
+      },
+      "everscalenet.client": {
+        "type": "Project",
+        "dependencies": {
+          "EverscaleNet": "[1.0.0, )",
+          "EverscaleNet.Adapter.Rust": "[1.0.0, )"
+        }
+      },
+      "everscalenet.serialization": {
+        "type": "Project",
+        "dependencies": {
           "EverscaleNet": "[1.0.0, )"
         }
       },

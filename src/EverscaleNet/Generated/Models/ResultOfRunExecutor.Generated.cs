@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,7 +6,7 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// Not described yet..
+    /// <para>Not described yet..</para>
     /// </summary>
     public class ResultOfRunExecutor
     {
@@ -28,7 +27,7 @@ namespace EverscaleNet.Client.Models
         public string[] OutMessages { get; set; }
 
         /// <summary>
-        /// Optional decoded message bodies according to the optional `abi` parameter.
+        /// <para>Optional decoded message bodies according to the optional `abi` parameter.</para>
         /// </summary>
         [JsonPropertyName("decoded")]
         public DecodedOutput Decoded { get; set; }
@@ -41,7 +40,7 @@ namespace EverscaleNet.Client.Models
         public string Account { get; set; }
 
         /// <summary>
-        /// Transaction fees
+        /// <para>Transaction fees</para>
         /// </summary>
         [JsonPropertyName("fees")]
         public TransactionFees Fees { get; set; }

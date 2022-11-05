@@ -1,4 +1,3 @@
-using Dahomey.Json.Attributes;
 using System;
 using System.Numerics;
 using System.Text.Json;
@@ -7,12 +6,12 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// [UNSTABLE](UNSTABLE.md) Parameters to start DeBot. DeBot must be already initialized with init() function.
+    /// <para>[UNSTABLE](UNSTABLE.md) Parameters to start DeBot. DeBot must be already initialized with init() function.</para>
     /// </summary>
     public class ParamsOfStart
     {
         /// <summary>
-        /// Debot handle which references an instance of debot engine.
+        /// <para>Debot handle which references an instance of debot engine.</para>
         /// </summary>
         [JsonPropertyName("debot_handle")]
         public uint DebotHandle { get; set; }

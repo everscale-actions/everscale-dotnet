@@ -71,7 +71,7 @@
       "everscalenet": {
         "type": "Project",
         "dependencies": {
-          "Dahomey.Json": "[1.12.2, )"
+          "Dahomey.Json.Attributes": "[1.0.1, )"
         }
       },
       "everscalenet.adapter.base": {
@@ -146,7 +146,7 @@
       "everscalenet": {
         "type": "Project",
         "dependencies": {
-          "Dahomey.Json": "[1.12.2, )"
+          "Dahomey.Json.Attributes": "[1.0.1, )"
         }
       },
       "everscalenet.adapter.base": {
