@@ -12,12 +12,12 @@
         <SupportedPlatform Include="browser" />
     </ItemGroup>
 
-    <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
-        <PackageReference Include="Microsoft.JSInterop" Version="6.0.10" />
-    </ItemGroup>
-
     <ItemGroup Condition=" '$(TargetFramework)' == 'net5.0' ">
         <PackageReference Include="Microsoft.JSInterop" Version="5.0.17" />
+    </ItemGroup>
+
+    <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
+        <PackageReference Include="Microsoft.JSInterop" Version="6.0.10" />
     </ItemGroup>
 
     <ItemGroup>
