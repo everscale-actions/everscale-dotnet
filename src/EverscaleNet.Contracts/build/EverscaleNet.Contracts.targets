@@ -5,12 +5,12 @@
     </ItemGroup>
 
     <Target Name="CompileSolidityContracts" AfterTargets="AfterBuild" Inputs="@(SolFile)" Outputs="@(SolFile->'$(OutDir)%(RelativeDir)%(Filename).tvc');@(SolFile->'$(OutDir)%(RelativeDir)%(Filename).abi.json')">
-        <Exec Command="npx everdev --version" ConsoleToMSBuild="true" EchoOff="true" StandardOutputImportance="Low">
+        <Exec Command="npx everdev@latest --version" ConsoleToMSBuild="true" EchoOff="true" StandardOutputImportance="Low">
             <Output TaskParameter="ConsoleOutput" PropertyName="EverDevVersion" />
         </Exec>
         <Message Text="Everdev version: $(EverDevVersion)" />
         <Message Text="Building @(SolFile).. @(SolFile->'$(OutDir)%(RelativeDir)%(Filename).tvc');@(SolFile->'$(OutDir)%(RelativeDir)%(Filename).abi.json')" />
-        <Exec Command="npx everdev sol compile %(Identity) -o @(SolFile->'$(OutDir)%(RelativeDir)')" />
+        <Exec Command="npx everdev@latest sol compile %(Identity) -o @(SolFile->'$(OutDir)%(RelativeDir)')" />
     </Target>
 
 </Project>
