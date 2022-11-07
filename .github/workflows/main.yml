@@ -52,7 +52,7 @@ jobs:
         run: dotnet restore -v normal --locked-mode
       
       - name: Build
-        run: dotnet build -c Release --no-restore -v normal -ds
+        run: dotnet build -c Release --no-restore -v normal -ds -m:1
 
       - name: Wait for Node SE
         run: |
@@ -64,7 +64,7 @@ jobs:
         env:
           EVERSCALE_NETWORK_ENDPOINTS: http://localhost:5555
         run: |
-          dotnet test --no-build -c Release --logger "console;verbosity=normal" --logger "trx;LogFilePrefix=results"
+          dotnet test --no-build -c Release --logger "console;verbosity=normal" --logger "trx;LogFilePrefix=results" -m:1
       
       - name: Test Report
         uses: phoenix-actions/test-reporting@v8
@@ -125,7 +125,7 @@ jobs:
           echo Version: $VERSION
           VERSION="${VERSION//v}"
           echo Clean Version: $VERSION
-          dotnet pack -v normal -c Release --include-symbols --include-source -p:PackageVersion=$VERSION -o nupkg       
+          dotnet pack -v normal -c Release --include-symbols --include-source -p:PackageVersion=$VERSION -o nupkg -m:1       
       - name: Push to GitHub Feed
         working-directory: nupkg
         run: |
