@@ -211,8 +211,8 @@
       },
       "Microsoft.JSInterop": {
         "type": "Transitive",
-        "resolved": "6.0.10",
-        "contentHash": "t/63fnJiLzw2hKsReEAej0oSaHx2L/9wn3Wczip89RX+/FuPopssenWHtj9o0oJedbWgLuu6AbMJed/aIYLnxA=="
+        "resolved": "7.0.0-rc.2.22476.2",
+        "contentHash": "oh6r1Nu0l+7uKsXWt3WiwHde/cbJ0u8++nIOBFDlriYGb7BzZKCGt4xGPiFi3BNyW0b1vavpY7V7vxotaGAc1A=="
       },
       "System.Runtime.CompilerServices.Unsafe": {
         "type": "Transitive",
@@ -253,7 +253,7 @@
           "EverscaleNet.Adapter.Base": "[1.0.0, )",
           "EverscaleNet.Serialization": "[1.0.0, )",
           "Microsoft.Extensions.Options": "[6.0.0, )",
-          "Microsoft.JSInterop": "[6.0.10, )"
+          "Microsoft.JSInterop": "[7.0.0-rc.2.22476.2, )"
         }
       },
       "everscalenet.serialization": {
