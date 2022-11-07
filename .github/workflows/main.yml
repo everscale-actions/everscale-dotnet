@@ -38,7 +38,7 @@ jobs:
           key: nuget-${{ hashFiles('**/packages.lock.json') }}
           restore-keys: |
             nuget-
-      
+
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v3
         with:
@@ -49,10 +49,11 @@ jobs:
             7.x
       
       - name: Restore
-        run: dotnet restore --locked-mode
-      - name: Build
-        run: dotnet build -c Release --no-restore -v n -ds
+        run: dotnet restore -v normal --locked-mode
       
+      - name: Build
+        run: dotnet build -c Release --no-restore -v normal -ds
+
       - name: Wait for Node SE
         run: |
           wget https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh
@@ -63,7 +64,7 @@ jobs:
         env:
           EVERSCALE_NETWORK_ENDPOINTS: http://localhost:5555
         run: |
-          dotnet test --no-restore --no-build -c Release --logger "console;verbosity=normal" --logger "trx;LogFilePrefix=results"
+          dotnet test --no-build -c Release --logger "console;verbosity=normal" --logger "trx;LogFilePrefix=results"
       
       - name: Test Report
         uses: phoenix-actions/test-reporting@v8
