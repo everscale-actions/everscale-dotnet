@@ -1,7 +1,11 @@
 <Project>
+
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <IsPackable>false</IsPackable>
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
+    
 </Project>

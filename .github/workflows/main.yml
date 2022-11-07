@@ -25,52 +25,58 @@ jobs:
     steps:
       - name: Run Node SE
         run: docker run -d --name tonlab-node -e USER_AGREEMENT=yes -p5555:80 tonlabs/local-node
-
+  
       - name: Checkout
         uses: actions/checkout@v2
-
+  
+      - uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            nuget-
+  
       - name: Setup .NET Core 3.1.x
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.x
-
+  
       - name: Setup .NET Core 5.0.x
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 5.0.x
-
+  
       - name: Setup .NET Core ${{ env.NETCORE_VERSION }}
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: ${{ env.NETCORE_VERSION }}
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
+  
       - name: Restore
-        run: dotnet restore
-
+        run: dotnet restore --locked-mode
       - name: Build
         run: dotnet build -c Release --no-restore -v n
-
+  
       - name: Wait for Node SE
         run: |
           wget https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh
           chmod +x wait-for-it.sh
           ./wait-for-it.sh -s -t 120 localhost:5555
-
+  
       - name: Test
         env:
           EVERSCALE_NETWORK_ENDPOINTS: http://localhost:5555
           VSTestVerbosity: normal
         run: |
           dotnet test --no-restore --no-build -c Release
-
+  
       - name: Pack
         if: github.event_name != 'pull_request'
         run: |
           version=GITHUB_SHA
           dotnet pack -v normal -c Release --no-restore --no-build --include-symbols --include-source -p:PackageVersion=${GITHUB_RUN_ID: -9} -o pack
-
+  
       - name: Upload Artifact
         if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@v2

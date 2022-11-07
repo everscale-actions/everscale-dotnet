@@ -1,5 +1,7 @@
 <Project>
-    <Import Project="..\PackageInfo.targets"/>
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+    
+    <Import Project="..\PackageInfo.targets" />
 
     <PropertyGroup>
         <TargetFrameworks>netstandard2.1;netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
