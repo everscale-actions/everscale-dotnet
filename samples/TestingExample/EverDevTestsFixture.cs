@@ -35,7 +35,6 @@ public class EverDevTestsFixture : IEverTestsFixture {
 
 	public async ValueTask DisposeAsync() {
 		await DisposeAsyncCore().ConfigureAwait(false);
-		Dispose(false);
 		GC.SuppressFinalize(this);
 	}
 
@@ -85,21 +84,13 @@ public class EverDevTestsFixture : IEverTestsFixture {
 	}
 
 	private async ValueTask DisposeAsyncCore() {
-		await _adapter.DisposeAsync();
-		_adapter = null;
-	}
-
-	public void Dispose() {
-		Dispose(true);
-		GC.SuppressFinalize(this);
-	}
-
-	protected virtual void Dispose(bool disposing) {
-		if (disposing) {
-			_loggerFactory?.Dispose();
-			_loggerFactory = null;
-			_httpClient?.Dispose();
-			_httpClient = null;
+		if (_adapter is not null) {
+			await _adapter.DisposeAsync().ConfigureAwait(false);
 		}
+		_loggerFactory?.Dispose();
+		_httpClient?.Dispose();
+		_adapter = null;
+		_loggerFactory = null;
+		_httpClient = null;
 	}
 }

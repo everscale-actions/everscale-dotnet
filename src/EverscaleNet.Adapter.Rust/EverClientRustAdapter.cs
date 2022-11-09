@@ -39,9 +39,9 @@ public class EverClientRustAdapter : EverClientAdapterBase {
 	}
 
 	/// <inheritdoc />
-	public override async ValueTask DisposeAsync() {
+	protected override async ValueTask DisposeAsyncCore() {
+		await base.DisposeAsyncCore();
 		RustInteropInterface.tc_destroy_context(ContextId);
-		await base.DisposeAsync();
 	}
 
 	/// <inheritdoc />
