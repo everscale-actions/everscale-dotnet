@@ -13,10 +13,10 @@ namespace EverscaleNet.Adapter.Wasm;
 
 /// <inheritdoc />
 public class EverClientWasmAdapter : EverClientAdapterBase {
-	private readonly IJSRuntime _jsRuntime;
-	private readonly ILogger<EverClientWasmAdapter> _logger;
 	private readonly IOptions<EverClientOptions> _everOptionsAccessor;
+	private readonly IJSRuntime _jsRuntime;
 	private readonly IOptions<LibWebOptions> _libWebOptionsAccessor;
+	private readonly ILogger<EverClientWasmAdapter> _logger;
 	private IJSObjectReference? _libWeb;
 
 	/// <inheritdoc />
@@ -29,11 +29,13 @@ public class EverClientWasmAdapter : EverClientAdapterBase {
 	}
 
 	/// <inheritdoc />
-	public override async ValueTask DisposeAsync() {
+	protected override async ValueTask DisposeAsyncCore() {
+		await base.DisposeAsyncCore();
 		if (_libWeb is not null) {
 			await _libWeb.InvokeAsync<string>("destroyContext", ContextId);
 			await _libWeb.DisposeAsync();
 		}
+		_libWeb = null;
 	}
 
 	/// <summary>

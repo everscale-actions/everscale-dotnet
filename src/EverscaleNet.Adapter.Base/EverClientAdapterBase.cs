@@ -39,14 +39,9 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 	}
 
 	/// <inheritdoc />
-	public virtual async ValueTask DisposeAsync() {
-		bool waitDelegatesResult = await WaitForDelegates();
-		if (!waitDelegatesResult) {
-			_logger.LogError("Delegates didn't finish during the allotted time. Force clean...");
-			_requestsDict.Clear();
-		}
-
-		_logger.LogTrace("Context {Context} disposed", ContextId);
+	public async ValueTask DisposeAsync() {
+		await DisposeAsyncCore().ConfigureAwait(false);
+		GC.SuppressFinalize(this);
 	}
 
 	/// <inheritdoc />
@@ -97,6 +92,17 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 		string responseJson = await Request(method, requestJson, null, cancellationToken);
 
 		return JsonSerializer.Deserialize<TResponse>(responseJson, JsonOptionsProvider.JsonSerializerOptions)!;
+	}
+
+	/// <summary>
+	/// 
+	/// </summary>
+	protected virtual async ValueTask DisposeAsyncCore() {
+		bool waitDelegatesResult = await WaitForDelegates();
+		if (!waitDelegatesResult) {
+			_logger.LogError("Delegates didn't finish during the allotted time. Force clean...");
+			_requestsDict.Clear();
+		}
 	}
 
 	/// <summary>
@@ -205,14 +211,14 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 		var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
 		while (true) {
 			lock (_lock) {
-				if (_requestsDict.Count == 0) {
+				if (_requestsDict.IsEmpty) {
 					return true;
 				}
 				_logger.LogWarning("Some delegates not finished: {Count} wait...", _requestsDict.Count);
 			}
 
 			try {
-				await Task.Delay(TimeSpan.FromSeconds(1), cts.Token);
+				await Task.Delay(TimeSpan.FromSeconds(1), cts.Token).ConfigureAwait(false);
 			} catch (TaskCanceledException) {
 				return false;
 			}
