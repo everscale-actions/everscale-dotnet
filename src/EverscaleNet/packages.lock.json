@@ -82,14 +82,6 @@
         }
       }
     },
-    ".NETCoreApp,Version=v5.0": {
-      "Dahomey.Json.Attributes": {
-        "type": "Direct",
-        "requested": "[1.0.1, )",
-        "resolved": "1.0.1",
-        "contentHash": "5V73KuRVnyvyB8+BEkCvxpbI3MZpG6PQNdfKGxeKFBabotepbrnJ+Xz00P84BD4zdg7UPGybo9Nsl988Y8/tfw=="
-      }
-    },
     "net6.0": {
       "Dahomey.Json.Attributes": {
         "type": "Direct",
