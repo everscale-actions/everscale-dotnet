@@ -1,6 +1,6 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <ItemGroup>
-        <PackageReference Include="ch1seL.MSBuildGzTool" Version="1.1.1">
+        <PackageReference Include="ch1seL.MSBuildGzTool" Version="1.2.0">
             <PrivateAssets>All</PrivateAssets>
         </PackageReference>
     </ItemGroup>
@@ -30,16 +30,11 @@
         <_NativeLibName Condition="'$(_NativeRuntime)' == 'osx-x64' Or '$(_NativeRuntime)' == 'osx-arm64'">libtonclient</_NativeLibName>
     </PropertyGroup>
 
-    <PropertyGroup>
-        <FirstTargetFramework Condition=" '$(TargetFrameworks)' == '' ">$(TargetFramework)</FirstTargetFramework>
-        <FirstTargetFramework Condition=" '$(FirstTargetFramework)' == '' ">$(TargetFrameworks.Split(';')[0])</FirstTargetFramework>
-    </PropertyGroup>
-
-    <ItemGroup>
+    <ItemGroup Condition=" '$(TargetFramework)' == '' AND '$(ExcludeRestorePackageImports)' != 'true' ">
         <LibFiles Include="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\tonclient.dll;$(MSBuildThisFileDirectory)..\runtimes\linux-x64\native\libtonclient.so;$(MSBuildThisFileDirectory)..\runtimes\osx-x64\native\libtonclient;$(MSBuildThisFileDirectory)..\runtimes\osx-arm64\native\libtonclient" />
     </ItemGroup>
 
-    <Target Name="DownloadContentFiles" Condition=" '$(TargetFramework)' == '$(FirstTargetFramework)' " BeforeTargets="BeforeBuild" Inputs="..\..\SDKVersion.targets" Outputs="@(LibFiles)">
+    <Target Name="DownloadContentFiles" BeforeTargets="DispatchToInnerBuilds" Inputs="..\..\SDKVersion.targets" Outputs="@(LibFiles)">
         <Message Importance="high" Text="SDKVersion: $(SDKVersion)" />
         <MakeDir Directories="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\" />
         <DownloadFile SourceUrl="$(_TonLibDownloadUrlWin)" DestinationFolder="$(MSBuildThisFileDirectory)..\downloads\" DestinationFileName="tonclient_win32_dll.gz">

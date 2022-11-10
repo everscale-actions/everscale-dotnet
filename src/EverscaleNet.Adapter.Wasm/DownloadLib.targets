@@ -1,11 +1,6 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <PropertyGroup>
-    <FirstTargetFramework Condition=" '$(TargetFrameworks)' == '' ">$(TargetFramework)</FirstTargetFramework>
-    <FirstTargetFramework Condition=" '$(FirstTargetFramework)' == '' ">$(TargetFrameworks.Split(';')[0])</FirstTargetFramework>
-  </PropertyGroup>
-
-  <Target Name="DownloadContentFiles" Condition="'$(TargetFramework)' == '$(FirstTargetFramework)'" BeforeTargets="BeforeBuild" Inputs="..\..\SDKVersion.targets" Outputs="wwwroot/js/eversdk.js;wwwroot/eversdk.wasm">
+  <Target Name="DownloadContentFiles" BeforeTargets="DispatchToInnerBuilds" Inputs="..\..\SDKVersion.targets" Outputs="wwwroot/js/eversdk.js;wwwroot/eversdk.wasm">
       <Message Importance="high" Text="SDKVersion: $(SDKVersion)" />
       <Exec Command="npm init -y" />
       <Exec Command="npm install --no-save @eversdk/lib-web@$(SDKVersion)" />

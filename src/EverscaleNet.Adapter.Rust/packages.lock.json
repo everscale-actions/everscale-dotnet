@@ -4,9 +4,9 @@
     ".NETCoreApp,Version=v3.1": {
       "ch1seL.MSBuildGzTool": {
         "type": "Direct",
-        "requested": "[1.1.1, )",
-        "resolved": "1.1.1",
-        "contentHash": "htTGGGZ8A4BrKZ6VQS7LjhXZlkJTOruGuq3XN+DD2Bn9b4GRy9DC4b1qqPwBscfp63afl3pchH46KVSXP34q2g=="
+        "requested": "[1.2.0, )",
+        "resolved": "1.2.0",
+        "contentHash": "3M3NRyeasfT3JHhTvGVPqZFKev2FXhDsMiG2YiiRkMhT1lrNdbT6x57gnNtj0O8BlNbrWFHgVfkJxvPoOOUsDQ=="
       },
       "Microsoft.Extensions.Configuration.Abstractions": {
         "type": "Direct",
@@ -104,9 +104,9 @@
     ".NETStandard,Version=v2.1": {
       "ch1seL.MSBuildGzTool": {
         "type": "Direct",
-        "requested": "[1.1.1, )",
-        "resolved": "1.1.1",
-        "contentHash": "htTGGGZ8A4BrKZ6VQS7LjhXZlkJTOruGuq3XN+DD2Bn9b4GRy9DC4b1qqPwBscfp63afl3pchH46KVSXP34q2g=="
+        "requested": "[1.2.0, )",
+        "resolved": "1.2.0",
+        "contentHash": "3M3NRyeasfT3JHhTvGVPqZFKev2FXhDsMiG2YiiRkMhT1lrNdbT6x57gnNtj0O8BlNbrWFHgVfkJxvPoOOUsDQ=="
       },
       "Microsoft.Extensions.Configuration.Abstractions": {
         "type": "Direct",
@@ -266,9 +266,9 @@
     ".NETCoreApp,Version=v5.0": {
       "ch1seL.MSBuildGzTool": {
         "type": "Direct",
-        "requested": "[1.1.1, )",
-        "resolved": "1.1.1",
-        "contentHash": "htTGGGZ8A4BrKZ6VQS7LjhXZlkJTOruGuq3XN+DD2Bn9b4GRy9DC4b1qqPwBscfp63afl3pchH46KVSXP34q2g=="
+        "requested": "[1.2.0, )",
+        "resolved": "1.2.0",
+        "contentHash": "3M3NRyeasfT3JHhTvGVPqZFKev2FXhDsMiG2YiiRkMhT1lrNdbT6x57gnNtj0O8BlNbrWFHgVfkJxvPoOOUsDQ=="
       },
       "Microsoft.Extensions.Configuration.Abstractions": {
         "type": "Direct",
@@ -366,9 +366,9 @@
     "net6.0": {
       "ch1seL.MSBuildGzTool": {
         "type": "Direct",
-        "requested": "[1.1.1, )",
-        "resolved": "1.1.1",
-        "contentHash": "htTGGGZ8A4BrKZ6VQS7LjhXZlkJTOruGuq3XN+DD2Bn9b4GRy9DC4b1qqPwBscfp63afl3pchH46KVSXP34q2g=="
+        "requested": "[1.2.0, )",
+        "resolved": "1.2.0",
+        "contentHash": "3M3NRyeasfT3JHhTvGVPqZFKev2FXhDsMiG2YiiRkMhT1lrNdbT6x57gnNtj0O8BlNbrWFHgVfkJxvPoOOUsDQ=="
       },
       "Microsoft.Extensions.Configuration.Abstractions": {
         "type": "Direct",
@@ -452,9 +452,9 @@
     "net7.0": {
       "ch1seL.MSBuildGzTool": {
         "type": "Direct",
-        "requested": "[1.1.1, )",
-        "resolved": "1.1.1",
-        "contentHash": "htTGGGZ8A4BrKZ6VQS7LjhXZlkJTOruGuq3XN+DD2Bn9b4GRy9DC4b1qqPwBscfp63afl3pchH46KVSXP34q2g=="
+        "requested": "[1.2.0, )",
+        "resolved": "1.2.0",
+        "contentHash": "3M3NRyeasfT3JHhTvGVPqZFKev2FXhDsMiG2YiiRkMhT1lrNdbT6x57gnNtj0O8BlNbrWFHgVfkJxvPoOOUsDQ=="
       },
       "Microsoft.Extensions.Configuration.Abstractions": {
         "type": "Direct",
