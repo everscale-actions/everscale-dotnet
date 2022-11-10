@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using EverscaleNet.Client.Models;
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
 using Dahomey.Json;
 using Dahomey.Json.Attributes;
 using Dahomey.Json.Serialization.Conventions;
@@ -32,7 +32,7 @@ public static class JsonOptionsProvider {
 #endif
 		};
 
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
 		IEnumerable<Type> nestedTypes = typeof(Abi.Contract).Assembly.GetTypes().Where(t => t.IsNestedPublic);
 		options.SetupExtensions();
 		DiscriminatorConventionRegistry registry = options.GetDiscriminatorConventionRegistry();

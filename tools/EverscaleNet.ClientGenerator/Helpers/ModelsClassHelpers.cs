@@ -97,7 +97,7 @@ internal class ModelsClassHelpers {
 								                                      SimpleBaseType(IdentifierName(NamingConventions.Normalize(typeElement.Name))))
 							                                      .AddMembers(properties.ToArray())
 							                                      .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(subClassSummary)
-							                                                                        .Add(DisabledText("#if !NET7_0_OR_GREATER"))
+							                                                                        .Add(DisabledText("#if !NET6_0_OR_GREATER"))
 							                                                                        .Add(ElasticCarriageReturnLineFeed)
 							                                                                        .Add(DisabledText($"        [Dahomey.Json.Attributes.JsonDiscriminator(\"{subClass.Name}\")]"))
 							                                                                        .Add(ElasticCarriageReturnLineFeed)
@@ -120,7 +120,7 @@ internal class ModelsClassHelpers {
 		       .AddModifiers(Token(SyntaxKind.PublicKeyword), Token(SyntaxKind.AbstractKeyword))
 		       .AddMembers(enumTypes)
 		       .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(typeElementSummary)
-		                                         .Add(DisabledText("#if NET7_0_OR_GREATER")).Add(ElasticCarriageReturnLineFeed)
+		                                         .Add(DisabledText("#if NET6_0_OR_GREATER")).Add(ElasticCarriageReturnLineFeed)
 		                                         .Add(DisabledText("    [JsonPolymorphic(TypeDiscriminatorPropertyName = \"type\")]")).Add(ElasticCarriageReturnLineFeed)
 		                                         .AddRange(polymAttributes)
 		                                         .Add(DisabledText("#endif")).Add(ElasticCarriageReturnLineFeed));

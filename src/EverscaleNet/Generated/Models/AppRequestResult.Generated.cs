@@ -8,7 +8,7 @@ namespace EverscaleNet.Client.Models
     /// <summary>
     /// <para>Not described yet..</para>
     /// </summary>
-#if NET7_0_OR_GREATER
+#if NET6_0_OR_GREATER
     [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
     [JsonDerivedType(typeof(Error), nameof(Error))]
     [JsonDerivedType(typeof(Ok), nameof(Ok))]
@@ -18,7 +18,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Error occurred during request processing</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("Error")]
 #endif
         public class Error : AppRequestResult
@@ -33,7 +33,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Request processed successfully</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("Ok")]
 #endif
         public class Ok : AppRequestResult

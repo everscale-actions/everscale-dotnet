@@ -8,7 +8,7 @@ namespace EverscaleNet.Client.Models
     /// <summary>
     /// <para>Not described yet..</para>
     /// </summary>
-#if NET7_0_OR_GREATER
+#if NET6_0_OR_GREATER
     [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
     [JsonDerivedType(typeof(WillFetchFirstBlock), nameof(WillFetchFirstBlock))]
     [JsonDerivedType(typeof(FetchFirstBlockFailed), nameof(FetchFirstBlockFailed))]
@@ -30,7 +30,7 @@ namespace EverscaleNet.Client.Models
         /// <para>Notifies the application that the account's current shard block will be fetched from the network. This step is performed before the message sending so that sdk knows starting from which block it will search for the transaction.</para>
         /// <para>Fetched block will be used later in waiting phase.</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("WillFetchFirstBlock")]
 #endif
         public class WillFetchFirstBlock : ProcessingEvent
@@ -43,7 +43,7 @@ namespace EverscaleNet.Client.Models
         /// <para>message was not sent, and Developer can try to run `process_message` again,</para>
         /// <para>in the hope that the connection is restored.</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("FetchFirstBlockFailed")]
 #endif
         public class FetchFirstBlockFailed : ProcessingEvent
@@ -61,7 +61,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Notifies the app that the message will be sent to the network. This event means that the account's current shard block was successfully fetched and the message was successfully created (`abi.encode_message` function was executed successfully).</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("WillSend")]
 #endif
         public class WillSend : ProcessingEvent
@@ -89,7 +89,7 @@ namespace EverscaleNet.Client.Models
         /// <para>Notifies the app that the message was sent to the network, i.e `processing.send_message` was successfuly executed. Now, the message is in the blockchain. If Application exits at this phase, Developer needs to proceed with processing after the application is restored with `wait_for_transaction` function, passing shard_block_id and message from this event.</para>
         /// <para>Do not forget to specify abi of your contract as well, it is crucial for proccessing. See `processing.wait_for_transaction` documentation.</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("DidSend")]
 #endif
         public class DidSend : ProcessingEvent
@@ -126,7 +126,7 @@ namespace EverscaleNet.Client.Models
         /// <para>shard_block_id and message from this event. Do not forget to specify abi of your contract</para>
         /// <para>as well, it is crucial for proccessing. See `processing.wait_for_transaction` documentation.</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("SendFailed")]
 #endif
         public class SendFailed : ProcessingEvent
@@ -193,7 +193,7 @@ namespace EverscaleNet.Client.Models
         /// <para>shard_block_id and message from this event. Do not forget to specify abi of your contract</para>
         /// <para>as well, it is crucial for proccessing. See `processing.wait_for_transaction` documentation.</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("WillFetchNextBlock")]
 #endif
         public class WillFetchNextBlock : ProcessingEvent
@@ -243,7 +243,7 @@ namespace EverscaleNet.Client.Models
         /// <para>message and contract abi to it. Note that passing ABI is crucial, because it will influence the processing strategy.</para>
         /// <para>Another way to tune this is to specify long timeout in `NetworkConfig.wait_for_timeout`</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("FetchNextBlockFailed")]
 #endif
         public class FetchNextBlockFailed : ProcessingEvent
@@ -301,7 +301,7 @@ namespace EverscaleNet.Client.Models
         /// <para>the maximum retries count or receives a successful result.  All the processing</para>
         /// <para>events will be repeated.</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("MessageExpired")]
 #endif
         public class MessageExpired : ProcessingEvent
@@ -343,7 +343,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Notifies the app that the message has been delivered to the thread's validators</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("RempSentToValidators")]
 #endif
         public class RempSentToValidators : ProcessingEvent
@@ -370,7 +370,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Notifies the app that the message has been successfully included into a block candidate by the thread's collator</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("RempIncludedIntoBlock")]
 #endif
         public class RempIncludedIntoBlock : ProcessingEvent
@@ -397,7 +397,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Notifies the app that the block candicate with the message has been accepted by the thread's validators</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("RempIncludedIntoAcceptedBlock")]
 #endif
         public class RempIncludedIntoAcceptedBlock : ProcessingEvent
@@ -424,7 +424,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Notifies the app about some other minor REMP statuses occurring during message processing</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("RempOther")]
 #endif
         public class RempOther : ProcessingEvent
@@ -451,7 +451,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Notifies the app about any problem that has occured in REMP processing - in this case library switches to the fallback transaction awaiting scenario (sequential block reading).</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("RempError")]
 #endif
         public class RempError : ProcessingEvent

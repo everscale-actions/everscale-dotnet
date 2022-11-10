@@ -8,7 +8,7 @@ namespace EverscaleNet.Client.Models
     /// <summary>
     /// <para>Returning values from signing box callbacks.</para>
     /// </summary>
-#if NET7_0_OR_GREATER
+#if NET6_0_OR_GREATER
     [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
     [JsonDerivedType(typeof(GetPublicKey), nameof(GetPublicKey))]
     [JsonDerivedType(typeof(Sign), nameof(Sign))]
@@ -18,7 +18,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Result of getting public key</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("GetPublicKey")]
 #endif
         public class GetPublicKey : ResultOfAppSigningBox
@@ -33,7 +33,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Result of signing data</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("Sign")]
 #endif
         public class Sign : ResultOfAppSigningBox

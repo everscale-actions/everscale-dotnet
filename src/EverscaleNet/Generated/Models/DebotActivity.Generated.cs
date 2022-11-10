@@ -8,7 +8,7 @@ namespace EverscaleNet.Client.Models
     /// <summary>
     /// <para>[UNSTABLE](UNSTABLE.md) Describes the operation that the DeBot wants to perform.</para>
     /// </summary>
-#if NET7_0_OR_GREATER
+#if NET6_0_OR_GREATER
     [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
     [JsonDerivedType(typeof(Transaction), nameof(Transaction))]
 #endif
@@ -17,7 +17,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>DeBot wants to create new transaction in blockchain.</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("Transaction")]
 #endif
         public class Transaction : DebotActivity

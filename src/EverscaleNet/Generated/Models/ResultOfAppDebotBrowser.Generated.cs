@@ -8,7 +8,7 @@ namespace EverscaleNet.Client.Models
     /// <summary>
     /// <para>[UNSTABLE](UNSTABLE.md) Returning values from Debot Browser callbacks.</para>
     /// </summary>
-#if NET7_0_OR_GREATER
+#if NET6_0_OR_GREATER
     [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
     [JsonDerivedType(typeof(Input), nameof(Input))]
     [JsonDerivedType(typeof(GetSigningBox), nameof(GetSigningBox))]
@@ -20,7 +20,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Result of user input.</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("Input")]
 #endif
         public class Input : ResultOfAppDebotBrowser
@@ -35,7 +35,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Result of getting signing box.</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("GetSigningBox")]
 #endif
         public class GetSigningBox : ResultOfAppDebotBrowser
@@ -50,7 +50,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Result of debot invoking.</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("InvokeDebot")]
 #endif
         public class InvokeDebot : ResultOfAppDebotBrowser
@@ -60,7 +60,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Result of `approve` callback.</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("Approve")]
 #endif
         public class Approve : ResultOfAppDebotBrowser
