@@ -61,6 +61,7 @@ jobs:
           ./wait-for-it.sh -s -t 120 localhost:5555
       
       - name: Test
+        timeout-minutes: 10
         env:
           EVERSCALE_NETWORK_ENDPOINTS: http://localhost:5555
         run: |
