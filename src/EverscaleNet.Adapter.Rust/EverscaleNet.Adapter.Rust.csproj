@@ -3,17 +3,22 @@
     <Import Project="..\..\SDKVersion.targets" />
     <Import Project="DownloadLib.targets" />
 
-    <ItemGroup Condition=" '$(TargetFramework)' == 'net7.0' ">
+    <PropertyGroup>
+        <NET6_0_OR_NET7_0 Condition=" '$(TargetFramework)' == 'net6.0' or '$(TargetFramework)' == 'net7.0' ">true</NET6_0_OR_NET7_0>
+        <NET6_0_OR_NET7_0 Condition=" '$(NET6_0_OR_NET7_0)' != 'true' ">false</NET6_0_OR_NET7_0>
+    </PropertyGroup>
+
+    <ItemGroup Condition=" $(NET6_0_OR_NET7_0) ">
         <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
         <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.0" />
     </ItemGroup>
 
-    <ItemGroup Condition=" '$(TargetFramework)' != 'net7.0' ">
+    <ItemGroup Condition=" !$(NET6_0_OR_NET7_0)">
         <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.2" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.3" />
         <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
     </ItemGroup>
 
