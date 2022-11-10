@@ -11,7 +11,7 @@
 - Fully supported methods provided in SDK documentation https://github.com/tonlabs/TON-SDK/tree/master/docs
 - No Newtonsoft.Json required
 - The most complete support of CancellationToken
-- Net Standard 2.1 compatible
+- Net Standard 2.1, Net Core 3.1, Net 5, Net 6, Net 7 compatible
 
 
 # Quick start 

@@ -10,7 +10,7 @@
 
 ## Preparing
 
-Download and install .NET 6.0 SDK https://dotnet.microsoft.com/download
+Download and install latest .NET SDK https://dotnet.microsoft.com/download
 
 ### Start local Node SE
 
