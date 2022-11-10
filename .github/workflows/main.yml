@@ -78,7 +78,7 @@ jobs:
           EVERSCALE_NETWORK_ENDPOINTS: http://localhost:5555
         run: |
           dotnet test --no-build -c Release --logger "console;verbosity=normal" --logger "trx;LogFilePrefix=results" -m
-  
+      
       - name: Test Report
         uses: phoenix-actions/test-reporting@v8
         id: test-report
@@ -89,12 +89,7 @@ jobs:
           reporter: dotnet-trx
           list-suites: failed
           list-tests: failed
-  
-      #      - name: Add Nuget package sources
-      #        if: github.event_name == 'release' || contains(github.event.*.labels.*.name, 'publish')
-      #        run: |
-      #          dotnet nuget add source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json --name github --username ${{ github.repository_owner }} --password ${{ github.token }} --store-password-in-clear-text
-  
+
       - name: Pack and publish Release package
         if: github.event_name == 'release'
         run: |
@@ -104,10 +99,10 @@ jobs:
           dotnet pack -v normal -c Release --no-build --include-symbols --include-source -p:PackageVersion=$VERSION -o pack
           dotnet nuget push "pack/*.nupkg" --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json --api-key ${{ github.token }} --skip-duplicate
           dotnet nuget push "pack/*.nupkg" --source https://api.nuget.org/v3/index.json --api-key $NUGET_KEY --skip-duplicate
-  
+      
       - name: Pack and publish PR package
         if: github.event.label.name == 'publish'
         run: |
-          VERSION=${GITHUB_RUN_ID: -9}
+          VERSION=${{github.event.number}}.${GITHUB_RUN_ID: -9}
           dotnet pack -v normal -c Release --no-build --include-symbols --include-source -p:PackageVersion=$VERSION -o pack
           dotnet nuget push "pack/*.nupkg" --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json --api-key ${{ github.token }} --skip-duplicate
