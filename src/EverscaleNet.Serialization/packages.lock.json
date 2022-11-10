@@ -121,28 +121,6 @@
         }
       }
     },
-    ".NETCoreApp,Version=v5.0": {
-      "Dahomey.Json": {
-        "type": "Direct",
-        "requested": "[1.12.2, )",
-        "resolved": "1.12.2",
-        "contentHash": "lguY4WN14f6kQuKJTGX+nsTT0V31PWHa+jcPx86B/xmOBgm4FwdLKtymMFBKAE5yBDDKhO7iQIvFwQNHufWLRw==",
-        "dependencies": {
-          "Dahomey.Json.Attributes": "1.0.1"
-        }
-      },
-      "Dahomey.Json.Attributes": {
-        "type": "Transitive",
-        "resolved": "1.0.1",
-        "contentHash": "5V73KuRVnyvyB8+BEkCvxpbI3MZpG6PQNdfKGxeKFBabotepbrnJ+Xz00P84BD4zdg7UPGybo9Nsl988Y8/tfw=="
-      },
-      "everscalenet": {
-        "type": "Project",
-        "dependencies": {
-          "Dahomey.Json.Attributes": "[1.0.1, )"
-        }
-      }
-    },
     "net6.0": {
       "Dahomey.Json": {
         "type": "Direct",
