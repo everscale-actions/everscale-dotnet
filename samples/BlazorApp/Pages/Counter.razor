@@ -25,8 +25,8 @@
 		Count: @Count
 	</label>
 </p>
-<button disabled="@(!ReadyToCount)" @onclick="Increment">Increment</button>
-<button disabled="@(!ReadyToCount)" @onclick="Decrement">Decrement</button>
+<button disabled="@(!ReadyToCount)" @onclick="@Increment">Increment</button>
+<button disabled="@(!ReadyToCount)" @onclick="@Decrement">Decrement</button>
 
 @if (Error != null) {
 	<p>
