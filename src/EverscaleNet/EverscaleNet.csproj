@@ -1,5 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    <ItemGroup Condition=" '$(TargetFramework)' != 'net7.0' ">
+
+    <ItemGroup Condition=" ('$(TargetFramework)' != 'net7.0' And '$(TargetFramework)' != 'net6.0') ">
         <PackageReference Include="Dahomey.Json.Attributes" Version="1.0.1" />
     </ItemGroup>
+
+    <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
+        <PackageReference Include="System.Text.Json" Version="7.0.0" />
+    </ItemGroup>
+
 </Project>

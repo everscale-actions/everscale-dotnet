@@ -8,7 +8,7 @@ namespace EverscaleNet.Client.Models
     /// <summary>
     /// <para>Not described yet..</para>
     /// </summary>
-#if NET7_0_OR_GREATER
+#if NET6_0_OR_GREATER
     [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
     [JsonDerivedType(typeof(Contract), nameof(Contract))]
     [JsonDerivedType(typeof(Json), nameof(Json))]
@@ -20,7 +20,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Not described yet..</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("Contract")]
 #endif
         public class Contract : Abi
@@ -35,7 +35,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Not described yet..</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("Json")]
 #endif
         public class Json : Abi
@@ -50,7 +50,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Not described yet..</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("Handle")]
 #endif
         public class Handle : Abi
@@ -65,7 +65,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Not described yet..</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("Serialized")]
 #endif
         public class Serialized : Abi

@@ -1327,19 +1327,6 @@
         "resolved": "2.4.5",
         "contentHash": "OwHamvBdUKgqsXfBzWiCW/O98BTx81UKzx2bieIOQI7CZFE5NEQZGi8PBQGIKawDW96xeRffiNf20SjfC0x9hw=="
       },
-      "Dahomey.Json": {
-        "type": "Transitive",
-        "resolved": "1.12.2",
-        "contentHash": "lguY4WN14f6kQuKJTGX+nsTT0V31PWHa+jcPx86B/xmOBgm4FwdLKtymMFBKAE5yBDDKhO7iQIvFwQNHufWLRw==",
-        "dependencies": {
-          "Dahomey.Json.Attributes": "1.0.1"
-        }
-      },
-      "Dahomey.Json.Attributes": {
-        "type": "Transitive",
-        "resolved": "1.0.1",
-        "contentHash": "5V73KuRVnyvyB8+BEkCvxpbI3MZpG6PQNdfKGxeKFBabotepbrnJ+Xz00P84BD4zdg7UPGybo9Nsl988Y8/tfw=="
-      },
       "Microsoft.CodeCoverage": {
         "type": "Transitive",
         "resolved": "17.3.2",
@@ -2329,6 +2316,23 @@
           "System.Text.Encoding": "4.3.0"
         }
       },
+      "System.Text.Encodings.Web": {
+        "type": "Transitive",
+        "resolved": "7.0.0",
+        "contentHash": "OP6umVGxc0Z0MvZQBVigj4/U31Pw72ITihDWP9WiWDm+q5aoe0GaJivsfYGq53o6dxH7DcXWiCTl7+0o2CGdmg==",
+        "dependencies": {
+          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
+        }
+      },
+      "System.Text.Json": {
+        "type": "Transitive",
+        "resolved": "7.0.0",
+        "contentHash": "DaGSsVqKsn/ia6RG8frjwmJonfos0srquhw09TlT8KRw5I43E+4gs+/bZj4K0vShJ5H9imCuXupb4RmS+dBy3w==",
+        "dependencies": {
+          "System.Runtime.CompilerServices.Unsafe": "6.0.0",
+          "System.Text.Encodings.Web": "7.0.0"
+        }
+      },
       "System.Text.RegularExpressions": {
         "type": "Transitive",
         "resolved": "4.3.0",
@@ -2465,7 +2469,7 @@
       "everscalenet": {
         "type": "Project",
         "dependencies": {
-          "Dahomey.Json.Attributes": "[1.0.1, )"
+          "System.Text.Json": "[7.0.0, )"
         }
       },
       "everscalenet.adapter.base": {
@@ -2491,8 +2495,8 @@
       "everscalenet.serialization": {
         "type": "Project",
         "dependencies": {
-          "Dahomey.Json": "[1.12.2, )",
-          "EverscaleNet": "[1.0.0, )"
+          "EverscaleNet": "[1.0.0, )",
+          "System.Text.Json": "[7.0.0, )"
         }
       }
     },

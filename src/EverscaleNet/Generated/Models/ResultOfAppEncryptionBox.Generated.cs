@@ -8,7 +8,7 @@ namespace EverscaleNet.Client.Models
     /// <summary>
     /// <para>Returning values from signing box callbacks.</para>
     /// </summary>
-#if NET7_0_OR_GREATER
+#if NET6_0_OR_GREATER
     [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
     [JsonDerivedType(typeof(GetInfo), nameof(GetInfo))]
     [JsonDerivedType(typeof(Encrypt), nameof(Encrypt))]
@@ -19,7 +19,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Result of getting encryption box info</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("GetInfo")]
 #endif
         public class GetInfo : ResultOfAppEncryptionBox
@@ -34,7 +34,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Result of encrypting data</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("Encrypt")]
 #endif
         public class Encrypt : ResultOfAppEncryptionBox
@@ -49,7 +49,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Result of decrypting data</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("Decrypt")]
 #endif
         public class Decrypt : ResultOfAppEncryptionBox

@@ -8,7 +8,7 @@ namespace EverscaleNet.Client.Models
     /// <summary>
     /// <para>Crypto Box Secret.</para>
     /// </summary>
-#if NET7_0_OR_GREATER
+#if NET6_0_OR_GREATER
     [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
     [JsonDerivedType(typeof(RandomSeedPhrase), nameof(RandomSeedPhrase))]
     [JsonDerivedType(typeof(PredefinedSeedPhrase), nameof(PredefinedSeedPhrase))]
@@ -22,7 +22,7 @@ namespace EverscaleNet.Client.Models
         /// <para>should use `EncryptedSecret` type instead.</para>
         /// <para>Get `encrypted_secret` with `get_crypto_box_info` function and store it on your side.</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("RandomSeedPhrase")]
 #endif
         public class RandomSeedPhrase : CryptoBoxSecret
@@ -52,7 +52,7 @@ namespace EverscaleNet.Client.Models
         /// <para>initializations should use `EncryptedSecret` type instead.</para>
         /// <para>Get `encrypted_secret` with `get_crypto_box_info` function and store it on your side.</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("PredefinedSeedPhrase")]
 #endif
         public class PredefinedSeedPhrase : CryptoBoxSecret
@@ -93,7 +93,7 @@ namespace EverscaleNet.Client.Models
         /// <para>the wallet with `PredefinedSeedPhrase`, then get `EncryptedSecret` via `get_crypto_box_info`,</para>
         /// <para>store it somewhere, and only after that initialize the wallet with `EncryptedSecret` type.</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("EncryptedSecret")]
 #endif
         public class EncryptedSecret : CryptoBoxSecret

@@ -9,7 +9,7 @@ namespace EverscaleNet.Client.Models
     /// <para>[UNSTABLE](UNSTABLE.md) Debot Browser callbacks</para>
     /// <para>Called by debot engine to communicate with debot browser.</para>
     /// </summary>
-#if NET7_0_OR_GREATER
+#if NET6_0_OR_GREATER
     [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
     [JsonDerivedType(typeof(Log), nameof(Log))]
     [JsonDerivedType(typeof(Switch), nameof(Switch))]
@@ -26,7 +26,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Print message to user.</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("Log")]
 #endif
         public class Log : ParamsOfAppDebotBrowser
@@ -41,7 +41,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Switch debot to another context (menu).</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("Switch")]
 #endif
         public class Switch : ParamsOfAppDebotBrowser
@@ -56,7 +56,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Notify browser that all context actions are shown.</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("SwitchCompleted")]
 #endif
         public class SwitchCompleted : ParamsOfAppDebotBrowser
@@ -66,7 +66,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Show action to the user. Called after `switch` for each action in context.</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("ShowAction")]
 #endif
         public class ShowAction : ParamsOfAppDebotBrowser
@@ -81,7 +81,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Request user input.</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("Input")]
 #endif
         public class Input : ParamsOfAppDebotBrowser
@@ -97,7 +97,7 @@ namespace EverscaleNet.Client.Models
         /// <para>Get signing box to sign data.</para>
         /// <para>Signing box returned is owned and disposed by debot engine</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("GetSigningBox")]
 #endif
         public class GetSigningBox : ParamsOfAppDebotBrowser
@@ -107,7 +107,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Execute action of another debot.</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("InvokeDebot")]
 #endif
         public class InvokeDebot : ParamsOfAppDebotBrowser
@@ -128,7 +128,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Used by Debot to call DInterface implemented by Debot Browser.</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("Send")]
 #endif
         public class Send : ParamsOfAppDebotBrowser
@@ -143,7 +143,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Requests permission from DeBot Browser to execute DeBot operation.</para>
         /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("Approve")]
 #endif
         public class Approve : ParamsOfAppDebotBrowser
