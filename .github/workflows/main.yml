@@ -77,7 +77,7 @@ jobs:
         env:
           EVERSCALE_NETWORK_ENDPOINTS: http://localhost:5555
         run: |
-          dotnet test --no-build -c Release --logger "console;verbosity=normal" --logger "trx;LogFilePrefix=results" -m:1
+          dotnet test --no-build -c Release --logger "console;verbosity=normal" --logger "trx;LogFilePrefix=results" -m
   
       - name: Test Report
         uses: phoenix-actions/test-reporting@v8
