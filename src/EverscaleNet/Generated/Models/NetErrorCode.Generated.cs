@@ -69,6 +69,10 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Not described yet..</para>
         /// </summary>
-        Unauthorized = 615
+        Unauthorized = 615,
+        /// <summary>
+        /// <para>Not described yet..</para>
+        /// </summary>
+        QueryTransactionTreeTimeout = 616
     }
 }
