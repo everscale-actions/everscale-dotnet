@@ -1,9 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+    <PropertyGroup>
+        <NET6_0_OR_NET7_0 Condition=" '$(TargetFramework)' == 'net6.0' or '$(TargetFramework)' == 'net7.0' ">true</NET6_0_OR_NET7_0>
+        <NET6_0_OR_NET7_0 Condition=" '$(NET6_0_OR_NET7_0)' != 'true' ">false</NET6_0_OR_NET7_0>
+    </PropertyGroup>
+
+    <ItemGroup Condition=" $(NET6_0_OR_NET7_0) ">
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+    </ItemGroup>
+
+    <ItemGroup Condition=" !$(NET6_0_OR_NET7_0)">
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+    </ItemGroup>
+
     <ItemGroup>
         <PackageReference Include="FluentAssertions" Version="6.8.0" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />
         <PackageReference Include="Serilog.Extensions.Logging" Version="3.1.0" />
         <PackageReference Include="Serilog.Sinks.XUnit" Version="3.0.3" />
         <PackageReference Include="xunit" Version="2.4.2" />
