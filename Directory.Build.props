@@ -1,5 +1,14 @@
 <Project>
     <PropertyGroup>
+        <NET6 Condition=" '$(TargetFramework)' == 'net6.0' ">true</NET6>
+        <NET6 Condition=" '$(NET6)' != 'true' ">false</NET6>
+        <NET7 Condition=" '$(TargetFramework)' == 'net7.0' ">true</NET7>
+        <NET7 Condition=" '$(NET7)' != 'true' ">false</NET7>
+        <NET6_OR_NET7 Condition=" '$(NET6)' or '$(NET7)' ">true</NET6_OR_NET7>
+        <NET6_OR_NET7 Condition=" '$(NET6_OR_NET7)' != 'true' ">false</NET6_OR_NET7>
+    </PropertyGroup>
+
+    <PropertyGroup>
         <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
         <CheckEolTargetFramework>false</CheckEolTargetFramework>
     </PropertyGroup>

@@ -1,15 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <NET6_0_OR_NET7_0 Condition=" '$(TargetFramework)' == 'net6.0' or '$(TargetFramework)' == 'net7.0' ">true</NET6_0_OR_NET7_0>
-        <NET6_0_OR_NET7_0 Condition=" '$(NET6_0_OR_NET7_0)' != 'true' ">false</NET6_0_OR_NET7_0>
-    </PropertyGroup>
-
-    <ItemGroup Condition=" $(NET6_0_OR_NET7_0) ">
+    <ItemGroup Condition=" $(NET6_OR_NET7) ">
         <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
     </ItemGroup>
 
-    <ItemGroup Condition=" !$(NET6_0_OR_NET7_0)">
+    <ItemGroup Condition=" !$(NET6_OR_NET7)">
         <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
     </ItemGroup>
 
