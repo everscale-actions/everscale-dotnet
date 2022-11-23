@@ -1,5 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
+    <PropertyGroup>
+        <RunAOTCompilation>true</RunAOTCompilation>
+    </PropertyGroup>
+
     <ItemGroup>
         <PackageReference Include="Blazored.LocalStorage" Version="4.3.0" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.0" />
@@ -10,6 +14,10 @@
         <ProjectReference Include="..\..\src\EverscaleNet.Contracts\EverscaleNet.Contracts.csproj" />
         <ProjectReference Include="..\..\src\EverscaleNet.Utils\EverscaleNet.Utils.csproj" />
         <ProjectReference Include="..\..\src\EverscaleNet.WebClient\EverscaleNet.WebClient.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <NativeFileReference Include="runtimes\browser-wasm\native\libton_client.a" />
     </ItemGroup>
 
 </Project>

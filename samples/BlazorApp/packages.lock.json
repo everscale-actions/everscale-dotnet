@@ -242,8 +242,10 @@
           "EverscaleNet": "[1.0.0, )",
           "EverscaleNet.Adapter.Base": "[1.0.0, )",
           "EverscaleNet.Serialization": "[1.0.0, )",
-          "Microsoft.Extensions.Options": "[7.0.0, )",
-          "Microsoft.JSInterop": "[7.0.0, )"
+          "Microsoft.Extensions.Configuration.Abstractions": "[7.0.0, )",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "[7.0.0, )",
+          "Microsoft.Extensions.Logging.Abstractions": "[7.0.0, )",
+          "Microsoft.Extensions.Options": "[7.0.0, )"
         }
       },
       "everscalenet.contracts": {

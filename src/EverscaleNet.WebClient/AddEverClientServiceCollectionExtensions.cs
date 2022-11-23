@@ -22,10 +22,6 @@ public static class AddEverClientServiceCollectionExtensions {
 	///     <see href="https://github.com/tonlabs/ever-sdk/blob/master/docs/mod_client.md#cryptoconfig"/>
 	///     <see href="https://github.com/tonlabs/ever-sdk/blob/master/docs/mod_client.md#abiconfig"/>
 	/// </param>
-	/// <param name="configureLibWebOptions">
-	///     Configure lib web <see cref="LibWebOptions" />
-	///		<see href="https://github.com/tonlabs/ever-sdk-js#setup-library"/>
-	/// </param>
 	/// <param name="configurePackageManagerOptions">
 	///     Configure package manager, contracts path and etc.
 	///     <see cref="WebPackageManager" />
@@ -34,13 +30,9 @@ public static class AddEverClientServiceCollectionExtensions {
 	// ReSharper enable CommentTypo
 	public static IServiceCollection AddEverClient(this IServiceCollection services,
 	                                               Action<EverClientOptions>? configureEverClientOptions = null,
-	                                               Action<LibWebOptions>? configureLibWebOptions = null,
 	                                               Action<WebPackageManagerOptions>? configurePackageManagerOptions = null) {
 		if (configureEverClientOptions != null) {
 			services.Configure(configureEverClientOptions);
-		}
-		if (configureLibWebOptions != null) {
-			services.Configure(configureLibWebOptions);
 		}
 		if (configurePackageManagerOptions != null) {
 			services.Configure(configurePackageManagerOptions);
@@ -52,3 +44,4 @@ public static class AddEverClientServiceCollectionExtensions {
 		       .AddTransient<IEverPackageManager, WebPackageManager>();
 	}
 }
+
