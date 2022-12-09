@@ -17,7 +17,7 @@ namespace EverscaleNet.Client.Models
         public string Boc { get; set; }
 
         /// <summary>
-        /// <para>Shardstate identificator</para>
+        /// <para>Shardstate identifier</para>
         /// </summary>
         [JsonPropertyName("id")]
         public string Id { get; set; }

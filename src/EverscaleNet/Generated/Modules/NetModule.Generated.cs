@@ -127,7 +127,7 @@ namespace EverscaleNet.Client.Modules
         /// <para>The subscription is a persistent communication channel between</para>
         /// <para>client and Everscale Network.</para>
         /// <para>### Important Notes on Subscriptions</para>
-        /// <para>Unfortunately sometimes the connection with the network breakes down.</para>
+        /// <para>Unfortunately sometimes the connection with the network breaks down.</para>
         /// <para>In this situation the library attempts to reconnect to the network.</para>
         /// <para>This reconnection sequence can take significant time.</para>
         /// <para>All of this time the client is disconnected from the network.</para>
@@ -225,7 +225,7 @@ namespace EverscaleNet.Client.Modules
         /// <para>All the retrieved messages and transactions are included</para>
         /// <para>into `result.messages` and `result.transactions` respectively.</para>
         /// <para>Function reads transactions layer by layer, by pages of 20 transactions.</para>
-        /// <para>The retrieval prosess goes like this:</para>
+        /// <para>The retrieval process goes like this:</para>
         /// <para>Let's assume we have an infinite chain of transactions and each transaction generates 5 messages.</para>
         /// <para>1. Retrieve 1st message (input parameter) and corresponding transaction - put it into result.</para>
         /// <para>It is the first level of the tree of transactions - its root.</para>
@@ -291,7 +291,7 @@ namespace EverscaleNet.Client.Modules
 
         /// <summary>
         /// <para>Resumes block iterator.</para>
-        /// <para>The iterator stays exactly at the same position where the `resume_state` was catched.</para>
+        /// <para>The iterator stays exactly at the same position where the `resume_state` was caught.</para>
         /// <para>Application should call the `remove_iterator` when iterator is no longer required.</para>
         /// </summary>
         public async Task<RegisteredIterator> ResumeBlockIterator(ParamsOfResumeBlockIterator @params, CancellationToken cancellationToken = default)

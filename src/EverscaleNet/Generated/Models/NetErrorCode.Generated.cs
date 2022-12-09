@@ -73,6 +73,10 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Not described yet..</para>
         /// </summary>
-        QueryTransactionTreeTimeout = 616
+        QueryTransactionTreeTimeout = 616,
+        /// <summary>
+        /// <para>Not described yet..</para>
+        /// </summary>
+        GraphqlConnectionError = 617
     }
 }

@@ -86,8 +86,8 @@ namespace EverscaleNet.Client.Models
         }
 
         /// <summary>
-        /// <para>Notifies the app that the message was sent to the network, i.e `processing.send_message` was successfuly executed. Now, the message is in the blockchain. If Application exits at this phase, Developer needs to proceed with processing after the application is restored with `wait_for_transaction` function, passing shard_block_id and message from this event.</para>
-        /// <para>Do not forget to specify abi of your contract as well, it is crucial for proccessing. See `processing.wait_for_transaction` documentation.</para>
+        /// <para>Notifies the app that the message was sent to the network, i.e `processing.send_message` was successfully executed. Now, the message is in the blockchain. If Application exits at this phase, Developer needs to proceed with processing after the application is restored with `wait_for_transaction` function, passing shard_block_id and message from this event.</para>
+        /// <para>Do not forget to specify abi of your contract as well, it is crucial for processing. See `processing.wait_for_transaction` documentation.</para>
         /// </summary>
 #if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("DidSend")]
@@ -95,22 +95,22 @@ namespace EverscaleNet.Client.Models
         public class DidSend : ProcessingEvent
         {
             /// <summary>
-            /// <para>Notifies the app that the message was sent to the network, i.e `processing.send_message` was successfuly executed. Now, the message is in the blockchain. If Application exits at this phase, Developer needs to proceed with processing after the application is restored with `wait_for_transaction` function, passing shard_block_id and message from this event.</para>
-            /// <para>Do not forget to specify abi of your contract as well, it is crucial for proccessing. See `processing.wait_for_transaction` documentation.</para>
+            /// <para>Notifies the app that the message was sent to the network, i.e `processing.send_message` was successfully executed. Now, the message is in the blockchain. If Application exits at this phase, Developer needs to proceed with processing after the application is restored with `wait_for_transaction` function, passing shard_block_id and message from this event.</para>
+            /// <para>Do not forget to specify abi of your contract as well, it is crucial for processing. See `processing.wait_for_transaction` documentation.</para>
             /// </summary>
             [JsonPropertyName("shard_block_id")]
             public string ShardBlockId { get; set; }
 
             /// <summary>
-            /// <para>Notifies the app that the message was sent to the network, i.e `processing.send_message` was successfuly executed. Now, the message is in the blockchain. If Application exits at this phase, Developer needs to proceed with processing after the application is restored with `wait_for_transaction` function, passing shard_block_id and message from this event.</para>
-            /// <para>Do not forget to specify abi of your contract as well, it is crucial for proccessing. See `processing.wait_for_transaction` documentation.</para>
+            /// <para>Notifies the app that the message was sent to the network, i.e `processing.send_message` was successfully executed. Now, the message is in the blockchain. If Application exits at this phase, Developer needs to proceed with processing after the application is restored with `wait_for_transaction` function, passing shard_block_id and message from this event.</para>
+            /// <para>Do not forget to specify abi of your contract as well, it is crucial for processing. See `processing.wait_for_transaction` documentation.</para>
             /// </summary>
             [JsonPropertyName("message_id")]
             public string MessageId { get; set; }
 
             /// <summary>
-            /// <para>Notifies the app that the message was sent to the network, i.e `processing.send_message` was successfuly executed. Now, the message is in the blockchain. If Application exits at this phase, Developer needs to proceed with processing after the application is restored with `wait_for_transaction` function, passing shard_block_id and message from this event.</para>
-            /// <para>Do not forget to specify abi of your contract as well, it is crucial for proccessing. See `processing.wait_for_transaction` documentation.</para>
+            /// <para>Notifies the app that the message was sent to the network, i.e `processing.send_message` was successfully executed. Now, the message is in the blockchain. If Application exits at this phase, Developer needs to proceed with processing after the application is restored with `wait_for_transaction` function, passing shard_block_id and message from this event.</para>
+            /// <para>Do not forget to specify abi of your contract as well, it is crucial for processing. See `processing.wait_for_transaction` documentation.</para>
             /// </summary>
             [JsonPropertyName("message")]
             public string Message { get; set; }
@@ -124,7 +124,7 @@ namespace EverscaleNet.Client.Models
         /// <para>If Application exits at this phase, Developer needs to proceed with processing</para>
         /// <para>after the application is restored with `wait_for_transaction` function, passing</para>
         /// <para>shard_block_id and message from this event. Do not forget to specify abi of your contract</para>
-        /// <para>as well, it is crucial for proccessing. See `processing.wait_for_transaction` documentation.</para>
+        /// <para>as well, it is crucial for processing. See `processing.wait_for_transaction` documentation.</para>
         /// </summary>
 #if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("SendFailed")]
@@ -139,7 +139,7 @@ namespace EverscaleNet.Client.Models
             /// <para>If Application exits at this phase, Developer needs to proceed with processing</para>
             /// <para>after the application is restored with `wait_for_transaction` function, passing</para>
             /// <para>shard_block_id and message from this event. Do not forget to specify abi of your contract</para>
-            /// <para>as well, it is crucial for proccessing. See `processing.wait_for_transaction` documentation.</para>
+            /// <para>as well, it is crucial for processing. See `processing.wait_for_transaction` documentation.</para>
             /// </summary>
             [JsonPropertyName("shard_block_id")]
             public string ShardBlockId { get; set; }
@@ -152,7 +152,7 @@ namespace EverscaleNet.Client.Models
             /// <para>If Application exits at this phase, Developer needs to proceed with processing</para>
             /// <para>after the application is restored with `wait_for_transaction` function, passing</para>
             /// <para>shard_block_id and message from this event. Do not forget to specify abi of your contract</para>
-            /// <para>as well, it is crucial for proccessing. See `processing.wait_for_transaction` documentation.</para>
+            /// <para>as well, it is crucial for processing. See `processing.wait_for_transaction` documentation.</para>
             /// </summary>
             [JsonPropertyName("message_id")]
             public string MessageId { get; set; }
@@ -165,7 +165,7 @@ namespace EverscaleNet.Client.Models
             /// <para>If Application exits at this phase, Developer needs to proceed with processing</para>
             /// <para>after the application is restored with `wait_for_transaction` function, passing</para>
             /// <para>shard_block_id and message from this event. Do not forget to specify abi of your contract</para>
-            /// <para>as well, it is crucial for proccessing. See `processing.wait_for_transaction` documentation.</para>
+            /// <para>as well, it is crucial for processing. See `processing.wait_for_transaction` documentation.</para>
             /// </summary>
             [JsonPropertyName("message")]
             public string Message { get; set; }
@@ -178,7 +178,7 @@ namespace EverscaleNet.Client.Models
             /// <para>If Application exits at this phase, Developer needs to proceed with processing</para>
             /// <para>after the application is restored with `wait_for_transaction` function, passing</para>
             /// <para>shard_block_id and message from this event. Do not forget to specify abi of your contract</para>
-            /// <para>as well, it is crucial for proccessing. See `processing.wait_for_transaction` documentation.</para>
+            /// <para>as well, it is crucial for processing. See `processing.wait_for_transaction` documentation.</para>
             /// </summary>
             [JsonPropertyName("error")]
             public ClientError Error { get; set; }
@@ -191,7 +191,7 @@ namespace EverscaleNet.Client.Models
         /// <para>If Application exits at this phase, Developer needs to proceed with processing</para>
         /// <para>after the application is restored with `wait_for_transaction` function, passing</para>
         /// <para>shard_block_id and message from this event. Do not forget to specify abi of your contract</para>
-        /// <para>as well, it is crucial for proccessing. See `processing.wait_for_transaction` documentation.</para>
+        /// <para>as well, it is crucial for processing. See `processing.wait_for_transaction` documentation.</para>
         /// </summary>
 #if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("WillFetchNextBlock")]
@@ -205,7 +205,7 @@ namespace EverscaleNet.Client.Models
             /// <para>If Application exits at this phase, Developer needs to proceed with processing</para>
             /// <para>after the application is restored with `wait_for_transaction` function, passing</para>
             /// <para>shard_block_id and message from this event. Do not forget to specify abi of your contract</para>
-            /// <para>as well, it is crucial for proccessing. See `processing.wait_for_transaction` documentation.</para>
+            /// <para>as well, it is crucial for processing. See `processing.wait_for_transaction` documentation.</para>
             /// </summary>
             [JsonPropertyName("shard_block_id")]
             public string ShardBlockId { get; set; }
@@ -217,7 +217,7 @@ namespace EverscaleNet.Client.Models
             /// <para>If Application exits at this phase, Developer needs to proceed with processing</para>
             /// <para>after the application is restored with `wait_for_transaction` function, passing</para>
             /// <para>shard_block_id and message from this event. Do not forget to specify abi of your contract</para>
-            /// <para>as well, it is crucial for proccessing. See `processing.wait_for_transaction` documentation.</para>
+            /// <para>as well, it is crucial for processing. See `processing.wait_for_transaction` documentation.</para>
             /// </summary>
             [JsonPropertyName("message_id")]
             public string MessageId { get; set; }
@@ -229,7 +229,7 @@ namespace EverscaleNet.Client.Models
             /// <para>If Application exits at this phase, Developer needs to proceed with processing</para>
             /// <para>after the application is restored with `wait_for_transaction` function, passing</para>
             /// <para>shard_block_id and message from this event. Do not forget to specify abi of your contract</para>
-            /// <para>as well, it is crucial for proccessing. See `processing.wait_for_transaction` documentation.</para>
+            /// <para>as well, it is crucial for processing. See `processing.wait_for_transaction` documentation.</para>
             /// </summary>
             [JsonPropertyName("message")]
             public string Message { get; set; }
@@ -297,7 +297,7 @@ namespace EverscaleNet.Client.Models
         /// <para>Notifies the app that the message was not executed within expire timeout on-chain and will never be because it is already expired. The expiration timeout can be configured with `AbiConfig` parameters.</para>
         /// <para>This event occurs only for the contracts which ABI includes "expire" header.</para>
         /// <para>If Application specifies `NetworkConfig.message_retries_count` &gt; 0, then `process_message`</para>
-        /// <para>will perform retries: will create a new message and send it again and repeat it untill it reaches</para>
+        /// <para>will perform retries: will create a new message and send it again and repeat it until it reaches</para>
         /// <para>the maximum retries count or receives a successful result.  All the processing</para>
         /// <para>events will be repeated.</para>
         /// </summary>
@@ -310,7 +310,7 @@ namespace EverscaleNet.Client.Models
             /// <para>Notifies the app that the message was not executed within expire timeout on-chain and will never be because it is already expired. The expiration timeout can be configured with `AbiConfig` parameters.</para>
             /// <para>This event occurs only for the contracts which ABI includes "expire" header.</para>
             /// <para>If Application specifies `NetworkConfig.message_retries_count` &gt; 0, then `process_message`</para>
-            /// <para>will perform retries: will create a new message and send it again and repeat it untill it reaches</para>
+            /// <para>will perform retries: will create a new message and send it again and repeat it until it reaches</para>
             /// <para>the maximum retries count or receives a successful result.  All the processing</para>
             /// <para>events will be repeated.</para>
             /// </summary>
@@ -321,7 +321,7 @@ namespace EverscaleNet.Client.Models
             /// <para>Notifies the app that the message was not executed within expire timeout on-chain and will never be because it is already expired. The expiration timeout can be configured with `AbiConfig` parameters.</para>
             /// <para>This event occurs only for the contracts which ABI includes "expire" header.</para>
             /// <para>If Application specifies `NetworkConfig.message_retries_count` &gt; 0, then `process_message`</para>
-            /// <para>will perform retries: will create a new message and send it again and repeat it untill it reaches</para>
+            /// <para>will perform retries: will create a new message and send it again and repeat it until it reaches</para>
             /// <para>the maximum retries count or receives a successful result.  All the processing</para>
             /// <para>events will be repeated.</para>
             /// </summary>
@@ -332,7 +332,7 @@ namespace EverscaleNet.Client.Models
             /// <para>Notifies the app that the message was not executed within expire timeout on-chain and will never be because it is already expired. The expiration timeout can be configured with `AbiConfig` parameters.</para>
             /// <para>This event occurs only for the contracts which ABI includes "expire" header.</para>
             /// <para>If Application specifies `NetworkConfig.message_retries_count` &gt; 0, then `process_message`</para>
-            /// <para>will perform retries: will create a new message and send it again and repeat it untill it reaches</para>
+            /// <para>will perform retries: will create a new message and send it again and repeat it until it reaches</para>
             /// <para>the maximum retries count or receives a successful result.  All the processing</para>
             /// <para>events will be repeated.</para>
             /// </summary>
@@ -395,7 +395,7 @@ namespace EverscaleNet.Client.Models
         }
 
         /// <summary>
-        /// <para>Notifies the app that the block candicate with the message has been accepted by the thread's validators</para>
+        /// <para>Notifies the app that the block candidate with the message has been accepted by the thread's validators</para>
         /// </summary>
 #if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("RempIncludedIntoAcceptedBlock")]
@@ -403,19 +403,19 @@ namespace EverscaleNet.Client.Models
         public class RempIncludedIntoAcceptedBlock : ProcessingEvent
         {
             /// <summary>
-            /// <para>Notifies the app that the block candicate with the message has been accepted by the thread's validators</para>
+            /// <para>Notifies the app that the block candidate with the message has been accepted by the thread's validators</para>
             /// </summary>
             [JsonPropertyName("message_id")]
             public string MessageId { get; set; }
 
             /// <summary>
-            /// <para>Notifies the app that the block candicate with the message has been accepted by the thread's validators</para>
+            /// <para>Notifies the app that the block candidate with the message has been accepted by the thread's validators</para>
             /// </summary>
             [JsonPropertyName("timestamp")]
             public ulong Timestamp { get; set; }
 
             /// <summary>
-            /// <para>Notifies the app that the block candicate with the message has been accepted by the thread's validators</para>
+            /// <para>Notifies the app that the block candidate with the message has been accepted by the thread's validators</para>
             /// </summary>
             [JsonPropertyName("json")]
             public JsonElement? Json { get; set; }
@@ -449,7 +449,7 @@ namespace EverscaleNet.Client.Models
         }
 
         /// <summary>
-        /// <para>Notifies the app about any problem that has occured in REMP processing - in this case library switches to the fallback transaction awaiting scenario (sequential block reading).</para>
+        /// <para>Notifies the app about any problem that has occurred in REMP processing - in this case library switches to the fallback transaction awaiting scenario (sequential block reading).</para>
         /// </summary>
 #if !NET6_0_OR_GREATER
         [Dahomey.Json.Attributes.JsonDiscriminator("RempError")]
@@ -457,7 +457,7 @@ namespace EverscaleNet.Client.Models
         public class RempError : ProcessingEvent
         {
             /// <summary>
-            /// <para>Notifies the app about any problem that has occured in REMP processing - in this case library switches to the fallback transaction awaiting scenario (sequential block reading).</para>
+            /// <para>Notifies the app about any problem that has occurred in REMP processing - in this case library switches to the fallback transaction awaiting scenario (sequential block reading).</para>
             /// </summary>
             [JsonPropertyName("error")]
             public ClientError Error { get; set; }

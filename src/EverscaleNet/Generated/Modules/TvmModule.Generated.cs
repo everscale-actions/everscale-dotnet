@@ -28,7 +28,7 @@ namespace EverscaleNet.Client.Modules
         /// <para>Performs all the phases of contract execution on Transaction Executor -</para>
         /// <para>the same component that is used on Validator Nodes.</para>
         /// <para>Can be used for contract debugging, to find out the reason why a message was not delivered successfully.</para>
-        /// <para>Validators throw away the failed external inbound messages (if they failed bedore `ACCEPT`) in the real network.</para>
+        /// <para>Validators throw away the failed external inbound messages (if they failed before `ACCEPT`) in the real network.</para>
         /// <para>This is why these messages are impossible to debug in the real network.</para>
         /// <para>With the help of run_executor you can do that. In fact, `process_message` function</para>
         /// <para>performs local check with `run_executor` if there was no transaction as a result of processing</para>

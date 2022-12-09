@@ -83,7 +83,7 @@ namespace EverscaleNet.Client.Models
 
         /// <summary>
         /// <para>Frequency of sync latency detection.</para>
-        /// <para>Library periodically checks the current endpoint for blockchain data syncronization latency.</para>
+        /// <para>Library periodically checks the current endpoint for blockchain data synchronization latency.</para>
         /// <para>If the latency (time-lag) is less then `NetworkConfig.max_latency`</para>
         /// <para>then library selects another endpoint.</para>
         /// <para>Must be specified in milliseconds. Default is 60000 (1 min).</para>
@@ -92,7 +92,7 @@ namespace EverscaleNet.Client.Models
         public uint? LatencyDetectionInterval { get; set; }
 
         /// <summary>
-        /// <para>Maximum value for the endpoint's blockchain data syncronization latency (time-lag). Library periodically checks the current endpoint for blockchain data synchronization latency. If the latency (time-lag) is less then `NetworkConfig.max_latency` then library selects another endpoint.</para>
+        /// <para>Maximum value for the endpoint's blockchain data synchronization latency (time-lag). Library periodically checks the current endpoint for blockchain data synchronization latency. If the latency (time-lag) is less then `NetworkConfig.max_latency` then library selects another endpoint.</para>
         /// <para>Must be specified in milliseconds. Default is 60000 (1 min).</para>
         /// </summary>
         [JsonPropertyName("max_latency")]
@@ -117,7 +117,7 @@ namespace EverscaleNet.Client.Models
 
         /// <summary>
         /// <para>UNSTABLE.</para>
-        /// <para>First REMP status awaiting timeout. If no status recieved during the timeout than fallback transaction scenario is activated.</para>
+        /// <para>First REMP status awaiting timeout. If no status received during the timeout than fallback transaction scenario is activated.</para>
         /// <para>Must be specified in milliseconds. Default is 1000 (1 sec).</para>
         /// </summary>
         [JsonPropertyName("first_remp_status_timeout")]
@@ -125,7 +125,7 @@ namespace EverscaleNet.Client.Models
 
         /// <summary>
         /// <para>UNSTABLE.</para>
-        /// <para>Subsequent REMP status awaiting timeout. If no status recieved during the timeout than fallback transaction scenario is activated.</para>
+        /// <para>Subsequent REMP status awaiting timeout. If no status received during the timeout than fallback transaction scenario is activated.</para>
         /// <para>Must be specified in milliseconds. Default is 5000 (5 sec).</para>
         /// </summary>
         [JsonPropertyName("next_remp_status_timeout")]

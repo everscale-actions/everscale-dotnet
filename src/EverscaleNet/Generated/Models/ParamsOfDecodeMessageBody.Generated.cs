@@ -33,5 +33,17 @@ namespace EverscaleNet.Client.Models
         /// </summary>
         [JsonPropertyName("allow_partial")]
         public bool? AllowPartial { get; set; }
+
+        /// <summary>
+        /// <para>Function name or function id if is known in advance</para>
+        /// </summary>
+        [JsonPropertyName("function_name")]
+        public string FunctionName { get; set; }
+
+        /// <summary>
+        /// <para>Not described yet..</para>
+        /// </summary>
+        [JsonPropertyName("data_layout")]
+        public DataLayout DataLayout { get; set; }
     }
 }
