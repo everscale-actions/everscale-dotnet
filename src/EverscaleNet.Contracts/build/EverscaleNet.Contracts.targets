@@ -1,7 +1,7 @@
 <Project>
 
     <ItemGroup Condition=" $(DoNotBuildContracts) == '' ">
-        <SolFile Include="**\*.sol" Exclude="**\interfaces\*.sol" />
+        <SolFile Include="**\*.sol;**\*.tsol" Exclude="**\interfaces\*.sol;**\interfaces\*.tsol" />
     </ItemGroup>
 
     <Target Name="CompileSolidityContracts" AfterTargets="AfterBuild" Inputs="@(SolFile)" Outputs="@(SolFile->'$(OutDir)%(RelativeDir)%(Filename).tvc');@(SolFile->'$(OutDir)%(RelativeDir)%(Filename).abi.json')">

@@ -1,7 +1,7 @@
-pragma ever -solidity >=0.32.0;
+pragma ever-solidity >=0.32.0;
 pragma AbiHeader expire;
 
-import "interfaces/20_interface.sol";
+import "interfaces/20_interface.tsol";
 
 contract Bomber is IBomber {
 
