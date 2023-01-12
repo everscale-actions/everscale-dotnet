@@ -136,5 +136,10 @@ namespace EverscaleNet.Abstract.Modules
         /// <para>Calculates contract function ID by contract ABI</para>
         /// </summary>
         public Task<ResultOfCalcFunctionId> CalcFunctionId(ParamsOfCalcFunctionId @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// <para>Extracts signature from message body and calculates hash to verify the signature</para>
+        /// </summary>
+        public Task<ResultOfGetSignatureData> GetSignatureData(ParamsOfGetSignatureData @params, CancellationToken cancellationToken = default);
     }
 }

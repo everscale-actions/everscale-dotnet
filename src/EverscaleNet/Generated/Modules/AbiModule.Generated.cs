@@ -193,5 +193,13 @@ namespace EverscaleNet.Client.Modules
         {
             return await _everClientAdapter.Request<ParamsOfCalcFunctionId, ResultOfCalcFunctionId>("abi.calc_function_id", @params, cancellationToken);
         }
+
+        /// <summary>
+        /// <para>Extracts signature from message body and calculates hash to verify the signature</para>
+        /// </summary>
+        public async Task<ResultOfGetSignatureData> GetSignatureData(ParamsOfGetSignatureData @params, CancellationToken cancellationToken = default)
+        {
+            return await _everClientAdapter.Request<ParamsOfGetSignatureData, ResultOfGetSignatureData>("abi.get_signature_data", @params, cancellationToken);
+        }
     }
 }

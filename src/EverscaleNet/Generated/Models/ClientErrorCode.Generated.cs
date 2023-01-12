@@ -149,6 +149,10 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Not described yet..</para>
         /// </summary>
-        LocalStorageError = 35
+        LocalStorageError = 35,
+        /// <summary>
+        /// <para>Not described yet..</para>
+        /// </summary>
+        InvalidData = 36
     }
 }
