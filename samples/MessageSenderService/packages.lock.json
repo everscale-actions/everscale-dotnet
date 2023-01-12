@@ -322,7 +322,7 @@
         "dependencies": {
           "EverscaleNet": "[1.0.0, )",
           "EverscaleNet.Serialization": "[1.0.0, )",
-          "Microsoft.Extensions.Logging.Abstractions": "[6.0.2, )"
+          "Microsoft.Extensions.Logging.Abstractions": "[7.0.0, )"
         }
       },
       "everscalenet.adapter.rust": {
