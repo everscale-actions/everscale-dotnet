@@ -21,10 +21,10 @@ public class WaitNodeSeFirstBlockStrategy : IWaitUntil {
 	//        && element.TryGetProperty("blocks", out JsonElement blocks)
 	//        && blocks.GetArrayLength() > 0;
 
-	public async Task<bool> Until(ITestcontainersContainer testcontainers, ILogger logger) {
+	public async Task<bool> UntilAsync(IContainer container) {
 		await Task.Delay(TimeSpan.FromMilliseconds(100));
 		using var httpClient = new HttpClient {
-			BaseAddress = new Uri($"http://localhost:{testcontainers.GetMappedPublicPort(80)}"),
+			BaseAddress = new Uri($"http://localhost:{container.GetMappedPublicPort(80)}"),
 			Timeout = TimeSpan.FromSeconds(5)
 		};
 		HttpResponseMessage response;
@@ -32,7 +32,7 @@ public class WaitNodeSeFirstBlockStrategy : IWaitUntil {
 			response = await httpClient.PostAsJsonAsync("graphql", new { query = "query blocks {blocks(limit: 1) {id}}" });
 			response.EnsureSuccessStatusCode();
 		} catch (HttpRequestException) {
-			logger.LogInformation("Waiting for Node SE will be ready..");
+			container.Logger.LogInformation("Waiting for Node SE will be ready..");
 			return false;
 		}
 		var data = await response.Content.ReadFromJsonAsync<JsonElement>();

@@ -5,7 +5,7 @@
     </ItemGroup>
 
     <ItemGroup Condition=" '$(NET6)' ">
-        <PackageReference Include="System.Text.Json" Version="7.0.0" />
+        <PackageReference Include="System.Text.Json" Version="7.0.1" />
     </ItemGroup>
 
 </Project>

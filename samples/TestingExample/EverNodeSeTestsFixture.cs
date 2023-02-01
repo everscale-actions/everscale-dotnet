@@ -20,7 +20,7 @@ public class EverNodeSeTestsFixture : IEverTestsFixture {
 	private const string NetworkEndpointsEnvVariable = "EVERSCALE_NETWORK_ENDPOINTS";
 	private readonly WebPackageManager _giverPackageManager;
 	private EverClientRustAdapter _adapter;
-	private TestcontainersContainer _everNodeSeContainer;
+	private IContainer _everNodeSeContainer;
 	private HttpClient _httpClient;
 	private LoggerFactory _loggerFactory;
 
@@ -52,7 +52,7 @@ public class EverNodeSeTestsFixture : IEverTestsFixture {
 			                          .CreateLogger())
 		});
 		if (runNodeSeContainer) {
-			TestcontainersSettings.Logger ??= _loggerFactory.CreateLogger("Testcontainers");
+			TestcontainersSettings.Logger ??= _loggerFactory.CreateLogger("NodeSE");
 			_everNodeSeContainer ??= await BuildAndStartNodeSE();
 		} else {
 			//todo: ensure that node se is ready
@@ -62,14 +62,14 @@ public class EverNodeSeTestsFixture : IEverTestsFixture {
 		Giver ??= new EverNodeSeGiver(Client, _giverPackageManager);
 	}
 
-	private static async Task<TestcontainersContainer> BuildAndStartNodeSE() {
-		TestcontainersContainer everNodeSE = new TestcontainersBuilder<TestcontainersContainer>()
-		                                     .WithImage("tonlabs/local-node:latest")
-		                                     .WithEnvironment("USER_AGREEMENT", "yes")
-		                                     .WithPortBinding(80, true)
-		                                     .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(80))
-		                                     .WithWaitStrategy(Wait.ForUnixContainer().AddCustomWaitStrategy(new WaitNodeSeFirstBlockStrategy()))
-		                                     .Build();
+	private static async Task<IContainer> BuildAndStartNodeSE() {
+		IContainer everNodeSE = new ContainerBuilder()
+		                        .WithImage("tonlabs/local-node:latest")
+		                        .WithEnvironment("USER_AGREEMENT", "yes")
+		                        .WithPortBinding(80, true)
+		                        .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(80))
+		                        .WithWaitStrategy(Wait.ForUnixContainer().AddCustomWaitStrategy(new WaitNodeSeFirstBlockStrategy()))
+		                        .Build();
 		await everNodeSE.StartAsync();
 		return everNodeSE;
 	}

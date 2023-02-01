@@ -195,7 +195,7 @@
       "everscalenet": {
         "type": "Project",
         "dependencies": {
-          "System.Text.Json": "[7.0.0, )"
+          "System.Text.Json": "[7.0.1, )"
         }
       },
       "everscalenet.serialization": {
