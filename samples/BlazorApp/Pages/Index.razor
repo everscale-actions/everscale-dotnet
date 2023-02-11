@@ -1,31 +1,85 @@
 ﻿@page "/"
+@using Blazored.LocalStorage
+@using System.ComponentModel.DataAnnotations
 
 <PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Hello, Everscale world!</h1>
 
-<p>Everscale client version: @Version</p>
-<p>Endpoints: @Endpoints</p>
+Welcome to your new everscale app.
 
-Welcome to your new app.
+<SurveyPrompt Title="How is Everscale working for you?"/>
 
-<SurveyPrompt Title="How is Blazor working for you?"/>
+<h4>Everscale client info</h4>
+<p>Version: @Version</p>
+<p>Endpoints: @(Endpoints is not null ? string.Join(',', Endpoints) : null)</p>
+@if (Error is not null) {
+	<p>Error: @Error</p>
+}
+
+<h4>Configure everscale client</h4>
+<EditForm Model="@_changeEndpointModel" OnValidSubmit="@Submit">
+	<DataAnnotationsValidator/>
+	<ValidationSummary/>
+	<p>
+		<label>
+			Endpoints:
+			<InputText placeholder="Register you endpoint on https://dashboard.evercloud.dev/" @bind-Value="_changeEndpointModel.Endpoints" size="80"/>
+		</label>
+	</p>
+	<button type="submit">Apply</button>
+</EditForm>
 
 @code {
 
 	private string Version { get; set; }
-	private string Endpoints { get; set; }
+	private string[] Endpoints { get; set; }
+	private string Error { get; set; }
+
+	private readonly ChangeEndpointModel _changeEndpointModel = new();
+
+	public class ChangeEndpointModel {
+		[Required]
+		public string Endpoints { get; set; }
+	}
 
 	protected override async Task OnInitializedAsync() {
-		Task<ResultOfVersion> resultOfVersionTask = EverClient.Client.Version();
-		Task<ResultOfGetEndpoints> resultOfGetEndpoints = EverClient.Net.GetEndpoints();
+		try {
+			await Task.WhenAll(FillVersion(), FillEndpoints());
+		} catch (EverClientException e) {
+			Error = e.Message;
+		}
+	}
 
-		await Task.WhenAll(resultOfGetEndpoints, resultOfVersionTask);
+	private async Task FillEndpoints() {
+		try {
+			ResultOfGetEndpoints result = await EverClient.Net.GetEndpoints();
+			Endpoints = result.Endpoints;
+		} catch (EverClientException e) when (e.Code == 14) {
+			Endpoints = new[] { e.Message };
+		}
+	}
 
-		Version = (await resultOfVersionTask).Version;
-		Endpoints = string.Join(',', (await resultOfGetEndpoints).Endpoints);
+	private async Task FillVersion() {
+		ResultOfVersion result = await EverClient.Client.Version();
+		Version = result.Version;
+	}
+
+	private async Task Submit() {
+		string[] endpoints = _changeEndpointModel.Endpoints.Split(',').Select(e => e.Trim()).ToArray();
+		await LocalStorageService.SetItemAsync(Static.EndpointsStorageKey, endpoints);
+
+	//Reload app to apply new endpoints
+		NavigationManager.NavigateTo(NavigationManager.Uri, true);
 	}
 
 	[Inject]
 	private IEverClient EverClient { get; set; }
+
+	[Inject]
+	private ILocalStorageService LocalStorageService { get; set; }
+
+	[Inject]
+	private NavigationManager NavigationManager { get; set; }
+
 }

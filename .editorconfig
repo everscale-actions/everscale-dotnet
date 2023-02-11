@@ -16,7 +16,7 @@ csharp_new_line_before_finally = false
 csharp_new_line_before_members_in_object_initializers = false
 csharp_new_line_before_open_brace = none
 csharp_new_line_between_query_expression_clauses = true
-csharp_preferred_modifier_order = public, private, protected, internal, new, static, abstract, virtual, sealed, readonly, override, extern, unsafe, volatile, async:error
+csharp_preferred_modifier_order = public, private, protected, internal, new, static, abstract, virtual, sealed, readonly, override, extern, unsafe, volatile, async, file, required:error
 csharp_prefer_braces = true:none
 csharp_preserve_single_line_blocks = true
 csharp_space_after_cast = false
@@ -40,6 +40,7 @@ csharp_space_between_method_declaration_name_and_open_parenthesis = false
 csharp_space_between_method_declaration_parameter_list_parentheses = false
 csharp_space_between_parentheses = false
 csharp_space_between_square_brackets = false
+csharp_style_prefer_utf8_string_literals = true:suggestion
 csharp_style_var_elsewhere = false:none
 csharp_style_var_for_built_in_types = false:suggestion
 csharp_style_var_when_type_is_apparent = true:none
@@ -307,6 +308,12 @@ dotnet_naming_rule.unity_serialized_field_rule_2.resharper_guid = 5f0fdb63-c892-
 dotnet_naming_rule.unity_serialized_field_rule_2.severity = warning
 dotnet_naming_rule.unity_serialized_field_rule_2.style = lower_camel_case_style
 dotnet_naming_rule.unity_serialized_field_rule_2.symbols = unity_serialized_field_symbols_2
+dotnet_naming_rule.unity_serialized_field_rule_3.import_to_resharper = True
+dotnet_naming_rule.unity_serialized_field_rule_3.resharper_description = Unity serialized field
+dotnet_naming_rule.unity_serialized_field_rule_3.resharper_guid = 5f0fdb63-c892-4d2c-9324-15c80b22a7ef
+dotnet_naming_rule.unity_serialized_field_rule_3.severity = warning
+dotnet_naming_rule.unity_serialized_field_rule_3.style = lower_camel_case_style
+dotnet_naming_rule.unity_serialized_field_rule_3.symbols = unity_serialized_field_symbols_3
 dotnet_naming_style.i_upper_camel_case_style.capitalization = pascal_case
 dotnet_naming_style.i_upper_camel_case_style.required_prefix = I
 dotnet_naming_style.lower_camel_case_style.capitalization = camel_case
@@ -367,6 +374,10 @@ dotnet_naming_symbols.unity_serialized_field_symbols_2.applicable_accessibilitie
 dotnet_naming_symbols.unity_serialized_field_symbols_2.applicable_kinds =
 dotnet_naming_symbols.unity_serialized_field_symbols_2.resharper_applicable_kinds = unity_serialised_field
 dotnet_naming_symbols.unity_serialized_field_symbols_2.resharper_required_modifiers = instance
+dotnet_naming_symbols.unity_serialized_field_symbols_3.applicable_accessibilities = *
+dotnet_naming_symbols.unity_serialized_field_symbols_3.applicable_kinds =
+dotnet_naming_symbols.unity_serialized_field_symbols_3.resharper_applicable_kinds = unity_serialised_field
+dotnet_naming_symbols.unity_serialized_field_symbols_3.resharper_required_modifiers = instance
 dotnet_separate_import_directive_groups = false
 dotnet_sort_system_directives_first = true
 dotnet_style_parentheses_in_arithmetic_binary_operators = never_if_unnecessary:none
@@ -380,6 +391,7 @@ dotnet_style_qualification_for_method = false:error
 dotnet_style_qualification_for_property = false:error
 dotnet_style_require_accessibility_modifiers = for_non_interface_members:suggestion
 file_header_template = # ReSharper properties
+
 
 
 resharper_accessor_owner_body = expression_body
@@ -677,7 +689,6 @@ resharper_outdent_dots = false
 resharper_outdent_namespace_member = false
 resharper_outdent_statement_labels = false
 resharper_outdent_ternary_ops = false
-resharper_parentheses_non_obvious_operations = none, bitwise, bitwise_inclusive_or, bitwise_exclusive_or, shift, bitwise_and
 resharper_parentheses_redundancy_style = remove_if_not_clarifies_precedence
 resharper_parentheses_same_type_operations = false
 resharper_pi_attributes_indent = align_by_first_attribute
@@ -720,7 +731,7 @@ resharper_resx_max_blank_lines_between_tags = 0
 resharper_resx_max_line_length = 160
 resharper_resx_pi_attribute_style = do_not_touch
 resharper_resx_space_before_self_closing = false
-resharper_resx_wrap_lines = false
+resharper_resx_wrap_lines = true
 resharper_resx_wrap_tags_and_pi = false
 resharper_resx_wrap_text = false
 resharper_shaderlab_brace_style = next_line
@@ -866,7 +877,6 @@ resharper_static_members_qualify_with = declared_type
 resharper_stick_comment = true
 resharper_support_vs_event_naming_pattern = true
 resharper_t4_indent_style = space
-resharper_t4_max_line_length = 160
 resharper_t4_wrap_lines = true
 resharper_toplevel_function_declaration_return_type_style = do_not_change
 resharper_toplevel_function_definition_return_type_style = do_not_change
@@ -3419,6 +3429,28 @@ resharper_xaml_xaml_xamarin_forms_data_type_and_binding_context_type_mismatched_
 resharper_xaml_x_key_attribute_disallowed_highlighting = error
 resharper_xunit_xunit_test_with_console_output_highlighting = warning
 
+# ReSharper properties
+resharper_csharp_naming_rule.constants = AaBb
+resharper_csharp_naming_rule.local_constants = aaBb
+resharper_csharp_naming_rule.private_constants = AaBb
+resharper_csharp_naming_rule.private_static_fields = _ + aaBb
+resharper_csharp_naming_rule.private_static_readonly = AaBb
+resharper_csharp_naming_rule.static_readonly = AaBb
+resharper_formatter_off_tag = @formatter:off
+resharper_formatter_on_tag = @formatter:on
+resharper_formatter_tags_enabled = true
+resharper_wrap_lines = true
+
 [*.{appxmanifest,asax,ascx,aspx,axaml,build,cs,cshtml,dtd,master,nuspec,paml,razor,skin,xaml,xamlx,xoml,xsd,csproj,props,targets}]
 tab_width = 4
 indent_size = 4
+
+[*.{appxmanifest,asax,ascx,aspx,axaml,build,cs,cshtml,dtd,master,nuspec,paml,razor,skin,xaml,xamlx,xoml,xsd}]
+indent_style = tab
+indent_size = tab
+tab_width = 4
+
+[*.{c,c++,cc,cginc,compute,cp,cpp,cu,cuh,cxx,fs,fsi,fsscript,fsx,fx,fxh,h,hh,hlsl,hlsli,hlslinc,hpp,hxx,inc,inl,ino,ipp,ixx,ml,mli,mpp,mq4,mq5,mqh,resw,resx,shader,tpp,usf,ush,vb}]
+indent_style = space
+indent_size = 4
+tab_width = 4
