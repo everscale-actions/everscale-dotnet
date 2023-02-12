@@ -1,20 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <RootNamespace>EverscaleNet</RootNamespace>
-    </PropertyGroup>
+	<PropertyGroup>
+		<RootNamespace>EverscaleNet</RootNamespace>
+	</PropertyGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\EverscaleNet.Serialization\EverscaleNet.Serialization.csproj" />
-        <ProjectReference Include="..\EverscaleNet.Utils\EverscaleNet.Utils.csproj" />
-        <ProjectReference Include="..\EverscaleNet\EverscaleNet.csproj" />
-    </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\EverscaleNet.Serialization\EverscaleNet.Serialization.csproj" />
+		<ProjectReference Include="..\EverscaleNet.Utils\EverscaleNet.Utils.csproj" />
+		<ProjectReference Include="..\EverscaleNet\EverscaleNet.csproj" />
+	</ItemGroup>
 
-    <ItemGroup>
-        <Content Include="build\EverscaleNet.Contracts.targets">
-            <Pack>true</Pack>
-            <PackagePath>build</PackagePath>
-        </Content>
-    </ItemGroup>
+	<ItemGroup>
+		<Content Include="build\EverscaleNet.Contracts.targets">
+			<Pack>true</Pack>
+			<PackagePath>build</PackagePath>
+		</Content>
+	</ItemGroup>
 
 </Project>

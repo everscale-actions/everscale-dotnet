@@ -11,11 +11,9 @@ using EverscaleNet.Serialization;
 namespace EverscaleNet.Utils;
 
 /// <summary>
-/// 
 /// </summary>
 public static class EverClientExtensions {
 	/// <summary>
-	/// 
 	/// </summary>
 	/// <param name="everClient"></param>
 	/// <param name="encodedMessage"></param>
@@ -70,20 +68,16 @@ public static class EverClientExtensions {
 }
 
 /// <summary>
-/// 
 /// </summary>
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
 public class ProcessAndWaitInternalMessagesResult {
 	/// <summary>
-	/// 
 	/// </summary>
 	public TransactionFees? ProcessingFees { get; set; }
 	/// <summary>
-	/// 
 	/// </summary>
 	public decimal ChildValue { get; set; }
 	/// <summary>
-	/// 
 	/// </summary>
 	public decimal ChildTransactionFees { get; set; }
 }

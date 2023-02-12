@@ -5,6 +5,8 @@ using EverscaleNet.Adapter.Rust.RustInterop.Models;
 namespace EverscaleNet.Adapter.Rust.RustInterop;
 
 internal static class RustInteropInterface {
+	private const string EverClientLib = "tonclient";
+
 	[DllImport(EverClientLib, CallingConvention = CallingConvention.Cdecl)]
 	public static extern IntPtr tc_create_context(InteropStringDisposable config);
 
@@ -21,6 +23,4 @@ internal static class RustInteropInterface {
 	public static extern void tc_request(uint context, InteropStringDisposable function,
 	                                     InteropStringDisposable parameters, uint requestId,
 	                                     CallbackDelegate callbackPointer);
-
-	private const string EverClientLib = "tonclient";
 }

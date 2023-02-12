@@ -54,9 +54,8 @@ public class EverNodeSeTestsFixture : IEverTestsFixture {
 		if (runNodeSeContainer) {
 			TestcontainersSettings.Logger ??= _loggerFactory.CreateLogger("NodeSE");
 			_everNodeSeContainer ??= await BuildAndStartNodeSE();
-		} else {
-			//todo: ensure that node se is ready
 		}
+		//todo: ensure that node se is ready
 		Client ??= CreateClient(_loggerFactory.CreateLogger<EverClientRustAdapter>());
 		PackageManager ??= new FilePackageManager(new OptionsWrapper<FilePackageManagerOptions>(new FilePackageManagerOptions()));
 		Giver ??= new EverNodeSeGiver(Client, _giverPackageManager);

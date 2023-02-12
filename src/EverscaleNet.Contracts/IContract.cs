@@ -38,7 +38,7 @@ public interface IContract {
 	Task<TransactionFees> Deploy(object? parameters = null, CancellationToken cancellationToken = default);
 
 	/// <summary>
-	/// Try to find contract in blockchain
+	///     Try to find contract in blockchain
 	/// </summary>
 	/// <param name="cancellationToken"></param>
 	/// <returns>Returns true if the contract exists</returns>

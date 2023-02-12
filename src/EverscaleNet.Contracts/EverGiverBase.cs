@@ -12,7 +12,7 @@ public abstract class EverGiverBase : ContractBase, IEverGiver {
 	private readonly IEverClient _everClient;
 
 	/// <summary>
-	/// Create Giver by address. Init is not necessary.
+	///     Create Giver by address. Init is not necessary.
 	/// </summary>
 	/// <param name="everClient"></param>
 	/// <param name="packageManager"></param>
@@ -22,7 +22,7 @@ public abstract class EverGiverBase : ContractBase, IEverGiver {
 	}
 
 	/// <summary>
-	/// Create giver by key pair. Do not forget init after creation.
+	///     Create giver by key pair. Do not forget init after creation.
 	/// </summary>
 	/// <param name="everClient"></param>
 	/// <param name="packageManager"></param>

@@ -100,7 +100,7 @@ public abstract class ContractBase : IContract {
 	}
 
 	/// <summary>
-	/// Try to find contract in blockchain
+	///     Try to find contract in blockchain
 	/// </summary>
 	/// <param name="cancellationToken"></param>
 	/// <returns>Returns true if the contract exists</returns>

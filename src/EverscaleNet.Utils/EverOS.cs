@@ -7,19 +7,19 @@ namespace EverscaleNet.Utils;
 /// </summary>
 public static class EverOS {
 	/// <summary>
-	/// Default givers info 
+	///     Default givers info
 	/// </summary>
 	public static class Givers {
 		/// <summary>
-		/// SE Giver address and keys
+		///     SE Giver address and keys
 		/// </summary>
 		public static class SE {
 			/// <summary>
-			/// SE Giver address
+			///     SE Giver address
 			/// </summary>
 			public static string Address = "0:78fbd6980c10cf41401b32e9b51810415e7578b52403af80dae68ddf99714498";
 			/// <summary>
-			/// SE Giver public and secret key pair
+			///     SE Giver public and secret key pair
 			/// </summary>
 			public static KeyPair KeyPair = new() {
 				Public = "2ada2e65ab8eeab09490e3521415f45b6e42df9c760a639bcf53957550b25a16",
@@ -62,4 +62,3 @@ public static class EverOS {
 		};
 	}
 }
-

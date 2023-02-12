@@ -7,6 +7,8 @@ using Xunit.Abstractions;
 namespace EverscaleNet.RustAdapter.Tests;
 
 public class RustAdapterTests {
+	private readonly ILogger<EverClientRustAdapter> _logger;
+
 	public RustAdapterTests(ITestOutputHelper output) {
 		ILoggerFactory loggerFactory = LoggerFactory.Create(builder => builder.AddSerilog(new LoggerConfiguration()
 		                                                                                  .MinimumLevel.Verbose()
@@ -14,8 +16,6 @@ public class RustAdapterTests {
 		                                                                                  .CreateLogger()));
 		_logger = loggerFactory.CreateLogger<EverClientRustAdapter>();
 	}
-
-	private readonly ILogger<EverClientRustAdapter> _logger;
 
 	[Fact(Timeout = 10000)]
 	public async Task AdapterDisposingNotThrowExceptionsTest() {

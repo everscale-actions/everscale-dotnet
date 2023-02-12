@@ -7,11 +7,11 @@ using Xunit.Abstractions;
 namespace EverscaleNet.Client.Tests.Modules;
 
 public class ProcessModuleTests : IClassFixture<EverClientTestsFixture> {
+	private readonly IEverClient _everClient;
+
 	public ProcessModuleTests(EverClientTestsFixture fixture, ITestOutputHelper outputHelper) {
 		_everClient = fixture.CreateClient(outputHelper, true);
 	}
-
-	private readonly IEverClient _everClient;
 
 	[Fact]
 	public async Task WaitMessage() {

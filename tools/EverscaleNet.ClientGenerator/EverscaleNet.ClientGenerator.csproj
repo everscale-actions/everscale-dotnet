@@ -1,35 +1,35 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <Import Project="..\..\SDKVersion.targets" />
+	<Import Project="..\..\SDKVersion.targets" />
 
-    <PropertyGroup>
-        <OutputType>Exe</OutputType>
-    </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+	</PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="EnumExtensions.System.Text.Json" />
-        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" />
-    </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="EnumExtensions.System.Text.Json" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" />
+	</ItemGroup>
 
-    <PropertyGroup>
-        <_TonSdkApiJson>https://raw.githubusercontent.com/tonlabs/ever-sdk/$(SDKVersion)/tools/api.json</_TonSdkApiJson>
-    </PropertyGroup>
+	<PropertyGroup>
+		<_TonSdkApiJson>https://raw.githubusercontent.com/tonlabs/ever-sdk/$(SDKVersion)/tools/api.json</_TonSdkApiJson>
+	</PropertyGroup>
 
-    <Target Name="DownloadContentFiles" BeforeTargets="CoreCompile">
-        <MakeDir Directories="$(MSBuildThisFileDirectory)\Resources\" />
-        <DownloadFile SourceUrl="$(_TonSdkApiJson)" DestinationFolder="$(MSBuildThisFileDirectory)\Resources\" DestinationFileName="api.json">
-            <Output TaskParameter="DownloadedFile" ItemName="None" />
-        </DownloadFile>
-    </Target>
+	<Target Name="DownloadContentFiles" BeforeTargets="CoreCompile">
+		<MakeDir Directories="$(MSBuildThisFileDirectory)\Resources\" />
+		<DownloadFile SourceUrl="$(_TonSdkApiJson)" DestinationFolder="$(MSBuildThisFileDirectory)\Resources\" DestinationFileName="api.json">
+			<Output TaskParameter="DownloadedFile" ItemName="None" />
+		</DownloadFile>
+	</Target>
 
-    <PropertyGroup>
-        <RepositoryLocation>$([System.IO.Path]::Combine($(MSBuildThisFileDirectory), "..", ".."))</RepositoryLocation>
-    </PropertyGroup>
+	<PropertyGroup>
+		<RepositoryLocation>$([System.IO.Path]::Combine($(MSBuildThisFileDirectory), "..", ".."))</RepositoryLocation>
+	</PropertyGroup>
 
-    <ItemGroup>
-        <AssemblyAttribute Include="EverscaleNet.ClientGenerator.RepositoryLocationAttribute">
-            <_Parameter1>$(RepositoryLocation)</_Parameter1>
-        </AssemblyAttribute>
-    </ItemGroup>
+	<ItemGroup>
+		<AssemblyAttribute Include="EverscaleNet.ClientGenerator.RepositoryLocationAttribute">
+			<_Parameter1>$(RepositoryLocation)</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
 
 </Project>

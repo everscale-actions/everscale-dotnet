@@ -5,11 +5,11 @@ using Xunit.Abstractions;
 namespace EverscaleNet.Client.Tests.Modules;
 
 public class BocModuleTests : IClassFixture<EverClientTestsFixture> {
+	private readonly IEverClient _everClient;
+
 	public BocModuleTests(EverClientTestsFixture fixture, ITestOutputHelper outputHelper) {
 		_everClient = fixture.CreateClient(outputHelper);
 	}
-
-	private readonly IEverClient _everClient;
 
 	[Fact]
 	public async Task GetBlockchainConfig() {

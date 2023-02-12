@@ -23,6 +23,7 @@
         <PackageVersion Include="Testcontainers" Version="2.4.0" />
         <PackageVersion Include="xunit" Version="2.4.2" />
         <PackageVersion Include="xunit.runner.visualstudio" Version="2.4.5" />
+        <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="1.1.1" />
     </ItemGroup>
     <ItemGroup Condition=" !$(NET6_OR_NET7)">
         <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />

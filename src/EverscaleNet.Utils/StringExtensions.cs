@@ -26,7 +26,7 @@ public static class StringExtensions {
 	}
 
 	/// <summary>
-	/// Convert decimal nano to coins
+	///     Convert decimal nano to coins
 	/// </summary>
 	/// <param name="nano"></param>
 	/// <returns></returns>

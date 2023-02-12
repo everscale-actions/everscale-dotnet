@@ -5,11 +5,11 @@ using Xunit.Abstractions;
 namespace EverscaleNet.Client.Tests.Modules;
 
 public class UtilsModuleTests : IClassFixture<EverClientTestsFixture> {
+	private readonly IEverClient _everClient;
+
 	public UtilsModuleTests(EverClientTestsFixture fixture, ITestOutputHelper outputHelper) {
 		_everClient = fixture.CreateClient(outputHelper);
 	}
-
-	private readonly IEverClient _everClient;
 
 	[Fact]
 	public async Task ConvertAddress() {

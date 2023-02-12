@@ -9,8 +9,21 @@ namespace EverscaleNet.Client.Tests;
 
 // ReSharper disable once ClassNeverInstantiated.Global
 public class EverClientTestsFixture : IDisposable, IAsyncDisposable {
-	private LoggerFactory _loggerFactory;
 	private IList<IEverClientAdapter> _adapters = new List<IEverClientAdapter>();
+	private LoggerFactory _loggerFactory;
+
+	public async ValueTask DisposeAsync() {
+		await DisposeAsyncCore().ConfigureAwait(false);
+		Dispose(false);
+#pragma warning disable CA1816 // Dispose methods should call SuppressFinalize
+		GC.SuppressFinalize(this);
+#pragma warning restore CA1816 // Dispose methods should call SuppressFinalize
+	}
+
+	public void Dispose() {
+		Dispose(true);
+		GC.SuppressFinalize(this);
+	}
 
 	protected internal IEverClient CreateClient(ITestOutputHelper output, bool useNodeSe = false) {
 		_loggerFactory ??= new LoggerFactory(new[] {
@@ -30,19 +43,6 @@ public class EverClientTestsFixture : IDisposable, IAsyncDisposable {
 		var adapter = new EverClientRustAdapter(new OptionsWrapper<EverClientOptions>(options), _loggerFactory.CreateLogger<EverClientRustAdapter>());
 		_adapters.Add(adapter);
 		return new EverClient(adapter);
-	}
-
-	public void Dispose() {
-		Dispose(true);
-		GC.SuppressFinalize(this);
-	}
-
-	public async ValueTask DisposeAsync() {
-		await DisposeAsyncCore().ConfigureAwait(false);
-		Dispose(false);
-#pragma warning disable CA1816 // Dispose methods should call SuppressFinalize
-		GC.SuppressFinalize(this);
-#pragma warning restore CA1816 // Dispose methods should call SuppressFinalize
 	}
 
 	protected virtual void Dispose(bool disposing) {

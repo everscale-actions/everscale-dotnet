@@ -1,11 +1,11 @@
 <Project>
 
-    <PropertyGroup>
-        <!--    EVER SDK version -->
-        <!--    used by tools\ClientGenerator (tools/api.json) -->
-        <!--    used by src\EverscaleNet.Adapter.Rust (runtime binaries) see DownloadLib.targets -->
-        <!--    used by src\EverscaleNet.Adapter.Wasm (runtime binaries) see DownloadLib.targets -->
-        <SDKVersion>1.40.0</SDKVersion>
-    </PropertyGroup>
+	<PropertyGroup>
+		<!--    EVER SDK version -->
+		<!--    used by tools\ClientGenerator (tools/api.json) -->
+		<!--    used by src\EverscaleNet.Adapter.Rust (runtime binaries) see DownloadLib.targets -->
+		<!--    used by src\EverscaleNet.Adapter.Wasm (runtime binaries) see DownloadLib.targets -->
+		<SDKVersion>1.40.0</SDKVersion>
+	</PropertyGroup>
 
 </Project>

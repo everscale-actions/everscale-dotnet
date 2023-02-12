@@ -6,11 +6,11 @@ using Xunit.Abstractions;
 namespace EverscaleNet.Client.Tests;
 
 public class ExceptionsTests : IClassFixture<EverClientTestsFixture> {
+	private readonly IEverClient _everClient;
+
 	public ExceptionsTests(EverClientTestsFixture fixture, ITestOutputHelper outputHelper) {
 		_everClient = fixture.CreateClient(outputHelper);
 	}
-
-	private readonly IEverClient _everClient;
 
 	[Fact(Timeout = 5000)]
 	public async Task ThrowEverClientException() {

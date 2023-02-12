@@ -9,15 +9,15 @@ namespace EverscaleNet.Abstract;
 /// </summary>
 public interface IEverPackageManager {
 	/// <summary>
-	/// Abi file name template
+	///     Abi file name template
 	/// </summary>
 	protected const string AbiFileTemplate = "{0}.abi.json";
 	/// <summary>
-	/// Tvc file name template
+	///     Tvc file name template
 	/// </summary>
 	protected const string TvcFileTemplate = "{0}.tvc";
 	/// <summary>
-	/// Tvc file name template
+	///     Tvc file name template
 	/// </summary>
 	protected const string KeyPairFileTemplate = "{0}.keys.json";
 

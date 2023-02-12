@@ -1,31 +1,31 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <ItemGroup Condition=" $(NET6_OR_NET7) ">
-        <PackageReference Include="Microsoft.Extensions.Logging" />
-    </ItemGroup>
+	<ItemGroup Condition=" $(NET6_OR_NET7) ">
+		<PackageReference Include="Microsoft.Extensions.Logging" />
+	</ItemGroup>
 
-    <ItemGroup Condition=" !$(NET6_OR_NET7)">
-        <PackageReference Include="Microsoft.Extensions.Logging" />
-    </ItemGroup>
+	<ItemGroup Condition=" !$(NET6_OR_NET7)">
+		<PackageReference Include="Microsoft.Extensions.Logging" />
+	</ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Include="FluentAssertions" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" />
-        <PackageReference Include="Serilog.Extensions.Logging" />
-        <PackageReference Include="Serilog.Sinks.XUnit" />
-        <PackageReference Include="xunit" />
-        <PackageReference Include="xunit.runner.visualstudio">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-        <PackageReference Include="coverlet.collector">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-    </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="FluentAssertions" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="Serilog.Extensions.Logging" />
+		<PackageReference Include="Serilog.Sinks.XUnit" />
+		<PackageReference Include="xunit" />
+		<PackageReference Include="xunit.runner.visualstudio">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="coverlet.collector">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\..\src\EverscaleNet.Adapter.Rust\EverscaleNet.Adapter.Rust.csproj" />
-    </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\EverscaleNet.Adapter.Rust\EverscaleNet.Adapter.Rust.csproj" />
+	</ItemGroup>
 
 </Project>

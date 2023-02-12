@@ -1,33 +1,35 @@
 <Project>
-    <PropertyGroup>
-        <Authors>Alexander Salamatov</Authors>
-        <Organization>everscale-actions</Organization>
-        <Owner>ch1seL</Owner>
-        <Copyright>Copyright 2023 (c) Alexander Salamatov. All rights reserved.</Copyright>
+	<PropertyGroup>
+		<Authors>Alexander Salamatov</Authors>
+		<Organization>everscale-actions</Organization>
+		<Owner>ch1seL</Owner>
+		<Copyright>Copyright 2023 (c) Alexander Salamatov. All rights reserved.</Copyright>
 
-        <Description>Everscale .Net Client</Description>
-        <IncludeSymbols>true</IncludeSymbols>
-        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<Description>Everscale .Net Client</Description>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
-        <Version Condition="$(PackageVersion)!=''">$(PackageVersion)</Version>
+		<PackageTags>Everscale;Ever;Blazor;Rust;Wasm</PackageTags>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/everscale-actions/everscale-dotnet</PackageProjectUrl>
+		<PackageIcon>icon.png</PackageIcon>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/everscale-actions/everscale-dotnet</RepositoryUrl>
 
-        <PackageTags>Everscale;Ever;Blazor;Rust;Wasm</PackageTags>
-        <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-        <PackageProjectUrl>https://github.com/everscale-actions/everscale-dotnet</PackageProjectUrl>
-        <PackageIcon>icon.png</PackageIcon>
-        <RepositoryType>git</RepositoryType>
-        <RepositoryUrl>https://github.com/everscale-actions/everscale-dotnet</RepositoryUrl>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 
-        <PublishRepositoryUrl>true</PublishRepositoryUrl>
-        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
 
-        <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    </PropertyGroup>
+	<PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	</PropertyGroup>
 
-    <ItemGroup>
-        <None Include="..\..\icon.png" Pack="true" PackagePath="\">
-            <Visible>false</Visible>
-        </None>
-    </ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\icon.png" Pack="true" PackagePath="\">
+			<Visible>false</Visible>
+		</None>
+	</ItemGroup>
 
 </Project>

@@ -12,7 +12,6 @@
 * Webfont stylesheets (including versions for Bootstrap and Foundation) in CSS, LESS, SCSS and Stylus formats
 * PNG and WebP raster images in 8px, 16px, 24px, 32px, 48px and 64px.
 
-
 ## Getting Started
 
 #### For code samples and everything else you need to get started with Open Iconic, check out our [Icons](https://github.com/iconic/open-iconic) and [Reference](https://github.com/iconic/open-iconic) sections.
@@ -43,7 +42,8 @@ each different icon in the* `<use>` *tag.*
 </svg>
 ```
 
-Sizing icons only needs basic CSS. All the icons are in a square format, so just set the `<svg>` tag with equal width and height dimensions.
+Sizing icons only needs basic CSS. All the icons are in a square format, so just set the `<svg>` tag with equal width
+and height dimensions.
 
 ```
 .icon {

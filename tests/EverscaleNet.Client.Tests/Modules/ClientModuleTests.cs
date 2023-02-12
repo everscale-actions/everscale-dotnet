@@ -6,11 +6,11 @@ using Xunit.Abstractions;
 namespace EverscaleNet.Client.Tests.Modules;
 
 public class ClientModuleTests : IClassFixture<EverClientTestsFixture> {
+	private readonly IEverClient _everClient;
+
 	public ClientModuleTests(EverClientTestsFixture fixture, ITestOutputHelper outputHelper) {
 		_everClient = fixture.CreateClient(outputHelper);
 	}
-
-	private readonly IEverClient _everClient;
 
 	[Fact]
 	public async Task ReturnsApiReference() {

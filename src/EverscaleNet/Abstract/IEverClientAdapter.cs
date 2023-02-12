@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace EverscaleNet.Abstract;
 
 /// <summary>
-///     Provide core methods used by client 
+///     Provide core methods used by client
 /// </summary>
 public interface IEverClientAdapter : IAsyncDisposable {
 	/// <summary>

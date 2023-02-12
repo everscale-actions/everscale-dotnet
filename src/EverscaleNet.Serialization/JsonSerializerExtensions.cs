@@ -41,7 +41,7 @@ public static class JsonSerializerExtensions {
 	/// <param name="value">Receives the value of the located property.</param>
 	/// <typeparam name="T"></typeparam>
 	/// <returns>
-	///   <see langword="true"/> if the property was found, <see langword="false"/> otherwise.
+	///     <see langword="true" /> if the property was found, <see langword="false" /> otherwise.
 	/// </returns>
 	public static bool TryGet<T>([DisallowNull] this JsonElement? element, string propertyName, out T value) {
 		if (element == null) {
@@ -63,7 +63,7 @@ public static class JsonSerializerExtensions {
 	/// <param name="value">Receives the value of the located property.</param>
 	/// <typeparam name="T"></typeparam>
 	/// <returns>
-	///   <see langword="true"/> if the property was found, <see langword="false"/> otherwise.
+	///     <see langword="true" /> if the property was found, <see langword="false" /> otherwise.
 	/// </returns>
 	public static bool TryGet<T>(this JsonElement element, string propertyName, out T value) {
 		if (element.TryGetProperty(propertyName, out JsonElement result)) {
@@ -164,7 +164,7 @@ public static class JsonSerializerExtensions {
 	}
 
 	/// <summary>
-	/// Deserialize prototype
+	///     Deserialize prototype
 	/// </summary>
 	/// <param name="json"></param>
 	/// <param name="prototype"></param>

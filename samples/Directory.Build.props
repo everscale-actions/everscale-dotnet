@@ -1,17 +1,17 @@
 <Project>
-    <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
-    
-    <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
-        <IsPackable>false</IsPackable>
-        <ImplicitUsings>enable</ImplicitUsings>
-    </PropertyGroup>
+	<Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 
-    <ItemGroup>
-        <Using Include="EverscaleNet.Abstract" />
-        <Using Include="EverscaleNet.Client.Models" />
-        <Using Include="EverscaleNet.Models" />
-        <Using Include="EverscaleNet.Serialization" />
-        <Using Include="EverscaleNet.Utils" />
-    </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<IsPackable>false</IsPackable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Using Include="EverscaleNet.Abstract" />
+		<Using Include="EverscaleNet.Client.Models" />
+		<Using Include="EverscaleNet.Models" />
+		<Using Include="EverscaleNet.Serialization" />
+		<Using Include="EverscaleNet.Utils" />
+	</ItemGroup>
 </Project>

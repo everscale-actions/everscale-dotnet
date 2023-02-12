@@ -25,7 +25,7 @@ public static class EverExceptionSerializer {
 		}
 
 		return clientError != null
-			       ? EverClientException.CreateExceptionWithCodeWithData(clientError.Code, 
+			       ? EverClientException.CreateExceptionWithCodeWithData(clientError.Code,
 			                                                             clientError.Data?.ToObject<Dictionary<string, object>>(),
 			                                                             clientError.Message)
 			       : new EverClientException($"Raw result: {responseJson}",

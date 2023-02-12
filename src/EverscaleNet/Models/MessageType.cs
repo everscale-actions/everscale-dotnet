@@ -1,21 +1,21 @@
 namespace EverscaleNet.Models;
 
 /// <summary>
-/// Message type
+///     Message type
 /// </summary>
 public enum MessageType {
 	/// <summary>
-	/// Internal message
+	///     Internal message
 	/// </summary>
 	Internal = 0,
 
 	/// <summary>
-	/// Inbound message
+	///     Inbound message
 	/// </summary>
 	ExtIn = 1,
 
 	/// <summary>
-	/// Outbound message
+	///     Outbound message
 	/// </summary>
 	ExtOut = 2
 }
