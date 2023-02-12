@@ -11,7 +11,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="build\EverscaleNet.Contracts.targets" PackagePath="build\" />
+        <Content Include="build\EverscaleNet.Contracts.targets">
+            <Pack>true</Pack>
+            <PackagePath>build</PackagePath>
+        </Content>
     </ItemGroup>
 
 </Project>
