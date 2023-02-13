@@ -1,16 +1,45 @@
 <Project>
 
-	<ItemGroup Condition=" $(DoNotBuildContracts) == '' ">
-		<SolFile Include="**\*.sol;**\*.tsol" Exclude="**\interfaces\*.sol;**\interfaces\*.tsol" />
+	<PropertyGroup>
+		<EverDevTool Condition=" $(EverDevTool) == '' ">npx everdev@latest</EverDevTool>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Content Include="**\*.sol;**\*.tsol" />
 	</ItemGroup>
 
-	<Target Name="CompileSolidityContracts" AfterTargets="AfterBuild" Inputs="@(SolFile)" Outputs="@(SolFile->'$(OutDir)%(RelativeDir)%(Filename).tvc');@(SolFile->'$(OutDir)%(RelativeDir)%(Filename).abi.json')">
-		<Exec Command="npx everdev@latest --version" ConsoleToMSBuild="true" EchoOff="true" StandardOutputImportance="Low">
+	<Target Name="IncludeSolidityFiles" BeforeTargets="CompileSolidityContracts;GetCopyToOutputDirectoryItems">
+		<ItemGroup>
+			<SolAllFiles Include="**\*.sol;**\*.tsol" />
+			<SolCompileFiles Include="**\*.sol;**\*.tsol" Exclude="**\interfaces\*;**\include\*;**\import\*;**\abstract\*;**\.solc_imports\*" />
+		</ItemGroup>
+	</Target>
+
+	<Target Name="CompileSolidityContracts" Condition=" $(DoNotBuildContracts) == '' " Inputs="@(SolAllFiles)" Outputs="@(SolCompileFiles->'$(OutputPath)%(RelativeDir)%(Filename).tvc');@(SolCompileFiles->'$(OutputPath)%(RelativeDir)%(Filename).abi.json')" AfterTargets="Build">
+		<Exec Command="$(EverDevTool) --version" ConsoleToMSBuild="true" EchoOff="true" StandardOutputImportance="Low">
 			<Output TaskParameter="ConsoleOutput" PropertyName="EverDevVersion" />
 		</Exec>
 		<Message Text="Everdev version: $(EverDevVersion)" />
-		<Message Text="Building @(SolFile).. @(SolFile->'$(OutDir)%(RelativeDir)%(Filename).tvc');@(SolFile->'$(OutDir)%(RelativeDir)%(Filename).abi.json')" />
-		<Exec Command="npx everdev@latest sol compile %(Identity) -o @(SolFile->'$(OutDir)%(RelativeDir)')" />
+		<Message Text="Building @(SolCompileFiles).. @(SolCompileFiles->'$(OutputPath)%(RelativeDir)%(Filename).tvc');@(SolCompileFiles->'$(OutputPath)%(RelativeDir)%(Filename).abi.json')" />
+		<Exec Command="$(EverDevTool) sol compile %(Identity) -o @(SolCompileFiles->'$(OutputPath)%(RelativeDir)')" />
+	</Target>
+
+	<Target Name="GetCopyToOutputDirectoryTvcItems" BeforeTargets="GetCopyToOutputDirectoryItems">
+		<ItemGroup>
+			<CompiledTvcFiles Include="@(SolCompileFiles->'$(OutputPath)%(RelativeDir)%(Filename).tvc')">
+				<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+				<TargetPath>%(RelativeDir)%(Filename).tvc</TargetPath>
+			</CompiledTvcFiles>
+
+			<CompiledAbiFiles Include="@(SolCompileFiles->'$(OutputPath)%(RelativeDir)%(Filename).abi.json')">
+				<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+				<TargetPath>%(RelativeDir)%(Filename).abi.json</TargetPath>
+			</CompiledAbiFiles>
+
+			<FileWrites Include="@(CompiledTvcFiles->'%(FullPath)');@(CompiledAbiFiles->'%(FullPath)')" />
+
+			<AllItemsFullPathWithTargetPath Include="@(CompiledTvcFiles->'%(FullPath)');@(CompiledAbiFiles->'%(FullPath)')" />
+		</ItemGroup>
 	</Target>
 
 </Project>
