@@ -1,4 +1,4 @@
-namespace TestingExample;
+namespace TestingExample.Fixtures;
 
 public interface IEverTestsFixture : IAsyncDisposable {
 	IEverClient Client { get; }

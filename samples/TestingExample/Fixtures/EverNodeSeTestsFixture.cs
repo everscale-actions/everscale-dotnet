@@ -10,7 +10,7 @@ using Microsoft.Extensions.Options;
 using Serilog;
 using Serilog.Extensions.Logging;
 
-namespace TestingExample;
+namespace TestingExample.Fixtures;
 
 public class EverNodeSeTestsFixture : IEverTestsFixture {
 	// if you want to start new node se container per fixture set true

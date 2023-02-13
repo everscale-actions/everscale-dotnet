@@ -1,4 +1,4 @@
-namespace TestingExample;
+namespace TestingExample.Fixtures;
 
 public class FixtureWrapper {
 	private readonly IEverTestsFixture _fixture;

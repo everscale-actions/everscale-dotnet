@@ -4,7 +4,7 @@ using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Containers;
 using Microsoft.Extensions.Logging;
 
-namespace TestingExample;
+namespace TestingExample.Fixtures;
 
 public class WaitNodeSeFirstBlockStrategy : IWaitUntil {
 	// Alternative check inside container

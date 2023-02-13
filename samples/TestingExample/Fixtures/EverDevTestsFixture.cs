@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 using Serilog;
 using Serilog.Extensions.Logging;
 
-namespace TestingExample;
+namespace TestingExample.Fixtures;
 
 public class EverDevTestsFixture : IEverTestsFixture {
 	private readonly WebPackageManager _giverPackageManager;
