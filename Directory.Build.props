@@ -1,4 +1,6 @@
 <Project>
+	<Import Project="SDKVersion.targets"/>
+
 	<PropertyGroup>
 		<NET6 Condition=" '$(TargetFramework)' == 'net6.0' ">true</NET6>
 		<NET6 Condition=" '$(NET6)' != 'true' ">false</NET6>

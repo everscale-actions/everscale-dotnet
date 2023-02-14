@@ -1,7 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-	<Import Project="..\..\SDKVersion.targets" />
-
 	<ItemGroup>
 		<None Include="_contracts\**" CopyToOutputDirectory="PreserveNewest" />
 	</ItemGroup>
