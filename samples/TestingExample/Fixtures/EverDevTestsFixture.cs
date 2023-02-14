@@ -73,12 +73,11 @@ public class EverDevTestsFixture : IEverTestsFixture {
 		}
 
 		var options = new EverClientOptions {
-			Network = new NetworkConfig {
+			Network = {
 				Endpoints = endpoints,
 				QueriesProtocol = NetworkQueriesProtocol.WS
 			}
 		};
-
 		_adapter = new EverClientRustAdapter(new OptionsWrapper<EverClientOptions>(options), logger);
 		return new EverClient(_adapter);
 	}

@@ -22,6 +22,13 @@
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 
+	<PropertyGroup>
+		<PackageVersion Condition=" $(PackageVersion) == '' ">$(SDKVersion)</PackageVersion>
+		<AssemblyVersion Condition=" $(AssemblyVersion) == '' ">$(SDKVersion)</AssemblyVersion>
+		<RunNumber Condition=" $(RunNumber) == '' ">0</RunNumber>
+		<FileVersion Condition=" $(FileVersion) == '' ">$(SDKVersion).$(RunNumber)</FileVersion>
+	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
 		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
 	</PropertyGroup>

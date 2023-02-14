@@ -1,6 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-	<Import Project="..\..\SDKVersion.targets" />
 	<Import Project="DownloadLib.targets" />
 
 	<ItemGroup>
