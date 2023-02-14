@@ -4,6 +4,10 @@ using Xunit.Abstractions;
 
 namespace EverscaleNet.Client.Tests;
 
+[CollectionDefinition(nameof(SystemTestCollectionDefinition), DisableParallelization = true)]
+public class SystemTestCollectionDefinition { }
+
+[Collection(nameof(SystemTestCollectionDefinition))]
 public class ParallelRequestsTests : IClassFixture<EverClientTestsFixture> {
 	private readonly IEverClient _everClient;
 
