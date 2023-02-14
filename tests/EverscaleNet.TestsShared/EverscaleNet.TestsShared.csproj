@@ -9,10 +9,4 @@
 		<ProjectReference Include="..\..\src\EverscaleNet.Utils\EverscaleNet.Utils.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<AssemblyAttribute Include="EverscaleNet.TestsShared.SdkVersionAttribute">
-			<_Parameter1>$(SDKVersion)</_Parameter1>
-		</AssemblyAttribute>
-	</ItemGroup>
-
 </Project>

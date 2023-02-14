@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-using System.Text.Json.Serialization;
-using EverscaleNet.Client;
+﻿using System.Text.Json.Serialization;
 using EverscaleNet.Client.Models;
 
 // ReSharper disable UnusedMember.Global
@@ -12,8 +10,8 @@ namespace EverscaleNet.Models;
 /// </summary>
 public class EverClientOptions {
 	private static readonly BindingConfig DefaultBindingConfig = new() {
-		Library = "everscale-actions/everscale-dotnet",
-		Version = Assembly.GetAssembly(typeof(EverClient))!.GetName().Version?.ToString() ?? "Undefined"
+		Library = Static.BindingName,
+		Version = Static.SdkVersion
 	};
 
 	/// <summary>

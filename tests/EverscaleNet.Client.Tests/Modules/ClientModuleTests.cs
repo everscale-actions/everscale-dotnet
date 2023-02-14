@@ -1,5 +1,4 @@
-﻿using EverscaleNet.TestsShared;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -32,6 +31,14 @@ public class ClientModuleTests : IClassFixture<EverClientTestsFixture> {
 	public async Task ReturnsMatchedVersion() {
 		ResultOfVersion result = await _everClient.Client.Version();
 
-		result.Version.Should().Be(TestsEnv.SdkVersion);
+		result.Version.Should().Be(Static.SdkVersion);
+	}
+
+	[Fact]
+	public async Task BindingInfo() {
+		ClientConfig result = await _everClient.Client.Config();
+
+		result.Binding.Library.Should().Be(Static.BindingName);
+		result.Binding.Version.Should().Be(Static.SdkVersion);
 	}
 }
