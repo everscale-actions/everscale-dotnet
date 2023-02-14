@@ -14,6 +14,6 @@ namespace EverscaleNet.Client.Models
         /// <para>Account address type.</para>
         /// </summary>
         [JsonPropertyName("address_type")]
-        public AccountAddressType AddressType { get; set; }
+        public AccountAddressType? AddressType { get; set; }
     }
 }

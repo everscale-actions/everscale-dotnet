@@ -28,8 +28,8 @@ public class EverClientBenchmark {
 	public void GlobalSetup() {
 		_adapter = new EverClientRustAdapter(new OptionsWrapper<EverClientOptions>(new EverClientOptions()));
 		_everClient = new EverClient(_adapter);
-		_paramsOfMnemonicFromRandomTon = new ParamsOfMnemonicFromRandom { Dictionary = 0 };
-		_paramsOfMnemonicFromRandomEnglish = new ParamsOfMnemonicFromRandom { Dictionary = 1 };
+		_paramsOfMnemonicFromRandomTon = new ParamsOfMnemonicFromRandom { Dictionary = MnemonicDictionary.Ton };
+		_paramsOfMnemonicFromRandomEnglish = new ParamsOfMnemonicFromRandom { Dictionary = MnemonicDictionary.English };
 	}
 
 	[GlobalCleanup]
@@ -46,7 +46,7 @@ public class EverClientBenchmark {
 	[Benchmark(OperationsPerInvoke = 1)]
 	public async Task Crypto_MnemonicVerify_Ton() {
 		foreach (string phrase in _tonPhrases) {
-			await _everClient.Crypto.MnemonicVerify(new ParamsOfMnemonicVerify { Phrase = phrase, Dictionary = 0 });
+			await _everClient.Crypto.MnemonicVerify(new ParamsOfMnemonicVerify { Phrase = phrase, Dictionary = MnemonicDictionary.Ton });
 		}
 	}
 
@@ -59,7 +59,7 @@ public class EverClientBenchmark {
 	[Benchmark(OperationsPerInvoke = 1)]
 	public async Task Crypto_MnemonicVerify_English() {
 		foreach (string phrase in _englishPhrases) {
-			await _everClient.Crypto.MnemonicVerify(new ParamsOfMnemonicVerify { Phrase = phrase, Dictionary = 1 });
+			await _everClient.Crypto.MnemonicVerify(new ParamsOfMnemonicVerify { Phrase = phrase, Dictionary = MnemonicDictionary.English });
 		}
 	}
 }

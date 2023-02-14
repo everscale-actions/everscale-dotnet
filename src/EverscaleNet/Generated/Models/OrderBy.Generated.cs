@@ -20,6 +20,6 @@ namespace EverscaleNet.Client.Models
         /// <para>Not described yet..</para>
         /// </summary>
         [JsonPropertyName("direction")]
-        public SortDirection Direction { get; set; }
+        public SortDirection? Direction { get; set; }
     }
 }

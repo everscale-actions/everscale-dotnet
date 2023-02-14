@@ -11,10 +11,10 @@ namespace EverscaleNet.Client.Models
     public class CryptoConfig
     {
         /// <summary>
-        /// <para>Mnemonic dictionary that will be used by default in crypto functions. If not specified, 1 dictionary will be used.</para>
+        /// <para>Mnemonic dictionary that will be used by default in crypto functions. If not specified, `English` dictionary will be used.</para>
         /// </summary>
         [JsonPropertyName("mnemonic_dictionary")]
-        public byte? MnemonicDictionary { get; set; }
+        public MnemonicDictionary? MnemonicDictionary { get; set; }
 
         /// <summary>
         /// <para>Mnemonic word count that will be used by default in crypto functions. If not specified the default value will be 12.</para>

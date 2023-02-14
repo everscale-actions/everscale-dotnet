@@ -8,10 +8,10 @@ using static EverscaleNet.ClientGenerator.Helpers.PropertyHelpers;
 namespace EverscaleNet.ClientGenerator.Helpers;
 
 internal class ModelsClassHelpers {
-	private readonly string[] _allTypes;
+	private readonly Dictionary<string, TypeType> _allTypes;
 	private readonly IReadOnlyDictionary<string, string> _numberTypesMapping;
 
-	public ModelsClassHelpers(IReadOnlyDictionary<string, string> numberTypesMapping, string[] allTypes) {
+	public ModelsClassHelpers(IReadOnlyDictionary<string, string> numberTypesMapping, Dictionary<string, TypeType> allTypes) {
 		_numberTypesMapping = numberTypesMapping;
 		_allTypes = allTypes;
 	}
@@ -136,14 +136,21 @@ internal class ModelsClassHelpers {
 	}
 
 	private MemberDeclarationSyntax CreatePropertyForRef(string typeName, string name, string description,
-	                                                     bool optional = false,
 	                                                     bool addPostfix = false) {
 		typeName = NamingConventions.Normalize(typeName);
-		typeName = _allTypes.Contains(typeName) ? typeName : "JsonElement?";
+		bool optional;
 
-		typeName = _numberTypesMapping.ContainsKey(typeName)
-			           ? _numberTypesMapping[typeName]
-			           : typeName;
+		if (_numberTypesMapping.ContainsKey(typeName)) {
+			typeName = _numberTypesMapping[typeName];
+			optional = false;
+		} else {
+			if (_allTypes.TryGetValue(typeName, out TypeType type)) {
+				optional = type == TypeType.EnumOfConsts;
+			} else {
+				typeName = "JsonElement";
+				optional = true;
+			}
+		}
 
 		return CreatePropertyDeclaration(typeName, name, description, optional, addPostfix);
 	}
@@ -235,7 +242,7 @@ internal class ModelsClassHelpers {
 		}
 
 		string typeName = arrayType switch {
-			GenericArgType.Ref => _allTypes.Contains(NamingConventions.Normalize(arrayRefName))
+			GenericArgType.Ref => _allTypes.ContainsKey(NamingConventions.Normalize(arrayRefName))
 				                      ? NamingConventions.Normalize(arrayRefName)
 				                      : "JsonElement",
 			GenericArgType.Boolean => "bool",

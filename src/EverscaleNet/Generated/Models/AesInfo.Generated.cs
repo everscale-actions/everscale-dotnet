@@ -14,7 +14,7 @@ namespace EverscaleNet.Client.Models
         /// <para>Not described yet..</para>
         /// </summary>
         [JsonPropertyName("mode")]
-        public CipherMode Mode { get; set; }
+        public CipherMode? Mode { get; set; }
 
         /// <summary>
         /// <para>Not described yet..</para>

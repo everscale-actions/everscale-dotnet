@@ -58,5 +58,11 @@ namespace EverscaleNet.Client.Models
         /// </summary>
         [JsonPropertyName("processing_try_index")]
         public byte? ProcessingTryIndex { get; set; }
+
+        /// <summary>
+        /// <para>Signature ID to be used in data to sign preparing when CapSignatureWithId capability is enabled</para>
+        /// </summary>
+        [JsonPropertyName("signature_id")]
+        public int? SignatureId { get; set; }
     }
 }

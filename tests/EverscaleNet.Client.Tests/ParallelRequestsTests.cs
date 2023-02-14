@@ -13,10 +13,12 @@ public class ParallelRequestsTests : IClassFixture<EverClientTestsFixture> {
 
 	[Fact(Timeout = 30000)]
 	public async Task ParallelRunNotThrowExceptions() {
-		ParallelQuery<Task<ResultOfMnemonicFromRandom>> tasks = Enumerable
-		                                                        .Repeat((object)null, 10000)
-		                                                        .AsParallel()
-		                                                        .Select(_ => _everClient.Crypto.MnemonicFromRandom(new ParamsOfMnemonicFromRandom()));
+		const int parallelTasks = 100000;
+
+		ParallelQuery<Task<KeyPair>> tasks = Enumerable
+		                                     .Repeat((object)null, parallelTasks)
+		                                     .AsParallel()
+		                                     .Select(_ => _everClient.Crypto.GenerateRandomSignKeys());
 
 		Func<Task> act = () => Task.WhenAll(tasks);
 

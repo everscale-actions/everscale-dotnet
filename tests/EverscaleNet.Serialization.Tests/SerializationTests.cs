@@ -86,7 +86,7 @@ public class SerializationTests {
 
 	[Fact]
 	public void EnumIntValueType() {
-		var @params = new ParamsOfMnemonicFromRandom { Dictionary = 1 };
+		var @params = new ParamsOfMnemonicFromRandom { Dictionary = MnemonicDictionary.English };
 
 		string json = JsonSerializer.Serialize(@params, JsonOptionsProvider.JsonSerializerOptions);
 

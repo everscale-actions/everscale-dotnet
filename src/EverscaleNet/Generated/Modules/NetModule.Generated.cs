@@ -400,5 +400,13 @@ namespace EverscaleNet.Client.Modules
         {
             await _everClientAdapter.Request<RegisteredIterator>("net.remove_iterator", @params, cancellationToken);
         }
+
+        /// <summary>
+        /// <para>Returns signature ID for configured network if it should be used in messages signature</para>
+        /// </summary>
+        public async Task<ResultOfGetSignatureId> GetSignatureId(CancellationToken cancellationToken = default)
+        {
+            return await _everClientAdapter.Request<ResultOfGetSignatureId>("net.get_signature_id", cancellationToken);
+        }
     }
 }

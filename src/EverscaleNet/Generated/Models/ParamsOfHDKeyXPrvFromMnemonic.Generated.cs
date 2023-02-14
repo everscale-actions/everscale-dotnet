@@ -20,7 +20,7 @@ namespace EverscaleNet.Client.Models
         /// <para>Dictionary identifier</para>
         /// </summary>
         [JsonPropertyName("dictionary")]
-        public byte? Dictionary { get; set; }
+        public MnemonicDictionary? Dictionary { get; set; }
 
         /// <summary>
         /// <para>Mnemonic word count</para>

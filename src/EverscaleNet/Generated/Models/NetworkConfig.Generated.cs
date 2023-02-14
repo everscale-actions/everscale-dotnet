@@ -113,7 +113,7 @@ namespace EverscaleNet.Client.Models
         /// <para>Default is `HTTP`.</para>
         /// </summary>
         [JsonPropertyName("queries_protocol")]
-        public NetworkQueriesProtocol QueriesProtocol { get; set; }
+        public NetworkQueriesProtocol? QueriesProtocol { get; set; }
 
         /// <summary>
         /// <para>UNSTABLE.</para>
@@ -130,6 +130,16 @@ namespace EverscaleNet.Client.Models
         /// </summary>
         [JsonPropertyName("next_remp_status_timeout")]
         public uint? NextRempStatusTimeout { get; set; }
+
+        /// <summary>
+        /// <para>Network signature ID which is used by VM in signature verifying instructions if capability `CapSignatureWithId` is enabled in blockchain configuration parameters.</para>
+        /// <para>This parameter should be set to `global_id` field from any blockchain block if network can</para>
+        /// <para>not be reachable at the moment of message encoding and the message is aimed to be sent into</para>
+        /// <para>network with `CapSignatureWithId` enabled. Otherwise signature ID is detected automatically</para>
+        /// <para>inside message encoding functions</para>
+        /// </summary>
+        [JsonPropertyName("signature_id")]
+        public int? SignatureId { get; set; }
 
         /// <summary>
         /// <para>Access key to GraphQL API (Project secret)</para>

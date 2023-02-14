@@ -13,6 +13,12 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Not described yet..</para>
         /// </summary>
+        [JsonPropertyName("binding")]
+        public BindingConfig Binding { get; set; }
+
+        /// <summary>
+        /// <para>Not described yet..</para>
+        /// </summary>
         [JsonPropertyName("network")]
         public NetworkConfig Network { get; set; }
 

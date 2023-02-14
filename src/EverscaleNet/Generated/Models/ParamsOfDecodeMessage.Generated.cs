@@ -38,6 +38,6 @@ namespace EverscaleNet.Client.Models
         /// <para>Not described yet..</para>
         /// </summary>
         [JsonPropertyName("data_layout")]
-        public DataLayout DataLayout { get; set; }
+        public DataLayout? DataLayout { get; set; }
     }
 }
