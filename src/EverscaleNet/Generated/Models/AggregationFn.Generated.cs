@@ -8,6 +8,7 @@ namespace EverscaleNet.Client.Models
     /// <summary>
     /// <para>Not described yet..</para>
     /// </summary>
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum AggregationFn
     {
         /// <summary>

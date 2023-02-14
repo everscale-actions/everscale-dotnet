@@ -77,11 +77,29 @@ public class SerializationTests {
 
 	[Fact]
 	public void TypeWithNullableProperties() {
-		var @params = new ParamsOfMnemonicFromRandom { Dictionary = 111 };
+		var @params = new ParamsOfMnemonicFromRandom();
 
 		string json = JsonSerializer.Serialize(@params, JsonOptionsProvider.JsonSerializerOptions);
 
-		json.Should().Be("{\"dictionary\":111}");
+		json.Should().Be("{}");
+	}
+
+	[Fact]
+	public void EnumIntValueType() {
+		var @params = new ParamsOfMnemonicFromRandom { Dictionary = 1 };
+
+		string json = JsonSerializer.Serialize(@params, JsonOptionsProvider.JsonSerializerOptions);
+
+		json.Should().Be("{\"dictionary\":1}");
+	}
+
+	[Fact]
+	public void EnumStringValueType() {
+		var @params = new NetworkConfig { QueriesProtocol = NetworkQueriesProtocol.WS };
+
+		string json = JsonSerializer.Serialize(@params, JsonOptionsProvider.JsonSerializerOptions);
+
+		json.Should().Be("{\"queries_protocol\":\"WS\"}");
 	}
 
 	[Theory]

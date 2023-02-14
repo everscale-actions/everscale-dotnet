@@ -33,19 +33,19 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 
 	[Theory]
 	[ClassData(typeof(MnemonicFromRandomData))]
-	public async Task MnemonicFromRandom(byte dictionary, byte wordCount) {
+	public async Task MnemonicFromRandom(byte? dictionary, byte? wordCount) {
 		ResultOfMnemonicFromRandom result = await _everClient.Crypto.MnemonicFromRandom(
 			                                    new ParamsOfMnemonicFromRandom {
 				                                    Dictionary = dictionary,
 				                                    WordCount = wordCount
 			                                    });
 
-		result.Phrase.Split(" ").Length.Should().Be(wordCount);
+		result.Phrase.Split(" ").Length.Should().Be(wordCount ?? 12);
 	}
 
 	[Theory]
 	[ClassData(typeof(MnemonicFromRandomData))]
-	public async Task MnemonicFromRandomVerify(byte dictionary, byte wordCount) {
+	public async Task MnemonicFromRandomVerify(byte? dictionary, byte? wordCount) {
 		ResultOfMnemonicFromRandom result = await _everClient.Crypto.MnemonicFromRandom(
 			                                    new ParamsOfMnemonicFromRandom {
 				                                    Dictionary = dictionary,
@@ -266,6 +266,15 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 		ResultOfMnemonicWords result = await _everClient.Crypto.MnemonicWords(new ParamsOfMnemonicWords());
 
 		result.Words.Split(" ").Length.Should().Be(2048);
+	}
+
+	[Fact]
+	public async Task ClientReturnsEnglishMnemonicAsDefault() {
+		ResultOfMnemonicFromRandom mnemonicFromRandom = await _everClient.Crypto.MnemonicFromRandom(new ParamsOfMnemonicFromRandom());
+
+		ResultOfMnemonicVerify result = await _everClient.Crypto.MnemonicVerify(new ParamsOfMnemonicVerify { Phrase = mnemonicFromRandom.Phrase, Dictionary = 1 });
+
+		result.Valid.Should().BeTrue();
 	}
 
 	[Fact]
@@ -570,8 +579,8 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 		}
 
 		private static List<object[]> GetData() {
-			IEnumerable<int> dict = Enumerable.Range(1, 8);
-			int[] words = { 12, 15, 18, 21, 24 };
+			byte?[] dict = Enumerable.Range(1, 8).Select(i => (byte?)i).Append(null).ToArray();
+			byte?[] words = { null, 12, 15, 18, 21, 24 };
 
 			return (from d in dict
 			        from w in words

@@ -18,13 +18,22 @@ internal class ModelsClassHelpers {
 
 	private static EnumDeclarationSyntax GenerateEnumOfConsts(TypeElement typeElement) {
 		string summary = typeElement.Summary + (typeElement.Description != null ? $"\n{typeElement.Description}" : null);
-		return EnumDeclaration(Identifier(NamingConventions.Normalize(typeElement.Name)))
+
+		bool isValuedEnum = typeElement
+		                    .EnumConsts.Any(e => e.Value is not null);
+
+		EnumDeclarationSyntax declaration = EnumDeclaration(Identifier(NamingConventions.Normalize(typeElement.Name)));
+
+		if (!isValuedEnum) {
+			declaration = declaration.AddAttributeLists(AttributeList(SeparatedList(new List<AttributeSyntax> { Attribute(IdentifierName("JsonConverter(typeof(JsonStringEnumConverter))")) })));
+		}
+		return declaration
 		       .AddMembers(typeElement
 		                   .EnumConsts
 		                   .Select(EnumSelector)
 		                   .ToArray())
-		       .AddModifiers(Token(SyntaxKind.PublicKeyword)
-			                     .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(summary)));
+		       .AddModifiers(Token(SyntaxKind.PublicKeyword))
+		       .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(summary));
 	}
 
 	private static EnumMemberDeclarationSyntax EnumSelector(EnumConst e) {

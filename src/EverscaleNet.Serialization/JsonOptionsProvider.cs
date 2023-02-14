@@ -24,7 +24,6 @@ public static class JsonOptionsProvider {
 	private static JsonSerializerOptions CreateJsonSerializerOptions() {
 		var options = new JsonSerializerOptions {
 			MaxDepth = int.MaxValue,
-			Converters = { new JsonStringEnumConverter() },
 #if NETSTANDARD2_1 || NET5_0_OR_GREATER
 			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
 #else

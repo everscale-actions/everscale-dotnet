@@ -8,6 +8,7 @@ namespace EverscaleNet.Client.Models
     /// <summary>
     /// <para>Network protocol used to perform GraphQL queries.</para>
     /// </summary>
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum NetworkQueriesProtocol
     {
         /// <summary>
