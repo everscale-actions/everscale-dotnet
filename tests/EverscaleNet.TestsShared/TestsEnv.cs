@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using EverscaleNet.Client.PackageManager;
+﻿using EverscaleNet.Client.PackageManager;
 using EverscaleNet.Utils;
 using Microsoft.Extensions.Options;
 
@@ -14,8 +13,6 @@ public static class TestsEnv {
 		                                                                                        new FilePackageManagerOptions
 			                                                                                        { PackagesPath = Path.Join(ContractsPath, $"abi_v{CurrentAbiVersion}") }));
 	public static readonly string[] EverscaleNetworkEndpoints = Environment.GetEnvironmentVariable(NetworkEndpointsEnvVariable)?.Split(";") ?? EverOS.Endpoints.NodeSE;
-
-	public static readonly string SdkVersion = typeof(SdkVersionAttribute).Assembly!.GetCustomAttribute<SdkVersionAttribute>()?.SdkVersion;
 
 	private static int CurrentAbiVersion => int.TryParse(Environment.GetEnvironmentVariable("ABI_VERSION"), out int version)
 		                                        ? version == 0 ? DefaultAbiVersion : version

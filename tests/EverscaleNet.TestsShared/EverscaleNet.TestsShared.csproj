@@ -1,7 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-	<Import Project="..\..\SDKVersion.targets" />
-
 	<ItemGroup>
 		<None Include="_contracts\**" CopyToOutputDirectory="PreserveNewest" />
 	</ItemGroup>
@@ -9,12 +7,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\EverscaleNet.Client\EverscaleNet.Client.csproj" />
 		<ProjectReference Include="..\..\src\EverscaleNet.Utils\EverscaleNet.Utils.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<AssemblyAttribute Include="EverscaleNet.TestsShared.SdkVersionAttribute">
-			<_Parameter1>$(SDKVersion)</_Parameter1>
-		</AssemblyAttribute>
 	</ItemGroup>
 
 </Project>

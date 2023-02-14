@@ -1,11 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<ItemGroup Condition=" !$(NET6_OR_NET7)">
-		<PackageReference Include="Dahomey.Json.Attributes" />
+		<PackageReference Include="Dahomey.Json.Attributes"/>
 	</ItemGroup>
 
 	<ItemGroup Condition=" '$(NET6)' ">
-		<PackageReference Include="System.Text.Json" />
+		<PackageReference Include="System.Text.Json"/>
+	</ItemGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>EverscaleNet.Client.Tests</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="EverscaleNet.SdkVersionAttribute">
+			<_Parameter1>$(SDKVersion)</_Parameter1>
+		</AssemblyAttribute>
 	</ItemGroup>
 
 </Project>

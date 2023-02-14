@@ -1,28 +1,20 @@
-﻿using System.Text.Json.Serialization;
-using EverscaleNet.Client.Models;
+﻿using EverscaleNet.Client.Models;
+
+// ReSharper disable UnusedMember.Global
 
 namespace EverscaleNet.Models;
 
 /// <summary>
-///     Everscale client options. See details https://tonlabs.gitbook.io/ever-sdk/guides/installation/configure_sdk#configure-client
+///     Everscale client options. See details https://docs.everos.dev/ever-sdk/reference/types-and-methods/mod_client#config
 /// </summary>
-public class EverClientOptions {
-	/// <summary>
-	///     https://tonlabs.gitbook.io/ever-sdk/guides/installation/configure_sdk#network-config
-	///     see available endpoint URLs https://tonlabs.gitbook.io/ever-sdk/reference/ton-os-api/networks#networks
-	/// </summary>
-	[JsonPropertyName("network")]
-	public NetworkConfig Network { get; set; } = new();
-
-	/// <summary>
-	///     https://tonlabs.gitbook.io/ever-sdk/guides/installation/configure_sdk#crypto-config
-	/// </summary>
-	[JsonPropertyName("crypto")]
-	public CryptoConfig Crypto { get; set; } = new();
-
-	/// <summary>
-	///     https://tonlabs.gitbook.io/ever-sdk/guides/installation/configure_sdk#abi-config
-	/// </summary>
-	[JsonPropertyName("abi")]
-	public AbiConfig Abi { get; set; } = new();
+public class EverClientOptions : ClientConfig {
+	/// <inheritdoc />
+	public EverClientOptions() {
+		Binding = new BindingConfig { Library = Static.BindingName, Version = Static.SdkVersion };
+		Network = new NetworkConfig();
+		Crypto = new CryptoConfig();
+		Abi = new AbiConfig();
+		Boc = new BocConfig();
+		Proofs = new ProofsConfig();
+	}
 }

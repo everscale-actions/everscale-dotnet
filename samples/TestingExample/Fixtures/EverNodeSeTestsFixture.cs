@@ -79,7 +79,7 @@ public class EverNodeSeTestsFixture : IEverTestsFixture {
 			                     : EverOS.Endpoints.NodeSE.Select(e => $"{e}:{_everNodeSeContainer.GetMappedPublicPort(80)}").ToArray();
 
 		var options = new EverClientOptions {
-			Network = new NetworkConfig {
+			Network = {
 				Endpoints = endpoints,
 				QueriesProtocol = NetworkQueriesProtocol.WS
 			}
