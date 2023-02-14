@@ -24,10 +24,9 @@
 
 	<PropertyGroup>
 		<PackageVersion Condition=" $(PackageVersion) == '' ">$(SDKVersion)</PackageVersion>
-		<Version Condition=" $(Version) == '' ">$(PackageVersion)</Version>
-		<AssemblyVersion Condition=" $(AssemblyVersion) == '' ">$(PackageVersion)</AssemblyVersion>
+		<AssemblyVersion Condition=" $(AssemblyVersion) == '' ">$(SDKVersion)</AssemblyVersion>
 		<RunNumber Condition=" $(RunNumber) == '' ">0</RunNumber>
-		<FileVersion Condition=" $(FileVersion) == '' ">$(AssemblyVersion).$(RunNumber)</FileVersion>
+		<FileVersion Condition=" $(FileVersion) == '' ">$(SDKVersion).$(RunNumber)</FileVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
