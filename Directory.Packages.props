@@ -1,49 +1,50 @@
 <Project>
-    <PropertyGroup>
-        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-    </PropertyGroup>
-    <ItemGroup>
-        <PackageVersion Include="Blazored.LocalStorage" Version="4.3.0" />
-        <PackageVersion Include="ch1seL.MSBuildGzTool" Version="1.2.0" />
-        <PackageVersion Include="coverlet.collector" Version="3.2.0" />
-        <PackageVersion Include="Dahomey.Json" Version="1.12.2" />
-        <PackageVersion Include="Dahomey.Json.Attributes" Version="1.0.1" />
-        <PackageVersion Include="EnumExtensions.System.Text.Json" Version="1.1.0" />
-        <PackageVersion Include="FluentAssertions" Version="6.9.0" />
-        <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.2" />
-        <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.2" />
-        <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.4.0" />
-        <PackageVersion Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
-        <PackageVersion Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
-        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.4.1" />
-        <PackageVersion Include="Serilog.Extensions.Hosting" Version="5.0.1" />
-        <PackageVersion Include="Serilog.Extensions.Logging" Version="3.1.0" />
-        <PackageVersion Include="Serilog.Sinks.Console" Version="4.1.0" />
-        <PackageVersion Include="Serilog.Sinks.XUnit" Version="3.0.3" />
-        <PackageVersion Include="Testcontainers" Version="2.4.0" />
-        <PackageVersion Include="xunit" Version="2.4.2" />
-        <PackageVersion Include="xunit.runner.visualstudio" Version="2.4.5" />
-        <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="1.1.1" />
-    </ItemGroup>
-    <ItemGroup Condition=" !$(NET6_OR_NET7)">
-        <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
-        <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
-        <PackageVersion Include="Microsoft.Extensions.Logging" Version="6.0.0" />
-        <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.3" />
-        <PackageVersion Include="Microsoft.Extensions.Options" Version="6.0.0" />
-    </ItemGroup>
-    <ItemGroup Condition=" $(NET6_OR_NET7) ">
-        <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
-        <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
-        <PackageVersion Include="Microsoft.Extensions.Logging" Version="7.0.0" />
-        <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
-        <PackageVersion Include="Microsoft.Extensions.Options" Version="7.0.0" />
-    </ItemGroup>
-    <ItemGroup Condition=" '$(NET7)' ">
-        <PackageVersion Include="Microsoft.JSInterop" Version="7.0.2" />
-    </ItemGroup>
-    <ItemGroup Condition=" '$(NET6)' ">
-        <PackageVersion Include="Microsoft.JSInterop" Version="6.0.0" />
-        <PackageVersion Include="System.Text.Json" Version="7.0.1" />
-    </ItemGroup>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="BenchmarkDotNet" Version="0.13.4" />
+    <PackageVersion Include="Blazored.LocalStorage" Version="4.3.0" />
+    <PackageVersion Include="ch1seL.MSBuildGzTool" Version="1.2.0" />
+    <PackageVersion Include="coverlet.collector" Version="3.2.0" />
+    <PackageVersion Include="Dahomey.Json" Version="1.12.2" />
+    <PackageVersion Include="Dahomey.Json.Attributes" Version="1.0.1" />
+    <PackageVersion Include="EnumExtensions.System.Text.Json" Version="1.1.0" />
+    <PackageVersion Include="FluentAssertions" Version="6.9.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.2" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.2" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.4.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.4.1" />
+    <PackageVersion Include="Serilog.Extensions.Hosting" Version="5.0.1" />
+    <PackageVersion Include="Serilog.Extensions.Logging" Version="3.1.0" />
+    <PackageVersion Include="Serilog.Sinks.Console" Version="4.1.0" />
+    <PackageVersion Include="Serilog.Sinks.XUnit" Version="3.0.3" />
+    <PackageVersion Include="Testcontainers" Version="2.4.0" />
+    <PackageVersion Include="xunit" Version="2.4.2" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="2.4.5" />
+    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="1.1.1" />
+  </ItemGroup>
+  <ItemGroup Condition=" !$(NET6_OR_NET7)">
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.3" />
+    <PackageVersion Include="Microsoft.Extensions.Options" Version="6.0.0" />
+  </ItemGroup>
+  <ItemGroup Condition=" $(NET6_OR_NET7) ">
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Options" Version="7.0.0" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(NET7)' ">
+    <PackageVersion Include="Microsoft.JSInterop" Version="7.0.2" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(NET6)' ">
+    <PackageVersion Include="Microsoft.JSInterop" Version="6.0.0" />
+    <PackageVersion Include="System.Text.Json" Version="7.0.1" />
+  </ItemGroup>
 </Project>
