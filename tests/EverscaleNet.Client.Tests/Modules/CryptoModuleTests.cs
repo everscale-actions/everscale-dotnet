@@ -33,7 +33,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 
 	[Theory]
 	[ClassData(typeof(MnemonicFromRandomData))]
-	public async Task MnemonicFromRandom(byte? dictionary, byte? wordCount) {
+	public async Task MnemonicFromRandom(MnemonicDictionary? dictionary, byte? wordCount) {
 		ResultOfMnemonicFromRandom result = await _everClient.Crypto.MnemonicFromRandom(
 			                                    new ParamsOfMnemonicFromRandom {
 				                                    Dictionary = dictionary,
@@ -45,7 +45,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 
 	[Theory]
 	[ClassData(typeof(MnemonicFromRandomData))]
-	public async Task MnemonicFromRandomVerify(byte? dictionary, byte? wordCount) {
+	public async Task MnemonicFromRandomVerify(MnemonicDictionary? dictionary, byte? wordCount) {
 		ResultOfMnemonicFromRandom result = await _everClient.Crypto.MnemonicFromRandom(
 			                                    new ParamsOfMnemonicFromRandom {
 				                                    Dictionary = dictionary,
@@ -190,7 +190,8 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 	[Fact]
 	public async Task MnemonicDeriveSignKeys() {
 		KeyPair result = await _everClient.Crypto.MnemonicDeriveSignKeys(new ParamsOfMnemonicDeriveSignKeys {
-			Phrase = "abandon math mimic master filter design carbon crystal rookie group knife young"
+			Phrase = "foil despair dish fitness start seat hobby hood eight organ want wrong",
+			Dictionary = MnemonicDictionary.Ton
 		});
 
 		ResultOfConvertPublicKeyToTonSafeFormat anotherResult =
@@ -199,7 +200,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 					PublicKey = result.Public
 				});
 
-		anotherResult.TonPublicKey.Should().Be("PuZhw8W5ejPJwKA68RL7sn4_RNmeH4BIU_mEK7em5d4_-cIx");
+		anotherResult.TonPublicKey.Should().Be("PuYPI2kinsEy2cc8K42Ro4_tPlL1uFLyKLpCCqkEBFbw1XAH");
 	}
 
 	[Fact]
@@ -244,7 +245,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 		ResultOfMnemonicFromEntropy result = await _everClient.Crypto.MnemonicFromEntropy(
 			                                     new ParamsOfMnemonicFromEntropy {
 				                                     Entropy = "00112233445566778899AABBCCDDEEFF",
-				                                     Dictionary = 1,
+				                                     Dictionary = MnemonicDictionary.English,
 				                                     WordCount = 12
 			                                     });
 
@@ -272,7 +273,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 	public async Task ClientReturnsEnglishMnemonicAsDefault() {
 		ResultOfMnemonicFromRandom mnemonicFromRandom = await _everClient.Crypto.MnemonicFromRandom(new ParamsOfMnemonicFromRandom());
 
-		ResultOfMnemonicVerify result = await _everClient.Crypto.MnemonicVerify(new ParamsOfMnemonicVerify { Phrase = mnemonicFromRandom.Phrase, Dictionary = 1 });
+		ResultOfMnemonicVerify result = await _everClient.Crypto.MnemonicVerify(new ParamsOfMnemonicVerify { Phrase = mnemonicFromRandom.Phrase, Dictionary = MnemonicDictionary.English });
 
 		result.Valid.Should().BeTrue();
 	}
@@ -579,7 +580,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 		}
 
 		private static List<object[]> GetData() {
-			byte?[] dict = Enumerable.Range(1, 8).Select(i => (byte?)i).Append(null).ToArray();
+			MnemonicDictionary?[] dict = Enum.GetValues(typeof(MnemonicDictionary)).Cast<MnemonicDictionary?>().Append(null).ToArray();
 			byte?[] words = { null, 12, 15, 18, 21, 24 };
 
 			return (from d in dict

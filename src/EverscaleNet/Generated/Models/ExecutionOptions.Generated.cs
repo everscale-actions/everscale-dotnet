@@ -39,5 +39,11 @@ namespace EverscaleNet.Client.Models
         /// </summary>
         [JsonPropertyName("chksig_always_succeed")]
         public bool? ChksigAlwaysSucceed { get; set; }
+
+        /// <summary>
+        /// <para>Signature ID to be used in signature verifying instructions when CapSignatureWithId capability is enabled</para>
+        /// </summary>
+        [JsonPropertyName("signature_id")]
+        public int? SignatureId { get; set; }
     }
 }

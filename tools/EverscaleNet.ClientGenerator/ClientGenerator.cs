@@ -39,10 +39,10 @@ internal static class ClientGenerator {
 		                       "System", "EverscaleNet.Abstract", "EverscaleNet.Abstract.Modules", "EverscaleNet.Client.Modules");
 
 		//Save all used types
-		string[] allTypes = everApi!.Modules
-		                            .SelectMany(m => m.Types)
-		                            .Select(t => NamingConventions.Normalize(t.Name))
-		                            .ToArray();
+		Dictionary<string, TypeType> allTypes = everApi!.Modules
+		                                                .SelectMany(m => m.Types)
+		                                                .Select(t => new { name = NamingConventions.Normalize(t.Name), type = t.Type })
+		                                                .ToDictionary(t => t.name, t => t.type);
 
 		IReadOnlyDictionary<string, string> numberTypesMapping = NumberUtils.MapNumericTypes(everApi!.Modules);
 

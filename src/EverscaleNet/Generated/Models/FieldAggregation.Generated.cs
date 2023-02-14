@@ -20,6 +20,6 @@ namespace EverscaleNet.Client.Models
         /// <para>Aggregation function that must be applied to field values</para>
         /// </summary>
         [JsonPropertyName("fn")]
-        public AggregationFn Fn { get; set; }
+        public AggregationFn? Fn { get; set; }
     }
 }

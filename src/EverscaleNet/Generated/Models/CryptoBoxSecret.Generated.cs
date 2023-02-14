@@ -34,7 +34,7 @@ namespace EverscaleNet.Client.Models
             /// <para>Get `encrypted_secret` with `get_crypto_box_info` function and store it on your side.</para>
             /// </summary>
             [JsonPropertyName("dictionary")]
-            public byte Dictionary { get; set; }
+            public MnemonicDictionary? Dictionary { get; set; }
 
             /// <summary>
             /// <para>Creates Crypto Box from a random seed phrase. This option can be used if a developer doesn't want the seed phrase to leave the core library's memory, where it is stored encrypted.</para>
@@ -73,7 +73,7 @@ namespace EverscaleNet.Client.Models
             /// <para>Get `encrypted_secret` with `get_crypto_box_info` function and store it on your side.</para>
             /// </summary>
             [JsonPropertyName("dictionary")]
-            public byte Dictionary { get; set; }
+            public MnemonicDictionary? Dictionary { get; set; }
 
             /// <summary>
             /// <para>Restores crypto box instance from an existing seed phrase. This type should be used when Crypto Box is initialized from a seed phrase, entered by a user.</para>

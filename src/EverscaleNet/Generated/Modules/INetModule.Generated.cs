@@ -322,5 +322,10 @@ namespace EverscaleNet.Abstract.Modules
         /// <para>is no longer required.</para>
         /// </summary>
         public Task RemoveIterator(RegisteredIterator @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// <para>Returns signature ID for configured network if it should be used in messages signature</para>
+        /// </summary>
+        public Task<ResultOfGetSignatureId> GetSignatureId(CancellationToken cancellationToken = default);
     }
 }

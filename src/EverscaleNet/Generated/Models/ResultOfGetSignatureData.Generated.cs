@@ -17,9 +17,9 @@ namespace EverscaleNet.Client.Models
         public string Signature { get; set; }
 
         /// <summary>
-        /// <para>Hash to verify the signature in `base64`.</para>
+        /// <para>Data to verify the signature in `base64`.</para>
         /// </summary>
-        [JsonPropertyName("hash")]
-        public string Hash { get; set; }
+        [JsonPropertyName("unsigned")]
+        public string Unsigned { get; set; }
     }
 }

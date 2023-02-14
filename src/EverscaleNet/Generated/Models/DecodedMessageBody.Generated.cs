@@ -14,7 +14,7 @@ namespace EverscaleNet.Client.Models
         /// <para>Type of the message body content.</para>
         /// </summary>
         [JsonPropertyName("body_type")]
-        public MessageBodyType BodyType { get; set; }
+        public MessageBodyType? BodyType { get; set; }
 
         /// <summary>
         /// <para>Function or event name.</para>
