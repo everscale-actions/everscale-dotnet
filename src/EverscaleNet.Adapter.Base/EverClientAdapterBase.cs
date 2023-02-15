@@ -95,7 +95,7 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 	}
 
 	/// <summary>
-	/// Wait for delegates finished their work
+	///     Wait for delegates finished their work
 	/// </summary>
 	protected virtual async ValueTask DisposeAsyncCore() {
 		bool waitDelegatesResult = await WaitForDelegates();

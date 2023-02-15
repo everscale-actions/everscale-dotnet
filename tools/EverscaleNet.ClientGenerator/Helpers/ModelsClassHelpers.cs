@@ -166,7 +166,7 @@ internal class ModelsClassHelpers {
 
 		return type switch {
 			GenericArgType.Boolean => CreatePropertyDeclaration("bool", name, description, optional, addPostfix),
-			GenericArgType.Ref => CreatePropertyForRef(refName, name, description, addPostfix: addPostfix),
+			GenericArgType.Ref => CreatePropertyForRef(refName, name, description, addPostfix),
 			GenericArgType.String => CreatePropertyDeclaration("string", name, description, addPostfix: addPostfix),
 			GenericArgType.Optional => CreatePropertyGenericArgs(optionalInner.Type, name, optionalInner.RefName,
 			                                                     null, description,
