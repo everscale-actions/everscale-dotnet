@@ -54,17 +54,17 @@
       "everscalenet.adapter.base": {
         "type": "Project",
         "dependencies": {
-          "EverscaleNet": "[1.0.0, )",
-          "EverscaleNet.Serialization": "[1.0.0, )",
+          "EverscaleNet": "[1.41.0, )",
+          "EverscaleNet.Serialization": "[1.41.0, )",
           "Microsoft.Extensions.Logging.Abstractions": "[6.0.3, )"
         }
       },
       "everscalenet.adapter.rust": {
         "type": "Project",
         "dependencies": {
-          "EverscaleNet": "[1.0.0, )",
-          "EverscaleNet.Adapter.Base": "[1.0.0, )",
-          "EverscaleNet.Serialization": "[1.0.0, )",
+          "EverscaleNet": "[1.41.0, )",
+          "EverscaleNet.Adapter.Base": "[1.41.0, )",
+          "EverscaleNet.Serialization": "[1.41.0, )",
           "Microsoft.Extensions.Configuration.Abstractions": "[6.0.0, )",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[6.0.0, )",
           "Microsoft.Extensions.Logging.Abstractions": "[6.0.3, )",
@@ -75,7 +75,7 @@
         "type": "Project",
         "dependencies": {
           "Dahomey.Json": "[1.12.2, )",
-          "EverscaleNet": "[1.0.0, )"
+          "EverscaleNet": "[1.41.0, )"
         }
       },
       "Dahomey.Json": {
@@ -208,20 +208,6 @@
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
         }
       },
-      "System.Text.Json": {
-        "type": "Transitive",
-        "resolved": "6.0.0",
-        "contentHash": "zaJsHfESQvJ11vbXnNlkrR46IaMULk/gHxYsJphzSF+07kTjPHv+Oc14w6QEOfo3Q4hqLJgStUaYB9DBl0TmWg==",
-        "dependencies": {
-          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
-          "System.Buffers": "4.5.1",
-          "System.Memory": "4.5.4",
-          "System.Numerics.Vectors": "4.5.0",
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0",
-          "System.Text.Encodings.Web": "6.0.0",
-          "System.Threading.Tasks.Extensions": "4.5.4"
-        }
-      },
       "System.Threading.Tasks.Extensions": {
         "type": "Transitive",
         "resolved": "4.5.4",
@@ -239,17 +225,17 @@
       "everscalenet.adapter.base": {
         "type": "Project",
         "dependencies": {
-          "EverscaleNet": "[1.0.0, )",
-          "EverscaleNet.Serialization": "[1.0.0, )",
+          "EverscaleNet": "[1.41.0, )",
+          "EverscaleNet.Serialization": "[1.41.0, )",
           "Microsoft.Extensions.Logging.Abstractions": "[6.0.3, )"
         }
       },
       "everscalenet.adapter.rust": {
         "type": "Project",
         "dependencies": {
-          "EverscaleNet": "[1.0.0, )",
-          "EverscaleNet.Adapter.Base": "[1.0.0, )",
-          "EverscaleNet.Serialization": "[1.0.0, )",
+          "EverscaleNet": "[1.41.0, )",
+          "EverscaleNet.Adapter.Base": "[1.41.0, )",
+          "EverscaleNet.Serialization": "[1.41.0, )",
           "Microsoft.Extensions.Configuration.Abstractions": "[6.0.0, )",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[6.0.0, )",
           "Microsoft.Extensions.Logging.Abstractions": "[6.0.3, )",
@@ -260,7 +246,7 @@
         "type": "Project",
         "dependencies": {
           "Dahomey.Json": "[1.12.2, )",
-          "EverscaleNet": "[1.0.0, )"
+          "EverscaleNet": "[1.41.0, )"
         }
       },
       "Dahomey.Json": {
@@ -317,6 +303,21 @@
           "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
           "Microsoft.Extensions.Primitives": "6.0.0"
         }
+      },
+      "System.Text.Json": {
+        "type": "CentralTransitive",
+        "requested": "[7.0.2, )",
+        "resolved": "6.0.0",
+        "contentHash": "zaJsHfESQvJ11vbXnNlkrR46IaMULk/gHxYsJphzSF+07kTjPHv+Oc14w6QEOfo3Q4hqLJgStUaYB9DBl0TmWg==",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "System.Buffers": "4.5.1",
+          "System.Memory": "4.5.4",
+          "System.Numerics.Vectors": "4.5.0",
+          "System.Runtime.CompilerServices.Unsafe": "6.0.0",
+          "System.Text.Encodings.Web": "6.0.0",
+          "System.Threading.Tasks.Extensions": "4.5.4"
+        }
       }
     },
     "net6.0": {
@@ -364,34 +365,34 @@
       "everscalenet": {
         "type": "Project",
         "dependencies": {
-          "System.Text.Json": "[7.0.1, )"
+          "System.Text.Json": "[7.0.2, )"
         }
       },
       "everscalenet.adapter.base": {
         "type": "Project",
         "dependencies": {
-          "EverscaleNet": "[1.0.0, )",
-          "EverscaleNet.Serialization": "[1.0.0, )",
+          "EverscaleNet": "[1.41.0, )",
+          "EverscaleNet.Serialization": "[1.41.0, )",
           "Microsoft.Extensions.Logging.Abstractions": "[7.0.0, )"
         }
       },
       "everscalenet.adapter.rust": {
         "type": "Project",
         "dependencies": {
-          "EverscaleNet": "[1.0.0, )",
-          "EverscaleNet.Adapter.Base": "[1.0.0, )",
-          "EverscaleNet.Serialization": "[1.0.0, )",
+          "EverscaleNet": "[1.41.0, )",
+          "EverscaleNet.Adapter.Base": "[1.41.0, )",
+          "EverscaleNet.Serialization": "[1.41.0, )",
           "Microsoft.Extensions.Configuration.Abstractions": "[7.0.0, )",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[7.0.0, )",
           "Microsoft.Extensions.Logging.Abstractions": "[7.0.0, )",
-          "Microsoft.Extensions.Options": "[7.0.0, )"
+          "Microsoft.Extensions.Options": "[7.0.1, )"
         }
       },
       "everscalenet.serialization": {
         "type": "Project",
         "dependencies": {
-          "EverscaleNet": "[1.0.0, )",
-          "System.Text.Json": "[7.0.1, )"
+          "EverscaleNet": "[1.41.0, )",
+          "System.Text.Json": "[7.0.2, )"
         }
       },
       "Microsoft.Extensions.Configuration.Abstractions": {
@@ -417,9 +418,9 @@
       },
       "Microsoft.Extensions.Options": {
         "type": "CentralTransitive",
-        "requested": "[7.0.0, )",
-        "resolved": "7.0.0",
-        "contentHash": "lP1yBnTTU42cKpMozuafbvNtQ7QcBjr/CcK3bYOGEMH55Fjt+iecXjT6chR7vbgCMqy3PG3aNQSZgo/EuY/9qQ==",
+        "requested": "[7.0.1, )",
+        "resolved": "7.0.1",
+        "contentHash": "pZRDYdN1FpepOIfHU62QoBQ6zdAoTvnjxFfqAzEd9Jhb2dfhA5i6jeTdgGgcgTWFRC7oT0+3XrbQu4LjvgX1Nw==",
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0",
           "Microsoft.Extensions.Primitives": "7.0.0"
@@ -427,9 +428,9 @@
       },
       "System.Text.Json": {
         "type": "CentralTransitive",
-        "requested": "[7.0.1, )",
-        "resolved": "7.0.1",
-        "contentHash": "OtDEmCCiNl8JAduFKZ/r0Sw6XZNHwIicUYy/mXgMDGeOsZLshH37qi3oPRzFYiryVktiMoQLByMGPtRCEMYbeQ==",
+        "requested": "[7.0.2, )",
+        "resolved": "7.0.2",
+        "contentHash": "/LZf/JrGyilojqwpaywb+sSz8Tew7ij4K/Sk+UW8AKfAK7KRhR6mKpKtTm06cYA7bCpGTWfYksIW+mVsdxPegQ==",
         "dependencies": {
           "System.Runtime.CompilerServices.Unsafe": "6.0.0",
           "System.Text.Encodings.Web": "7.0.0"
@@ -468,27 +469,27 @@
       "everscalenet.adapter.base": {
         "type": "Project",
         "dependencies": {
-          "EverscaleNet": "[1.0.0, )",
-          "EverscaleNet.Serialization": "[1.0.0, )",
+          "EverscaleNet": "[1.41.0, )",
+          "EverscaleNet.Serialization": "[1.41.0, )",
           "Microsoft.Extensions.Logging.Abstractions": "[7.0.0, )"
         }
       },
       "everscalenet.adapter.rust": {
         "type": "Project",
         "dependencies": {
-          "EverscaleNet": "[1.0.0, )",
-          "EverscaleNet.Adapter.Base": "[1.0.0, )",
-          "EverscaleNet.Serialization": "[1.0.0, )",
+          "EverscaleNet": "[1.41.0, )",
+          "EverscaleNet.Adapter.Base": "[1.41.0, )",
+          "EverscaleNet.Serialization": "[1.41.0, )",
           "Microsoft.Extensions.Configuration.Abstractions": "[7.0.0, )",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[7.0.0, )",
           "Microsoft.Extensions.Logging.Abstractions": "[7.0.0, )",
-          "Microsoft.Extensions.Options": "[7.0.0, )"
+          "Microsoft.Extensions.Options": "[7.0.1, )"
         }
       },
       "everscalenet.serialization": {
         "type": "Project",
         "dependencies": {
-          "EverscaleNet": "[1.0.0, )"
+          "EverscaleNet": "[1.41.0, )"
         }
       },
       "Microsoft.Extensions.Configuration.Abstractions": {
@@ -514,9 +515,9 @@
       },
       "Microsoft.Extensions.Options": {
         "type": "CentralTransitive",
-        "requested": "[7.0.0, )",
-        "resolved": "7.0.0",
-        "contentHash": "lP1yBnTTU42cKpMozuafbvNtQ7QcBjr/CcK3bYOGEMH55Fjt+iecXjT6chR7vbgCMqy3PG3aNQSZgo/EuY/9qQ==",
+        "requested": "[7.0.1, )",
+        "resolved": "7.0.1",
+        "contentHash": "pZRDYdN1FpepOIfHU62QoBQ6zdAoTvnjxFfqAzEd9Jhb2dfhA5i6jeTdgGgcgTWFRC7oT0+3XrbQu4LjvgX1Nw==",
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0",
           "Microsoft.Extensions.Primitives": "7.0.0"

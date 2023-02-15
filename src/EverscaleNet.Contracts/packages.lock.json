@@ -32,14 +32,14 @@
         "type": "Project",
         "dependencies": {
           "Dahomey.Json": "[1.12.2, )",
-          "EverscaleNet": "[1.0.0, )"
+          "EverscaleNet": "[1.41.0, )"
         }
       },
       "everscalenet.utils": {
         "type": "Project",
         "dependencies": {
-          "EverscaleNet": "[1.0.0, )",
-          "EverscaleNet.Serialization": "[1.0.0, )"
+          "EverscaleNet": "[1.41.0, )",
+          "EverscaleNet.Serialization": "[1.41.0, )"
         }
       },
       "Dahomey.Json": {
@@ -128,20 +128,6 @@
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
         }
       },
-      "System.Text.Json": {
-        "type": "Transitive",
-        "resolved": "6.0.0",
-        "contentHash": "zaJsHfESQvJ11vbXnNlkrR46IaMULk/gHxYsJphzSF+07kTjPHv+Oc14w6QEOfo3Q4hqLJgStUaYB9DBl0TmWg==",
-        "dependencies": {
-          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
-          "System.Buffers": "4.5.1",
-          "System.Memory": "4.5.4",
-          "System.Numerics.Vectors": "4.5.0",
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0",
-          "System.Text.Encodings.Web": "6.0.0",
-          "System.Threading.Tasks.Extensions": "4.5.4"
-        }
-      },
       "System.Threading.Tasks.Extensions": {
         "type": "Transitive",
         "resolved": "4.5.4",
@@ -160,14 +146,14 @@
         "type": "Project",
         "dependencies": {
           "Dahomey.Json": "[1.12.2, )",
-          "EverscaleNet": "[1.0.0, )"
+          "EverscaleNet": "[1.41.0, )"
         }
       },
       "everscalenet.utils": {
         "type": "Project",
         "dependencies": {
-          "EverscaleNet": "[1.0.0, )",
-          "EverscaleNet.Serialization": "[1.0.0, )"
+          "EverscaleNet": "[1.41.0, )",
+          "EverscaleNet.Serialization": "[1.41.0, )"
         }
       },
       "Dahomey.Json": {
@@ -188,6 +174,21 @@
         "contentHash": "5V73KuRVnyvyB8+BEkCvxpbI3MZpG6PQNdfKGxeKFBabotepbrnJ+Xz00P84BD4zdg7UPGybo9Nsl988Y8/tfw==",
         "dependencies": {
           "System.Text.Json": "6.0.0"
+        }
+      },
+      "System.Text.Json": {
+        "type": "CentralTransitive",
+        "requested": "[7.0.2, )",
+        "resolved": "6.0.0",
+        "contentHash": "zaJsHfESQvJ11vbXnNlkrR46IaMULk/gHxYsJphzSF+07kTjPHv+Oc14w6QEOfo3Q4hqLJgStUaYB9DBl0TmWg==",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "System.Buffers": "4.5.1",
+          "System.Memory": "4.5.4",
+          "System.Numerics.Vectors": "4.5.0",
+          "System.Runtime.CompilerServices.Unsafe": "6.0.0",
+          "System.Text.Encodings.Web": "6.0.0",
+          "System.Threading.Tasks.Extensions": "4.5.4"
         }
       }
     },
@@ -228,28 +229,28 @@
       "everscalenet": {
         "type": "Project",
         "dependencies": {
-          "System.Text.Json": "[7.0.1, )"
+          "System.Text.Json": "[7.0.2, )"
         }
       },
       "everscalenet.serialization": {
         "type": "Project",
         "dependencies": {
-          "EverscaleNet": "[1.0.0, )",
-          "System.Text.Json": "[7.0.1, )"
+          "EverscaleNet": "[1.41.0, )",
+          "System.Text.Json": "[7.0.2, )"
         }
       },
       "everscalenet.utils": {
         "type": "Project",
         "dependencies": {
-          "EverscaleNet": "[1.0.0, )",
-          "EverscaleNet.Serialization": "[1.0.0, )"
+          "EverscaleNet": "[1.41.0, )",
+          "EverscaleNet.Serialization": "[1.41.0, )"
         }
       },
       "System.Text.Json": {
         "type": "CentralTransitive",
-        "requested": "[7.0.1, )",
-        "resolved": "7.0.1",
-        "contentHash": "OtDEmCCiNl8JAduFKZ/r0Sw6XZNHwIicUYy/mXgMDGeOsZLshH37qi3oPRzFYiryVktiMoQLByMGPtRCEMYbeQ==",
+        "requested": "[7.0.2, )",
+        "resolved": "7.0.2",
+        "contentHash": "/LZf/JrGyilojqwpaywb+sSz8Tew7ij4K/Sk+UW8AKfAK7KRhR6mKpKtTm06cYA7bCpGTWfYksIW+mVsdxPegQ==",
         "dependencies": {
           "System.Runtime.CompilerServices.Unsafe": "6.0.0",
           "System.Text.Encodings.Web": "7.0.0"
@@ -283,14 +284,14 @@
       "everscalenet.serialization": {
         "type": "Project",
         "dependencies": {
-          "EverscaleNet": "[1.0.0, )"
+          "EverscaleNet": "[1.41.0, )"
         }
       },
       "everscalenet.utils": {
         "type": "Project",
         "dependencies": {
-          "EverscaleNet": "[1.0.0, )",
-          "EverscaleNet.Serialization": "[1.0.0, )"
+          "EverscaleNet": "[1.41.0, )",
+          "EverscaleNet.Serialization": "[1.41.0, )"
         }
       }
     }
