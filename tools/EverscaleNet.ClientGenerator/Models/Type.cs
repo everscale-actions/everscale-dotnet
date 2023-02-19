@@ -1,13 +1,16 @@
 ﻿namespace EverscaleNet.ClientGenerator.Models;
 
-public enum GenericArgType {
-	Boolean,
+public enum Type {
 	None,
+	Boolean,
 	Optional,
 	Ref,
 	String,
 	Struct,
 	Number,
 	Array,
-	BigInt
+	BigInt,
+	Generic,
+	EnumOfConsts,
+	EnumOfTypes
 }

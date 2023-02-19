@@ -6,7 +6,19 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 namespace EverscaleNet.ClientGenerator.Helpers;
 
 internal static class PropertyHelpers {
-	private static readonly AccessorListSyntax AccessorListSyntax = AccessorList(
+	private static readonly AccessorListSyntax GetSetAccessorListSyntax = AccessorList(
+		List(new[] {
+			AccessorDeclaration(
+					SyntaxKind.GetAccessorDeclaration)
+				.WithSemicolonToken(
+					Token(SyntaxKind.SemicolonToken)),
+			AccessorDeclaration(
+					SyntaxKind.SetAccessorDeclaration)
+				.WithSemicolonToken(
+					Token(SyntaxKind.SemicolonToken))
+		}));
+
+	private static readonly AccessorListSyntax GetInitAccessorListSyntax = AccessorList(
 		List(new[] {
 			AccessorDeclaration(
 					SyntaxKind.GetAccessorDeclaration)
@@ -20,7 +32,9 @@ internal static class PropertyHelpers {
 
 	public static PropertyDeclarationSyntax CreatePropertyDeclaration(string typeName, string name,
 	                                                                  string description, bool optional = false,
-	                                                                  bool addPostfix = false) {
+	                                                                  bool addPostfix = false, bool onlyInit = false) {
+		AccessorListSyntax accessors = onlyInit ? GetInitAccessorListSyntax : GetSetAccessorListSyntax;
+
 		var attributes = new List<AttributeSyntax> {
 			Attribute(IdentifierName($"JsonPropertyName(\"{name}\")"))
 		};
@@ -30,6 +44,6 @@ internal static class PropertyHelpers {
 		       .AddAttributeLists(AttributeList(SeparatedList(attributes))
 			                          .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(description)))
 		       .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
-		       .WithAccessorList(AccessorListSyntax);
+		       .WithAccessorList(accessors);
 	}
 }

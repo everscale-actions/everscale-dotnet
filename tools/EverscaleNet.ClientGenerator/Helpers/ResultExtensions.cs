@@ -1,4 +1,5 @@
 ﻿using EverscaleNet.ClientGenerator.Models;
+using Type = EverscaleNet.ClientGenerator.Models.Type;
 
 namespace EverscaleNet.ClientGenerator.Helpers;
 
@@ -7,7 +8,7 @@ internal static class ResultExtensions {
 		if (result.GenericName != ResultGenericName.ClientResult) {
 			throw new ArgumentOutOfRangeException(nameof(result.GenericName), result.GenericName, "Unsupported method result generic name");
 		}
-		if (result.Type != ParamType.Generic) {
+		if (result.Type != Type.Generic) {
 			throw new ArgumentOutOfRangeException(nameof(Result.Type), result.Type, "Unsupported method result type");
 		}
 		if (result.GenericArgs.Length != 1) {
@@ -16,20 +17,10 @@ internal static class ResultExtensions {
 
 		GenericArg genericArg = result.GenericArgs[0];
 
-		switch (genericArg.Type) {
-			case GenericArgType.None:
-				return null;
-			case GenericArgType.Ref:
-				return NamingConventions.Normalize(genericArg.RefName);
-			case GenericArgType.Boolean:
-			case GenericArgType.Optional:
-			case GenericArgType.String:
-			case GenericArgType.Struct:
-			case GenericArgType.Number:
-			case GenericArgType.Array:
-			case GenericArgType.BigInt:
-			default:
-				throw new ArgumentOutOfRangeException(nameof(Type), genericArg.Type, "Unsupported generic type");
-		}
+		return genericArg.Type switch {
+			Type.None => null,
+			Type.Ref => NamingConventions.Normalize(genericArg.RefName),
+			_ => throw new ArgumentOutOfRangeException(nameof(Type), genericArg.Type, "Unsupported generic type")
+		};
 	}
 }

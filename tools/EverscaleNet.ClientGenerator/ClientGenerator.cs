@@ -2,6 +2,7 @@
 using System.Text.Json.Serialization;
 using EverscaleNet.ClientGenerator.Helpers;
 using EverscaleNet.ClientGenerator.Models;
+using Type = EverscaleNet.ClientGenerator.Models.Type;
 
 namespace EverscaleNet.ClientGenerator;
 
@@ -39,10 +40,10 @@ internal static class ClientGenerator {
 		                       "System", "EverscaleNet.Abstract", "EverscaleNet.Abstract.Modules", "EverscaleNet.Client.Modules");
 
 		//Save all used types
-		Dictionary<string, TypeType> allTypes = everApi!.Modules
-		                                                .SelectMany(m => m.Types)
-		                                                .Select(t => new { name = NamingConventions.Normalize(t.Name), type = t.Type })
-		                                                .ToDictionary(t => t.name, t => t.type);
+		Dictionary<string, Type> allTypes = everApi!.Modules
+		                                            .SelectMany(m => m.Types)
+		                                            .Select(t => new { name = NamingConventions.Normalize(t.Name), type = t.Type })
+		                                            .ToDictionary(t => t.name, t => t.type);
 
 		IReadOnlyDictionary<string, string> numberTypesMapping = NumberUtils.MapNumericTypes(everApi!.Modules);
 
@@ -58,7 +59,7 @@ internal static class ClientGenerator {
 
 			//Create Models
 			var modelClassBuilder = new ModelsClassHelpers(numberTypesMapping, allTypes);
-			foreach (TypeElement typeElement in module.Types.Where(t => t.Type != TypeType.None && t.Type != TypeType.Number)) {
+			foreach (TypeElement typeElement in module.Types.Where(t => t.Type != Type.None && t.Type != Type.Number)) {
 				UnitHelpers.CreateUnit(module.Name, _ => modelClassBuilder.CreateModelClass(typeElement),
 				                       Path.Combine(output, "Models", $"{NamingConventions.Normalize(typeElement.Name)}.Generated.cs"), ModelsNamespaces);
 			}

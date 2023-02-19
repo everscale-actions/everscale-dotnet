@@ -6,7 +6,7 @@ public class Param {
 	[JsonPropertyName("name")]
 	public Name Name { get; set; }
 	[JsonPropertyName("type")]
-	public ParamType Type { get; set; }
+	public Type Type { get; set; }
 
 	[JsonPropertyName("generic_name")]
 	public ParamGenericName? GenericName { get; set; }

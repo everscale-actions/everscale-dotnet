@@ -4,7 +4,7 @@ namespace EverscaleNet.ClientGenerator.Models;
 
 public class StructFieldOptionalInner {
 	[JsonPropertyName("type")]
-	public PurpleType Type { get; set; }
+	public Type Type { get; set; }
 
 	[JsonPropertyName("ref_name")]
 	public string RefName { get; set; }

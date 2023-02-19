@@ -4,7 +4,7 @@ namespace EverscaleNet.ClientGenerator.Models;
 
 public class ArrayItem {
 	[JsonPropertyName("type")]
-	public GenericArgType Type { get; set; }
+	public Type Type { get; set; }
 
 	[JsonPropertyName("ref_name")]
 	public string RefName { get; set; }

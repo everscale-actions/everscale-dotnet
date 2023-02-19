@@ -6,7 +6,7 @@ public class StructField {
 	[JsonPropertyName("name")]
 	public string Name { get; set; }
 	[JsonPropertyName("type")]
-	public PurpleType Type { get; set; }
+	public Type Type { get; set; }
 
 	[JsonPropertyName("number_type")]
 	public NumberType? NumberType { get; set; }

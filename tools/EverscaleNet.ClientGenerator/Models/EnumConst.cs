@@ -6,7 +6,7 @@ public class EnumConst {
 	[JsonPropertyName("name")]
 	public string Name { get; set; }
 	[JsonPropertyName("type")]
-	public GenericArgType Type { get; set; }
+	public Type Type { get; set; }
 	[JsonPropertyName("value")]
 	public string Value { get; set; }
 	[JsonPropertyName("summary")]

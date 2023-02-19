@@ -4,14 +4,15 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 using static EverscaleNet.ClientGenerator.Helpers.PropertyHelpers;
+using Type = EverscaleNet.ClientGenerator.Models.Type;
 
 namespace EverscaleNet.ClientGenerator.Helpers;
 
 internal class ModelsClassHelpers {
-	private readonly Dictionary<string, TypeType> _allTypes;
+	private readonly Dictionary<string, Type> _allTypes;
 	private readonly IReadOnlyDictionary<string, string> _numberTypesMapping;
 
-	public ModelsClassHelpers(IReadOnlyDictionary<string, string> numberTypesMapping, Dictionary<string, TypeType> allTypes) {
+	public ModelsClassHelpers(IReadOnlyDictionary<string, string> numberTypesMapping, Dictionary<string, Type> allTypes) {
 		_numberTypesMapping = numberTypesMapping;
 		_allTypes = allTypes;
 	}
@@ -48,17 +49,17 @@ internal class ModelsClassHelpers {
 			.WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(null));
 	}
 
-	private static MemberDeclarationSyntax CreatePropertyForPurpleTypeOptionalOptional(string name,
-	                                                                                   OptionalInnerOptionalInner optionalInner,
-	                                                                                   string description) {
+	private static MemberDeclarationSyntax CreatePropertyForPurpleTypeOptional(string name,
+	                                                                           OptionalInnerOptionalInner optionalInner,
+	                                                                           string description) {
 		return optionalInner.Type switch {
-			PurpleType.BigInt => CreatePropertyDeclaration("ulong", name, description, true),
-			PurpleType.Boolean => CreatePropertyDeclaration("bool", name, description, true),
-			PurpleType.Number => CreatePropertyDeclaration(
+			Type.BigInt => CreatePropertyDeclaration("ulong", name, description, true),
+			Type.Boolean => CreatePropertyDeclaration("bool", name, description, true),
+			Type.Number => CreatePropertyDeclaration(
 				NumberUtils.ConvertToSharpNumeric(optionalInner.NumberType, optionalInner.NumberSize), name,
 				description,
 				true),
-			PurpleType.String => CreatePropertyDeclaration("string", name, description),
+			Type.String => CreatePropertyDeclaration("string", name, description),
 			_ => throw new ArgumentOutOfRangeException(nameof(optionalInner.Type), optionalInner.Type,
 			                                           "Not supported type detected")
 		};
@@ -68,9 +69,9 @@ internal class ModelsClassHelpers {
 		NamespaceDeclarationSyntax ns = NamespaceDeclaration(IdentifierName(ClientGenerator.NamespaceModels));
 
 		return typeElement.Type switch {
-			TypeType.EnumOfConsts => ns.AddMembers(GenerateEnumOfConsts(typeElement)),
-			TypeType.EnumOfTypes => ns.AddMembers(GenerateEnumOfTypes(typeElement)),
-			TypeType.Struct => ns.AddMembers(GenerateStruct(typeElement)),
+			Type.EnumOfConsts => ns.AddMembers(GenerateEnumOfConsts(typeElement)),
+			Type.EnumOfTypes => ns.AddMembers(GenerateEnumOfTypes(typeElement)),
+			Type.Struct => ns.AddMembers(GenerateStruct(typeElement)),
 			_ => throw new ArgumentOutOfRangeException(nameof(typeElement.Type), typeElement.Type,
 			                                           "Not supported type")
 		};
@@ -87,10 +88,10 @@ internal class ModelsClassHelpers {
 			                                                               (subClass.Description != null ? $"\n{subClass.Description}" : null);
 
 			                                      switch (subClass.Type) {
-				                                      case GenericArgType.Ref:
+				                                      case Type.Ref:
 					                                      return new[] { CreatePropertyForRef(subClass.RefName, subClass.Name, subClassSummary) };
 
-				                                      case GenericArgType.Struct:
+				                                      case Type.Struct:
 					                                      var properties = new List<MemberDeclarationSyntax>();
 					                                      properties.AddRange(subClass.StructFields.Select(sf => {
 						                                      bool addPostfix = NamingConventions.Normalize(sf.Name) ==
@@ -122,7 +123,7 @@ internal class ModelsClassHelpers {
 		                                      .ToArray();
 
 		IEnumerable<SyntaxTrivia> polymAttributes = typeElement.EnumTypes
-		                                                       .Where(e => e.Type == GenericArgType.Struct)
+		                                                       .Where(e => e.Type == Type.Struct)
 		                                                       .SelectMany(e => new[] { DisabledText($"    [JsonDerivedType(typeof({e.Name}), nameof({e.Name}))]"), ElasticCarriageReturnLineFeed });
 
 		return ClassDeclaration(NamingConventions.Normalize(typeElement.Name))
@@ -144,8 +145,8 @@ internal class ModelsClassHelpers {
 			typeName = _numberTypesMapping[typeName];
 			optional = false;
 		} else {
-			if (_allTypes.TryGetValue(typeName, out TypeType type)) {
-				optional = type == TypeType.EnumOfConsts;
+			if (_allTypes.TryGetValue(typeName, out Type type)) {
+				optional = type == Type.EnumOfConsts;
 			} else {
 				typeName = "JsonElement";
 				optional = true;
@@ -155,29 +156,29 @@ internal class ModelsClassHelpers {
 		return CreatePropertyDeclaration(typeName, name, description, optional, addPostfix);
 	}
 
-	private MemberDeclarationSyntax CreatePropertyGenericArgs(GenericArgType type, string name, string refName,
+	private MemberDeclarationSyntax CreatePropertyGenericArgs(Type type, string name, string refName,
 	                                                          GenericArg optionalInner,
 	                                                          string description, NumberType? numberType = null, long? numberSize = null, bool optional = false,
 	                                                          bool addPostfix = false,
 	                                                          ArrayItem arrayItem = null) {
-		if (type == GenericArgType.Array && arrayItem == null) {
+		if (type == Type.Array && arrayItem == null) {
 			throw new ArgumentNullException(nameof(arrayItem));
 		}
 
 		return type switch {
-			GenericArgType.Boolean => CreatePropertyDeclaration("bool", name, description, optional, addPostfix),
-			GenericArgType.Ref => CreatePropertyForRef(refName, name, description, addPostfix),
-			GenericArgType.String => CreatePropertyDeclaration("string", name, description, addPostfix: addPostfix),
-			GenericArgType.Optional => CreatePropertyGenericArgs(optionalInner.Type, name, optionalInner.RefName,
-			                                                     null, description,
-			                                                     addPostfix: addPostfix),
-			GenericArgType.Number => CreatePropertyDeclaration(
+			Type.Boolean => CreatePropertyDeclaration("bool", name, description, optional, addPostfix),
+			Type.Ref => CreatePropertyForRef(refName, name, description, addPostfix),
+			Type.String => CreatePropertyDeclaration("string", name, description, addPostfix: addPostfix),
+			Type.Optional => CreatePropertyGenericArgs(optionalInner.Type, name, optionalInner.RefName,
+			                                           null, description,
+			                                           addPostfix: addPostfix),
+			Type.Number => CreatePropertyDeclaration(
 				NumberUtils.ConvertToSharpNumeric(numberType, numberSize), name, description,
 				addPostfix: addPostfix),
 			// ReSharper disable once PossibleNullReferenceException
-			GenericArgType.Array => CreatePropertyForPurpleArrayItem(name, arrayItem.Type, arrayItem.RefName, null,
-			                                                         description),
-			GenericArgType.BigInt => CreatePropertyDeclaration("ulong", name, description),
+			Type.Array => CreatePropertyForPurpleArrayItem(name, arrayItem.Type, arrayItem.RefName, null,
+			                                               description),
+			Type.BigInt => CreatePropertyDeclaration("ulong", name, description),
 			_ => throw new ArgumentOutOfRangeException()
 		};
 	}
@@ -199,16 +200,16 @@ internal class ModelsClassHelpers {
 		string sfSummary = sf.Summary + (sf.Description != null ? $"\n{sf.Description}" : null);
 
 		return sf.Type switch {
-			PurpleType.Array => CreatePropertyForPurpleArrayItem(sf.Name, sf.ArrayItem.Type, sf.ArrayItem.RefName,
-			                                                     sf.ArrayItem.OptionalInner,
-			                                                     sfSummary),
-			PurpleType.BigInt => CreatePropertyDeclaration("ulong", sf.Name, sfSummary),
-			PurpleType.Boolean => CreatePropertyDeclaration("bool", sf.Name, sfSummary),
-			PurpleType.Number => CreatePropertyDeclaration(
+			Type.Array => CreatePropertyForPurpleArrayItem(sf.Name, sf.ArrayItem.Type, sf.ArrayItem.RefName,
+			                                               sf.ArrayItem.OptionalInner,
+			                                               sfSummary),
+			Type.BigInt => CreatePropertyDeclaration("ulong", sf.Name, sfSummary),
+			Type.Boolean => CreatePropertyDeclaration("bool", sf.Name, sfSummary),
+			Type.Number => CreatePropertyDeclaration(
 				NumberUtils.ConvertToSharpNumeric(sf.NumberType, sf.NumberSize), sf.Name, sfSummary),
-			PurpleType.Ref => CreatePropertyForRef(sf.RefName, sf.Name, sfSummary),
-			PurpleType.String => CreatePropertyDeclaration("string", sf.Name, sfSummary),
-			PurpleType.Optional => CreateOptionalPropertyForPurple(sf.Name, sf.OptionalInner, sfSummary),
+			Type.Ref => CreatePropertyForRef(sf.RefName, sf.Name, sfSummary),
+			Type.String => CreatePropertyDeclaration("string", sf.Name, sfSummary),
+			Type.Optional => CreateOptionalPropertyForPurple(sf.Name, sf.OptionalInner, sfSummary),
 			_ => throw new ArgumentOutOfRangeException(nameof(sf.Type), sf.Type, "Not supported type detected")
 		};
 	}
@@ -216,25 +217,24 @@ internal class ModelsClassHelpers {
 	private MemberDeclarationSyntax CreateOptionalPropertyForPurple(string name,
 	                                                                StructFieldOptionalInner optionalInner, string description) {
 		return optionalInner.Type switch {
-			PurpleType.Array => CreatePropertyForPurpleArrayItem(name, optionalInner.ArrayItem.Type,
-			                                                     optionalInner.ArrayItem.RefName, null, description),
-			PurpleType.BigInt => CreatePropertyDeclaration("ulong", name, description, true),
-			PurpleType.Boolean => CreatePropertyDeclaration("bool", name, description, true),
-			PurpleType.Number => CreatePropertyDeclaration(
+			Type.Array => CreatePropertyForPurpleArrayItem(name, optionalInner.ArrayItem.Type,
+			                                               optionalInner.ArrayItem.RefName, null, description),
+			Type.BigInt => CreatePropertyDeclaration("ulong", name, description, true),
+			Type.Boolean => CreatePropertyDeclaration("bool", name, description, true),
+			Type.Number => CreatePropertyDeclaration(
 				NumberUtils.ConvertToSharpNumeric(optionalInner.NumberType, optionalInner.NumberSize), name,
 				description, true),
-			PurpleType.Ref => CreatePropertyForRef(optionalInner.RefName, name, description),
-			PurpleType.String => CreatePropertyDeclaration("string", name, description),
-			PurpleType.Optional => CreatePropertyForPurpleTypeOptionalOptional(name, optionalInner.OptionalInner,
-			                                                                   description),
+			Type.Ref => CreatePropertyForRef(optionalInner.RefName, name, description),
+			Type.String => CreatePropertyDeclaration("string", name, description),
+			Type.Optional => CreatePropertyForPurpleTypeOptional(name, optionalInner.OptionalInner, description),
 			_ => throw new ArgumentOutOfRangeException(nameof(optionalInner.Type), optionalInner.Type, "Not supported type detected")
 		};
 	}
 
-	private MemberDeclarationSyntax CreatePropertyForPurpleArrayItem(string name, GenericArgType arrayType,
+	private MemberDeclarationSyntax CreatePropertyForPurpleArrayItem(string name, Type arrayType,
 	                                                                 string arrayRefName,
 	                                                                 GenericArg arrayItemOptionalInner, string description) {
-		if (arrayType == GenericArgType.Optional)
+		if (arrayType == Type.Optional)
 			// ReSharper disable once TailRecursiveCall
 		{
 			return CreatePropertyForPurpleArrayItem(name, arrayItemOptionalInner.Type,
@@ -242,11 +242,11 @@ internal class ModelsClassHelpers {
 		}
 
 		string typeName = arrayType switch {
-			GenericArgType.Ref => _allTypes.ContainsKey(NamingConventions.Normalize(arrayRefName))
-				                      ? NamingConventions.Normalize(arrayRefName)
-				                      : "JsonElement",
-			GenericArgType.Boolean => "bool",
-			GenericArgType.String => "string",
+			Type.Ref => _allTypes.ContainsKey(NamingConventions.Normalize(arrayRefName))
+				            ? NamingConventions.Normalize(arrayRefName)
+				            : "JsonElement",
+			Type.Boolean => "bool",
+			Type.String => "string",
 			_ => throw new ArgumentOutOfRangeException()
 		};
 

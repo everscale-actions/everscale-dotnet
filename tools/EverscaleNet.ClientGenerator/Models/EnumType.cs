@@ -6,7 +6,7 @@ public class EnumType {
 	[JsonPropertyName("name")]
 	public string Name { get; set; }
 	[JsonPropertyName("type")]
-	public GenericArgType Type { get; set; }
+	public Type Type { get; set; }
 
 	[JsonPropertyName("struct_fields")]
 	public EnumType[] StructFields { get; set; }
