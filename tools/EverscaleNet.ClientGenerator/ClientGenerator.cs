@@ -34,7 +34,7 @@ internal static class ClientGenerator {
 		UnitHelpers.CreateUnit("IEverClient", unitName =>
 			                       ClientClassHelpers.CreateClientInterface(unitName, everApi), Path.Combine(output, "IEverClient.Generated.cs"), "EverscaleNet.Abstract.Modules");
 
-		//Create EVerClient
+		//Create EverClient
 		UnitHelpers.CreateUnit("EverClient", unitName =>
 			                       ClientClassHelpers.CreateClientClass(unitName, everApi), Path.Combine(output, "EverClient.Generated.cs"),
 		                       "System", "EverscaleNet.Abstract", "EverscaleNet.Abstract.Modules", "EverscaleNet.Client.Modules");

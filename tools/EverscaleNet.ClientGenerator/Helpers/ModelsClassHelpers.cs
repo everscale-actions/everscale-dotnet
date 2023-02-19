@@ -55,13 +55,9 @@ internal class ModelsClassHelpers {
 		return optionalInner.Type switch {
 			Type.BigInt => CreatePropertyDeclaration("ulong", name, description, true),
 			Type.Boolean => CreatePropertyDeclaration("bool", name, description, true),
-			Type.Number => CreatePropertyDeclaration(
-				NumberUtils.ConvertToSharpNumeric(optionalInner.NumberType, optionalInner.NumberSize), name,
-				description,
-				true),
+			Type.Number => CreatePropertyDeclaration(NumberUtils.ConvertToSharpNumeric(optionalInner.NumberType, optionalInner.NumberSize), name, description, true),
 			Type.String => CreatePropertyDeclaration("string", name, description),
-			_ => throw new ArgumentOutOfRangeException(nameof(optionalInner.Type), optionalInner.Type,
-			                                           "Not supported type detected")
+			_ => throw new ArgumentOutOfRangeException(nameof(optionalInner.Type), optionalInner.Type, "Not supported type detected")
 		};
 	}
 
@@ -170,16 +166,13 @@ internal class ModelsClassHelpers {
 			Type.Ref => CreatePropertyForRef(refName, name, description, addPostfix),
 			Type.String => CreatePropertyDeclaration("string", name, description, addPostfix: addPostfix),
 			Type.Optional => CreatePropertyGenericArgs(optionalInner.Type, name, optionalInner.RefName,
-			                                           null, description,
+			                                           null, description, optional: true,
 			                                           addPostfix: addPostfix),
-			Type.Number => CreatePropertyDeclaration(
-				NumberUtils.ConvertToSharpNumeric(numberType, numberSize), name, description,
-				addPostfix: addPostfix),
+			Type.Number => CreatePropertyDeclaration(NumberUtils.ConvertToSharpNumeric(numberType, numberSize), name, description, optional, addPostfix),
 			// ReSharper disable once PossibleNullReferenceException
-			Type.Array => CreatePropertyForPurpleArrayItem(name, arrayItem.Type, arrayItem.RefName, null,
-			                                               description),
-			Type.BigInt => CreatePropertyDeclaration("ulong", name, description),
-			_ => throw new ArgumentOutOfRangeException()
+			Type.Array => CreatePropertyForPurpleArrayItem(name, arrayItem.Type, arrayItem.RefName, null, description),
+			Type.BigInt => CreatePropertyDeclaration("ulong", name, description, optional),
+			_ => throw new ArgumentOutOfRangeException(nameof(Type), $"Name: {name} RefName: {refName} Type: {type.ToString()}")
 		};
 	}
 

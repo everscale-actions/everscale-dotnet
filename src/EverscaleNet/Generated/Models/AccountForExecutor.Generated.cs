@@ -54,7 +54,7 @@ namespace EverscaleNet.Client.Models
             /// <para>Account state to run message</para>
             /// </summary>
             [JsonPropertyName("unlimited_balance")]
-            public bool UnlimitedBalance { get; set; }
+            public bool? UnlimitedBalance { get; set; }
         }
     }
 }
