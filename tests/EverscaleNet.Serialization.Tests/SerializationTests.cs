@@ -1,6 +1,7 @@
 ﻿using EverscaleNet.TestsShared;
 using FluentAssertions;
 using Xunit;
+using BindingConfig = EverscaleNet.Models.BindingConfig;
 
 namespace EverscaleNet.Serialization.Tests;
 
@@ -138,6 +139,17 @@ public class SerializationTests {
 		string json = JsonSerializer.Serialize<AppRequestResult>(appRequestResult, JsonOptionsProvider.JsonSerializerOptions);
 
 		json.Should().Be("{\"type\":\"Ok\",\"result\":{\"type\":\"GetPublicKey\",\"public_key\":\"Pubkey\"}}");
+	}
+
+	[Fact]
+	public void CustomBindingConfigModelMatchesToGenerated() {
+		var custom = new BindingConfig();
+		var generated = new Client.Models.BindingConfig { Library = Static.BindingName, Version = Static.SdkVersion };
+
+		string customJson = JsonSerializer.Serialize(custom, JsonOptionsProvider.JsonSerializerOptions);
+		string generatedJson = JsonSerializer.Serialize(generated, JsonOptionsProvider.JsonSerializerOptions);
+
+		customJson.Should().Be(generatedJson);
 	}
 
 	private class AccountTypeTestData : TheoryData<string, AccountType?> {

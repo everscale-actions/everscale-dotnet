@@ -1,4 +1,5 @@
-﻿using EverscaleNet.Client.Models;
+﻿using System.Text.Json.Serialization;
+using EverscaleNet.Client.Models;
 
 // ReSharper disable UnusedMember.Global
 
@@ -10,11 +11,17 @@ namespace EverscaleNet.Models;
 public class EverClientOptions : ClientConfig {
 	/// <inheritdoc />
 	public EverClientOptions() {
-		Binding = new BindingConfig { Library = Static.BindingName, Version = Static.SdkVersion };
+		Binding = new BindingConfig();
 		Network = new NetworkConfig();
 		Crypto = new CryptoConfig();
 		Abi = new AbiConfig();
 		Boc = new BocConfig();
 		Proofs = new ProofsConfig();
 	}
+
+	/// <summary>
+	/// 
+	/// </summary>
+	[JsonPropertyName("binding")]
+	public new BindingConfig Binding { get; }
 }
