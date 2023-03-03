@@ -20,7 +20,7 @@ public class EverClientOptions : ClientConfig {
 	}
 
 	/// <summary>
-	/// 
+	///     Overridden binding info
 	/// </summary>
 	[JsonPropertyName("binding")]
 	public new BindingConfig Binding { get; }
