@@ -1,6 +1,6 @@
 namespace TestingExample.Fixtures;
 
-public class FixtureWrapper {
+public class FixtureWrapper : IAsyncLifetime {
 	private readonly IEverTestsFixture _fixture;
 
 	public FixtureWrapper() {
@@ -9,5 +9,13 @@ public class FixtureWrapper {
 
 	public IEverTestsFixture GetFixture() {
 		return _fixture;
+	}
+
+	public Task InitializeAsync() {
+		return Task.CompletedTask;
+	}
+
+	public Task DisposeAsync() {
+		return _fixture.DisposeAsync().AsTask();
 	}
 }
