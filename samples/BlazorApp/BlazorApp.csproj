@@ -7,7 +7,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\src\EverscaleNet.Contracts\EverscaleNet.Contracts.csproj" />
+		<ProjectReference Include="..\..\src\EverscaleNet.AppKit\EverscaleNet.AppKit.csproj" />
 		<ProjectReference Include="..\..\src\EverscaleNet.Utils\EverscaleNet.Utils.csproj" />
 		<ProjectReference Include="..\..\src\EverscaleNet.WebClient\EverscaleNet.WebClient.csproj" />
 	</ItemGroup>

@@ -1,3 +1,4 @@
+using System.Reflection;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Containers;
@@ -5,6 +6,7 @@ using EverscaleNet.Adapter.Rust;
 using EverscaleNet.Client;
 using EverscaleNet.Client.PackageManager;
 using EverscaleNet.WebClient.PackageManager;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Serilog;
@@ -13,22 +15,17 @@ using Serilog.Extensions.Logging;
 namespace TestingExample.Fixtures;
 
 public class EverNodeSeTestsFixture : IEverTestsFixture {
-	// if you want to start new node se container per fixture set true
-	// todo: init by configuration file or env variables
-	private const bool RunNodeSeContainer = false;
-
-	private const string NetworkEndpointsEnvVariable = "EVERSCALE_NETWORK_ENDPOINTS";
-	private readonly WebPackageManager _giverPackageManager;
 	private EverClientRustAdapter _adapter;
 	private IContainer _everNodeSeContainer;
 	private HttpClient _httpClient;
 	private LoggerFactory _loggerFactory;
+	private readonly IConfigurationRoot _configuration;
 
 	public EverNodeSeTestsFixture() {
 		_httpClient = new HttpClient();
-		_giverPackageManager = new WebPackageManager(_httpClient, new OptionsWrapper<WebPackageManagerOptions>(new WebPackageManagerOptions {
-			PackagesPath = "https://raw.githubusercontent.com/tonlabs/evernode-se/5652dc8710d8c1f249a663f537ef78116bf97f6d/contracts/giver_v2/"
-		}));
+		_configuration = new ConfigurationBuilder()
+		                 .AddUserSecrets(Assembly.GetExecutingAssembly())
+		                 .Build();
 	}
 
 	public IEverClient Client { get; private set; }
@@ -36,29 +33,48 @@ public class EverNodeSeTestsFixture : IEverTestsFixture {
 	public IEverGiver Giver { get; private set; }
 
 	public async Task Init(ITestOutputHelper output) {
-		await InitAsync(RunNodeSeContainer, output);
+		InitLoggerFactory(output);
+		Client ??= CreateEverClient();
+		PackageManager ??= CreatePackageManager();
+		Giver ??= await CreateGiver();
+		await RunNodeSeContainer();
 	}
 
-	public async ValueTask DisposeAsync() {
-		await DisposeAsyncCore().ConfigureAwait(false);
-		GC.SuppressFinalize(this);
+	private static FilePackageManager CreatePackageManager() {
+		return new FilePackageManager(new OptionsWrapper<FilePackageManagerOptions>(new FilePackageManagerOptions()));
 	}
 
-	private async Task InitAsync(bool runNodeSeContainer, ITestOutputHelper output) {
+	private async Task<EverNodeSeGiver> CreateGiver() {
+		var giverPackageManager = new WebPackageManager(_httpClient, new OptionsWrapper<WebPackageManagerOptions>(new WebPackageManagerOptions {
+			PackagesPath = "https://raw.githubusercontent.com/tonlabs/evernode-se/5652dc8710d8c1f249a663f537ef78116bf97f6d/contracts/giver_v2/"
+		}));
+		var giver = new EverNodeSeGiver(Client, giverPackageManager);
+		await giver.InitByPackage();
+		return giver;
+	}
+
+	private async Task RunNodeSeContainer() {
+		if (!bool.TryParse(_configuration["EverNodeSe:RunNodeSeContainer"], out bool runNodeSeContainer)) {
+			runNodeSeContainer = true;
+		}
+		if (runNodeSeContainer) {
+			TestcontainersSettings.Logger ??= _loggerFactory.CreateLogger("NodeSE");
+			_everNodeSeContainer ??= await BuildAndStartNodeSE();
+		}
+	}
+
+	private void InitLoggerFactory(ITestOutputHelper output) {
 		_loggerFactory ??= new LoggerFactory(new[] {
 			new SerilogLoggerProvider(new LoggerConfiguration()
 			                          .MinimumLevel.Verbose()
 			                          .WriteTo.TestOutput(output)
 			                          .CreateLogger())
 		});
-		if (runNodeSeContainer) {
-			TestcontainersSettings.Logger ??= _loggerFactory.CreateLogger("NodeSE");
-			_everNodeSeContainer ??= await BuildAndStartNodeSE();
-		}
-		//todo: ensure that node se is ready
-		Client ??= CreateClient(_loggerFactory.CreateLogger<EverClientRustAdapter>());
-		PackageManager ??= new FilePackageManager(new OptionsWrapper<FilePackageManagerOptions>(new FilePackageManagerOptions()));
-		Giver ??= new EverNodeSeGiver(Client, _giverPackageManager);
+	}
+
+	public async ValueTask DisposeAsync() {
+		await DisposeAsyncCore().ConfigureAwait(false);
+		GC.SuppressFinalize(this);
 	}
 
 	private static async Task<IContainer> BuildAndStartNodeSE() {
@@ -73,19 +89,22 @@ public class EverNodeSeTestsFixture : IEverTestsFixture {
 		return everNodeSE;
 	}
 
-	private IEverClient CreateClient(ILogger<EverClientRustAdapter> logger) {
-		string[] endpoints = _everNodeSeContainer == null
-			                     ? Environment.GetEnvironmentVariable(NetworkEndpointsEnvVariable)?.Split(";") ?? EverOS.Endpoints.NodeSE
+	private EverClient CreateEverClient() {
+		string endpoint = _configuration["EverNodeSe:Endpoint"];
+		string[] endpoints = _everNodeSeContainer is null
+			                     ? endpoint is null ? EverOS.Endpoints.NodeSE : new[] { endpoint }
 			                     : EverOS.Endpoints.NodeSE.Select(e => $"{e}:{_everNodeSeContainer.GetMappedPublicPort(80)}").ToArray();
 
-		var options = new EverClientOptions {
+		var options = new OptionsWrapper<EverClientOptions>(new EverClientOptions {
 			Network = {
 				Endpoints = endpoints,
 				QueriesProtocol = NetworkQueriesProtocol.WS
 			}
-		};
+		});
 
-		_adapter = new EverClientRustAdapter(new OptionsWrapper<EverClientOptions>(options), logger);
+		ILogger<EverClientRustAdapter> logger = _loggerFactory.CreateLogger<EverClientRustAdapter>();
+
+		_adapter = new EverClientRustAdapter(options, logger);
 		return new EverClient(_adapter);
 	}
 

@@ -2,7 +2,7 @@ using EverscaleNet;
 
 namespace BlazorApp.Contracts;
 
-public class SafeMultisigWallet : ContractBase {
+public class SafeMultisigWallet : AccountBase {
 	private const string Transfer = "transfer";
 
 	private readonly IEverClient _everClient;
@@ -19,7 +19,7 @@ public class SafeMultisigWallet : ContractBase {
 		Package contract = await _everPackageManager.LoadPackage(Name);
 		Abi transferAbi = await _everPackageManager.LoadAbi(Transfer);
 		KeyPair keyPair = await _everClient.Crypto.MnemonicDeriveSignKeys(new ParamsOfMnemonicDeriveSignKeys { Phrase = phrase });
-		await Init(keyPair.Public);
+		await InitByPublicKey(keyPair.Public);
 		if (await GetAccountType() == AccountType.Uninit) {
 			await Deploy(phrase);
 		}

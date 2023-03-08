@@ -34,26 +34,22 @@ public static class EverClientExtensions {
 	private static async Task<(string transctionId, decimal value, decimal fees)[]> WaitAndGetInternalMessageTransactions(IEverClient everClient, IEnumerable<string> messages,
 	                                                                                                                      CancellationToken cancellationToken) {
 		var parsedMessages = await Task.WhenAll(messages.Select(async message => {
-			ResultOfParse parseResult =
-				await everClient.Boc.ParseMessage(
-					new ParamsOfParse { Boc = message }, cancellationToken);
-			var parsedPrototype = new
-				{ id = default(string), msg_type = default(MessageType) };
-			var parsedMessage =
-				parseResult.Parsed!.ToPrototype(parsedPrototype);
+			ResultOfParse parseResult = await everClient.Boc.ParseMessage(new ParamsOfParse {
+				Boc = message
+			}, cancellationToken);
+			var parsedPrototype = new { id = default(string), msg_type = default(MessageType) };
+			var parsedMessage = parseResult.Parsed!.ToPrototype(parsedPrototype);
 			return new { messageId = parsedMessage.id, messageType = parsedMessage.msg_type };
 		}));
 
 		return await Task.WhenAll(parsedMessages
 		                          .Where(message => message.messageType == MessageType.Internal)
 		                          .Select(async parsedMessage => {
-			                          ResultOfWaitForCollection? result =
-				                          await everClient.Net.WaitForCollection(
-					                          new ParamsOfWaitForCollection {
-						                          Collection = "transactions",
-						                          Filter = new { in_msg = new { eq = parsedMessage.messageId } }.ToJsonElement(),
-						                          Result = "id in_message{value(format:DEC)} total_fees(format: DEC)"
-					                          }, cancellationToken);
+			                          ResultOfWaitForCollection result = await everClient.Net.WaitForCollection(new ParamsOfWaitForCollection {
+				                          Collection = "transactions",
+				                          Filter = new { in_msg = new { eq = parsedMessage.messageId } }.ToJsonElement(),
+				                          Result = "id in_message{value(format:DEC)} total_fees(format: DEC)",
+			                          }, cancellationToken);
 			                          var proto = new {
 				                          id = default(string),
 				                          in_message = new { value = default(string) },

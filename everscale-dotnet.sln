@@ -61,7 +61,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverscaleNet.Adapter.Base",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{640C8AF3-2DDD-4160-8303-B44A060628E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverscaleNet.Contracts", "src\EverscaleNet.Contracts\EverscaleNet.Contracts.csproj", "{8343A85F-B100-4FAC-B184-796F22446EDF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverscaleNet.AppKit", "src\EverscaleNet.AppKit\EverscaleNet.AppKit.csproj", "{8343A85F-B100-4FAC-B184-796F22446EDF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Adapters", "Adapters", "{C0B82D6C-B988-4F9B-B94D-D72A2DC85762}"
 EndProject

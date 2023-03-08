@@ -6,6 +6,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="FluentAssertions" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" />
 		<PackageReference Include="Serilog.Extensions.Logging" />
@@ -21,10 +22,10 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\EverscaleNet.Adapter.Rust\EverscaleNet.Adapter.Rust.csproj" />
 		<ProjectReference Include="..\..\src\EverscaleNet.Client\EverscaleNet.Client.csproj" />
-		<ProjectReference Include="..\..\src\EverscaleNet.Contracts\EverscaleNet.Contracts.csproj" />
+		<ProjectReference Include="..\..\src\EverscaleNet.AppKit\EverscaleNet.AppKit.csproj" />
 		<ProjectReference Include="..\..\src\EverscaleNet.WebClient\EverscaleNet.WebClient.csproj" />
 	</ItemGroup>
 
-	<Import Project="..\..\src\EverscaleNet.Contracts\build\EverscaleNet.Contracts.targets" />
+	<Import Project="..\..\src\EverscaleNet.AppKit\build\EverscaleNet.AppKit.targets" />
 
 </Project>

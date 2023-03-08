@@ -11,7 +11,7 @@
 </p>
 <p>
 	<label>
-		Accumulator address:
+		Calculator address:
 		<input id="address" value="@Address" readonly size="80"/>
 	</label>
 </p>
@@ -38,7 +38,7 @@
 
 @code {
 
-	AccumulatorContract Accumulator { get; set; }
+	CalculatorAccount Calculator { get; set; }
 
 	[Inject]
 	IEverClient EverClient { get; set; }
@@ -50,7 +50,7 @@
 	ILocalStorageService LocalStorageService { get; set; }
 
 	protected override async Task OnInitializedAsync() {
-		Phrase = await LocalStorageService.GetItemAsStringAsync("Accumulator_Phrase");
+		Phrase = await LocalStorageService.GetItemAsStringAsync("Calculator_Phrase");
 		Phrase ??= (await EverClient.Crypto.MnemonicFromRandom(new ParamsOfMnemonicFromRandom())).Phrase;
 		await PhraseChanged(new ChangeEventArgs { Value = Phrase });
 	}
@@ -60,7 +60,7 @@
 	private async Task Increment() {
 		Counting = true;
 		try {
-			await Accumulator.Add(1);
+			await Calculator.Add(1);
 			await UpdateCountAndBalance();
 			Error = null;
 		} catch (Exception e) {
@@ -73,7 +73,7 @@
 	private async Task Decrement() {
 		Counting = true;
 		try {
-			await Accumulator.Subtract(1);
+			await Calculator.Subtract(1);
 			await UpdateCountAndBalance();
 			Error = null;
 		} catch (Exception e) {
@@ -84,8 +84,8 @@
 	}
 
 	private async Task UpdateCountAndBalance() {
-		Count = await Accumulator.GetSum();
-		Balance = await Accumulator.GetBalance();
+		Count = await Calculator.GetSum();
+		Balance = await Calculator.GetBalance();
 	}
 
 	private bool Counting { get; set; }
@@ -99,23 +99,23 @@
 		StateHasChanged();
 		Phrase = obj.Value!.ToString();
 		try {
-			KeyPair keyPair = await EverClient.Crypto.MnemonicDeriveSignKeys(new ParamsOfMnemonicDeriveSignKeys { Phrase = Phrase });
-			Accumulator = new AccumulatorContract(EverClient, PackageManager, keyPair);
-			await Accumulator.Init(keyPair.Public);
-			Address = Accumulator.Address;
-			await LocalStorageService.SetItemAsStringAsync("Accumulator_Phrase", Phrase);
-			AccountType? accountType = await Accumulator.GetAccountType();
+			_keyPair = await EverClient.Crypto.MnemonicDeriveSignKeys(new ParamsOfMnemonicDeriveSignKeys { Phrase = Phrase });
+			Calculator = new CalculatorAccount(EverClient, PackageManager, _keyPair);
+			await Calculator.InitByPublicKey(_keyPair.Public);
+			Address = Calculator.Address;
+			await LocalStorageService.SetItemAsStringAsync("Calculator_Phrase", Phrase);
+			AccountType? accountType = await Calculator.GetAccountType();
 			switch (accountType) {
 				case AccountType.Frozen:
-					throw new Exception("Accumulator contract has been frozen");
-				case AccountType.NonExist when await Accumulator.GetBalance() < 1M:
-				case AccountType.Active when await Accumulator.GetBalance() < 1M:
-				case AccountType.Uninit when await Accumulator.GetBalance() < 1M:
+					throw new Exception("Calculator contract has been frozen");
+				case AccountType.NonExist when await Calculator.GetBalance() < 1M:
+				case AccountType.Active when await Calculator.GetBalance() < 1M:
+				case AccountType.Uninit when await Calculator.GetBalance() < 1M:
 				case null:
 					throw new Exception("Balance to low, send 1 or more Evers to address");
 				case AccountType.Uninit:
 				case AccountType.NonExist:
-					await Accumulator.Deploy();
+					await Calculator.Deploy();
 					break;
 				case AccountType.Active:
 					break;
@@ -136,4 +136,5 @@
 
 	public decimal? Balance { get; set; }
 
+	private KeyPair _keyPair;
 }

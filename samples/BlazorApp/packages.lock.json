@@ -200,7 +200,7 @@
           "Microsoft.JSInterop": "[7.0.3, )"
         }
       },
-      "everscalenet.contracts": {
+      "everscalenet.appkit": {
         "type": "Project",
         "dependencies": {
           "EverscaleNet": "[1.41.0, )",

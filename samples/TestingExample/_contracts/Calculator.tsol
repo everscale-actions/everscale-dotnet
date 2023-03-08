@@ -1,0 +1,29 @@
+pragma ever-solidity >= 0.62.0;
+pragma AbiHeader expire;
+pragma AbiHeader pubkey;
+
+contract Calculator {
+    int public sum = 0;
+    address static owner_;
+
+    modifier checkOwnerAndAccept {
+        if (msg.pubkey() != 0) {
+            require(msg.pubkey() == tvm.pubkey(), 101);
+            tvm.accept();
+        } else {
+            require(owner_.value != 0, 102);
+            require(msg.sender == owner_, 103);
+        }
+        _;
+    }
+
+    constructor() public checkOwnerAndAccept {}
+
+    function add(int value) public checkOwnerAndAccept {
+        sum += value;
+    }
+
+    function subtract(int value) public checkOwnerAndAccept {
+        sum -= value;
+    }
+}

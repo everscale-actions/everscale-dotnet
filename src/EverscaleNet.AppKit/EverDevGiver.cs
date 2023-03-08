@@ -6,5 +6,5 @@ namespace EverscaleNet;
 /// <inheritdoc />
 public class EverDevGiver : EverGiverBase {
 	/// <inheritdoc />
-	public EverDevGiver(IEverClient everClient, IEverPackageManager packageManager, KeyPair keyPair) : base(everClient, packageManager, keyPair) { }
+	public EverDevGiver(IEverClient everClient, IEverPackageManager packageManager) : base(everClient, packageManager) { }
 }
