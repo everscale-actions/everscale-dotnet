@@ -68,11 +68,16 @@ jobs:
       - name: Build
         run: dotnet build -c Release --no-restore -v normal -ds -m
       
-      - name: Wait for Node SE
+      - name: Wait for first block of Node SE
+        timeout-minutes: 5
         run: |
-          wget https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh
-          chmod +x wait-for-it.sh
-          ./wait-for-it.sh -s -t 120 localhost:5555
+          while true; do
+            firstBlockId=`curl --max-time 1 -s 'http://localhost:5555/graphql' --header 'Content-Type: application/json' --data '{"query":"{ blocks(limit: 1) { id }}"}' | jq -r -e '.data.blocks[0].id?'`
+            if [[ ! -z "$firstBlockId" ]]; then
+              break
+            fi
+            sleep 1
+          done
       
       - name: Test
         timeout-minutes: 10
