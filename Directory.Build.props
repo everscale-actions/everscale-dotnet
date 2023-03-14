@@ -10,8 +10,4 @@
 		<NET6_OR_NET7 Condition=" '$(NET6_OR_NET7)' != 'true' ">false</NET6_OR_NET7>
 	</PropertyGroup>
 
-	<PropertyGroup>
-		<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
-		<CheckEolTargetFramework>false</CheckEolTargetFramework>
-	</PropertyGroup>
 </Project>
