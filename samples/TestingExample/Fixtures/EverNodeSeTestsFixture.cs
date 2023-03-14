@@ -15,16 +15,17 @@ using Serilog.Extensions.Logging;
 namespace TestingExample.Fixtures;
 
 public class EverNodeSeTestsFixture : IEverTestsFixture {
+	private readonly IConfigurationRoot _configuration;
 	private EverClientRustAdapter _adapter;
 	private IContainer _everNodeSeContainer;
 	private HttpClient _httpClient;
 	private LoggerFactory _loggerFactory;
-	private readonly IConfigurationRoot _configuration;
 
 	public EverNodeSeTestsFixture() {
 		_httpClient = new HttpClient();
 		_configuration = new ConfigurationBuilder()
 		                 .AddUserSecrets(Assembly.GetExecutingAssembly())
+		                 .AddEnvironmentVariables()
 		                 .Build();
 	}
 
@@ -38,6 +39,11 @@ public class EverNodeSeTestsFixture : IEverTestsFixture {
 		PackageManager ??= CreatePackageManager();
 		Giver ??= await CreateGiver();
 		await RunNodeSeContainer();
+	}
+
+	public async ValueTask DisposeAsync() {
+		await DisposeAsyncCore().ConfigureAwait(false);
+		GC.SuppressFinalize(this);
 	}
 
 	private static FilePackageManager CreatePackageManager() {
@@ -54,6 +60,9 @@ public class EverNodeSeTestsFixture : IEverTestsFixture {
 	}
 
 	private async Task RunNodeSeContainer() {
+		if (_configuration["EVERSCALE_NETWORK_ENDPOINTS"] is not null) {
+			return;
+		}
 		if (!bool.TryParse(_configuration["EverNodeSe:RunNodeSeContainer"], out bool runNodeSeContainer)) {
 			runNodeSeContainer = true;
 		}
@@ -72,11 +81,6 @@ public class EverNodeSeTestsFixture : IEverTestsFixture {
 		});
 	}
 
-	public async ValueTask DisposeAsync() {
-		await DisposeAsyncCore().ConfigureAwait(false);
-		GC.SuppressFinalize(this);
-	}
-
 	private static async Task<IContainer> BuildAndStartNodeSE() {
 		IContainer everNodeSE = new ContainerBuilder()
 		                        .WithImage("tonlabs/local-node:latest")
@@ -90,10 +94,11 @@ public class EverNodeSeTestsFixture : IEverTestsFixture {
 	}
 
 	private EverClient CreateEverClient() {
-		string endpoint = _configuration["EverNodeSe:Endpoint"];
-		string[] endpoints = _everNodeSeContainer is null
-			                     ? endpoint is null ? EverOS.Endpoints.NodeSE : new[] { endpoint }
-			                     : EverOS.Endpoints.NodeSE.Select(e => $"{e}:{_everNodeSeContainer.GetMappedPublicPort(80)}").ToArray();
+		string[] endpoints = _everNodeSeContainer is not null
+			                     ? EverOS.Endpoints.NodeSE.Select(e => $"{e}:{_everNodeSeContainer.GetMappedPublicPort(80)}").ToArray()
+			                     : _configuration["EVERSCALE_NETWORK_ENDPOINTS"]?.Split(',', ';', '|')
+			                       ?? _configuration["EverNodeSe:Endpoint"]?.Split(',', ';', '|')
+			                       ?? EverOS.Endpoints.NodeSE;
 
 		var options = new OptionsWrapper<EverClientOptions>(new EverClientOptions {
 			Network = {
