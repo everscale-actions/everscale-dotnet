@@ -1,0 +1,47 @@
+pragma ever-solidity >= 0.61.2;
+
+pragma AbiHeader time;
+pragma AbiHeader expire;
+pragma AbiHeader pubkey;
+
+import "import/ever-contracts/contracts/libraries/MsgFlag.tsol";
+import "import/ever-contracts/contracts/libraries/UtilityGas.tsol";
+
+import "import/ever-contracts/contracts/reservation/abstract/Reservable.tsol";
+import "import/ever-contracts/contracts/reservation/abstract/TargetBalance.tsol";
+
+contract CalculatorInternal is Reservable, TargetBalance {
+    int public sum = 0;
+
+    modifier checkOwner {
+        require(msg.pubkey() != 0, 100);
+        require(msg.pubkey() == tvm.pubkey(), 101);
+        _;
+    }
+
+    function _getTargetBalanceInternal()
+    internal view override
+    returns (uint128)
+    {
+        return UtilityGas.INITIAL_BALANCE;
+    }
+
+    constructor()
+    public reserveAndAccept(_getTargetBalanceInternal()) {
+    }
+
+    function add(int value)
+    public checkOwner reserveAndAccept(_getTargetBalanceInternal()) {
+        sum += value;
+    }
+
+    function subtract(int value)
+    public checkOwner reserveAndAccept(_getTargetBalanceInternal()) {
+        sum -= value;
+    }
+
+    function getMoney(optional(address) _remainingGasTo)
+    public checkOwner reserveAcceptAndRefund(_getTargetBalanceInternal(), _remainingGasTo, msg.sender) {
+        
+    }
+}

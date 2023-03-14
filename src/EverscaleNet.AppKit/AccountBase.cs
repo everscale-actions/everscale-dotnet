@@ -1,5 +1,5 @@
 using System;
-using System.Diagnostics;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using EverscaleNet.Abstract;
@@ -166,11 +166,33 @@ public abstract class AccountBase {
 		throw new Exception("Unreachable code");
 	}
 
+	private async Task<ResultOfProcessMessage> DeployWithSigner(Signer signer, CallSet callSet, CancellationToken cancellationToken) {
+		if (signer is null) {
+			throw new ArgumentNullException(nameof(signer));
+		}
+		if (callSet is null) {
+			throw new ArgumentNullException(nameof(callSet));
+		}
+		var paramsOfProcessMessage = new ParamsOfProcessMessage {
+			MessageEncodeParams = new ParamsOfEncodeMessage {
+				Address = Address,
+				Abi = await GetAbi(cancellationToken),
+				DeploySet = new DeploySet {
+					Tvc = await GetTvc(cancellationToken),
+					InitialData = _initialData?.ToJsonElement()
+				},
+				CallSet = callSet,
+				Signer = signer
+			}
+		};
+		return await _client.Processing.ProcessMessage(paramsOfProcessMessage, cancellationToken: cancellationToken);
+	}
+
 	private async Task<ResultOfProcessMessage> DeployWithMultisig(IMultisigAccount multisig, CallSet callSet, CancellationToken cancellationToken) {
-		if (multisig == null) {
+		if (multisig is null) {
 			throw new ArgumentNullException(nameof(multisig));
 		}
-		if (callSet == null) {
+		if (callSet is null) {
 			throw new ArgumentNullException(nameof(callSet));
 		}
 		ResultOfEncodeInitialData resultOfEncodeInitialData = await _client.Abi.EncodeInitialData(new ParamsOfEncodeInitialData {
@@ -196,29 +218,7 @@ public abstract class AccountBase {
 
 		string payload = resultOfEncodeMessageBody.Body;
 		string stateInit = resultOfEncodeTvc.Tvc;
-		return await multisig.SubmitTransaction(Address, 1M, false, false, payload, stateInit, cancellationToken);
-	}
-
-	private async Task<ResultOfProcessMessage> DeployWithSigner(Signer signer, CallSet callSet, CancellationToken cancellationToken) {
-		if (signer == null) {
-			throw new ArgumentNullException(nameof(signer));
-		}
-		if (callSet == null) {
-			throw new ArgumentNullException(nameof(callSet));
-		}
-		var paramsOfProcessMessage = new ParamsOfProcessMessage {
-			MessageEncodeParams = new ParamsOfEncodeMessage {
-				Address = Address,
-				Abi = await GetAbi(cancellationToken),
-				DeploySet = new DeploySet {
-					Tvc = await GetTvc(cancellationToken),
-					InitialData = _initialData?.ToJsonElement()
-				},
-				CallSet = callSet,
-				Signer = signer
-			}
-		};
-		return await _client.Processing.ProcessMessage(paramsOfProcessMessage, cancellationToken: cancellationToken);
+		return await multisig.SubmitTransaction(Address, 5M, false, false, payload, stateInit, cancellationToken);
 	}
 
 	/// <summary>
@@ -240,29 +240,11 @@ public abstract class AccountBase {
 		throw new Exception("Unreachable code");
 	}
 
-	private async Task<ResultOfProcessMessage> RunWithMultisig(IMultisigAccount multisig, CallSet callSet, CancellationToken cancellationToken) {
-		if (multisig == null) {
-			throw new ArgumentNullException(nameof(multisig));
-		}
-		if (callSet == null) {
-			throw new ArgumentNullException(nameof(callSet));
-		}
-		ResultOfEncodeMessageBody resultOfEncodeMessageBody = await _client.Abi.EncodeMessageBody(new ParamsOfEncodeMessageBody {
-			Abi = await GetAbi(cancellationToken),
-			CallSet = callSet,
-			IsInternal = true,
-			Signer = new Signer.None()
-		}, cancellationToken);
-
-		string payload = resultOfEncodeMessageBody.Body;
-		return await multisig.SendTransaction(Address, 0.1M, true, 1, payload, cancellationToken);
-	}
-
 	private async Task<ResultOfProcessMessage> RunWithSigner(Signer signer, CallSet callSet, CancellationToken cancellationToken) {
-		if (signer == null) {
+		if (signer is null) {
 			throw new ArgumentNullException(nameof(signer));
 		}
-		if (callSet == null) {
+		if (callSet is null) {
 			throw new ArgumentNullException(nameof(callSet));
 		}
 		return await _client.Processing.ProcessMessage(new ParamsOfProcessMessage {
@@ -273,6 +255,49 @@ public abstract class AccountBase {
 				Signer = signer
 			}
 		}, cancellationToken: cancellationToken);
+	}
+
+	private async Task<ResultOfProcessMessage> RunWithMultisig(IMultisigAccount multisig, CallSet callSet, CancellationToken cancellationToken) {
+		if (multisig is null) {
+			throw new ArgumentNullException(nameof(multisig));
+		}
+		if (callSet is null) {
+			throw new ArgumentNullException(nameof(callSet));
+		}
+		ResultOfEncodeMessageBody resultOfEncodeMessageBody = await _client.Abi.EncodeMessageBody(new ParamsOfEncodeMessageBody {
+			Abi = await GetAbi(cancellationToken),
+			CallSet = callSet,
+			IsInternal = true,
+			Signer = new Signer.None()
+		}, cancellationToken);
+
+		string payload = resultOfEncodeMessageBody.Body;
+		ResultOfProcessMessage resultOfProcessMessage = await multisig.SendTransaction(Address, 5M, true, 1, payload, cancellationToken);
+		if (resultOfProcessMessage.OutMessages.Length == 0) {
+			throw new NoOutMessagesException(resultOfProcessMessage);
+		}
+		string outMessage = resultOfProcessMessage.OutMessages[0];
+		ResultOfParse parseResult = await _client.Boc.ParseMessage(new ParamsOfParse { Boc = outMessage }, cancellationToken);
+		var outMsg = parseResult.Parsed!.ToPrototype(new { id = default(string) });
+		ResultOfQueryCollection resultOfQueryCollection = await _client.Net.QueryCollection(new ParamsOfQueryCollection {
+			Collection = "messages",
+			Filter = new { id = new { eq = outMsg.id } }.ToJsonElement(),
+			Result = "dst_transaction{aborted compute{success exit_code}}"
+		}, cancellationToken);
+		var result = resultOfQueryCollection.Result[0].ToPrototype(new {
+			dst_transaction = new {
+				aborted = default(bool),
+				compute = new {
+					success = default(bool),
+					exit_code = default(uint)
+				}
+			}
+		});
+		if (result.dst_transaction.aborted || !result.dst_transaction.compute.success) {
+			throw EverClientException.CreateExceptionWithCodeWithData(result.dst_transaction.compute.exit_code, resultOfProcessMessage.ToJsonElement().ToObject<Dictionary<string, object>>(),
+			                                                          "Transaction aborted or failed");
+		}
+		return resultOfProcessMessage;
 	}
 
 	/// <summary>
@@ -300,7 +325,7 @@ public abstract class AccountBase {
 				Tvc = await GetTvc(cancellationToken),
 				InitialData = initialData?.ToJsonElement()
 			},
-			Signer = publicKey == null ? new Signer.None() : new Signer.External { PublicKey = publicKey }
+			Signer = publicKey is null ? new Signer.None() : new Signer.External { PublicKey = publicKey }
 		};
 		ResultOfEncodeMessage resultOfEncodeMessage = await _client.Abi.EncodeMessage(paramsOfEncodeMessage, cancellationToken);
 		return resultOfEncodeMessage.Address;

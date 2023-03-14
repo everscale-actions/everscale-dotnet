@@ -4,6 +4,8 @@ public class FixtureWrapper : IAsyncLifetime {
 	private readonly IEverTestsFixture _fixture;
 
 	public FixtureWrapper() {
+		// Fixture for network
+		// _fixture = new EverDevTestsFixture();
 		_fixture = new EverNodeSeTestsFixture();
 	}
 

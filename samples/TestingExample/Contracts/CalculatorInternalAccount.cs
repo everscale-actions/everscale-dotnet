@@ -1,21 +1,18 @@
 namespace TestingExample.Contracts;
 
-internal class CalculatorAccount : AccountBase {
+internal class CalculatorInternalAccount : AccountBase {
 	private readonly IEverClient _client;
 
-	public CalculatorAccount(IEverClient client, IEverPackageManager packageManager, KeyPair keyPair) : base(client, packageManager, new Signer.Keys { KeysAccessor = keyPair }) {
+	public CalculatorInternalAccount(IEverClient client, IEverPackageManager packageManager, IMultisigAccount multisigAccount) : base(client, packageManager, multisigAccount) {
 		_client = client;
 	}
 
-	public CalculatorAccount(IEverClient client, IEverPackageManager packageManager, IMultisigAccount multisigAccount) : base(client, packageManager, multisigAccount) {
+	public CalculatorInternalAccount(IEverClient client, IEverPackageManager packageManager, IMultisigAccount multisigAccount, string address) :
+		base(client, packageManager, multisigAccount, address) {
 		_client = client;
 	}
 
-	public CalculatorAccount(IEverClient client, IEverPackageManager packageManager, IMultisigAccount multisigAccount, string address) : base(client, packageManager, multisigAccount, address) {
-		_client = client;
-	}
-
-	protected override string Name => "Calculator";
+	protected override string Name => "CalculatorInternal";
 
 	public async Task<ResultOfProcessMessage> Add(int value, CancellationToken cancellationToken = default) {
 		return await Run(new CallSet {

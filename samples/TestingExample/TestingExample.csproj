@@ -9,6 +9,7 @@
 		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="Polly" />
 		<PackageReference Include="Serilog.Extensions.Logging" />
 		<PackageReference Include="Serilog.Sinks.XUnit" />
 		<PackageReference Include="Testcontainers" />
@@ -24,6 +25,10 @@
 		<ProjectReference Include="..\..\src\EverscaleNet.Client\EverscaleNet.Client.csproj" />
 		<ProjectReference Include="..\..\src\EverscaleNet.AppKit\EverscaleNet.AppKit.csproj" />
 		<ProjectReference Include="..\..\src\EverscaleNet.WebClient\EverscaleNet.WebClient.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="_contracts\import\ever-contracts\" />
 	</ItemGroup>
 
 	<Import Project="..\..\src\EverscaleNet.AppKit\build\EverscaleNet.AppKit.targets" />

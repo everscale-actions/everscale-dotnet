@@ -1,0 +1,3 @@
+[submodule "samples/TestingExample/_contracts/import/ever-contracts"]
+	path = samples/TestingExample/_contracts/import/ever-contracts
+	url = https://github.com/broxus/ever-contracts.git

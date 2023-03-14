@@ -2,13 +2,13 @@ using System.Text.Json;
 
 namespace TestingExample;
 
-public class CalculatorTests : IClassFixture<FixtureWrapper>, IAsyncLifetime {
+public class CalculatorExternalTests : IClassFixture<FixtureWrapper>, IAsyncLifetime {
 	private readonly IEverTestsFixture _fixture;
 	private readonly ITestOutputHelper _output;
-	private CalculatorAccount _calculator;
+	private CalculatorExternalAccount _calculator;
 	private KeyPair _keyPair;
 
-	public CalculatorTests(FixtureWrapper fixtureWrapper, ITestOutputHelper output) {
+	public CalculatorExternalTests(FixtureWrapper fixtureWrapper, ITestOutputHelper output) {
 		_fixture = fixtureWrapper.GetFixture();
 		_output = output;
 	}
@@ -16,9 +16,9 @@ public class CalculatorTests : IClassFixture<FixtureWrapper>, IAsyncLifetime {
 	public async Task InitializeAsync() {
 		await _fixture.Init(_output);
 		_keyPair = await _fixture.Client.Crypto.GenerateRandomSignKeys();
-		_calculator = new CalculatorAccount(_fixture.Client, _fixture.PackageManager, _keyPair);
+		_calculator = new CalculatorExternalAccount(_fixture.Client, _fixture.PackageManager, _keyPair);
 		await _calculator.InitByPublicKey(_keyPair.Public);
-		await _fixture.Giver.SendTransaction(_calculator.Address, 0.1M);
+		await _fixture.Giver.SendTransaction(_calculator.Address, 10m);
 		await _calculator.Deploy();
 	}
 
@@ -27,12 +27,12 @@ public class CalculatorTests : IClassFixture<FixtureWrapper>, IAsyncLifetime {
 	}
 
 	[Fact]
-	public async Task Add100_Returns100() {
-		await _calculator.Add(100);
+	public async Task Add1_Returns1() {
+		await _calculator.Add(1);
 
 		long result = await _calculator.GetSum();
 
-		result.Should().Be(100);
+		result.Should().Be(1);
 	}
 
 	[Fact]
@@ -48,12 +48,12 @@ public class CalculatorTests : IClassFixture<FixtureWrapper>, IAsyncLifetime {
 	[Fact]
 	public async Task ParallelAdd10_Returns10() {
 		await Parallel.ForEachAsync(
-			Enumerable.Range(0, 9),
+			Enumerable.Range(1, 10),
 			async (i, token) => await _calculator.Add(i, token));
 
 		long result = await _calculator.GetSum();
 
-		result.Should().Be(36);
+		result.Should().Be(55);
 	}
 
 	[Fact]
@@ -68,10 +68,10 @@ public class CalculatorTests : IClassFixture<FixtureWrapper>, IAsyncLifetime {
 	[Fact]
 	public async Task AnotherPubkeyHasNoAccess() {
 		KeyPair keyPair = await _fixture.Client.Crypto.GenerateRandomSignKeys();
-		var accumulatorAccount = new CalculatorAccount(_fixture.Client, _fixture.PackageManager, keyPair);
-		await accumulatorAccount.InitByPublicKey(_keyPair.Public);
+		var calculatorAccount = new CalculatorExternalAccount(_fixture.Client, _fixture.PackageManager, keyPair);
+		await calculatorAccount.InitByPublicKey(_keyPair.Public);
 
-		Func<Task> act = () => accumulatorAccount.Add(1);
+		Func<Task> act = () => calculatorAccount.Add(1);
 
 		await act.Should()
 		         .ThrowAsync<EverClientException>()

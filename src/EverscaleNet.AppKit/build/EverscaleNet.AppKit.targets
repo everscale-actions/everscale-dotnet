@@ -11,7 +11,7 @@
 	<Target Name="IncludeSolidityFiles" BeforeTargets="CompileSolidityContracts;GetCopyToOutputDirectoryItems">
 		<ItemGroup>
 			<SolAllFiles Include="**\*.sol;**\*.tsol" />
-			<SolCompileFiles Include="**\*.sol;**\*.tsol" Exclude="**\interfaces\*;**\include\*;**\import\*;**\abstract\*;**\.solc_imports\*" />
+			<SolCompileFiles Include="**\*.sol;**\*.tsol" Exclude="**\interfaces\**;**\include\**;**\import\**;**\abstract\**;**\.solc_imports\**" />
 		</ItemGroup>
 	</Target>
 

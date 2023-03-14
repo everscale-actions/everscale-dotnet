@@ -14,10 +14,10 @@ public abstract class EverGiverBase : AccountBase, IEverGiver {
 	/// </summary>
 	/// <param name="everClient"></param>
 	/// <param name="packageManager"></param>
-	/// <param name="address"></param>
 	/// <param name="keyPair"></param>
-	protected EverGiverBase(IEverClient everClient, IEverPackageManager packageManager, string address, KeyPair keyPair) : base(
-		everClient, packageManager, new Signer.Keys { KeysAccessor = keyPair }, address) { }
+	/// <param name="address"></param>
+	protected EverGiverBase(IEverClient everClient, IEverPackageManager packageManager, KeyPair keyPair, string? address = null)
+		: base(everClient, packageManager, new Signer.Keys { KeysAccessor = keyPair }, address: address) { }
 
 	/// <summary>
 	///     Create giver by key pair. Do not forget init after creation.
@@ -25,14 +25,8 @@ public abstract class EverGiverBase : AccountBase, IEverGiver {
 	/// <param name="everClient"></param>
 	/// <param name="packageManager"></param>
 	/// <param name="address"></param>
-	protected EverGiverBase(IEverClient everClient, IEverPackageManager packageManager, string address) : base(everClient, packageManager, address) { }
-
-	/// <summary>
-	///     Create giver by key pair. Do not forget init after creation.
-	/// </summary>
-	/// <param name="everClient"></param>
-	/// <param name="packageManager"></param>
-	protected EverGiverBase(IEverClient everClient, IEverPackageManager packageManager) : base(everClient, packageManager) { }
+	protected EverGiverBase(IEverClient everClient, IEverPackageManager packageManager, string address)
+		: base(everClient, packageManager, address) { }
 
 	/// <inheritdoc />
 	protected override string Name => "GiverV2";

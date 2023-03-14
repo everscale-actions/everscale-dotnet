@@ -1,0 +1,40 @@
+pragma ever-solidity >= 0.61.2;
+
+import "import/ever-contracts/contracts/libraries/MsgFlag.tsol";
+import "import/ever-contracts/contracts/libraries/UtilityGas.tsol";
+
+import "import/ever-contracts/contracts/reservation/abstract/Reservable.tsol";
+import "import/ever-contracts/contracts/reservation/abstract/TargetBalance.tsol";
+
+contract CalculatorInternal is Reservable, TargetBalance {
+    address static owner_;
+
+    int public sum = 0;
+
+    modifier checkOwner {
+        require(owner_.value != 0, 102);
+        require(msg.sender == owner_, 103);
+        _;
+    }
+
+    function _getTargetBalanceInternal()
+    internal view override
+    returns (uint128)
+    {
+        return UtilityGas.INITIAL_BALANCE;
+    }
+
+    constructor()
+    public reserveAndRefund(_getTargetBalanceInternal(), owner_, msg.sender) {
+    }
+
+    function add(int value)
+    public checkOwner reserveAndRefund(_getTargetBalanceInternal(), owner_, msg.sender) {
+        sum += value;
+    }
+
+    function subtract(int value)
+    public checkOwner reserveAndRefund(_getTargetBalanceInternal(), owner_, msg.sender) {
+        sum -= value;
+    }
+}

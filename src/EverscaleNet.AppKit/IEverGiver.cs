@@ -8,12 +8,17 @@ namespace EverscaleNet;
 /// </summary>
 public interface IEverGiver {
 	/// <summary>
+	/// 
+	/// </summary>
+	string Address { get; }
+	
+	/// <summary>
 	///     Send coins from giver to destination address
 	/// </summary>
 	/// <param name="dest">Address</param>
-	/// <param name="value">Coins value</param>
+	/// <param name="coins">Coins value</param>
 	/// <param name="bounce">Return money if address doesn't exist</param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task SendTransaction(string dest, decimal value, bool bounce = false, CancellationToken cancellationToken = default);
+	Task SendTransaction(string dest, decimal coins, bool bounce = false, CancellationToken cancellationToken = default);
 }

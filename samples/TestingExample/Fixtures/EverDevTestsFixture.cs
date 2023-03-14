@@ -59,13 +59,13 @@ public class EverDevTestsFixture : IEverTestsFixture {
 			PackagesPath = "https://raw.githubusercontent.com/tonlabs/evernode-se/5652dc8710d8c1f249a663f537ef78116bf97f6d/contracts/giver_v2/"
 		}));
 
-		var giverKeyPair = new KeyPair {
+		var keyPair = new KeyPair {
 			Public = _configuration["EverDev:Giver:Public"] ?? throw new NullReferenceException("EverDev:Giver:Public was not set"),
 			Secret = _configuration["EverDev:Giver:Secret"] ?? throw new NullReferenceException("EverDev:Giver:Secret was not set")
 		};
 
-		var giver = new EverDevGiver(Client, giverPackageManager);
-		await giver.InitByPublicKey(giverKeyPair.Public);
+		var giver = new EverDevGiver(Client, giverPackageManager, keyPair);
+		await giver.InitByPublicKey(keyPair.Public);
 		return giver;
 	}
 

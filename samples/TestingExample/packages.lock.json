@@ -43,6 +43,12 @@
           "Microsoft.TestPlatform.TestHost": "17.5.0"
         }
       },
+      "Polly": {
+        "type": "Direct",
+        "requested": "[7.2.3, )",
+        "resolved": "7.2.3",
+        "contentHash": "DeCY0OFbNdNxsjntr1gTXHJ5pKUwYzp04Er2LLeN3g6pWhffsGuKVfMBLe1lw7x76HrPkLxKEFxBlpRxS2nDEQ=="
+      },
       "Serilog.Extensions.Logging": {
         "type": "Direct",
         "requested": "[3.1.0, )",
