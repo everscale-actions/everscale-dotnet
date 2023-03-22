@@ -8,7 +8,7 @@ jobs:
   report:
     runs-on: ubuntu-latest
     steps:
-      - uses: phoenix-actions/test-reporting@v10
+      - uses: dorny/test-reporter@v1
         id: test-report
         with:
           artifact: test-results
