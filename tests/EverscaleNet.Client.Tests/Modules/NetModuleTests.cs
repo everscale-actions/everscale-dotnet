@@ -137,7 +137,7 @@ public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 					break;
 				case SubscriptionResponseType.Error:
 					var error = serdeJson.ToObject<ClientError>();
-					_outputHelper.WriteLine($">> {error}");
+					_outputHelper.WriteLine($">> Error: {serdeJson}");
 					lock (@lock) {
 						errorCodes.Add(error.Code);
 					}
@@ -165,9 +165,6 @@ public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 
 		int transactionCount1 = transactions.Count;
 
-		// suspend subscription
-		await subscriptionClient.Net.Suspend();
-
 		// second handler
 		ResultOfSubscribeCollection handle2 = await subscriptionClient.Net.SubscribeCollection(new ParamsOfSubscribeCollection {
 			Collection = "transactions",
@@ -177,6 +174,9 @@ public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 			}.ToJsonElement(),
 			Result = "id account_addr"
 		}, callback);
+
+		// suspend subscription
+		await subscriptionClient.Net.Suspend();
 
 		// deploy to create second transaction
 		await _everClient.Processing.ProcessMessage(new ParamsOfProcessMessage {
