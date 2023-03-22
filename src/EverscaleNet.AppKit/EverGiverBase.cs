@@ -17,7 +17,7 @@ public abstract class EverGiverBase : AccountBase, IEverGiver {
 	/// <param name="keyPair"></param>
 	/// <param name="address"></param>
 	protected EverGiverBase(IEverClient everClient, IEverPackageManager packageManager, KeyPair keyPair, string? address = null)
-		: base(everClient, packageManager, new Signer.Keys { KeysAccessor = keyPair }, address: address) { }
+		: base(everClient, packageManager, new Signer.Keys { KeysAccessor = keyPair }, address) { }
 
 	/// <summary>
 	///     Create giver by key pair. Do not forget init after creation.

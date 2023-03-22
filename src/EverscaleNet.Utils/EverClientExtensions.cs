@@ -48,7 +48,7 @@ public static class EverClientExtensions {
 			                          ResultOfWaitForCollection result = await everClient.Net.WaitForCollection(new ParamsOfWaitForCollection {
 				                          Collection = "transactions",
 				                          Filter = new { in_msg = new { eq = parsedMessage.messageId } }.ToJsonElement(),
-				                          Result = "id in_message{value(format:DEC)} total_fees(format: DEC)",
+				                          Result = "id in_message{value(format:DEC)} total_fees(format: DEC)"
 			                          }, cancellationToken);
 			                          var proto = new {
 				                          id = default(string),

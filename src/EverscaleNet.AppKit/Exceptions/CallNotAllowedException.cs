@@ -7,7 +7,6 @@ namespace EverscaleNet.Exceptions;
 /// </summary>
 public class CallNotAllowedException : Exception {
 	/// <summary>
-	/// 
 	/// </summary>
 	/// <param name="message"></param>
 	public CallNotAllowedException(string message) : base(message) { }

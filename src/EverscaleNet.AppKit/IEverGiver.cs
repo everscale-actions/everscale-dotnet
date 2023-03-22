@@ -8,10 +8,9 @@ namespace EverscaleNet;
 /// </summary>
 public interface IEverGiver {
 	/// <summary>
-	/// 
 	/// </summary>
 	string Address { get; }
-	
+
 	/// <summary>
 	///     Send coins from giver to destination address
 	/// </summary>
