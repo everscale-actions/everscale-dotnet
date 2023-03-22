@@ -77,6 +77,10 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Not described yet..</para>
         /// </summary>
-        GraphqlConnectionError = 617
+        GraphqlConnectionError = 617,
+        /// <summary>
+        /// <para>Not described yet..</para>
+        /// </summary>
+        WrongWebscoketProtocolSequence = 618
     }
 }

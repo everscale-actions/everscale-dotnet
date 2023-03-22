@@ -12,6 +12,52 @@ namespace EverscaleNet.Abstract.Modules
     public interface IProcessingModule : IEverModule
     {
         /// <summary>
+        /// <para>Starts monitoring for the processing results of the specified messages.</para>
+        /// <para>Message monitor performs background monitoring for a message processing results</para>
+        /// <para>for the specified set of messages.</para>
+        /// <para>Message monitor can serve several isolated monitoring queues.</para>
+        /// <para>Each monitor queue has a unique application defined identifier (or name) used</para>
+        /// <para>to separate several queue's.</para>
+        /// <para>There are two important lists inside of the monitoring queue:</para>
+        /// <para>- unresolved messages: contains messages requested by the application for monitoring</para>
+        /// <para>  and not yet resolved;</para>
+        /// <para>- resolved results: contains resolved processing results for monitored messages.</para>
+        /// <para>Each monitoring queue tracks own unresolved and resolved lists.</para>
+        /// <para>Application can add more messages to the monitoring queue at any time.</para>
+        /// <para>Message monitor accumulates resolved results.</para>
+        /// <para>Application should fetch this results with `fetchNextMonitorResults` function.</para>
+        /// <para>When both unresolved and resolved lists becomes empty, monitor stops any background activity</para>
+        /// <para>and frees all allocated internal memory.</para>
+        /// <para>If monitoring queue with specified name already exists then messages will be added</para>
+        /// <para>to the unresolved list.</para>
+        /// <para>If monitoring queue with specified name does not exist then monitoring queue will be created</para>
+        /// <para>with specified unresolved messages.</para>
+        /// </summary>
+        public Task MonitorMessages(ParamsOfMonitorMessages @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// <para>Returns summary information about current state of the specified monitoring queue.</para>
+        /// </summary>
+        public Task<MonitoringQueueInfo> GetMonitorInfo(ParamsOfGetMonitorInfo @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// <para>Fetches next resolved results from the specified monitoring queue.</para>
+        /// <para>Results and waiting options are depends on the `wait` parameter.</para>
+        /// <para>All returned results will be removed from the queue's resolved list.</para>
+        /// </summary>
+        public Task<ResultOfFetchNextMonitorResults> FetchNextMonitorResults(ParamsOfFetchNextMonitorResults @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// <para>Cancels all background activity and releases all allocated system resources for the specified monitoring queue.</para>
+        /// </summary>
+        public Task CancelMonitor(ParamsOfCancelMonitor @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// <para>Sends specified messages to the blockchain.</para>
+        /// </summary>
+        public Task<ResultOfSendMessages> SendMessages(ParamsOfSendMessages @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// <para>Sends message to the network</para>
         /// <para>Sends message to the network and returns the last generated shard block of the destination account</para>
         /// <para>before the message was sent. It will be required later for message processing.</para>

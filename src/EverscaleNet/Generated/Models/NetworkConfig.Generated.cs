@@ -118,7 +118,8 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>UNSTABLE.</para>
         /// <para>First REMP status awaiting timeout. If no status received during the timeout than fallback transaction scenario is activated.</para>
-        /// <para>Must be specified in milliseconds. Default is 1000 (1 sec).</para>
+        /// <para>Must be specified in milliseconds. Default is 1 (1 ms) in order to start fallback scenario</para>
+        /// <para>together with REMP statuses processing while REMP is not properly tuned yet.</para>
         /// </summary>
         [JsonPropertyName("first_remp_status_timeout")]
         public uint? FirstRempStatusTimeout { get; set; }
