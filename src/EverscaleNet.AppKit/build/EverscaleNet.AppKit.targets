@@ -2,6 +2,8 @@
 
 	<PropertyGroup>
 		<EverDevTool Condition=" $(EverDevTool) == '' ">npx everdev@latest</EverDevTool>
+		<SolCompilerVersion Condition=" $(SolCompilerVersion) == '' ">latest</SolCompilerVersion>
+		<TVMLinkerVersion Condition=" $(TVMLinkerVersion) == '' ">latest</TVMLinkerVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -16,10 +18,9 @@
 	</Target>
 
 	<Target Name="CompileSolidityContracts" Condition=" $(DoNotBuildContracts) == '' " Inputs="@(SolAllFiles)" Outputs="@(SolCompileFiles->'$(OutputPath)%(RelativeDir)%(Filename).tvc');@(SolCompileFiles->'$(OutputPath)%(RelativeDir)%(Filename).abi.json')" AfterTargets="Build">
-		<Exec Command="$(EverDevTool) --version" ConsoleToMSBuild="true" EchoOff="true" StandardOutputImportance="Low">
-			<Output TaskParameter="ConsoleOutput" PropertyName="EverDevVersion" />
-		</Exec>
-		<Message Text="Everdev version: $(EverDevVersion)" />
+		<Exec Command="$(EverDevTool) --version" />
+		<Exec Command="$(EverDevTool) sol set -c $(SolCompilerVersion)" />
+		<Exec Command="$(EverDevTool) sol version" />
 		<Message Text="Building @(SolCompileFiles).. @(SolCompileFiles->'$(OutputPath)%(RelativeDir)%(Filename).tvc');@(SolCompileFiles->'$(OutputPath)%(RelativeDir)%(Filename).abi.json')" />
 		<Exec Command="$(EverDevTool) sol compile %(Identity) -o @(SolCompileFiles->'$(OutputPath)%(RelativeDir)')" />
 	</Target>

@@ -1379,7 +1379,7 @@ function isLikeNone(x) {
     return x === undefined || x === null;
 }
 
-    let cachedInt32Memory0 = null;
+let cachedInt32Memory0 = null;
 
     function getInt32Memory0() {
         if (cachedInt32Memory0 === null || cachedInt32Memory0.byteLength === 0) {
