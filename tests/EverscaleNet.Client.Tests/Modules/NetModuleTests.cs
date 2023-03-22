@@ -185,7 +185,7 @@ public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 		});
 
 		// give some time for subscription to receive all data
-		await Task.Delay(TimeSpan.FromSeconds(1));
+		await Task.Delay(TimeSpan.FromSeconds(2));
 
 		// check that second transaction is not received when subscription suspended
 		int transactionCount2 = transactions.Count;
@@ -205,7 +205,7 @@ public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 		});
 
 		// give some time for subscription to receive all data
-		await Task.Delay(TimeSpan.FromSeconds(1));
+		await Task.Delay(TimeSpan.FromSeconds(2));
 
 		await Task.WhenAll(
 			subscriptionClient.Net.Unsubscribe(new ResultOfSubscribeCollection { Handle = handle1.Handle }),
