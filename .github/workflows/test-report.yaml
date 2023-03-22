@@ -1,0 +1,19 @@
+name: 'Test Report'
+on:
+  workflow_run:
+    workflows: [ 'CI' ]
+    types:
+      - completed
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: phoenix-actions/test-reporting@v10
+        id: test-report
+        with:
+          artifact: test-results
+          name: Test Report
+          path: '**/*.trx'
+          reporter: dotnet-trx
+          list-suites: failed
+          list-tests: failed
