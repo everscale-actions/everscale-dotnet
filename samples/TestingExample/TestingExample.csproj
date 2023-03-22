@@ -27,10 +27,6 @@
 		<ProjectReference Include="..\..\src\EverscaleNet.WebClient\EverscaleNet.WebClient.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="_contracts\import\ever-contracts\" />
-	</ItemGroup>
-
 	<Import Project="..\..\src\EverscaleNet.AppKit\build\EverscaleNet.AppKit.targets" />
 
 </Project>
