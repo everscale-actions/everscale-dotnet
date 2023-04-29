@@ -138,7 +138,7 @@ public static class JsonSerializerExtensions {
 	/// <param name="discriminatorType"></param>
 	/// <returns></returns>
 	public static JsonElement ToJsonElement(this object element, Type? discriminatorType = null) {
-		if (discriminatorType == null && element.GetType().BaseType != null) {
+		if (discriminatorType == null && !element.GetType().IsPrimitive && element.GetType().BaseType != null) {
 			discriminatorType = element.GetType().BaseType;
 		}
 

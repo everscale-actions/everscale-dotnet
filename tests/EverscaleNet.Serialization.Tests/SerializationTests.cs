@@ -152,6 +152,15 @@ public class SerializationTests {
 		customJson.Should().Be(generatedJson);
 	}
 
+	[Fact]
+	public void IntJsonElement() {
+		var one = 1.ToJsonElement();
+
+		string json = JsonSerializer.Serialize(one, JsonOptionsProvider.JsonSerializerOptions);
+
+		json.Should().Be("1");
+	}
+
 	private class AccountTypeTestData : TheoryData<string, AccountType?> {
 		public AccountTypeTestData() {
 			// Add("{ }", null); // be careful JsonSerializer returns 0 value if not nullable enum type provided
