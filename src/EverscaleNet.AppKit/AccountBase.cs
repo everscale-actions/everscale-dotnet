@@ -109,7 +109,7 @@ public abstract class AccountBase {
 	/// </summary>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	/// <exception cref="ContractNotDeployedException"></exception>
+	/// <exception cref="AccountDoesNotExistException"></exception>
 	public async Task<decimal> GetBalance(CancellationToken cancellationToken = default) {
 		ResultOfQueryCollection result = await _client.Net.QueryCollection(new ParamsOfQueryCollection {
 			Collection = "accounts",
@@ -119,7 +119,7 @@ public abstract class AccountBase {
 		}, cancellationToken);
 
 		if (result.Result.Length == 0) {
-			throw new ContractNotDeployedException();
+			throw new AccountDoesNotExistException();
 		}
 
 		return result.Result[0].Get<string>("balance").NanoToCoins();
