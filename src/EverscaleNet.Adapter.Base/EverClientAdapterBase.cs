@@ -126,7 +126,7 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 	}
 
 	private static Action<string, uint> DeserializeCallback<TEvent>(Action<TEvent?, uint>? callback) {
-		return (json, responseType) => { callback?.Invoke(PolymorphicSerializer.Deserialize<TEvent>(JsonDocument.Parse(json).RootElement), responseType); };
+		return (json, responseType) => callback?.Invoke(PolymorphicSerializer.Deserialize<TEvent>(JsonDocument.Parse(json).RootElement), responseType);
 	}
 
 	/// <summary>

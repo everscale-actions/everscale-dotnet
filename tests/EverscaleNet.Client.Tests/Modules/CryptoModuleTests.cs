@@ -480,7 +480,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 		RegisteredSigningBox registeredSigningBox = await _everClient.Crypto.GetSigningBox(keys);
 		uint keyBoxHandle = registeredSigningBox.Handle;
 
-		async void Action(JsonElement request, uint _) {
+		async void Callback(JsonElement request, uint _) {
 			var paramsOfAppRequest = PolymorphicSerializer.Deserialize<ParamsOfAppRequest>(request);
 
 			switch (PolymorphicSerializer.Deserialize<ParamsOfAppSigningBox>(paramsOfAppRequest.RequestData!.Value)) {
@@ -511,10 +511,8 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 			}
 		}
 
-		var callback = new Action<JsonElement, uint>(Action);
-
 		// act
-		RegisteredSigningBox externalBox = await _everClient.Crypto.RegisterSigningBox(callback);
+		RegisteredSigningBox externalBox = await _everClient.Crypto.RegisterSigningBox(Callback);
 		ResultOfSigningBoxGetPublicKey boxPubkey =
 			await _everClient.Crypto.SigningBoxGetPublicKey(new RegisteredSigningBox
 				                                                { Handle = externalBox.Handle });
