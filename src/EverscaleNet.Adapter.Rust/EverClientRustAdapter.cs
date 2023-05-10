@@ -66,8 +66,7 @@ public class EverClientRustAdapter : EverClientAdapterBase {
 	protected override Task RequestImpl(uint requestId, string requestJson, string method,
 	                                    CancellationToken cancellationToken = default) {
 		var callbackDelegate =
-			new CallbackDelegate((id, json, type, finished) =>
-				                     ResponseHandler(id, json.ToString(), type, finished));
+			new CallbackDelegate((id, json, type, finished) => ResponseHandler(id, json.ToString(), type, finished));
 
 		_callbackDelegates.AddOrUpdate(requestId, _ => callbackDelegate, (_, _) => callbackDelegate);
 
@@ -78,10 +77,10 @@ public class EverClientRustAdapter : EverClientAdapterBase {
 		return Task.CompletedTask;
 	}
 
-	private void ResponseHandler(uint requestId, string responseJson, uint responseType, bool finished) {
+	private async void ResponseHandler(uint requestId, string responseJson, uint responseType, bool finished) {
 		if (finished) {
 			_callbackDelegates.Remove(requestId, out _);
 		}
-		ResponseHandlerBase(requestId, responseJson, responseType, finished);
+		await ResponseHandlerBase(requestId, responseJson, responseType, finished);
 	}
 }

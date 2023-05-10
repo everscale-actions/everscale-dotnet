@@ -13,7 +13,7 @@ public static class PolymorphicSerializer {
 	/// <param name="jsonElement"></param>
 	/// <typeparam name="TEvent"></typeparam>
 	/// <returns></returns>
-	public static TEvent? Deserialize<TEvent>(JsonElement jsonElement) {
+	public static TEvent Deserialize<TEvent>(JsonElement jsonElement) {
 		if (typeof(TEvent) == typeof(JsonElement)) {
 			return (TEvent)(object)jsonElement;
 		}
@@ -25,9 +25,7 @@ public static class PolymorphicSerializer {
 		}
 
 		var nestedTypeName = jsonElement.Get<string>("type");
-		Type? type = nestedTypes.FirstOrDefault(t => t.Name == nestedTypeName);
-		return type == null
-			       ? default
-			       : jsonElement.ToObject<TEvent>(type);
+		Type type = nestedTypes.Single(t => t.Name == nestedTypeName);
+		return jsonElement.ToObject<TEvent>(type);
 	}
 }

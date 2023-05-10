@@ -117,9 +117,9 @@ internal static class ModulesClassHelpers {
 
 		if (callbackParam.name != default) {
 			methodDeclarationParams.Add(Parameter(Identifier(callbackParam.nameWithNull))
-				                            .WithType(IdentifierName($"Action<{callbackParam.type},uint>")));
+				                            .WithType(IdentifierName($"Func<{callbackParam.type}, uint, Task>")));
 			@params.Add(Parameter(Identifier(callbackParam.name))
-				            .WithType(IdentifierName($"Action<{callbackParam.type},uint>")));
+				            .WithType(IdentifierName($"Func<{callbackParam.type}, uint, Task>")));
 		}
 
 		MethodDeclarationSyntax method =

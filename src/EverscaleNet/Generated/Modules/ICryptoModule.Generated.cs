@@ -220,7 +220,7 @@ namespace EverscaleNet.Abstract.Modules
         /// <para>When used, decrypted secret shows up in core library's memory for a very short period</para>
         /// <para>of time and then is immediately overwritten with zeroes.</para>
         /// </summary>
-        public Task<RegisteredCryptoBox> CreateCryptoBox(ParamsOfCreateCryptoBox @params, Action<JsonElement,uint> appObject = null, CancellationToken cancellationToken = default);
+        public Task<RegisteredCryptoBox> CreateCryptoBox(ParamsOfCreateCryptoBox @params, Func<JsonElement, uint, Task> appObject = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para>Removes Crypto Box. Clears all secret data.</para>
@@ -261,7 +261,7 @@ namespace EverscaleNet.Abstract.Modules
         /// <summary>
         /// <para>Register an application implemented signing box.</para>
         /// </summary>
-        public Task<RegisteredSigningBox> RegisterSigningBox(Action<JsonElement,uint> appObject = null, CancellationToken cancellationToken = default);
+        public Task<RegisteredSigningBox> RegisterSigningBox(Func<JsonElement, uint, Task> appObject = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para>Creates a default signing box implementation.</para>
@@ -286,7 +286,7 @@ namespace EverscaleNet.Abstract.Modules
         /// <summary>
         /// <para>Register an application implemented encryption box.</para>
         /// </summary>
-        public Task<RegisteredEncryptionBox> RegisterEncryptionBox(Action<JsonElement,uint> appObject = null, CancellationToken cancellationToken = default);
+        public Task<RegisteredEncryptionBox> RegisterEncryptionBox(Func<JsonElement, uint, Task> appObject = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para>Removes encryption box from SDK</para>

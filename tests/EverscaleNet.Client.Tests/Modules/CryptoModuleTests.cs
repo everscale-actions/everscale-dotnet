@@ -480,8 +480,8 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 		RegisteredSigningBox registeredSigningBox = await _everClient.Crypto.GetSigningBox(keys);
 		uint keyBoxHandle = registeredSigningBox.Handle;
 
-		async void Callback(JsonElement request, uint _) {
-			var paramsOfAppRequest = PolymorphicSerializer.Deserialize<ParamsOfAppRequest>(request);
+		async Task Callback(JsonElement request, uint _) {
+			var paramsOfAppRequest = request.ToObject<ParamsOfAppRequest>();
 
 			switch (PolymorphicSerializer.Deserialize<ParamsOfAppSigningBox>(paramsOfAppRequest.RequestData!.Value)) {
 				case ParamsOfAppSigningBox.GetPublicKey: {

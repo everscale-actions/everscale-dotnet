@@ -82,7 +82,7 @@ public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 		var messagesLock = new object();
 		var messages = new List<JsonElement>();
 
-		var callback = new Action<JsonElement, uint>((serdeJson, responseType) => {
+		var callback = new Func<JsonElement, uint, Task>((serdeJson, responseType) => {
 			JsonElement message = (ResponseType)responseType switch {
 				ResponseType.Custom => new { result = serdeJson }.ToJsonElement(),
 				_ => throw new EverClientException("bad callback gotten")
@@ -90,6 +90,7 @@ public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 			lock (messagesLock) {
 				messages.Add(message);
 			}
+			return Task.CompletedTask;
 		});
 
 		//act
@@ -126,7 +127,7 @@ public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 		ResultOfEncodeMessage msg = await _everClient.Abi.EncodeMessage(deployParams);
 		string address = msg.Address;
 
-		var callback = new Action<JsonElement, uint>((serdeJson, responseType) => {
+		var callback = new Func<JsonElement, uint, Task>((serdeJson, responseType) => {
 			switch ((SubscriptionResponseType)responseType) {
 				case SubscriptionResponseType.Ok:
 					var result = serdeJson.ToPrototype(new { result = new { id = default(string), account_addr = default(string) } }).result;
@@ -145,6 +146,7 @@ public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 				default:
 					throw new EverClientException($"Unknown SubscriptionResponseType: {responseType}");
 			}
+			return Task.CompletedTask;
 		});
 
 		//act

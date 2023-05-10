@@ -331,7 +331,7 @@ namespace EverscaleNet.Client.Modules
         /// <para>When used, decrypted secret shows up in core library's memory for a very short period</para>
         /// <para>of time and then is immediately overwritten with zeroes.</para>
         /// </summary>
-        public async Task<RegisteredCryptoBox> CreateCryptoBox(ParamsOfCreateCryptoBox @params, Action<JsonElement,uint> appObject = null, CancellationToken cancellationToken = default)
+        public async Task<RegisteredCryptoBox> CreateCryptoBox(ParamsOfCreateCryptoBox @params, Func<JsonElement, uint, Task> appObject = null, CancellationToken cancellationToken = default)
         {
             return await _everClientAdapter.Request<ParamsOfCreateCryptoBox, RegisteredCryptoBox, JsonElement>("crypto.create_crypto_box", @params, appObject, cancellationToken);
         }
@@ -393,7 +393,7 @@ namespace EverscaleNet.Client.Modules
         /// <summary>
         /// <para>Register an application implemented signing box.</para>
         /// </summary>
-        public async Task<RegisteredSigningBox> RegisterSigningBox(Action<JsonElement,uint> appObject = null, CancellationToken cancellationToken = default)
+        public async Task<RegisteredSigningBox> RegisterSigningBox(Func<JsonElement, uint, Task> appObject = null, CancellationToken cancellationToken = default)
         {
             return await _everClientAdapter.Request<RegisteredSigningBox, JsonElement>("crypto.register_signing_box", appObject, cancellationToken);
         }
@@ -433,7 +433,7 @@ namespace EverscaleNet.Client.Modules
         /// <summary>
         /// <para>Register an application implemented encryption box.</para>
         /// </summary>
-        public async Task<RegisteredEncryptionBox> RegisterEncryptionBox(Action<JsonElement,uint> appObject = null, CancellationToken cancellationToken = default)
+        public async Task<RegisteredEncryptionBox> RegisterEncryptionBox(Func<JsonElement, uint, Task> appObject = null, CancellationToken cancellationToken = default)
         {
             return await _everClientAdapter.Request<RegisteredEncryptionBox, JsonElement>("crypto.register_encryption_box", appObject, cancellationToken);
         }

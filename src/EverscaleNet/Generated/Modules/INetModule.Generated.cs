@@ -87,7 +87,7 @@ namespace EverscaleNet.Abstract.Modules
         /// <para>(for example transactions of the specific account): application must</para>
         /// <para>refresh all cached (or visible to user) lists where this sequences presents.</para>
         /// </summary>
-        public Task<ResultOfSubscribeCollection> SubscribeCollection(ParamsOfSubscribeCollection @params, Action<JsonElement,uint> callback = null, CancellationToken cancellationToken = default);
+        public Task<ResultOfSubscribeCollection> SubscribeCollection(ParamsOfSubscribeCollection @params, Func<JsonElement, uint, Task> callback = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para>Creates a subscription</para>
@@ -118,7 +118,7 @@ namespace EverscaleNet.Abstract.Modules
         /// <para>(for example transactions of the specific account): application must</para>
         /// <para>refresh all cached (or visible to user) lists where this sequences presents.</para>
         /// </summary>
-        public Task<ResultOfSubscribeCollection> Subscribe(ParamsOfSubscribe @params, Action<JsonElement,uint> callback = null, CancellationToken cancellationToken = default);
+        public Task<ResultOfSubscribeCollection> Subscribe(ParamsOfSubscribe @params, Func<JsonElement, uint, Task> callback = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para>Suspends network module to stop any network activity</para>

@@ -30,7 +30,7 @@ namespace EverscaleNet.Client.Modules
         /// <para># Remarks</para>
         /// <para>It does not switch debot to context 0. Browser Callbacks are not called.</para>
         /// </summary>
-        public async Task<RegisteredDebot> Init(ParamsOfInit @params, Action<JsonElement,uint> appObject = null, CancellationToken cancellationToken = default)
+        public async Task<RegisteredDebot> Init(ParamsOfInit @params, Func<JsonElement, uint, Task> appObject = null, CancellationToken cancellationToken = default)
         {
             return await _everClientAdapter.Request<ParamsOfInit, RegisteredDebot, JsonElement>("debot.init", @params, appObject, cancellationToken);
         }

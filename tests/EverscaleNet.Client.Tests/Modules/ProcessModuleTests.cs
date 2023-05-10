@@ -36,10 +36,11 @@ public class ProcessModuleTests : IClassFixture<EverClientTestsFixture> {
 
 		var events = new List<ProcessingEvent>();
 
-		void ProcessingCallback(ProcessingEvent @event, uint code) {
+		Task ProcessingCallback(ProcessingEvent @event, uint code) {
 			code.Should().Be(100);
 			@event.Should().NotBeNull();
 			events.Add(@event);
+			return Task.CompletedTask;
 		}
 
 		ResultOfSendMessage sendMessageResult = await _everClient.Processing.SendMessage(new ParamsOfSendMessage {

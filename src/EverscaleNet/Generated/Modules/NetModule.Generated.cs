@@ -117,7 +117,7 @@ namespace EverscaleNet.Client.Modules
         /// <para>(for example transactions of the specific account): application must</para>
         /// <para>refresh all cached (or visible to user) lists where this sequences presents.</para>
         /// </summary>
-        public async Task<ResultOfSubscribeCollection> SubscribeCollection(ParamsOfSubscribeCollection @params, Action<JsonElement,uint> callback = null, CancellationToken cancellationToken = default)
+        public async Task<ResultOfSubscribeCollection> SubscribeCollection(ParamsOfSubscribeCollection @params, Func<JsonElement, uint, Task> callback = null, CancellationToken cancellationToken = default)
         {
             return await _everClientAdapter.Request<ParamsOfSubscribeCollection, ResultOfSubscribeCollection, JsonElement>("net.subscribe_collection", @params, callback, cancellationToken);
         }
@@ -151,7 +151,7 @@ namespace EverscaleNet.Client.Modules
         /// <para>(for example transactions of the specific account): application must</para>
         /// <para>refresh all cached (or visible to user) lists where this sequences presents.</para>
         /// </summary>
-        public async Task<ResultOfSubscribeCollection> Subscribe(ParamsOfSubscribe @params, Action<JsonElement,uint> callback = null, CancellationToken cancellationToken = default)
+        public async Task<ResultOfSubscribeCollection> Subscribe(ParamsOfSubscribe @params, Func<JsonElement, uint, Task> callback = null, CancellationToken cancellationToken = default)
         {
             return await _everClientAdapter.Request<ParamsOfSubscribe, ResultOfSubscribeCollection, JsonElement>("net.subscribe", @params, callback, cancellationToken);
         }
