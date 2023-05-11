@@ -1,10 +1,10 @@
-﻿using System;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+#if !NET6_0_OR_GREATER
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using EverscaleNet.Client.Models;
-#if !NET6_0_OR_GREATER
 using Dahomey.Json;
 using Dahomey.Json.Attributes;
 using Dahomey.Json.Serialization.Conventions;
