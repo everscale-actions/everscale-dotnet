@@ -18,7 +18,7 @@ namespace EverscaleNet.Abstract.Modules
         /// <para># Remarks</para>
         /// <para>It does not switch debot to context 0. Browser Callbacks are not called.</para>
         /// </summary>
-        public Task<RegisteredDebot> Init(ParamsOfInit @params, Func<JsonElement, uint, Task> appObject = null, CancellationToken cancellationToken = default);
+        public Task<RegisteredDebot> Init(ParamsOfInit @params, Func<JsonElement, uint, CancellationToken, Task> appObject = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para>[UNSTABLE](UNSTABLE.md) Starts the DeBot.</para>

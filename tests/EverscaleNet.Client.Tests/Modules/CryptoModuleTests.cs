@@ -480,7 +480,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 		RegisteredSigningBox registeredSigningBox = await _everClient.Crypto.GetSigningBox(keys);
 		uint keyBoxHandle = registeredSigningBox.Handle;
 
-		async Task Callback(JsonElement request, uint _) {
+		async Task Callback(JsonElement request, uint _, CancellationToken cancellationToken) {
 			var paramsOfAppRequest = request.ToObject<ParamsOfAppRequest>();
 
 			switch (PolymorphicSerializer.Deserialize<ParamsOfAppSigningBox>(paramsOfAppRequest.RequestData!.Value)) {
@@ -493,11 +493,12 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 								PublicKey = resultOfSigningBoxGetPublicKey.Pubkey
 							}.ToJsonElement()
 						}
-					});
+					}, cancellationToken);
 					break;
 				}
 				case ParamsOfAppSigningBox.Sign sign: {
-					ResultOfSigningBoxSign resultOfSigningBoxSign = await _everClient.Crypto.SigningBoxSign(new ParamsOfSigningBoxSign { SigningBox = keyBoxHandle, Unsigned = sign.Unsigned });
+					ResultOfSigningBoxSign resultOfSigningBoxSign =
+						await _everClient.Crypto.SigningBoxSign(new ParamsOfSigningBoxSign { SigningBox = keyBoxHandle, Unsigned = sign.Unsigned }, cancellationToken);
 					await _everClient.Client.ResolveAppRequest(new ParamsOfResolveAppRequest {
 						AppRequestId = paramsOfAppRequest.AppRequestId,
 						Result = new AppRequestResult.Ok {
@@ -505,7 +506,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 								Signature = resultOfSigningBoxSign.Signature
 							}.ToJsonElement()
 						}
-					});
+					}, cancellationToken);
 					break;
 				}
 			}

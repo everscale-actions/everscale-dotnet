@@ -36,7 +36,7 @@ public class ProcessModuleTests : IClassFixture<EverClientTestsFixture> {
 
 		var events = new List<ProcessingEvent>();
 
-		Task ProcessingCallback(ProcessingEvent @event, uint code) {
+		Task ProcessingCallback(ProcessingEvent @event, uint code, CancellationToken cancellationToken) {
 			code.Should().Be(100);
 			@event.Should().NotBeNull();
 			events.Add(@event);

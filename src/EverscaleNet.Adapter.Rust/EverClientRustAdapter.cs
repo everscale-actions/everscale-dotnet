@@ -20,7 +20,7 @@ namespace EverscaleNet.Adapter.Rust;
 ///     Rust adapter.
 /// </summary>
 public class EverClientRustAdapter : EverClientAdapterBase {
-	private readonly ConcurrentDictionary<uint, CallbackDelegate> _callbackDelegates = new();
+	private readonly ConcurrentDictionary<uint, (CallbackDelegate, CancellationToken)> _callbackDelegates = new();
 
 	private readonly ILogger<EverClientRustAdapter> _logger;
 	private readonly IOptions<EverClientOptions> _optionsAccessor;
@@ -68,7 +68,7 @@ public class EverClientRustAdapter : EverClientAdapterBase {
 		var callbackDelegate =
 			new CallbackDelegate((id, json, type, finished) => ResponseHandler(id, json.ToString(), type, finished));
 
-		_callbackDelegates.AddOrUpdate(requestId, _ => callbackDelegate, (_, _) => callbackDelegate);
+		_callbackDelegates.AddOrUpdate(requestId, _ => (callbackDelegate, cancellationToken), (_, _) => (callbackDelegate, cancellationToken));
 
 		using var methodInteropString = method.ToInteropStringDisposable();
 		using var paramsJsonInteropString = requestJson.ToInteropStringDisposable();
@@ -78,9 +78,15 @@ public class EverClientRustAdapter : EverClientAdapterBase {
 	}
 
 	private async void ResponseHandler(uint requestId, string responseJson, uint responseType, bool finished) {
+		CancellationToken cancellationToken;
+
 		if (finished) {
-			_callbackDelegates.Remove(requestId, out _);
+			_callbackDelegates.Remove(requestId, out (CallbackDelegate _, CancellationToken cancellationToken) t);
+			cancellationToken = t.cancellationToken;
+		} else {
+			(_, cancellationToken) = _callbackDelegates.GetValueOrDefault(requestId);
 		}
-		await ResponseHandlerBase(requestId, responseJson, responseType, finished);
+
+		await ResponseHandlerBase(requestId, responseJson, responseType, finished, cancellationToken);
 	}
 }

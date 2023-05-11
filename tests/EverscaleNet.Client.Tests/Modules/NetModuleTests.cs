@@ -82,7 +82,7 @@ public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 		var messagesLock = new object();
 		var messages = new List<JsonElement>();
 
-		var callback = new Func<JsonElement, uint, Task>((serdeJson, responseType) => {
+		var callback = new Func<JsonElement, uint, CancellationToken, Task>((serdeJson, responseType, _) => {
 			JsonElement message = (ResponseType)responseType switch {
 				ResponseType.Custom => new { result = serdeJson }.ToJsonElement(),
 				_ => throw new EverClientException("bad callback gotten")
@@ -127,7 +127,7 @@ public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 		ResultOfEncodeMessage msg = await _everClient.Abi.EncodeMessage(deployParams);
 		string address = msg.Address;
 
-		var callback = new Func<JsonElement, uint, Task>((serdeJson, responseType) => {
+		var callback = new Func<JsonElement, uint, CancellationToken, Task>((serdeJson, responseType, _) => {
 			switch ((SubscriptionResponseType)responseType) {
 				case SubscriptionResponseType.Ok:
 					var result = serdeJson.ToPrototype(new { result = new { id = default(string), account_addr = default(string) } }).result;
