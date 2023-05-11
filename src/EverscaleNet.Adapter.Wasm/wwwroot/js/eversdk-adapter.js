@@ -5,7 +5,7 @@ export async function init(dotnetAdapter, options) {
     eversdk.libWebSetup(options);
     const libWeb = await eversdk.libWeb();
     libWeb.setResponseParamsHandler((requestId, params, responseType, finished) => {
-        dotnetAdapter.invokeMethod('ResponseHandler', requestId, JSON.stringify(params), responseType, finished);
+        dotnetAdapter.invokeMethodAsync('ResponseHandler', requestId, JSON.stringify(params), responseType, finished);
     });
     libWeb.sendRequest = (context, requestId, functionName, functionParamsJson) => {
         libWeb.sendRequestParams(context, requestId, functionName, JSON.parse(functionParamsJson))

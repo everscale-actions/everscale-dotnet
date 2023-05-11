@@ -46,8 +46,8 @@ public class EverClientWasmAdapter : EverClientAdapterBase {
 	/// <param name="responseType"></param>
 	/// <param name="finished"></param>
 	[JSInvokable]
-	public void ResponseHandler(uint requestId, string responseJson, uint responseType, bool finished) {
-		ResponseHandlerBase(requestId, responseJson, responseType, finished);
+	public Task ResponseHandler(uint requestId, string responseJson, uint responseType, bool finished) {
+		return ResponseHandlerBase(requestId, responseJson, responseType, finished);
 	}
 
 	/// <inheritdoc />
