@@ -9,15 +9,18 @@ namespace EverscaleNet.WebClient.PackageManager;
 /// <inheritdoc />
 public class WebPackageManager : IEverPackageManager {
 	private readonly HttpClient _httpClient;
-	private readonly PackageManagerOptions _options;
+	private readonly WebPackageManagerOptions _options;
 
 	/// <summary>
 	/// </summary>
 	/// <param name="httpClient"></param>
 	/// <param name="optionsAccessor"></param>
-	public WebPackageManager(HttpClient httpClient, IOptions<PackageManagerOptions> optionsAccessor) {
+	public WebPackageManager(HttpClient httpClient, IOptions<WebPackageManagerOptions> optionsAccessor) {
 		_httpClient = httpClient;
 		_options = optionsAccessor.Value;
+
+		string basePath = _options.BasePath ?? throw new InvalidOperationException($"Provide {nameof(WebPackageManagerOptions)}.{nameof(WebPackageManagerOptions.BasePath)} to use WebPackageManager");
+		_httpClient.BaseAddress = new Uri(basePath);
 	}
 
 	/// <inheritdoc />
@@ -31,7 +34,8 @@ public class WebPackageManager : IEverPackageManager {
 	/// <inheritdoc />
 	public async Task<string?> LoadTvc(string name, CancellationToken cancellationToken = default) {
 		string fileUrl = Combine(_options.PackagesPath, string.Format(_options.TvcFileTemplate, name));
-		return await _httpClient.GetStringAsync(fileUrl, cancellationToken);
+		byte[] bytes = await _httpClient.GetByteArrayAsync(fileUrl, cancellationToken);
+		return Convert.ToBase64String(bytes);
 	}
 
 	/// <inheritdoc />

@@ -1,4 +1,5 @@
 ﻿using EverscaleNet.Client.Models;
+using EverscaleNet.Models;
 
 namespace EverscaleNet.Abstract;
 
@@ -6,6 +7,21 @@ namespace EverscaleNet.Abstract;
 ///     Load package from abi and tvm files. Default path is _contracts/abi_v{AbiVersion}/
 /// </summary>
 public interface IEverPackageManager {
+	/// <summary>
+	///     Load whole package
+	/// </summary>
+	/// <param name="name"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	public async Task<IPackage> LoadPackage(string name, CancellationToken cancellationToken) {
+		return new Package(
+			await LoadAbi(name, cancellationToken),
+			await LoadTvc(name, cancellationToken),
+			await LoadKeyPair(name, cancellationToken),
+			await LoadCode(name, cancellationToken)
+		);
+	}
+
 	/// <summary>
 	///     Load Abi from abi file. Default path is _contracts/{PackageName}.abi.json
 	/// </summary>

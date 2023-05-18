@@ -8,13 +8,13 @@ namespace EverscaleNet.Client.PackageManager;
 
 /// <inheritdoc />
 public class FilePackageManager : IEverPackageManager {
-	private readonly PackageManagerOptions _options;
+	private readonly FilePackageManagerOptions _options;
 
 	/// <summary>
 	///     Create FilePackageManager
 	/// </summary>
 	/// <param name="optionsAccessor"></param>
-	public FilePackageManager(IOptions<PackageManagerOptions> optionsAccessor) {
+	public FilePackageManager(IOptions<FilePackageManagerOptions> optionsAccessor) {
 		_options = optionsAccessor.Value;
 	}
 
@@ -38,8 +38,8 @@ public class FilePackageManager : IEverPackageManager {
 		if (!fileInfo.Exists) {
 			return null;
 		}
-		using StreamReader fs = fileInfo.OpenText();
-		return await fs.ReadToEndAsync();
+		byte[] bytes = await File.ReadAllBytesAsync(filePath, cancellationToken);
+		return Convert.ToBase64String(bytes);
 	}
 
 	/// <inheritdoc />

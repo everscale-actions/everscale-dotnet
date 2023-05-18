@@ -18,7 +18,7 @@ public class Worker : BackgroundService {
 			try {
 				// load contracts from abi.json and tvc files 
 				// Package senderContract = await _packageManager.LoadPackage(SenderContractName);
-				Package receiverContract = await _packageManager.LoadPackage(ReceiverContractName, stoppingToken);
+				IPackage receiverContract = await _packageManager.LoadPackage(ReceiverContractName, stoppingToken);
 
 				// get keys by mnemonic
 				KeyPair keys =
@@ -40,7 +40,7 @@ public class Worker : BackgroundService {
 		}
 	}
 
-	private async Task<ulong> GetReceivedMessagesCount(Package contract, KeyPair keys, string address,
+	private async Task<ulong> GetReceivedMessagesCount(IPackage contract, KeyPair keys, string address,
 	                                                   CancellationToken cancellationToken) {
 		ResultOfQueryCollection accountBocResult = await _everClient.Net.QueryCollection(new ParamsOfQueryCollection {
 			Collection = "accounts",
@@ -67,7 +67,7 @@ public class Worker : BackgroundService {
 		return result.Decoded.Output.Get<string>("c").HexToDec();
 	}
 
-	private async Task<string> CheckBalanceAndDeploy(Package package, KeyPair keys,
+	private async Task<string> CheckBalanceAndDeploy(IPackage package, KeyPair keys,
 	                                                 CancellationToken cancellationToken) {
 		var deployParams = new ParamsOfEncodeMessage {
 			Abi = package.Abi,

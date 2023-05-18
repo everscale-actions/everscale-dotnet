@@ -1,0 +1,11 @@
+<Project>
+
+  <ItemGroup>
+    <ContractFiles Include="$(MSBuildThisFileDirectory)\..\_contracts\**" />
+  </ItemGroup>
+
+  <Target Name="CopyContractFiles" BeforeTargets="Build">
+    <Copy SourceFiles="@(ContractFiles)" DestinationFolder="$(TargetDir)" />
+  </Target>
+
+</Project>

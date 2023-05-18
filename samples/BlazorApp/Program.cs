@@ -9,18 +9,14 @@ builder.Logging.SetMinimumLevel(LogLevel.Trace);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-ConfigureServices(builder.Services, builder.HostEnvironment.BaseAddress);
-await builder.Build().RunAsync();
+builder.Services
+       .AddEverClient((provider, options) => {
+	       using IServiceScope scope = provider.CreateScope();
+	       var localStorage = scope.ServiceProvider.GetRequiredService<ISyncLocalStorageService>();
+	       options.Network.Endpoints = localStorage.GetItem<string[]>(Static.EndpointsStorageKey);
+	       options.Network.QueriesProtocol = NetworkQueriesProtocol.WS;
+       }, (_, options) => { options.BasePath = builder.HostEnvironment.BaseAddress; })
+       .AddTransient<SafeMultisigWallet>()
+       .AddBlazoredLocalStorage();
 
-void ConfigureServices(IServiceCollection services, string hostEnvironmentBaseAddress) {
-	services
-		.AddScoped(_ => new HttpClient { BaseAddress = new Uri(hostEnvironmentBaseAddress) })
-		.AddEverClient((provider, options) => {
-			using IServiceScope scope = provider.CreateScope();
-			var localStorage = scope.ServiceProvider.GetRequiredService<ISyncLocalStorageService>();
-			options.Network.Endpoints = localStorage.GetItem<string[]>(Static.EndpointsStorageKey);
-			options.Network.QueriesProtocol = NetworkQueriesProtocol.WS;
-		})
-		.AddTransient<SafeMultisigWallet>()
-		.AddBlazoredLocalStorage();
-}
+await builder.Build().RunAsync();

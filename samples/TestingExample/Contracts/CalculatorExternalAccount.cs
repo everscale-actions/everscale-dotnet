@@ -4,7 +4,7 @@ internal class CalculatorExternalAccount : AccountBase {
 	private readonly IEverClient _client;
 
 	public CalculatorExternalAccount(IEverClient client, IEverPackageManager packageManager, KeyPair keyPair) : base(
-		client, packageManager, new Signer.Keys { KeysAccessor = keyPair }) {
+		client, packageManager, keyPair) {
 		_client = client;
 	}
 
