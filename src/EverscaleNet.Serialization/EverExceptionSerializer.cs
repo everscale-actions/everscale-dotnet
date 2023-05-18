@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.Json;
+﻿using System.Text.Json;
 using EverscaleNet.Client.Models;
 using EverscaleNet.Models;
 

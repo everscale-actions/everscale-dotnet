@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 using EverscaleNet.Adapter.Base;
 using EverscaleNet.Models;
 using EverscaleNet.Serialization;

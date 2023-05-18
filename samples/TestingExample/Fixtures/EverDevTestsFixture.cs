@@ -36,6 +36,11 @@ public class EverDevTestsFixture : IEverTestsFixture {
 		Giver ??= await CreateGiver();
 	}
 
+	public async ValueTask DisposeAsync() {
+		await DisposeAsyncCore().ConfigureAwait(false);
+		GC.SuppressFinalize(this);
+	}
+
 	private void InitLoggerFactory(ITestOutputHelper output) {
 		_loggerFactory ??= new LoggerFactory(new[] {
 			new SerilogLoggerProvider(new LoggerConfiguration()
@@ -46,16 +51,11 @@ public class EverDevTestsFixture : IEverTestsFixture {
 	}
 
 	private static FilePackageManager CreatePackageManager() {
-		return new FilePackageManager(new OptionsWrapper<FilePackageManagerOptions>(new FilePackageManagerOptions()));
-	}
-
-	public async ValueTask DisposeAsync() {
-		await DisposeAsyncCore().ConfigureAwait(false);
-		GC.SuppressFinalize(this);
+		return new FilePackageManager(new OptionsWrapper<PackageManagerOptions>(new PackageManagerOptions()));
 	}
 
 	private async Task<EverDevGiver> CreateGiver() {
-		var giverPackageManager = new WebPackageManager(_httpClient, new OptionsWrapper<WebPackageManagerOptions>(new WebPackageManagerOptions {
+		var giverPackageManager = new WebPackageManager(_httpClient, new OptionsWrapper<PackageManagerOptions>(new PackageManagerOptions {
 			PackagesPath = "https://raw.githubusercontent.com/tonlabs/evernode-se/5652dc8710d8c1f249a663f537ef78116bf97f6d/contracts/giver_v2/"
 		}));
 

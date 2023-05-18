@@ -1,8 +1,4 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace EverscaleNet.Abstract;
+﻿namespace EverscaleNet.Abstract;
 
 /// <summary>
 ///     Provide core methods used by client

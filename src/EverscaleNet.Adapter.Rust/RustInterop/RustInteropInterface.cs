@@ -1,4 +1,3 @@
-using System;
 using System.Runtime.InteropServices;
 using EverscaleNet.Adapter.Rust.RustInterop.Models;
 

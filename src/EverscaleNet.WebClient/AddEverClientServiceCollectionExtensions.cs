@@ -1,4 +1,4 @@
-﻿using System;
+﻿using EverscaleNet;
 using EverscaleNet.Abstract;
 using EverscaleNet.Adapter.Wasm;
 using EverscaleNet.Client;
@@ -27,14 +27,14 @@ public static class AddEverClientServiceCollectionExtensions {
 	/// </param>
 	/// <param name="configurePackageManagerOptions">
 	///     Configure package manager, contracts path and etc.
-	///     <see cref="WebPackageManager" />
+	///     <see cref="PackageManagerOptions" />
 	/// </param>
 	/// <returns></returns>
 	// ReSharper enable CommentTypo
 	public static IServiceCollection AddEverClient(this IServiceCollection services,
 	                                               Action<EverClientOptions>? configureEverClientOptions = null,
 	                                               Action<LibWebOptions>? configureLibWebOptions = null,
-	                                               Action<WebPackageManagerOptions>? configurePackageManagerOptions = null) {
+	                                               Action<PackageManagerOptions>? configurePackageManagerOptions = null) {
 		if (configureEverClientOptions != null) {
 			services.Configure(configureEverClientOptions);
 		}
@@ -66,14 +66,14 @@ public static class AddEverClientServiceCollectionExtensions {
 	/// </param>
 	/// <param name="configurePackageManagerOptions">
 	///     Configure package manager, contracts path and etc.
-	///     <see cref="WebPackageManager" />
+	///     <see cref="PackageManagerOptions" />
 	/// </param>
 	/// <returns></returns>
 	// ReSharper enable CommentTypo
 	public static IServiceCollection AddEverClient(this IServiceCollection services,
 	                                               Action<IServiceProvider, EverClientOptions>? configureEverClientOptions,
 	                                               Action<IServiceProvider, LibWebOptions>? configureLibWebOptions = null,
-	                                               Action<IServiceProvider, WebPackageManagerOptions>? configurePackageManagerOptions = null) {
+	                                               Action<IServiceProvider, PackageManagerOptions>? configurePackageManagerOptions = null) {
 		if (configureEverClientOptions != null) {
 			services.AddOptions();
 			services.AddSingleton<IConfigureOptions<EverClientOptions>>(
@@ -86,8 +86,8 @@ public static class AddEverClientServiceCollectionExtensions {
 		}
 		if (configurePackageManagerOptions != null) {
 			services.AddOptions();
-			services.AddSingleton<IConfigureOptions<WebPackageManagerOptions>>(
-				provider => new ConfigureOptions<WebPackageManagerOptions>(options => configurePackageManagerOptions(provider, options)));
+			services.AddSingleton<IConfigureOptions<PackageManagerOptions>>(
+				provider => new ConfigureOptions<PackageManagerOptions>(options => configurePackageManagerOptions(provider, options)));
 		}
 
 		return services

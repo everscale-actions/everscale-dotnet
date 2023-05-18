@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace EverscaleNet.Models;
+﻿namespace EverscaleNet.Models;
 
 /// <summary>
 ///     Provide code and error message

@@ -1,4 +1,3 @@
-using System;
 using EverscaleNet.Client.Models;
 
 namespace EverscaleNet.Exceptions;

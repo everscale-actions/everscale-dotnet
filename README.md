@@ -11,7 +11,7 @@
 - Fully supported methods provided in SDK documentation https://github.com/tonlabs/TON-SDK/tree/master/docs
 - No Newtonsoft.Json required
 - The most complete support of CancellationToken
-- Net Standard 2.1, Net Core 3.1, Net 6, Net 7 compatible
+- Net Standard 2.1, Net 6, Net 7 compatible
 
 
 # Quick start 
@@ -60,9 +60,11 @@ There is easy option to load contracts abi and tvm info from files in this clien
 Now available following async methods:
 
 ```
-Task<Package> LoadPackage(string name); // Package entity just contains Abi and Tvc
+Task<Package> LoadPackage(string name); // Load whole package within Abi, Tvc, KeyPair and Code
 Task<Abi> LoadAbi(string name);
 Task<string> LoadTvc(string name);
+Task<KeyPair> LoadKeyPair(string name);
+Task<string> LoadCode(string name);
 ```
 
 Default contracts path is `_contracts`. **Be careful**, Blazor WASM app will search for `_contracts` relative to `wwwroot`. 
@@ -71,20 +73,23 @@ Default contracts path is `_contracts`. **Be careful**, Blazor WASM app will sea
 
 See configuration parameters:
 
-* https://tonlabs.gitbook.io/ton-sdk/guides/installation/configure_sdk#network-config
-* https://tonlabs.gitbook.io/ton-sdk/guides/installation/configure_sdk#crypto-config
-* https://tonlabs.gitbook.io/ton-sdk/guides/installation/configure_sdk#abi-config
+* https://docs.everos.dev/ever-sdk/reference/types-and-methods/mod_client#clientconfig
+* https://docs.everos.dev/ever-sdk/guides/configuration/endpoint-configuration
 
 ```
 public void ConfigureServices(IServiceCollection services)
 {
-    services.AddEverClient(config =>
+    services.AddEverClient(client =>
     {
-        config.Network.Endpoints = new[] { // see avalable networks https://tonlabs.gitbook.io/ton-sdk/reference/ton-os-api/networks#networks // };
-        config.Network.NetworkRetriesCount = 5;
-    }, packageManagerConfig =>
+        client.Network.Endpoints = new[] { "http://mainnet.evercloud.dev/your-project-id-here/graphql" };
+        client.Network.NetworkRetriesCount = 5;
+    }, packageManager =>
     {
-        packageManagerConfig.PackagesPath = "packages"; // path to abi.json and tvc files, _contracts is default
+        packageManager.PackagesPath = "_my_contracts"; // path to files, _contracts is default
+        packageManager.AbiFileTemplate = "{0}.abi.json"; 
+        packageManager.TvcFileTemplate = "{0}.tvc";
+        packageManager.KeyPairFileTemplate = "{0}.keys.json"; 
+        packageManager.CodeFileTemplate = "{0}.code"; 
     });  
 }
 ```
@@ -99,12 +104,12 @@ https://docs.microsoft.com/en-us/dotnet/core/extensions/configuration-providers
 {
   "EverClient": {
     "Network": {
-      "Endpoints": [ "https://eri01.net.everos.dev/", "https://rbx01.net.everos.dev/", "https://gra01.net.everos.dev/" ],
+      "Endpoints": [ "http://mainnet.evercloud.dev/your-project-id-here/graphql" ],
       "WaitForTimeout": 5000
     }
   },
   "PackageManager": {
-    "PackagesPath": "my_app_contracts"
+    "PackagesPath": "_my_contracts"
   }
 }
 ```

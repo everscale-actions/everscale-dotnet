@@ -10,7 +10,7 @@ public static class TestsEnv {
 	private const string NetworkEndpointsEnvVariable = "EVERSCALE_NETWORK_ENDPOINTS";
 
 	private static readonly IEverPackageManager EverPackageManager = new FilePackageManager(Options.Create(
-		                                                                                        new FilePackageManagerOptions
+		                                                                                        new PackageManagerOptions
 			                                                                                        { PackagesPath = Path.Join(ContractsPath, $"abi_v{CurrentAbiVersion}") }));
 	public static readonly string[] EverscaleNetworkEndpoints = Environment.GetEnvironmentVariable(NetworkEndpointsEnvVariable)?.Split(";") ?? EverOS.Endpoints.NodeSE;
 

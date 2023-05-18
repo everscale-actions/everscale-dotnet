@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using EverscaleNet.Abstract;
 using EverscaleNet.Client.Models;
 using EverscaleNet.Exceptions;
@@ -99,7 +95,7 @@ public abstract class AccountBase {
 	/// <param name="initialData"></param>
 	/// <param name="cancellationToken"></param>
 	public async Task InitByPackage(object? initialData = null, CancellationToken cancellationToken = default) {
-		KeyPair keyPair = await _packageManager.LoadKeyPair(Name, cancellationToken);
+		KeyPair keyPair = await _packageManager.LoadKeyPair(Name, cancellationToken) ?? throw new InvalidOperationException();
 		_initialData ??= initialData;
 		_address ??= await GetAddress(keyPair.Public, _initialData, cancellationToken);
 		_signer ??= new Signer.Keys { KeysAccessor = keyPair };
@@ -306,7 +302,7 @@ public abstract class AccountBase {
 	/// <param name="cancellationToken"></param>
 	/// <returns>tvc string of code</returns>
 	protected async Task<string> GetTvc(CancellationToken cancellationToken) {
-		return _tvc ??= await _packageManager.LoadTvc(Name, cancellationToken);
+		return (_tvc ??= await _packageManager.LoadTvc(Name, cancellationToken)) ?? throw new InvalidOperationException();
 	}
 
 	/// <summary>
@@ -315,7 +311,7 @@ public abstract class AccountBase {
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	protected async Task<Abi> GetAbi(CancellationToken cancellationToken) {
-		return _abi ??= await _packageManager.LoadAbi(Name, cancellationToken);
+		return (_abi ??= await _packageManager.LoadAbi(Name, cancellationToken)) ?? throw new InvalidOperationException();
 	}
 
 	private async Task<string> GetAddress(string? publicKey, object? initialData, CancellationToken cancellationToken) {

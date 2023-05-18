@@ -47,11 +47,11 @@ public class EverNodeSeTestsFixture : IEverTestsFixture {
 	}
 
 	private static FilePackageManager CreatePackageManager() {
-		return new FilePackageManager(new OptionsWrapper<FilePackageManagerOptions>(new FilePackageManagerOptions()));
+		return new FilePackageManager(new OptionsWrapper<PackageManagerOptions>(new PackageManagerOptions()));
 	}
 
 	private async Task<EverNodeSeGiver> CreateGiver() {
-		var giverPackageManager = new WebPackageManager(_httpClient, new OptionsWrapper<WebPackageManagerOptions>(new WebPackageManagerOptions {
+		var giverPackageManager = new WebPackageManager(_httpClient, new OptionsWrapper<PackageManagerOptions>(new PackageManagerOptions {
 			PackagesPath = "https://raw.githubusercontent.com/tonlabs/evernode-se/5652dc8710d8c1f249a663f537ef78116bf97f6d/contracts/giver_v2/"
 		}));
 		var giver = new EverNodeSeGiver(Client, giverPackageManager);

@@ -3,26 +3,26 @@
 namespace EverscaleNet.Models;
 
 /// <summary>
-///     Package contains Abi and Tvc of contract
+///     Package contains Abi, Tvc, KeyPair and Code of contract
 /// </summary>
-public class Package {
+public record Package(Abi? Abi, string? Tvc, KeyPair? KeyPair, string? Code) {
 	/// <summary>
-	///     Package .ctor
+	///     Abi
 	/// </summary>
-	/// <param name="abi"></param>
-	/// <param name="tvc"></param>
-	public Package(Abi abi, string tvc) {
-		Abi = abi;
-		Tvc = tvc;
-	}
+	public Abi? Abi { get; } = Abi;
 
 	/// <summary>
-	///     Abi of contract
+	///     Tvc
 	/// </summary>
-	public Abi Abi { get; }
+	public string? Tvc { get; } = Tvc;
 
 	/// <summary>
-	///     Tvc of contract
+	///     KeyPair
 	/// </summary>
-	public string Tvc { get; }
+	public KeyPair? KeyPair { get; } = KeyPair;
+
+	/// <summary>
+	///     Code
+	/// </summary>
+	public string? Code { get; } = Code;
 }
