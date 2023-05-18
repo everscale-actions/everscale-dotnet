@@ -19,7 +19,7 @@ public class SafeMultisigWallet : AccountBase {
 		Package contract = await _everPackageManager.LoadPackage(Name);
 		Abi transferAbi = await _everPackageManager.LoadAbi(Transfer);
 		KeyPair keyPair = await _everClient.Crypto.MnemonicDeriveSignKeys(new ParamsOfMnemonicDeriveSignKeys { Phrase = phrase });
-		await InitByPublicKey(keyPair.Public);
+		await Init(keyPair.Public);
 		if (await GetAccountType() == AccountType.Uninit) {
 			await Deploy(phrase);
 		}

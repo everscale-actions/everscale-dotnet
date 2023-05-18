@@ -101,7 +101,7 @@
 		try {
 			_keyPair = await EverClient.Crypto.MnemonicDeriveSignKeys(new ParamsOfMnemonicDeriveSignKeys { Phrase = Phrase });
 			Calculator = new CalculatorAccount(EverClient, PackageManager, _keyPair);
-			await Calculator.InitByPublicKey(_keyPair.Public);
+			await Calculator.Init(_keyPair.Public);
 			Address = Calculator.Address;
 			await LocalStorageService.SetItemAsStringAsync("Calculator_Phrase", Phrase);
 			AccountType? accountType = await Calculator.GetAccountType();

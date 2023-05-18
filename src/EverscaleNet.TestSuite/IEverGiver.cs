@@ -1,10 +1,11 @@
-namespace EverscaleNet;
+namespace EverscaleNet.TestSuite;
 
 /// <summary>
 ///     The giver is used to send coins to some address
 /// </summary>
 public interface IEverGiver {
 	/// <summary>
+	///     Can be used to reverse fund back
 	/// </summary>
 	string Address { get; }
 

@@ -52,7 +52,7 @@ public class EverClientBenchmark {
 
 	[Benchmark(OperationsPerInvoke = 1000)]
 	public async Task Crypto_MnemonicFromRandom_English() {
-		ResultOfMnemonicFromRandom? mnemonicFromRandom = await _everClient.Crypto.MnemonicFromRandom(_paramsOfMnemonicFromRandomEnglish);
+		ResultOfMnemonicFromRandom mnemonicFromRandom = await _everClient.Crypto.MnemonicFromRandom(_paramsOfMnemonicFromRandomEnglish);
 		_englishPhrases.Add(mnemonicFromRandom.Phrase);
 	}
 

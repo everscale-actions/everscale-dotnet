@@ -3,7 +3,7 @@ namespace EverscaleNet;
 /// <summary>
 ///     Get contract abi, tvc, keypair or code
 /// </summary>
-public class PackageManagerOptions {
+public abstract class PackageManagerOptions {
 	/// <summary>
 	///     Path that will be used to load packages. Default is "_contracts". Blazor WASM will reflect to wwwroot/_contracts
 	/// </summary>

@@ -3,12 +3,12 @@ namespace TestingExample.Contracts;
 internal class CalculatorInternalAccount : AccountBase {
 	private readonly IEverClient _client;
 
-	public CalculatorInternalAccount(IEverClient client, IEverPackageManager packageManager, IMultisigAccount multisigAccount) : base(client, packageManager, multisigAccount) {
+	public CalculatorInternalAccount(IEverClient client, IEverPackageManager packageManager, IMultisigAccount multisigAccount) : base(client, packageManager, multisig: multisigAccount) {
 		_client = client;
 	}
 
 	public CalculatorInternalAccount(IEverClient client, IEverPackageManager packageManager, IMultisigAccount multisigAccount, string address) :
-		base(client, packageManager, multisigAccount, address) {
+		base(client, packageManager, multisig: multisigAccount, address: address) {
 		_client = client;
 	}
 

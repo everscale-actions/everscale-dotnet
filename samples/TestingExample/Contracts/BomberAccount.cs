@@ -1,7 +1,7 @@
 namespace TestingExample.Contracts;
 
 internal class BomberAccount : AccountBase {
-	public BomberAccount(IEverClient client, IEverPackageManager packageManager, KeyPair keyPair) : base(client, packageManager, signer: new Signer.Keys { KeysAccessor = keyPair }) { }
+	public BomberAccount(IEverClient client, IEverPackageManager packageManager, KeyPair keyPair) : base(client, packageManager, keyPair) { }
 
 	protected override string Name => "20_bomber";
 

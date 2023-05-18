@@ -1,3 +1,4 @@
+using System.Text.Json;
 using EverscaleNet.Abstract;
 using EverscaleNet.Client.Models;
 using EverscaleNet.Exceptions;
@@ -13,47 +14,40 @@ namespace EverscaleNet;
 public abstract class AccountBase {
 	private readonly IEverClient _client;
 	private readonly IMultisigAccount? _multisig;
-	private readonly IEverPackageManager _packageManager;
+	private readonly IEverPackageManager? _packageManager;
 	private Abi? _abi;
 	private string? _address;
-	private object? _initialData;
-	private Signer? _signer;
+	private JsonElement? _initialData;
+	private KeyPair? _keyPair;
 	private string? _tvc;
 
 	/// <summary>
 	///     Init account without Signer
 	/// </summary>
 	/// <param name="client"></param>
-	/// <param name="packageManager"></param>
-	/// <param name="address">Put or call InitAddress method</param>
-	protected AccountBase(IEverClient client, IEverPackageManager packageManager, string? address = null) {
-		_client = client;
-		_packageManager = packageManager;
-		_address = address;
-	}
-
-	/// <summary>
-	/// </summary>
-	/// <param name="client"></param>
-	/// <param name="packageManager"></param>
-	/// <param name="signer">Set Signer to sign messages</param>
-	/// <param name="address">Put or call InitAddress method</param>
-	protected AccountBase(IEverClient client, IEverPackageManager packageManager, Signer signer, string? address = null) {
-		_client = client;
-		_packageManager = packageManager;
-		_signer = signer;
-		_address = address;
-	}
-
-	/// <summary>
-	/// </summary>
-	/// <param name="client"></param>
-	/// <param name="packageManager"></param>
+	/// <param name="package"></param>
 	/// <param name="multisig"></param>
 	/// <param name="address">Put or call InitAddress method</param>
-	protected AccountBase(IEverClient client, IEverPackageManager packageManager, IMultisigAccount multisig, string? address = null) {
+	protected AccountBase(IEverClient client, IPackage package, IMultisigAccount? multisig = null, string? address = null) {
+		_client = client;
+		_multisig = multisig;
+		_abi = package.Abi;
+		_tvc = package.Tvc;
+		_keyPair = package.KeyPair;
+		_address = address;
+	}
+
+	/// <summary>
+	/// </summary>
+	/// <param name="client"></param>
+	/// <param name="packageManager"></param>
+	/// <param name="keyPair"></param>
+	/// <param name="multisig"></param>
+	/// <param name="address">Put or call InitAddress method</param>
+	protected AccountBase(IEverClient client, IEverPackageManager packageManager, KeyPair? keyPair = null, IMultisigAccount? multisig = null, string? address = null) {
 		_client = client;
 		_packageManager = packageManager;
+		_keyPair = keyPair;
 		_multisig = multisig;
 		_address = address;
 	}
@@ -69,36 +63,14 @@ public abstract class AccountBase {
 	public string Address => _address ?? throw new AccountNotInitializedException();
 
 	/// <summary>
-	///     Init by public key
-	/// </summary>
-	/// <param name="initialData"></param>
-	/// <param name="cancellationToken"></param>
-	public async Task Init(object? initialData = null, CancellationToken cancellationToken = default) {
-		_initialData ??= initialData;
-		_address ??= await GetAddress(null, initialData, cancellationToken);
-	}
-
-	/// <summary>
-	///     Init by public key
+	///     Init by initialData
 	/// </summary>
 	/// <param name="publicKey"></param>
 	/// <param name="initialData"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task InitByPublicKey(string publicKey, object? initialData = null, CancellationToken cancellationToken = default) {
-		_initialData ??= initialData;
-		_address ??= await GetAddress(publicKey, initialData, cancellationToken);
-	}
-
-	/// <summary>
-	///     Init by KeyPair from package manager
-	/// </summary>
-	/// <param name="initialData"></param>
-	/// <param name="cancellationToken"></param>
-	public async Task InitByPackage(object? initialData = null, CancellationToken cancellationToken = default) {
-		KeyPair keyPair = await _packageManager.LoadKeyPair(Name, cancellationToken) ?? throw new InvalidOperationException();
-		_initialData ??= initialData;
-		_address ??= await GetAddress(keyPair.Public, _initialData, cancellationToken);
-		_signer ??= new Signer.Keys { KeysAccessor = keyPair };
+	public async Task Init(string? publicKey = null, object? initialData = null, CancellationToken cancellationToken = default) {
+		_initialData ??= initialData?.ToJsonElement();
+		_address ??= await CalculateAddress(publicKey, cancellationToken);
 	}
 
 	/// <summary>
@@ -117,7 +89,6 @@ public abstract class AccountBase {
 		if (result.Result.Length == 0) {
 			throw new AccountDoesNotExistException();
 		}
-
 		return result.Result[0].Get<string>("balance").NanoToCoins();
 	}
 
@@ -133,7 +104,6 @@ public abstract class AccountBase {
 			Result = "acc_type",
 			Limit = 1
 		}, cancellationToken);
-
 		return result.Result.Length == 1
 			       ? result.Result[0].Get<AccountType>("acc_type")
 			       : null;
@@ -146,23 +116,21 @@ public abstract class AccountBase {
 	/// <param name="cancellationToken"></param>
 	/// <returns>deployment fee</returns>
 	protected async Task<ResultOfProcessMessage> Deploy(object? parameters = null, CancellationToken cancellationToken = default) {
-		if (_signer is null && _multisig is null) {
-			throw new CallNotAllowedException("Deploy not allowed because Signer or Multisig must set to sign message");
+		CallSet GetCallSet() {
+			return new CallSet { FunctionName = "constructor", Input = parameters?.ToJsonElement() };
 		}
-		var callSet = new CallSet {
-			FunctionName = "constructor",
-			Input = parameters?.ToJsonElement()
-		};
-		if (_signer is not null) {
-			return await DeployWithSigner(_signer, callSet, cancellationToken);
+
+		KeyPair? keyPair = await GetKeyPair(cancellationToken);
+		if (keyPair is not null) {
+			return await DeployBySigner(new Signer.Keys { KeysAccessor = keyPair }, GetCallSet(), cancellationToken);
 		}
 		if (_multisig is not null) {
-			return await DeployWithMultisig(_multisig, callSet, cancellationToken);
+			return await DeployByMultisig(_multisig, GetCallSet(), cancellationToken);
 		}
-		throw new Exception("Unreachable code");
+		throw new CallNotAllowedException("Deploy not allowed because KeyPair or Multisig must set to sign message");
 	}
 
-	private async Task<ResultOfProcessMessage> DeployWithSigner(Signer signer, CallSet callSet, CancellationToken cancellationToken) {
+	private async Task<ResultOfProcessMessage> DeployBySigner(Signer signer, CallSet callSet, CancellationToken cancellationToken) {
 		if (signer is null) {
 			throw new ArgumentNullException(nameof(signer));
 		}
@@ -175,7 +143,7 @@ public abstract class AccountBase {
 				Abi = await GetAbi(cancellationToken),
 				DeploySet = new DeploySet {
 					Tvc = await GetTvc(cancellationToken),
-					InitialData = _initialData?.ToJsonElement()
+					InitialData = _initialData
 				},
 				CallSet = callSet,
 				Signer = signer
@@ -184,7 +152,7 @@ public abstract class AccountBase {
 		return await _client.Processing.ProcessMessage(paramsOfProcessMessage, cancellationToken: cancellationToken);
 	}
 
-	private async Task<ResultOfProcessMessage> DeployWithMultisig(IMultisigAccount multisig, CallSet callSet, CancellationToken cancellationToken) {
+	private async Task<ResultOfProcessMessage> DeployByMultisig(IMultisigAccount multisig, CallSet callSet, CancellationToken cancellationToken) {
 		if (multisig is null) {
 			throw new ArgumentNullException(nameof(multisig));
 		}
@@ -193,7 +161,7 @@ public abstract class AccountBase {
 		}
 		ResultOfEncodeInitialData resultOfEncodeInitialData = await _client.Abi.EncodeInitialData(new ParamsOfEncodeInitialData {
 			Abi = await GetAbi(cancellationToken),
-			InitialData = _initialData?.ToJsonElement()
+			InitialData = _initialData
 		}, cancellationToken);
 
 		ResultOfDecodeTvc resultOfDecodeTvc = await _client.Boc.DecodeTvc(new ParamsOfDecodeTvc {
@@ -224,19 +192,17 @@ public abstract class AccountBase {
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	protected async Task<ResultOfProcessMessage> Run(CallSet callSet, CancellationToken cancellationToken = default) {
-		if (_signer is null && _multisig is null) {
-			throw new CallNotAllowedException("Call not allowed because Signer or Multisig was not set in .ctor");
-		}
-		if (_signer is not null) {
-			return await RunWithSigner(_signer, callSet, cancellationToken);
+		KeyPair? keyPair = await GetKeyPair(cancellationToken);
+		if (keyPair is not null) {
+			return await RunBySigner(new Signer.Keys { KeysAccessor = keyPair }, callSet, cancellationToken);
 		}
 		if (_multisig is not null) {
-			return await RunWithMultisig(_multisig, callSet, cancellationToken);
+			return await RunByMultisig(_multisig, callSet, cancellationToken);
 		}
-		throw new Exception("Unreachable code");
+		throw new CallNotAllowedException("Call not allowed because KeyPair or Multisig was not set in .ctor");
 	}
 
-	private async Task<ResultOfProcessMessage> RunWithSigner(Signer signer, CallSet callSet, CancellationToken cancellationToken) {
+	private async Task<ResultOfProcessMessage> RunBySigner(Signer signer, CallSet callSet, CancellationToken cancellationToken) {
 		if (signer is null) {
 			throw new ArgumentNullException(nameof(signer));
 		}
@@ -253,7 +219,7 @@ public abstract class AccountBase {
 		}, cancellationToken: cancellationToken);
 	}
 
-	private async Task<ResultOfProcessMessage> RunWithMultisig(IMultisigAccount multisig, CallSet callSet, CancellationToken cancellationToken) {
+	private async Task<ResultOfProcessMessage> RunByMultisig(IMultisigAccount multisig, CallSet callSet, CancellationToken cancellationToken) {
 		if (multisig is null) {
 			throw new ArgumentNullException(nameof(multisig));
 		}
@@ -302,7 +268,7 @@ public abstract class AccountBase {
 	/// <param name="cancellationToken"></param>
 	/// <returns>tvc string of code</returns>
 	protected async Task<string> GetTvc(CancellationToken cancellationToken) {
-		return (_tvc ??= await _packageManager.LoadTvc(Name, cancellationToken)) ?? throw new InvalidOperationException();
+		return (_tvc ??= await _packageManager!.LoadTvc(Name, cancellationToken)) ?? throw new InvalidOperationException();
 	}
 
 	/// <summary>
@@ -311,15 +277,24 @@ public abstract class AccountBase {
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	protected async Task<Abi> GetAbi(CancellationToken cancellationToken) {
-		return (_abi ??= await _packageManager.LoadAbi(Name, cancellationToken)) ?? throw new InvalidOperationException();
+		return (_abi ??= await _packageManager!.LoadAbi(Name, cancellationToken)) ?? throw new InvalidOperationException();
 	}
 
-	private async Task<string> GetAddress(string? publicKey, object? initialData, CancellationToken cancellationToken) {
+	/// <summary>
+	/// </summary>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	/// <exception cref="InvalidOperationException"></exception>
+	protected async Task<KeyPair?> GetKeyPair(CancellationToken cancellationToken) {
+		return (_keyPair ??= await _packageManager!.LoadKeyPair(Name, cancellationToken)) ?? null;
+	}
+
+	private async Task<string> CalculateAddress(string? publicKey, CancellationToken cancellationToken) {
 		var paramsOfEncodeMessage = new ParamsOfEncodeMessage {
 			Abi = await GetAbi(cancellationToken),
 			DeploySet = new DeploySet {
 				Tvc = await GetTvc(cancellationToken),
-				InitialData = initialData?.ToJsonElement()
+				InitialData = _initialData
 			},
 			Signer = publicKey is null ? new Signer.None() : new Signer.External { PublicKey = publicKey }
 		};

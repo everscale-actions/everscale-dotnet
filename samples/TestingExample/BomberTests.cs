@@ -1,32 +1,35 @@
+using EverscaleNet.TestSuite;
+
 namespace TestingExample;
 
-public class BomberTests : IClassFixture<FixtureWrapper>, IAsyncLifetime {
+public class BomberTests : IAsyncLifetime {
 	private const decimal TopUpCoins = 2M;
 	private const decimal SendEverCoins = 1M;
-	private readonly IEverTestsFixture _fixture;
-	private readonly ITestOutputHelper _output;
+	private readonly IEverClient _everClient;
+	private readonly IEverGiver _giver;
+	private readonly IEverPackageManager _packageManager;
 	private BomberAccount _bomberAccount;
 	private decimal _bomberDeployFees;
 	private SinkAccount _sinkAccount;
 	private decimal _sinkDeployFees;
 
-	public BomberTests(FixtureWrapper fixtureWrapper, ITestOutputHelper output) {
-		_fixture = fixtureWrapper.GetFixture();
-		_output = output;
+	public BomberTests(IEverClient everClient, IEverPackageManager packageManager, IEverGiver giver) {
+		_everClient = everClient;
+		_packageManager = packageManager;
+		_giver = giver;
 	}
 
 	public async Task InitializeAsync() {
-		await _fixture.Init(_output);
-		KeyPair keyPair = await _fixture.Client.Crypto.GenerateRandomSignKeys();
-		_bomberAccount = new BomberAccount(_fixture.Client, _fixture.PackageManager, keyPair);
-		_sinkAccount = new SinkAccount(_fixture.Client, _fixture.PackageManager, keyPair);
+		KeyPair keyPair = await _everClient.Crypto.GenerateRandomSignKeys();
+		_bomberAccount = new BomberAccount(_everClient, _packageManager, keyPair);
+		_sinkAccount = new SinkAccount(_everClient, _packageManager, keyPair);
 		await Task.WhenAll(
-			_bomberAccount.InitByPublicKey(keyPair.Public),
-			_sinkAccount.InitByPublicKey(keyPair.Public)
+			_bomberAccount.Init(keyPair.Public),
+			_sinkAccount.Init(keyPair.Public)
 		);
 		await Task.WhenAll(
-			_fixture.Giver.SendTransaction(_bomberAccount.Address, TopUpCoins),
-			_fixture.Giver.SendTransaction(_sinkAccount.Address, TopUpCoins)
+			_giver.SendTransaction(_bomberAccount.Address, TopUpCoins),
+			_giver.SendTransaction(_sinkAccount.Address, TopUpCoins)
 		);
 		Task<ResultOfProcessMessage> bomberDeployTask = _bomberAccount.Deploy();
 		Task<ResultOfProcessMessage> sinkDeployTask = _sinkAccount.Deploy();

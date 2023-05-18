@@ -1,0 +1,24 @@
+<Project>
+
+  <ItemGroup>
+    <Content Include="_contracts\**" />
+  </ItemGroup>
+
+  <Target Name="IncludeDependencyFiles" BeforeTargets="GetCopyToOutputDirectoryItems">
+    <ItemGroup>
+      <DependencyFiles Include="_contracts\**" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="GetCopyToOutputDirectoryTvcItems" BeforeTargets="GetCopyToOutputDirectoryItems">
+    <ItemGroup>
+      <OutputDependencyFiles Include="@(DependencyFiles->'$(OutputPath)%(RelativeDir)%(Filename)%(Extension)')">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <TargetPath>%(RelativeDir)%(Filename)%(Extension)</TargetPath>
+      </OutputDependencyFiles>
+      <FileWrites Include="@(OutputDependencyFiles->'%(FullPath)')" />
+      <AllItemsFullPathWithTargetPath Include="@(OutputDependencyFiles->'%(FullPath)')" />
+    </ItemGroup>
+  </Target>
+
+</Project>
