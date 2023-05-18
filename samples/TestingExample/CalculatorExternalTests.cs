@@ -1,24 +1,26 @@
 using System.Text.Json;
+using EverscaleNet.TestSuite;
 
 namespace TestingExample;
 
-public class CalculatorExternalTests : IClassFixture<FixtureWrapper>, IAsyncLifetime {
-	private readonly IEverTestsFixture _fixture;
-	private readonly ITestOutputHelper _output;
+public class CalculatorExternalTests : IAsyncLifetime {
+	private readonly IEverClient _everClient;
+	private readonly IEverGiver _giver;
+	private readonly IEverPackageManager _packageManager;
 	private CalculatorExternalAccount _calculator;
 	private KeyPair _keyPair;
 
-	public CalculatorExternalTests(FixtureWrapper fixtureWrapper, ITestOutputHelper output) {
-		_fixture = fixtureWrapper.GetFixture();
-		_output = output;
+	public CalculatorExternalTests(IEverClient everClient, IEverPackageManager packageManager, IEverGiver giver) {
+		_everClient = everClient;
+		_packageManager = packageManager;
+		_giver = giver;
 	}
 
 	public async Task InitializeAsync() {
-		await _fixture.Init(_output);
-		_keyPair = await _fixture.Client.Crypto.GenerateRandomSignKeys();
-		_calculator = new CalculatorExternalAccount(_fixture.Client, _fixture.PackageManager, _keyPair);
-		await _calculator.InitByPublicKey(_keyPair.Public);
-		await _fixture.Giver.SendTransaction(_calculator.Address, 10m);
+		_keyPair = await _everClient.Crypto.GenerateRandomSignKeys();
+		_calculator = new CalculatorExternalAccount(_everClient, _packageManager, _keyPair);
+		await _calculator.Init(_keyPair.Public);
+		await _giver.SendTransaction(_calculator.Address, 10m);
 		await _calculator.Deploy();
 	}
 
@@ -67,14 +69,14 @@ public class CalculatorExternalTests : IClassFixture<FixtureWrapper>, IAsyncLife
 
 	[Fact]
 	public async Task AnotherPubkeyHasNoAccess() {
-		KeyPair keyPair = await _fixture.Client.Crypto.GenerateRandomSignKeys();
-		var calculatorAccount = new CalculatorExternalAccount(_fixture.Client, _fixture.PackageManager, keyPair);
-		await calculatorAccount.InitByPublicKey(_keyPair.Public);
+		KeyPair keyPair = await _everClient.Crypto.GenerateRandomSignKeys();
+		var calculatorAccount = new CalculatorExternalAccount(_everClient, _packageManager, keyPair);
+		await calculatorAccount.Init(_keyPair.Public);
 
 		Func<Task> act = () => calculatorAccount.Add(1);
 
 		await act.Should()
 		         .ThrowAsync<EverClientException>()
-		         .Where(exceptionExpression: e => ((JsonElement)e.Data["exit_code"]).GetInt32() == 101);
+		         .Where(e => ((JsonElement)e.Data["exit_code"]).GetInt32() == 101);
 	}
 }

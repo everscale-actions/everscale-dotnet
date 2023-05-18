@@ -19,8 +19,8 @@ public class Worker : BackgroundService {
 		while (!stoppingToken.IsCancellationRequested) {
 			try {
 				// load contracts from abi.json and tvc files 
-				Package senderContract = await _packageManager.LoadPackage(SenderContractName, stoppingToken);
-				Package receiverContract = await _packageManager.LoadPackage(ReceiverContractName, stoppingToken);
+				IPackage senderContract = await _packageManager.LoadPackage(SenderContractName, stoppingToken);
+				IPackage receiverContract = await _packageManager.LoadPackage(ReceiverContractName, stoppingToken);
 
 				// get keys by mnemonic
 				KeyPair keys =
@@ -45,7 +45,7 @@ public class Worker : BackgroundService {
 		}
 	}
 
-	private async Task<ulong> GetSentMessagesCount(Package contract, KeyPair keys, string senderAddress,
+	private async Task<ulong> GetSentMessagesCount(IPackage contract, KeyPair keys, string senderAddress,
 	                                               CancellationToken cancellationToken) {
 		ResultOfQueryCollection accountBocResult = await _everClient.Net.QueryCollection(new ParamsOfQueryCollection {
 			Collection = "accounts",
@@ -72,7 +72,7 @@ public class Worker : BackgroundService {
 		return result.Decoded.Output.Get<string>("c").HexToDec();
 	}
 
-	private async Task SendMessage(Package senderContract, Package receiverContract, KeyPair keys,
+	private async Task SendMessage(IPackage senderContract, IPackage receiverContract, KeyPair keys,
 	                               string senderAddress,
 	                               CancellationToken cancellationToken) {
 		ResultOfEncodeMessage encodedMessage = await _everClient.Abi.EncodeMessage(new ParamsOfEncodeMessage {
@@ -94,7 +94,7 @@ public class Worker : BackgroundService {
 		await _everClient.ProcessAndWaitInternalMessages(sendMessageEncoded, cancellationToken);
 	}
 
-	private async Task<string> CheckBalanceAndDeploy(Package package, KeyPair keys,
+	private async Task<string> CheckBalanceAndDeploy(IPackage package, KeyPair keys,
 	                                                 CancellationToken cancellationToken) {
 		var deployParams = new ParamsOfEncodeMessage {
 			Abi = package.Abi,

@@ -1,0 +1,11 @@
+<Project>
+
+  <ItemGroup>
+    <Files Include="$(MSBuildThisFileDirectory)\..\contentFiles\_contracts\**\*.*" />
+  </ItemGroup>
+
+  <Target Name="CopyFiles" AfterTargets="Build">
+    <Copy SourceFiles="@(Files)" DestinationFolder="$(TargetDir)\_contracts\%(RecursiveDir)" />
+  </Target>
+
+</Project>

@@ -11,7 +11,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
 /// </summary>
-public static class AddEverClientServiceCollectionExtensions {
+public static class ServiceCollectionExtensions {
 	/// <summary>
 	///     Provide IEverClient and IEverPackageManager in DI
 	/// </summary>
@@ -56,7 +56,7 @@ public static class AddEverClientServiceCollectionExtensions {
 	/// <returns></returns>
 	public static IServiceCollection AddEverClient(this IServiceCollection services,
 	                                               Action<IServiceProvider, EverClientOptions>? configureEverClientOptions,
-	                                               Action<IServiceProvider, PackageManagerOptions>? configurePackageManagerOptions = null) {
+	                                               Action<IServiceProvider, FilePackageManagerOptions>? configurePackageManagerOptions = null) {
 		if (configureEverClientOptions != null) {
 			services.AddOptions();
 			services.AddSingleton<IConfigureOptions<EverClientOptions>>(
@@ -64,8 +64,8 @@ public static class AddEverClientServiceCollectionExtensions {
 		}
 		if (configurePackageManagerOptions != null) {
 			services.AddOptions();
-			services.AddSingleton<IConfigureOptions<PackageManagerOptions>>(
-				provider => new ConfigureOptions<PackageManagerOptions>(options => configurePackageManagerOptions(provider, options)));
+			services.AddSingleton<IConfigureOptions<FilePackageManagerOptions>>(
+				provider => new ConfigureOptions<FilePackageManagerOptions>(options => configurePackageManagerOptions(provider, options)));
 		}
 
 		return services

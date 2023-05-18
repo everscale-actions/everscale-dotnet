@@ -1,6 +1,5 @@
 pragma ever-solidity >= 0.61.2;
 
-pragma AbiHeader time;
 pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
@@ -27,7 +26,7 @@ contract CalculatorInternal is Reservable, TargetBalance {
     }
 
     constructor()
-    public reserveAndAccept(_getTargetBalanceInternal()) {
+    reserveAndAccept(_getTargetBalanceInternal()) {
     }
 
     function add(int value)
@@ -42,6 +41,6 @@ contract CalculatorInternal is Reservable, TargetBalance {
 
     function getMoney(optional(address) _remainingGasTo)
     public checkOwner reserveAcceptAndRefund(_getTargetBalanceInternal(), _remainingGasTo, msg.sender) {
-        
+
     }
 }

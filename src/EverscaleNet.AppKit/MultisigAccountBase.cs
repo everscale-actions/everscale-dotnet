@@ -5,19 +5,14 @@ using EverscaleNet.Utils;
 
 namespace EverscaleNet;
 
-/// <summary>
-/// </summary>
-public class SafeMultisigAccount : AccountBase, IMultisigAccount {
+/// <inheritdoc cref="EverscaleNet.IMultisigAccount" />
+public abstract class MultisigAccountBase : AccountBase, IMultisigAccount {
 	/// <summary>
 	/// </summary>
 	/// <param name="client"></param>
 	/// <param name="packageManager"></param>
 	/// <param name="keyPair"></param>
-	public SafeMultisigAccount(IEverClient client, IEverPackageManager packageManager, KeyPair keyPair) : base(client, packageManager, new Signer.Keys { KeysAccessor = keyPair }) { }
-
-	/// <summary>
-	/// </summary>
-	protected override string Name => "SafeMultisig";
+	protected MultisigAccountBase(IEverClient client, IEverPackageManager packageManager, KeyPair keyPair) : base(client, packageManager, keyPair) { }
 
 	/// <summary>
 	/// </summary>

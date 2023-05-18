@@ -25,7 +25,7 @@ contract CalculatorInternal is Reservable, TargetBalance {
     }
 
     constructor()
-    public reserveAndRefund(_getTargetBalanceInternal(), owner_, msg.sender) {
+    reserveAndRefund(_getTargetBalanceInternal(), owner_, msg.sender) {
     }
 
     function add(int value)

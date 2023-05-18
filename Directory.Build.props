@@ -1,16 +1,16 @@
 <Project>
-    <Import Project="SDKVersion.targets"/>
+  <Import Project="SDKVersion.targets" />
 
-    <PropertyGroup>
-        <LangVersion>11</LangVersion>
-        <ImplicitUsings>true</ImplicitUsings>
+  <PropertyGroup>
+    <LangVersion>11</LangVersion>
+    <ImplicitUsings>true</ImplicitUsings>
 
-        <NET6 Condition=" '$(TargetFramework)' == 'net6.0' ">true</NET6>
-        <NET6 Condition=" '$(NET6)' != 'true' ">false</NET6>
-        <NET7 Condition=" '$(TargetFramework)' == 'net7.0' ">true</NET7>
-        <NET7 Condition=" '$(NET7)' != 'true' ">false</NET7>
-        <NET6_OR_NET7 Condition=" '$(NET6)' or '$(NET7)' ">true</NET6_OR_NET7>
-        <NET6_OR_NET7 Condition=" '$(NET6_OR_NET7)' != 'true' ">false</NET6_OR_NET7>
-    </PropertyGroup>
+    <NET6 Condition=" '$(TargetFramework)' == 'net6.0' ">true</NET6>
+    <NET6 Condition=" '$(NET6)' != 'true' ">false</NET6>
+    <NET7 Condition=" '$(TargetFramework)' == 'net7.0' ">true</NET7>
+    <NET7 Condition=" '$(NET7)' != 'true' ">false</NET7>
+    <NET6_OR_NET7 Condition=" '$(NET6)' or '$(NET7)' ">true</NET6_OR_NET7>
+    <NET6_OR_NET7 Condition=" '$(NET6_OR_NET7)' != 'true' ">false</NET6_OR_NET7>
+  </PropertyGroup>
 
 </Project>

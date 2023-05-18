@@ -5,15 +5,16 @@ namespace BlazorApp.Contracts;
 internal class CalculatorAccount : AccountBase {
 	private readonly IEverClient _client;
 
-	public CalculatorAccount(IEverClient client, IEverPackageManager packageManager, KeyPair keyPair) : base(client, packageManager, new Signer.Keys { KeysAccessor = keyPair }) {
+	public CalculatorAccount(IEverClient client, IEverPackageManager packageManager, KeyPair keyPair) : base(client, packageManager, keyPair) {
 		_client = client;
 	}
 
-	public CalculatorAccount(IEverClient client, IEverPackageManager packageManager, IMultisigAccount multisigAccount) : base(client, packageManager, multisigAccount) {
+	public CalculatorAccount(IEverClient client, IEverPackageManager packageManager, IMultisigAccount multisigAccount) : base(client, packageManager, multisig: multisigAccount) {
 		_client = client;
 	}
 
-	public CalculatorAccount(IEverClient client, IEverPackageManager packageManager, IMultisigAccount multisigAccount, string address) : base(client, packageManager, multisigAccount, address) {
+	public CalculatorAccount(IEverClient client, IEverPackageManager packageManager, IMultisigAccount multisigAccount, string address) : base(
+		client, packageManager, multisig: multisigAccount, address: address) {
 		_client = client;
 	}
 

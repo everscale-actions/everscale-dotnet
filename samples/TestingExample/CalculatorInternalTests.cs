@@ -1,45 +1,39 @@
 using EverscaleNet.Exceptions;
-using EverscaleNet.WebClient.PackageManager;
-using Microsoft.Extensions.Options;
+using EverscaleNet.TestSuite;
 using Polly;
 using Polly.Retry;
 
 namespace TestingExample;
 
-public class CalculatorInternalTests : IClassFixture<FixtureWrapper>, IAsyncLifetime {
-	private const string MultisigPackageUrl = "https://raw.githubusercontent.com/EverSurf/contracts/414557cbb62e6bd69b4793db005799dfb4e59793/multisig2/build/";
-	private readonly IEverTestsFixture _fixture;
-	private readonly HttpClient _httpClient;
-	private readonly ITestOutputHelper _output;
+public class CalculatorInternalTests : IAsyncLifetime {
+	private readonly IEverClient _everClient;
+	private readonly IEverGiver _giver;
+	private readonly IEverPackageManager _packageManager;
 	private CalculatorInternalAccount _calculator;
-	private SafeMultisigAccount _multisig;
-	private WebPackageManager _multisigPackage;
+	private IMultisigAccount _multisig;
 
-	public CalculatorInternalTests(FixtureWrapper fixtureWrapper, ITestOutputHelper output) {
-		_fixture = fixtureWrapper.GetFixture();
-		_output = output;
-		_httpClient = new HttpClient();
+	public CalculatorInternalTests(IEverClient everClient, IEverPackageManager packageManager, IEverGiver giver) {
+		_everClient = everClient;
+		_packageManager = packageManager;
+		_giver = giver;
 	}
 
 	public async Task InitializeAsync() {
-		await _fixture.Init(_output);
-		_multisigPackage = new WebPackageManager(_httpClient, new OptionsWrapper<PackageManagerOptions>(new PackageManagerOptions { PackagesPath = MultisigPackageUrl }));
 		_multisig = await CreateMultisig();
-		_calculator = new CalculatorInternalAccount(_fixture.Client, _fixture.PackageManager, _multisig);
-		await _calculator.Init(new { owner_ = _multisig.Address });
+		_calculator = new CalculatorInternalAccount(_everClient, _packageManager, _multisig);
+		await _calculator.Init(initialData: new { owner_ = _multisig.Address });
 		await _calculator.Deploy();
 	}
 
 	public async Task DisposeAsync() {
-		await _multisig.SendTransaction(_fixture.Giver.Address, 0, true, 128, string.Empty);
-		_httpClient?.Dispose();
+		await _multisig.SendTransaction(_giver.Address, 0, true, 128, string.Empty);
 	}
 
-	private async Task<SafeMultisigAccount> CreateMultisig() {
-		KeyPair keyPair = await _fixture.Client.Crypto.GenerateRandomSignKeys();
-		var multisig = new SafeMultisigAccount(_fixture.Client, _multisigPackage, keyPair);
-		await multisig.InitByPublicKey(keyPair.Public);
-		await _fixture.Giver.SendTransaction(multisig.Address, 20M);
+	private async Task<IMultisigAccount> CreateMultisig(decimal coins = 20m) {
+		KeyPair keyPair = await _everClient.Crypto.GenerateRandomSignKeys();
+		var multisig = new SafeMultisigAccount(_everClient, _packageManager, keyPair);
+		await multisig.Init(keyPair.Public);
+		await _giver.SendTransaction(multisig.Address, coins);
 		await multisig.Deploy(new[] { keyPair.Public }, 1, TimeSpan.FromHours(1));
 		return multisig;
 	}
@@ -78,8 +72,8 @@ public class CalculatorInternalTests : IClassFixture<FixtureWrapper>, IAsyncLife
 
 	[Fact]
 	public async Task AnotherMultisigHasNoAccess() {
-		SafeMultisigAccount anotherMultisig = await CreateMultisig();
-		var calculatorWithAnotherMultisig = new CalculatorInternalAccount(_fixture.Client, _fixture.PackageManager, anotherMultisig, _calculator.Address);
+		IMultisigAccount anotherMultisig = await CreateMultisig();
+		var calculatorWithAnotherMultisig = new CalculatorInternalAccount(_everClient, _packageManager, anotherMultisig, _calculator.Address);
 
 		await _calculator.Add(1);
 		Func<Task> act = () => calculatorWithAnotherMultisig.Add(2);
