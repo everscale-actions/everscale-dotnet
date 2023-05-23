@@ -18,8 +18,8 @@ public class CalculatorExternalTests : IAsyncLifetime {
 
 	public async Task InitializeAsync() {
 		_keyPair = await _everClient.Crypto.GenerateRandomSignKeys();
-		_calculator = new CalculatorExternalAccount(_everClient, _packageManager, _keyPair);
-		await _calculator.Init(_keyPair.Public);
+		_calculator = new CalculatorExternalAccount(_everClient, _packageManager);
+		await _calculator.Init(_keyPair);
 		await _giver.SendTransaction(_calculator.Address, 10m);
 		await _calculator.Deploy();
 	}
@@ -70,8 +70,9 @@ public class CalculatorExternalTests : IAsyncLifetime {
 	[Fact]
 	public async Task AnotherPubkeyHasNoAccess() {
 		KeyPair keyPair = await _everClient.Crypto.GenerateRandomSignKeys();
-		var calculatorAccount = new CalculatorExternalAccount(_everClient, _packageManager, keyPair);
+		var calculatorAccount = new CalculatorExternalAccount(_everClient, _packageManager);
 		await calculatorAccount.Init(_keyPair.Public);
+		await calculatorAccount.Init(keyPair); // Reinit with another signer
 
 		Func<Task> act = () => calculatorAccount.Add(1);
 

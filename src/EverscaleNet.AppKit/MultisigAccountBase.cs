@@ -11,8 +11,7 @@ public abstract class MultisigAccountBase : AccountBase, IMultisigAccount {
 	/// </summary>
 	/// <param name="client"></param>
 	/// <param name="packageManager"></param>
-	/// <param name="keyPair"></param>
-	protected MultisigAccountBase(IEverClient client, IEverPackageManager packageManager, KeyPair keyPair) : base(client, packageManager, keyPair) { }
+	protected MultisigAccountBase(IEverClient client, IEverPackageManager packageManager) : base(client, packageManager) { }
 
 	/// <summary>
 	/// </summary>

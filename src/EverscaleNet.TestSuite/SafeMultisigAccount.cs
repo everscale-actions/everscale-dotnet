@@ -1,5 +1,4 @@
 using EverscaleNet.Abstract;
-using EverscaleNet.Client.Models;
 
 namespace EverscaleNet.TestSuite;
 
@@ -10,8 +9,7 @@ public class SafeMultisigAccount : MultisigAccountBase {
 	/// </summary>
 	/// <param name="client"></param>
 	/// <param name="packageManager"></param>
-	/// <param name="keyPair"></param>
-	public SafeMultisigAccount(IEverClient client, IEverPackageManager packageManager, KeyPair keyPair) : base(client, packageManager, keyPair) { }
+	public SafeMultisigAccount(IEverClient client, IEverPackageManager packageManager) : base(client, packageManager) { }
 
 	/// <summary>
 	/// </summary>

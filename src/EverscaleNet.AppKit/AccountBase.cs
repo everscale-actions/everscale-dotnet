@@ -13,42 +13,37 @@ namespace EverscaleNet;
 /// </summary>
 public abstract class AccountBase {
 	private readonly IEverClient _client;
-	private readonly IMultisigAccount? _multisig;
 	private readonly IEverPackageManager? _packageManager;
 	private Abi? _abi;
 	private string? _address;
 	private JsonElement? _initialData;
 	private KeyPair? _keyPair;
+	private IMultisigAccount? _multisig;
 	private string? _tvc;
 
 	/// <summary>
 	///     Init account without Signer
 	/// </summary>
 	/// <param name="client"></param>
-	/// <param name="package"></param>
-	/// <param name="multisig"></param>
+	/// <param name="packageManager"></param>
 	/// <param name="address">Put or call InitAddress method</param>
-	protected AccountBase(IEverClient client, IPackage package, IMultisigAccount? multisig = null, string? address = null) {
+	protected AccountBase(IEverClient client, IEverPackageManager packageManager, string? address = null) {
 		_client = client;
-		_multisig = multisig;
-		_abi = package.Abi;
-		_tvc = package.Tvc;
-		_keyPair = package.KeyPair;
+		_packageManager = packageManager;
 		_address = address;
 	}
 
 	/// <summary>
+	///     Init account without Signer
 	/// </summary>
 	/// <param name="client"></param>
-	/// <param name="packageManager"></param>
-	/// <param name="keyPair"></param>
-	/// <param name="multisig"></param>
+	/// <param name="package">IPackage with abi, tv and keypair</param>
 	/// <param name="address">Put or call InitAddress method</param>
-	protected AccountBase(IEverClient client, IEverPackageManager packageManager, KeyPair? keyPair = null, IMultisigAccount? multisig = null, string? address = null) {
+	protected AccountBase(IEverClient client, IPackage package, string? address = null) {
 		_client = client;
-		_packageManager = packageManager;
-		_keyPair = keyPair;
-		_multisig = multisig;
+		_abi = package.Abi;
+		_tvc = package.Tvc;
+		_keyPair = package.KeyPair;
 		_address = address;
 	}
 
@@ -63,7 +58,7 @@ public abstract class AccountBase {
 	public string Address => _address ?? throw new AccountNotInitializedException();
 
 	/// <summary>
-	///     Init by initialData
+	///     Init by publicKey and initialData
 	/// </summary>
 	/// <param name="publicKey"></param>
 	/// <param name="initialData"></param>
@@ -71,6 +66,30 @@ public abstract class AccountBase {
 	public async Task Init(string? publicKey = null, object? initialData = null, CancellationToken cancellationToken = default) {
 		_initialData ??= initialData?.ToJsonElement();
 		_address ??= await CalculateAddress(publicKey, cancellationToken);
+	}
+
+	/// <summary>
+	///     Init with keyPair and initialData
+	/// </summary>
+	/// <param name="keyPair"></param>
+	/// <param name="initialData"></param>
+	/// <param name="cancellationToken"></param>
+	public async Task Init(KeyPair keyPair, object? initialData = null, CancellationToken cancellationToken = default) {
+		_keyPair ??= keyPair;
+		_initialData ??= initialData?.ToJsonElement();
+		_address ??= await CalculateAddress(keyPair.Public, cancellationToken);
+	}
+
+	/// <summary>
+	///     Init with Multisig Account and init data
+	/// </summary>
+	/// <param name="multisigAccount"></param>
+	/// <param name="initialData"></param>
+	/// <param name="cancellationToken"></param>
+	public async Task Init(IMultisigAccount multisigAccount, object? initialData = null, CancellationToken cancellationToken = default) {
+		_multisig ??= multisigAccount;
+		_initialData ??= initialData?.ToJsonElement();
+		_address ??= await CalculateAddress(null, cancellationToken);
 	}
 
 	/// <summary>

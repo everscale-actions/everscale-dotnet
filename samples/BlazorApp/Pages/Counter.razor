@@ -100,8 +100,8 @@
 		Phrase = obj.Value!.ToString();
 		try {
 			_keyPair = await EverClient.Crypto.MnemonicDeriveSignKeys(new ParamsOfMnemonicDeriveSignKeys { Phrase = Phrase });
-			Calculator = new CalculatorAccount(EverClient, PackageManager, _keyPair);
-			await Calculator.Init(_keyPair.Public);
+			Calculator = new CalculatorAccount(EverClient, PackageManager);
+			await Calculator.Init(_keyPair);
 			Address = Calculator.Address;
 			await LocalStorageService.SetItemAsStringAsync("Calculator_Phrase", Phrase);
 			AccountType? accountType = await Calculator.GetAccountType();

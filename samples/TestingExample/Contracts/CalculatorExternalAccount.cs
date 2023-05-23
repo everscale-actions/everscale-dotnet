@@ -3,8 +3,8 @@ namespace TestingExample.Contracts;
 internal class CalculatorExternalAccount : AccountBase {
 	private readonly IEverClient _client;
 
-	public CalculatorExternalAccount(IEverClient client, IEverPackageManager packageManager, KeyPair keyPair) : base(
-		client, packageManager, keyPair) {
+	public CalculatorExternalAccount(IEverClient client, IEverPackageManager packageManager) : base(
+		client, packageManager) {
 		_client = client;
 	}
 

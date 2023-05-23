@@ -21,11 +21,11 @@ public class BomberTests : IAsyncLifetime {
 
 	public async Task InitializeAsync() {
 		KeyPair keyPair = await _everClient.Crypto.GenerateRandomSignKeys();
-		_bomberAccount = new BomberAccount(_everClient, _packageManager, keyPair);
-		_sinkAccount = new SinkAccount(_everClient, _packageManager, keyPair);
+		_bomberAccount = new BomberAccount(_everClient, _packageManager);
+		_sinkAccount = new SinkAccount(_everClient, _packageManager);
 		await Task.WhenAll(
-			_bomberAccount.Init(keyPair.Public),
-			_sinkAccount.Init(keyPair.Public)
+			_bomberAccount.Init(keyPair),
+			_sinkAccount.Init(keyPair)
 		);
 		await Task.WhenAll(
 			_giver.SendTransaction(_bomberAccount.Address, TopUpCoins),

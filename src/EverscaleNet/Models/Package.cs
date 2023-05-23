@@ -5,7 +5,7 @@ namespace EverscaleNet.Models;
 /// <summary>
 ///     Package contains Abi, Tvc, KeyPair and Code of contract
 /// </summary>
-public record Package(Abi? Abi, string? Tvc, KeyPair? KeyPair, string? Code) : IPackage {
+public record Package(Abi? Abi = null, string? Tvc = null, KeyPair? KeyPair = null, string? Code = null) : IPackage {
 	/// <summary>
 	///     Abi
 	/// </summary>

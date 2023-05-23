@@ -14,13 +14,13 @@ public class Startup {
 				builder.AddXunitOutput();
 			})
 			.ConfigureServices(services => {
+				services.AddSingleton<NodeSeDockerContainer>()
+				        .AddHostedService<InitNodeSeService>();
+
 				services.AddEverClient((sp, options) => {
 					string endpoint = sp.GetRequiredService<NodeSeDockerContainer>().Endpoint;
 					options.Network.Endpoints = new[] { endpoint };
 				});
-
-				services.AddSingleton<NodeSeDockerContainer>()
-				        .AddHostedService<InitNodeSeService>();
 
 				services.AddSingleton<IEverGiver, EverGiverV3>();
 			});

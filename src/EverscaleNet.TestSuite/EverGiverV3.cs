@@ -21,7 +21,6 @@ public class EverGiverV3 : AccountBase, IEverGiver {
 		new FilePackageManager(new OptionsWrapper<FilePackageManagerOptions>(new FilePackageManagerOptions {
 			KeyPairFileTemplate = "seGiver.keys.json"
 		})),
-		optionsAccessor.Value.KeyPair,
 		address: optionsAccessor.Value.Address ?? SeGiverAddress
 	) { }
 

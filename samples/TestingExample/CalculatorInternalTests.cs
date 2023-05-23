@@ -20,8 +20,8 @@ public class CalculatorInternalTests : IAsyncLifetime {
 
 	public async Task InitializeAsync() {
 		_multisig = await CreateMultisig();
-		_calculator = new CalculatorInternalAccount(_everClient, _packageManager, _multisig);
-		await _calculator.Init(initialData: new { owner_ = _multisig.Address });
+		_calculator = new CalculatorInternalAccount(_everClient, _packageManager);
+		await _calculator.Init(_multisig, new { owner_ = _multisig.Address });
 		await _calculator.Deploy();
 	}
 
@@ -31,8 +31,8 @@ public class CalculatorInternalTests : IAsyncLifetime {
 
 	private async Task<IMultisigAccount> CreateMultisig(decimal coins = 20m) {
 		KeyPair keyPair = await _everClient.Crypto.GenerateRandomSignKeys();
-		var multisig = new SafeMultisigAccount(_everClient, _packageManager, keyPair);
-		await multisig.Init(keyPair.Public);
+		var multisig = new SafeMultisigAccount(_everClient, _packageManager);
+		await multisig.Init(keyPair);
 		await _giver.SendTransaction(multisig.Address, coins);
 		await multisig.Deploy(new[] { keyPair.Public }, 1, TimeSpan.FromHours(1));
 		return multisig;
@@ -73,7 +73,8 @@ public class CalculatorInternalTests : IAsyncLifetime {
 	[Fact]
 	public async Task AnotherMultisigHasNoAccess() {
 		IMultisigAccount anotherMultisig = await CreateMultisig();
-		var calculatorWithAnotherMultisig = new CalculatorInternalAccount(_everClient, _packageManager, anotherMultisig, _calculator.Address);
+		var calculatorWithAnotherMultisig = new CalculatorInternalAccount(_everClient, _packageManager, _calculator.Address);
+		await calculatorWithAnotherMultisig.Init(anotherMultisig, new { owner_ = _multisig.Address });
 
 		await _calculator.Add(1);
 		Func<Task> act = () => calculatorWithAnotherMultisig.Add(2);
