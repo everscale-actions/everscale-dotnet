@@ -34,6 +34,6 @@ public class InitMultisigAccountService : IHostedService {
 	/// </summary>
 	/// <param name="cancellationToken"></param>
 	public async Task StopAsync(CancellationToken cancellationToken) {
-		await _multisig.SendTransaction(_giver.Address, 0, true, 128, string.Empty, cancellationToken);
+		await _multisig.SubmitTransaction(_giver.Address, 0, true, true, string.Empty, cancellationToken: cancellationToken);
 	}
 }

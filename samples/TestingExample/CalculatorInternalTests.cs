@@ -26,12 +26,12 @@ public class CalculatorInternalTests : IAsyncLifetime {
 	}
 
 	public async Task DisposeAsync() {
-		await _multisig.SendTransaction(_giver.Address, 0, true, 128, string.Empty);
+		await _multisig.SubmitTransaction(_giver.Address, 0, false, true, string.Empty);
 	}
 
 	private async Task<IMultisigAccount> CreateMultisig(decimal coins = 20m) {
-		KeyPair keyPair = await _everClient.Crypto.GenerateRandomSignKeys();
 		var multisig = new SafeMultisigAccount(_everClient, _packageManager);
+		KeyPair keyPair = await _everClient.Crypto.GenerateRandomSignKeys();
 		await multisig.Init(keyPair);
 		await _giver.SendTransaction(multisig.Address, coins);
 		await multisig.Deploy(new[] { keyPair.Public }, 1, TimeSpan.FromHours(1));

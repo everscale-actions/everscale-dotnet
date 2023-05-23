@@ -49,7 +49,7 @@ public abstract class MultisigAccountBase : AccountBase, IMultisigAccount {
 	/// <param name="payload"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public async Task<ResultOfProcessMessage> SendTransaction(string dest, decimal coins, bool bounce, byte flags, string payload, CancellationToken cancellationToken = default) {
+	public async Task<ResultOfProcessMessage> SendTransaction(string dest, decimal coins, bool bounce, SendTransactionFlags flags, string payload, CancellationToken cancellationToken = default) {
 		var value = $"{coins.CoinsToNano():0}";
 		ResultOfProcessMessage result = await Run(new CallSet {
 			FunctionName = "sendTransaction",
@@ -57,7 +57,7 @@ public abstract class MultisigAccountBase : AccountBase, IMultisigAccount {
 				dest,
 				value,
 				bounce,
-				flags,
+				flags = (byte)flags,
 				payload
 			}.ToJsonElement()
 		}, cancellationToken);

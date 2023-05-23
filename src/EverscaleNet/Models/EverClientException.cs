@@ -9,7 +9,7 @@ public class EverClientException : Exception {
 
 	/// <summary>
 	/// </summary>
-	public uint Code { get; private set; }
+	public uint? Code { get; private set; }
 
 	/// <summary>
 	///     Create exception with code, data and message
@@ -19,7 +19,7 @@ public class EverClientException : Exception {
 	/// <param name="message"></param>
 	/// <param name="inner"></param>
 	/// <returns></returns>
-	public static EverClientException CreateExceptionWithCodeWithData(uint code, IDictionary<string, object>? data = null, string? message = null,
+	public static EverClientException CreateExceptionWithCodeWithData(uint? code, IDictionary<string, object>? data = null, string? message = null,
 	                                                                  Exception? inner = null) {
 		var exception = new EverClientException(message, inner) { Code = code };
 		if (data == null) {

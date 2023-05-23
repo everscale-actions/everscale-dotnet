@@ -30,7 +30,7 @@ public interface IMultisigAccount {
 	/// <param name="payload"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<ResultOfProcessMessage> SendTransaction(string dest, decimal coins, bool bounce, byte flags, string payload, CancellationToken cancellationToken = default);
+	Task<ResultOfProcessMessage> SendTransaction(string dest, decimal coins, bool bounce, SendTransactionFlags flags, string payload, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// </summary>

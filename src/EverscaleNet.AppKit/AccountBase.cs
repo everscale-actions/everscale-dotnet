@@ -192,6 +192,8 @@ public abstract class AccountBase {
 			Data = resultOfEncodeInitialData.Data
 		}, cancellationToken);
 
+		string stateInit = resultOfEncodeTvc.Tvc;
+
 		ResultOfEncodeMessageBody resultOfEncodeMessageBody = await _client.Abi.EncodeMessageBody(new ParamsOfEncodeMessageBody {
 			Abi = await GetAbi(cancellationToken),
 			CallSet = callSet,
@@ -200,7 +202,6 @@ public abstract class AccountBase {
 		}, cancellationToken);
 
 		string payload = resultOfEncodeMessageBody.Body;
-		string stateInit = resultOfEncodeTvc.Tvc;
 		return await multisig.SubmitTransaction(Address, 5M, false, false, payload, stateInit, cancellationToken);
 	}
 
@@ -253,7 +254,8 @@ public abstract class AccountBase {
 		}, cancellationToken);
 
 		string payload = resultOfEncodeMessageBody.Body;
-		ResultOfProcessMessage resultOfProcessMessage = await multisig.SendTransaction(Address, 5M, true, 1, payload, cancellationToken);
+		ResultOfProcessMessage resultOfProcessMessage = await multisig.SubmitTransaction(Address, 5M, true, false, payload, cancellationToken: cancellationToken);
+
 		if (resultOfProcessMessage.OutMessages.Length == 0) {
 			throw new NoOutMessagesException(resultOfProcessMessage);
 		}
@@ -269,12 +271,12 @@ public abstract class AccountBase {
 			dst_transaction = new {
 				aborted = default(bool),
 				compute = new {
-					success = default(bool),
-					exit_code = default(uint)
+					success = (bool?)null,
+					exit_code = (uint?)null
 				}
 			}
 		});
-		if (result.dst_transaction.aborted || !result.dst_transaction.compute.success) {
+		if (result.dst_transaction.aborted || !(result.dst_transaction.compute.success ?? false)) {
 			throw EverClientException.CreateExceptionWithCodeWithData(result.dst_transaction.compute.exit_code, resultOfProcessMessage.ToJsonElement().ToObject<Dictionary<string, object>>(),
 			                                                          "Transaction aborted or failed");
 		}
