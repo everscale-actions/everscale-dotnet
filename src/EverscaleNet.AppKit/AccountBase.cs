@@ -17,8 +17,8 @@ public abstract class AccountBase {
 	private Abi? _abi;
 	private string? _address;
 	private JsonElement? _initialData;
+	private IInternalSender? _internalSender;
 	private KeyPair? _keyPair;
-	private IMultisigAccount? _multisig;
 	private string? _tvc;
 
 	/// <summary>
@@ -83,11 +83,11 @@ public abstract class AccountBase {
 	/// <summary>
 	///     Init with Multisig Account and init data
 	/// </summary>
-	/// <param name="multisigAccount"></param>
+	/// <param name="internalSender"></param>
 	/// <param name="initialData"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task Init(IMultisigAccount multisigAccount, object? initialData = null, CancellationToken cancellationToken = default) {
-		_multisig ??= multisigAccount;
+	public async Task Init(IInternalSender internalSender, object? initialData = null, CancellationToken cancellationToken = default) {
+		_internalSender ??= internalSender;
 		_initialData ??= initialData?.ToJsonElement();
 		_address ??= await CalculateAddress(null, cancellationToken);
 	}
@@ -143,8 +143,8 @@ public abstract class AccountBase {
 		if (keyPair is not null) {
 			return await DeployBySigner(new Signer.Keys { KeysAccessor = keyPair }, GetCallSet(), cancellationToken);
 		}
-		if (_multisig is not null) {
-			return await DeployByMultisig(_multisig, GetCallSet(), cancellationToken);
+		if (_internalSender is not null) {
+			return await DeployByInternalSender(_internalSender, GetCallSet(), cancellationToken);
 		}
 		throw new CallNotAllowedException("Deploy not allowed because KeyPair or Multisig must set to sign message");
 	}
@@ -171,9 +171,9 @@ public abstract class AccountBase {
 		return await _client.Processing.ProcessMessage(paramsOfProcessMessage, cancellationToken: cancellationToken);
 	}
 
-	private async Task<ResultOfProcessMessage> DeployByMultisig(IMultisigAccount multisig, CallSet callSet, CancellationToken cancellationToken) {
-		if (multisig is null) {
-			throw new ArgumentNullException(nameof(multisig));
+	private async Task<ResultOfProcessMessage> DeployByInternalSender(IInternalSender internalSender, CallSet callSet, CancellationToken cancellationToken) {
+		if (internalSender is null) {
+			throw new ArgumentNullException(nameof(internalSender));
 		}
 		if (callSet is null) {
 			throw new ArgumentNullException(nameof(callSet));
@@ -202,7 +202,7 @@ public abstract class AccountBase {
 		}, cancellationToken);
 
 		string payload = resultOfEncodeMessageBody.Body;
-		return await multisig.SubmitTransaction(Address, 5M, false, false, payload, stateInit, cancellationToken);
+		return await internalSender.Send(Address, 5M, false, false, payload, stateInit, cancellationToken);
 	}
 
 	/// <summary>
@@ -216,8 +216,8 @@ public abstract class AccountBase {
 		if (keyPair is not null) {
 			return await RunBySigner(new Signer.Keys { KeysAccessor = keyPair }, callSet, cancellationToken);
 		}
-		if (_multisig is not null) {
-			return await RunByMultisig(_multisig, callSet, cancellationToken);
+		if (_internalSender is not null) {
+			return await RunWithInternalSender(_internalSender, callSet, cancellationToken);
 		}
 		throw new CallNotAllowedException("Call not allowed because KeyPair or Multisig was not set in .ctor");
 	}
@@ -239,9 +239,9 @@ public abstract class AccountBase {
 		}, cancellationToken: cancellationToken);
 	}
 
-	private async Task<ResultOfProcessMessage> RunByMultisig(IMultisigAccount multisig, CallSet callSet, CancellationToken cancellationToken) {
-		if (multisig is null) {
-			throw new ArgumentNullException(nameof(multisig));
+	private async Task<ResultOfProcessMessage> RunWithInternalSender(IInternalSender sender, CallSet callSet, CancellationToken cancellationToken) {
+		if (sender is null) {
+			throw new ArgumentNullException(nameof(sender));
 		}
 		if (callSet is null) {
 			throw new ArgumentNullException(nameof(callSet));
@@ -254,7 +254,7 @@ public abstract class AccountBase {
 		}, cancellationToken);
 
 		string payload = resultOfEncodeMessageBody.Body;
-		ResultOfProcessMessage resultOfProcessMessage = await multisig.SubmitTransaction(Address, 5M, true, false, payload, cancellationToken: cancellationToken);
+		ResultOfProcessMessage resultOfProcessMessage = await sender.Send(Address, 5M, true, false, payload, cancellationToken: cancellationToken);
 
 		if (resultOfProcessMessage.OutMessages.Length == 0) {
 			throw new NoOutMessagesException(resultOfProcessMessage);

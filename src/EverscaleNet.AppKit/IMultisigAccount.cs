@@ -4,7 +4,7 @@ namespace EverscaleNet;
 
 /// <summary>
 /// </summary>
-public interface IMultisigAccount {
+public interface IMultisigAccount : IInternalSender {
 	/// <summary>
 	/// </summary>
 	string Address { get; }

@@ -78,4 +78,26 @@ public abstract class MultisigAccountBase : AccountBase, IMultisigAccount {
 			lifetime = (int)lifetime.TotalSeconds
 		}, cancellationToken);
 	}
+
+	/// <summary>
+	/// </summary>
+	/// <param name="dest"></param>
+	/// <param name="coins"></param>
+	/// <param name="bounce"></param>
+	/// <param name="allBalance"></param>
+	/// <param name="payload"></param>
+	/// <param name="stateInit"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	public async Task<ResultOfProcessMessage> Send(string dest, decimal coins, bool bounce, bool allBalance, string payload, string? stateInit = null, CancellationToken cancellationToken = default) {
+		if (stateInit is not null) {
+			return await SubmitTransaction(dest, coins, bounce, allBalance, payload, stateInit, cancellationToken);
+		}
+
+		SendTransactionFlags flags = SendTransactionFlags.IgnoreSomeErrors | SendTransactionFlags.SenderWantsToPayTransferFeesSeparately;
+		if (allBalance) {
+			flags |= SendTransactionFlags.CarryAllRemainingBalance;
+		}
+		return await SendTransaction(dest, coins, bounce, flags, payload, cancellationToken);
+	}
 }
