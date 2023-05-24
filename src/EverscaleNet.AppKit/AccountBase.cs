@@ -202,7 +202,7 @@ public abstract class AccountBase {
 		}, cancellationToken);
 
 		string payload = resultOfEncodeMessageBody.Body;
-		return await internalSender.Send(Address, 5M, false, false, payload, stateInit, cancellationToken);
+		return await internalSender.Send(Address, 5m, false, false, payload, stateInit, cancellationToken);
 	}
 
 	/// <summary>

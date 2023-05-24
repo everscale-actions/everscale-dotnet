@@ -1,5 +1,4 @@
 using EverscaleNet.Abstract;
-using EverscaleNet.Client.Models;
 using EverscaleNet.Client.PackageManager;
 using EverscaleNet.Serialization;
 using EverscaleNet.Utils;
@@ -28,9 +27,9 @@ public class EverGiverV3 : AccountBase, IEverGiver {
 	protected override string Name => "GiverV3";
 
 	/// <inheritdoc />
-	public async Task SendTransaction(string dest, decimal coins, bool bounce = false, CancellationToken cancellationToken = default) {
+	public async Task<ResultOfProcessMessage> SendTransaction(string dest, decimal coins, bool bounce = false, CancellationToken cancellationToken = default) {
 		var value = $"{coins.CoinsToNano():0}";
-		await Run(new CallSet {
+		return await Run(new CallSet {
 			FunctionName = "sendTransaction",
 			Input = new { dest, value, bounce }.ToJsonElement()
 		}, cancellationToken);

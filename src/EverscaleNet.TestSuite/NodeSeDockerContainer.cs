@@ -3,7 +3,6 @@ using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Containers;
 using EverscaleNet.Adapter.Rust;
 using EverscaleNet.Client;
-using EverscaleNet.Client.Models;
 using EverscaleNet.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;

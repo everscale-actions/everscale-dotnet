@@ -17,5 +17,5 @@ public interface IEverGiver {
 	/// <param name="bounce">Return money if address doesn't exist</param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task SendTransaction(string dest, decimal coins, bool bounce = false, CancellationToken cancellationToken = default);
+	Task<ResultOfProcessMessage> SendTransaction(string dest, decimal coins, bool bounce = false, CancellationToken cancellationToken = default);
 }

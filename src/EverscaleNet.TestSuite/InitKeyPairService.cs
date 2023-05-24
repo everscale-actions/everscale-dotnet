@@ -1,5 +1,4 @@
 using EverscaleNet.Abstract;
-using EverscaleNet.Client.Models;
 using Microsoft.Extensions.Hosting;
 
 namespace EverscaleNet.TestSuite;
