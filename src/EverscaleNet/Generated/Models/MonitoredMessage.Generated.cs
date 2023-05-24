@@ -24,7 +24,7 @@ namespace EverscaleNet.Client.Models
         public class Boc : MonitoredMessage
         {
             /// <summary>
-            /// <para>BOC of the message.</para>
+            /// <para>Not described yet..</para>
             /// </summary>
             [JsonPropertyName("boc")]
             public string BocAccessor { get; set; }
@@ -39,13 +39,13 @@ namespace EverscaleNet.Client.Models
         public class HashAddress : MonitoredMessage
         {
             /// <summary>
-            /// <para>Message's hash and destination address.</para>
+            /// <para>Hash of the message.</para>
             /// </summary>
             [JsonPropertyName("hash")]
             public string Hash { get; set; }
 
             /// <summary>
-            /// <para>Message's hash and destination address.</para>
+            /// <para>Destination address of the message.</para>
             /// </summary>
             [JsonPropertyName("address")]
             public string Address { get; set; }

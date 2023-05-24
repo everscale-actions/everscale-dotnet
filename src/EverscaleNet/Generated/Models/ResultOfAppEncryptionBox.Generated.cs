@@ -25,7 +25,7 @@ namespace EverscaleNet.Client.Models
         public class GetInfo : ResultOfAppEncryptionBox
         {
             /// <summary>
-            /// <para>Result of getting encryption box info</para>
+            /// <para>Not described yet..</para>
             /// </summary>
             [JsonPropertyName("info")]
             public EncryptionBoxInfo Info { get; set; }
@@ -40,7 +40,7 @@ namespace EverscaleNet.Client.Models
         public class Encrypt : ResultOfAppEncryptionBox
         {
             /// <summary>
-            /// <para>Result of encrypting data</para>
+            /// <para>Encrypted data, encoded in Base64</para>
             /// </summary>
             [JsonPropertyName("data")]
             public string Data { get; set; }
@@ -55,7 +55,7 @@ namespace EverscaleNet.Client.Models
         public class Decrypt : ResultOfAppEncryptionBox
         {
             /// <summary>
-            /// <para>Result of decrypting data</para>
+            /// <para>Decrypted data, encoded in Base64</para>
             /// </summary>
             [JsonPropertyName("data")]
             public string Data { get; set; }

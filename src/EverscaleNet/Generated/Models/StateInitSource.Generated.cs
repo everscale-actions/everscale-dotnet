@@ -25,7 +25,7 @@ namespace EverscaleNet.Client.Models
         public class Message : StateInitSource
         {
             /// <summary>
-            /// <para>Deploy message.</para>
+            /// <para>Not described yet..</para>
             /// </summary>
             [JsonPropertyName("source")]
             public MessageSource Source { get; set; }
@@ -40,19 +40,19 @@ namespace EverscaleNet.Client.Models
         public class StateInit : StateInitSource
         {
             /// <summary>
-            /// <para>State init data.</para>
+            /// <para>Code BOC.</para>
             /// </summary>
             [JsonPropertyName("code")]
             public string Code { get; set; }
 
             /// <summary>
-            /// <para>State init data.</para>
+            /// <para>Data BOC.</para>
             /// </summary>
             [JsonPropertyName("data")]
             public string Data { get; set; }
 
             /// <summary>
-            /// <para>State init data.</para>
+            /// <para>Library BOC.</para>
             /// </summary>
             [JsonPropertyName("library")]
             public string Library { get; set; }
@@ -68,22 +68,19 @@ namespace EverscaleNet.Client.Models
         public class Tvc : StateInitSource
         {
             /// <summary>
-            /// <para>Content of the TVC file.</para>
-            /// <para>Encoded in `base64`.</para>
+            /// <para>Not described yet..</para>
             /// </summary>
             [JsonPropertyName("tvc")]
             public string TvcAccessor { get; set; }
 
             /// <summary>
-            /// <para>Content of the TVC file.</para>
-            /// <para>Encoded in `base64`.</para>
+            /// <para>Not described yet..</para>
             /// </summary>
             [JsonPropertyName("public_key")]
             public string PublicKey { get; set; }
 
             /// <summary>
-            /// <para>Content of the TVC file.</para>
-            /// <para>Encoded in `base64`.</para>
+            /// <para>Not described yet..</para>
             /// </summary>
             [JsonPropertyName("init_params")]
             public StateInitParams InitParams { get; set; }

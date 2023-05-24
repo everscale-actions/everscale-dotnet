@@ -45,13 +45,13 @@ namespace EverscaleNet.Client.Models
         public class Account : AccountForExecutor
         {
             /// <summary>
-            /// <para>Account state to run message</para>
+            /// <para>Account BOC.</para>
             /// </summary>
             [JsonPropertyName("boc")]
             public string Boc { get; set; }
 
             /// <summary>
-            /// <para>Account state to run message</para>
+            /// <para>Flag for running account with the unlimited balance.</para>
             /// </summary>
             [JsonPropertyName("unlimited_balance")]
             public bool? UnlimitedBalance { get; set; }

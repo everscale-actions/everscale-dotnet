@@ -34,7 +34,7 @@ namespace EverscaleNet.Client.Models
         public class Sign : ParamsOfAppSigningBox
         {
             /// <summary>
-            /// <para>Sign data</para>
+            /// <para>Data to sign encoded as base64</para>
             /// </summary>
             [JsonPropertyName("unsigned")]
             public string Unsigned { get; set; }

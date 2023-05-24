@@ -32,7 +32,7 @@ namespace EverscaleNet.Client.Models
         public class Log : ParamsOfAppDebotBrowser
         {
             /// <summary>
-            /// <para>Print message to user.</para>
+            /// <para>A string that must be printed to user.</para>
             /// </summary>
             [JsonPropertyName("msg")]
             public string Msg { get; set; }
@@ -47,7 +47,7 @@ namespace EverscaleNet.Client.Models
         public class Switch : ParamsOfAppDebotBrowser
         {
             /// <summary>
-            /// <para>Switch debot to another context (menu).</para>
+            /// <para>Debot context ID to which debot is switched.</para>
             /// </summary>
             [JsonPropertyName("context_id")]
             public byte ContextId { get; set; }
@@ -72,7 +72,7 @@ namespace EverscaleNet.Client.Models
         public class ShowAction : ParamsOfAppDebotBrowser
         {
             /// <summary>
-            /// <para>Show action to the user. Called after `switch` for each action in context.</para>
+            /// <para>Debot action that must be shown to user as menu item. At least `description` property must be shown from [DebotAction] structure.</para>
             /// </summary>
             [JsonPropertyName("action")]
             public DebotAction Action { get; set; }
@@ -87,7 +87,7 @@ namespace EverscaleNet.Client.Models
         public class Input : ParamsOfAppDebotBrowser
         {
             /// <summary>
-            /// <para>Request user input.</para>
+            /// <para>A prompt string that must be printed to user before input request.</para>
             /// </summary>
             [JsonPropertyName("prompt")]
             public string Prompt { get; set; }
@@ -113,13 +113,13 @@ namespace EverscaleNet.Client.Models
         public class InvokeDebot : ParamsOfAppDebotBrowser
         {
             /// <summary>
-            /// <para>Execute action of another debot.</para>
+            /// <para>Address of debot in blockchain.</para>
             /// </summary>
             [JsonPropertyName("debot_addr")]
             public string DebotAddr { get; set; }
 
             /// <summary>
-            /// <para>Execute action of another debot.</para>
+            /// <para>Debot action to execute.</para>
             /// </summary>
             [JsonPropertyName("action")]
             public DebotAction Action { get; set; }
@@ -134,7 +134,7 @@ namespace EverscaleNet.Client.Models
         public class Send : ParamsOfAppDebotBrowser
         {
             /// <summary>
-            /// <para>Used by Debot to call DInterface implemented by Debot Browser.</para>
+            /// <para>Internal message to DInterface address.</para>
             /// </summary>
             [JsonPropertyName("message")]
             public string Message { get; set; }
@@ -149,7 +149,7 @@ namespace EverscaleNet.Client.Models
         public class Approve : ParamsOfAppDebotBrowser
         {
             /// <summary>
-            /// <para>Requests permission from DeBot Browser to execute DeBot operation.</para>
+            /// <para>DeBot activity details.</para>
             /// </summary>
             [JsonPropertyName("activity")]
             public DebotActivity Activity { get; set; }

@@ -12,6 +12,11 @@ namespace EverscaleNet.Abstract.Modules
     public interface IBocModule : IEverModule
     {
         /// <summary>
+        /// <para>Decodes tvc into code, data, libraries and special options.</para>
+        /// </summary>
+        public Task<ResultOfDecodeTvc> DecodeTvc(ParamsOfDecodeTvc @params, CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// <para>Parses message boc into a JSON</para>
         /// <para>JSON structure is compatible with GraphQL API message object</para>
         /// </summary>
@@ -95,12 +100,12 @@ namespace EverscaleNet.Abstract.Modules
         /// <summary>
         /// <para>Decodes tvc into code, data, libraries and special options.</para>
         /// </summary>
-        public Task<ResultOfDecodeTvc> DecodeTvc(ParamsOfDecodeTvc @params, CancellationToken cancellationToken = default);
+        public Task<ResultOfDecodeStateInit> DecodeStateInit(ParamsOfDecodeStateInit @params, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para>Encodes tvc from code, data, libraries ans special options (see input params)</para>
         /// </summary>
-        public Task<ResultOfEncodeTvc> EncodeTvc(ParamsOfEncodeTvc @params, CancellationToken cancellationToken = default);
+        public Task<ResultOfEncodeStateInit> EncodeStateInit(ParamsOfEncodeStateInit @params, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para>Encodes a message</para>

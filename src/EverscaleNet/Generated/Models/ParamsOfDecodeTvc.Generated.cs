@@ -11,15 +11,9 @@ namespace EverscaleNet.Client.Models
     public class ParamsOfDecodeTvc
     {
         /// <summary>
-        /// <para>Contract TVC image BOC encoded as base64 or BOC handle</para>
+        /// <para>Contract TVC BOC encoded as base64 or BOC handle</para>
         /// </summary>
         [JsonPropertyName("tvc")]
         public string Tvc { get; set; }
-
-        /// <summary>
-        /// <para>Cache type to put the result. The BOC itself returned if no cache type provided.</para>
-        /// </summary>
-        [JsonPropertyName("boc_cache")]
-        public BocCacheType BocCache { get; set; }
     }
 }

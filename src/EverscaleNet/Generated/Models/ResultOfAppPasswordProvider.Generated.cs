@@ -23,13 +23,13 @@ namespace EverscaleNet.Client.Models
         public class GetPassword : ResultOfAppPasswordProvider
         {
             /// <summary>
-            /// <para>Not described yet..</para>
+            /// <para>Password, encrypted and encoded to base64. Crypto box uses this password to decrypt its secret (seed phrase).</para>
             /// </summary>
             [JsonPropertyName("encrypted_password")]
             public string EncryptedPassword { get; set; }
 
             /// <summary>
-            /// <para>Not described yet..</para>
+            /// <para>Hex encoded public key of a temporary key pair, used for password encryption on application side.</para>
             /// </summary>
             [JsonPropertyName("app_encryption_pubkey")]
             public string AppEncryptionPubkey { get; set; }

@@ -23,43 +23,43 @@ namespace EverscaleNet.Client.Models
         public class Transaction : DebotActivity
         {
             /// <summary>
-            /// <para>DeBot wants to create new transaction in blockchain.</para>
+            /// <para>External inbound message BOC.</para>
             /// </summary>
             [JsonPropertyName("msg")]
             public string Msg { get; set; }
 
             /// <summary>
-            /// <para>DeBot wants to create new transaction in blockchain.</para>
+            /// <para>Target smart contract address.</para>
             /// </summary>
             [JsonPropertyName("dst")]
             public string Dst { get; set; }
 
             /// <summary>
-            /// <para>DeBot wants to create new transaction in blockchain.</para>
+            /// <para>List of spendings as a result of transaction.</para>
             /// </summary>
             [JsonPropertyName("out")]
             public Spending[] Out { get; set; }
 
             /// <summary>
-            /// <para>DeBot wants to create new transaction in blockchain.</para>
+            /// <para>Transaction total fee.</para>
             /// </summary>
             [JsonPropertyName("fee")]
             public ulong Fee { get; set; }
 
             /// <summary>
-            /// <para>DeBot wants to create new transaction in blockchain.</para>
+            /// <para>Indicates if target smart contract updates its code.</para>
             /// </summary>
             [JsonPropertyName("setcode")]
             public bool Setcode { get; set; }
 
             /// <summary>
-            /// <para>DeBot wants to create new transaction in blockchain.</para>
+            /// <para>Public key from keypair that was used to sign external message.</para>
             /// </summary>
             [JsonPropertyName("signkey")]
             public string Signkey { get; set; }
 
             /// <summary>
-            /// <para>DeBot wants to create new transaction in blockchain.</para>
+            /// <para>Signing box handle used to sign external message.</para>
             /// </summary>
             [JsonPropertyName("signing_box_handle")]
             public uint SigningBoxHandle { get; set; }

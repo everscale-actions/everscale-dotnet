@@ -24,6 +24,14 @@ namespace EverscaleNet.Client.Modules
         }
 
         /// <summary>
+        /// <para>Decodes tvc into code, data, libraries and special options.</para>
+        /// </summary>
+        public async Task<ResultOfDecodeTvc> DecodeTvc(ParamsOfDecodeTvc @params, CancellationToken cancellationToken = default)
+        {
+            return await _everClientAdapter.Request<ParamsOfDecodeTvc, ResultOfDecodeTvc>("boc.decode_tvc", @params, cancellationToken);
+        }
+
+        /// <summary>
         /// <para>Parses message boc into a JSON</para>
         /// <para>JSON structure is compatible with GraphQL API message object</para>
         /// </summary>
@@ -152,17 +160,17 @@ namespace EverscaleNet.Client.Modules
         /// <summary>
         /// <para>Decodes tvc into code, data, libraries and special options.</para>
         /// </summary>
-        public async Task<ResultOfDecodeTvc> DecodeTvc(ParamsOfDecodeTvc @params, CancellationToken cancellationToken = default)
+        public async Task<ResultOfDecodeStateInit> DecodeStateInit(ParamsOfDecodeStateInit @params, CancellationToken cancellationToken = default)
         {
-            return await _everClientAdapter.Request<ParamsOfDecodeTvc, ResultOfDecodeTvc>("boc.decode_tvc", @params, cancellationToken);
+            return await _everClientAdapter.Request<ParamsOfDecodeStateInit, ResultOfDecodeStateInit>("boc.decode_state_init", @params, cancellationToken);
         }
 
         /// <summary>
         /// <para>Encodes tvc from code, data, libraries ans special options (see input params)</para>
         /// </summary>
-        public async Task<ResultOfEncodeTvc> EncodeTvc(ParamsOfEncodeTvc @params, CancellationToken cancellationToken = default)
+        public async Task<ResultOfEncodeStateInit> EncodeStateInit(ParamsOfEncodeStateInit @params, CancellationToken cancellationToken = default)
         {
-            return await _everClientAdapter.Request<ParamsOfEncodeTvc, ResultOfEncodeTvc>("boc.encode_tvc", @params, cancellationToken);
+            return await _everClientAdapter.Request<ParamsOfEncodeStateInit, ResultOfEncodeStateInit>("boc.encode_state_init", @params, cancellationToken);
         }
 
         /// <summary>

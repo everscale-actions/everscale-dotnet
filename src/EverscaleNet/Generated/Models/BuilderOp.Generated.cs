@@ -27,13 +27,13 @@ namespace EverscaleNet.Client.Models
         public class Integer : BuilderOp
         {
             /// <summary>
-            /// <para>Append integer to cell data.</para>
+            /// <para>Bit size of the value.</para>
             /// </summary>
             [JsonPropertyName("size")]
             public uint Size { get; set; }
 
             /// <summary>
-            /// <para>Append integer to cell data.</para>
+            /// <para>Value: - `Number` containing integer number.</para>
             /// </summary>
             [JsonPropertyName("value")]
             public JsonElement? Value { get; set; }
@@ -48,7 +48,7 @@ namespace EverscaleNet.Client.Models
         public class BitString : BuilderOp
         {
             /// <summary>
-            /// <para>Append bit string to cell data.</para>
+            /// <para>Bit string content using bitstring notation. See `TON VM specification` 1.0.</para>
             /// </summary>
             [JsonPropertyName("value")]
             public string Value { get; set; }
@@ -63,7 +63,7 @@ namespace EverscaleNet.Client.Models
         public class Cell : BuilderOp
         {
             /// <summary>
-            /// <para>Append ref to nested cells.</para>
+            /// <para>Nested cell builder.</para>
             /// </summary>
             [JsonPropertyName("builder")]
             public BuilderOp[] Builder { get; set; }
@@ -78,7 +78,7 @@ namespace EverscaleNet.Client.Models
         public class CellBoc : BuilderOp
         {
             /// <summary>
-            /// <para>Append ref to nested cell.</para>
+            /// <para>Nested cell BOC encoded with `base64` or BOC cache key.</para>
             /// </summary>
             [JsonPropertyName("boc")]
             public string Boc { get; set; }
@@ -93,7 +93,7 @@ namespace EverscaleNet.Client.Models
         public class Address : BuilderOp
         {
             /// <summary>
-            /// <para>Address.</para>
+            /// <para>Address in a common `workchain:account` or base64 format.</para>
             /// </summary>
             [JsonPropertyName("address")]
             public string AddressAccessor { get; set; }

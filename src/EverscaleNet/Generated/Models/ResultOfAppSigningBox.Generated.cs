@@ -24,7 +24,7 @@ namespace EverscaleNet.Client.Models
         public class GetPublicKey : ResultOfAppSigningBox
         {
             /// <summary>
-            /// <para>Result of getting public key</para>
+            /// <para>Signing box public key</para>
             /// </summary>
             [JsonPropertyName("public_key")]
             public string PublicKey { get; set; }
@@ -39,7 +39,7 @@ namespace EverscaleNet.Client.Models
         public class Sign : ResultOfAppSigningBox
         {
             /// <summary>
-            /// <para>Result of signing data</para>
+            /// <para>Data signature encoded as hex</para>
             /// </summary>
             [JsonPropertyName("signature")]
             public string Signature { get; set; }

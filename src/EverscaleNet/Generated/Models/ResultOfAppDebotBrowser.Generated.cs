@@ -26,7 +26,7 @@ namespace EverscaleNet.Client.Models
         public class Input : ResultOfAppDebotBrowser
         {
             /// <summary>
-            /// <para>Result of user input.</para>
+            /// <para>String entered by user.</para>
             /// </summary>
             [JsonPropertyName("value")]
             public string Value { get; set; }
@@ -41,7 +41,7 @@ namespace EverscaleNet.Client.Models
         public class GetSigningBox : ResultOfAppDebotBrowser
         {
             /// <summary>
-            /// <para>Result of getting signing box.</para>
+            /// <para>Signing box for signing data requested by debot engine.</para>
             /// </summary>
             [JsonPropertyName("signing_box")]
             public uint SigningBox { get; set; }
@@ -66,7 +66,7 @@ namespace EverscaleNet.Client.Models
         public class Approve : ResultOfAppDebotBrowser
         {
             /// <summary>
-            /// <para>Result of `approve` callback.</para>
+            /// <para>Indicates whether the DeBot is allowed to perform the specified operation.</para>
             /// </summary>
             [JsonPropertyName("approved")]
             public bool Approved { get; set; }

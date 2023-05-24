@@ -19,7 +19,7 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>List of Evernode endpoints.</para>
         /// <para>Any correct URL format can be specified, including IP addresses. This parameter is prevailing over `server_address`.</para>
-        /// <para>Check the full list of [supported network endpoints](https://docs.everos.dev/ever-sdk/reference/ever-os-api/networks).</para>
+        /// <para>Check the full list of [supported network endpoints](https://docs.evercloud.dev/products/evercloud/networks-endpoints).</para>
         /// </summary>
         [JsonPropertyName("endpoints")]
         public string[] Endpoints { get; set; }
@@ -66,10 +66,7 @@ namespace EverscaleNet.Client.Models
         public uint? WaitForTimeout { get; set; }
 
         /// <summary>
-        /// <para>Maximum time difference between server and client.</para>
-        /// <para>If client's device time is out of sync and difference is more than the threshold then error will occur. Also an error will occur if the specified threshold is more than</para>
-        /// <para>`message_processing_timeout/2`.</para>
-        /// <para>Must be specified in milliseconds. Default is 15000 (15 sec).</para>
+        /// <para>**DEPRECATED**: This parameter was deprecated.</para>
         /// </summary>
         [JsonPropertyName("out_of_sync_threshold")]
         public uint? OutOfSyncThreshold { get; set; }

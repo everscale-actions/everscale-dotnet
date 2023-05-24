@@ -161,6 +161,23 @@ public class SerializationTests {
 		json.Should().Be("1");
 	}
 
+	[Fact]
+	public void NestedStructureTest() {
+		var paramsOfMonitorMessages = new ParamsOfMonitorMessages {
+			Messages = new MessageMonitoringParams[] {
+				new() {
+					Message = new MonitoredMessage.Boc {
+						BocAccessor = "test"
+					}
+				}
+			}
+		};
+
+		string json = JsonSerializer.Serialize(paramsOfMonitorMessages, JsonOptionsProvider.JsonSerializerOptions);
+
+		json.Should().Be("""{"messages":[{"message":{"type":"Boc","boc":"test"},"wait_until":0}]}""");
+	}
+
 	private class AccountTypeTestData : TheoryData<string, AccountType?> {
 		public AccountTypeTestData() {
 			// Add("{ }", null); // be careful JsonSerializer returns 0 value if not nullable enum type provided

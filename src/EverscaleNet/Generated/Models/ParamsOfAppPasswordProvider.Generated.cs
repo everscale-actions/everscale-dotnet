@@ -30,7 +30,7 @@ namespace EverscaleNet.Client.Models
         public class GetPassword : ParamsOfAppPasswordProvider
         {
             /// <summary>
-            /// <para>Not described yet..</para>
+            /// <para>Temporary library pubkey, that is used on application side for password encryption, along with application temporary private key and nonce. Used for password decryption on library side.</para>
             /// </summary>
             [JsonPropertyName("encryption_public_key")]
             public string EncryptionPublicKey { get; set; }

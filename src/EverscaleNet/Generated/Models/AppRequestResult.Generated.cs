@@ -24,7 +24,7 @@ namespace EverscaleNet.Client.Models
         public class Error : AppRequestResult
         {
             /// <summary>
-            /// <para>Error occurred during request processing</para>
+            /// <para>Error description</para>
             /// </summary>
             [JsonPropertyName("text")]
             public string Text { get; set; }
@@ -39,7 +39,7 @@ namespace EverscaleNet.Client.Models
         public class Ok : AppRequestResult
         {
             /// <summary>
-            /// <para>Request processed successfully</para>
+            /// <para>Request processing result</para>
             /// </summary>
             [JsonPropertyName("result")]
             public JsonElement? Result { get; set; }

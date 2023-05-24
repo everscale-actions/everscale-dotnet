@@ -65,6 +65,10 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Not described yet..</para>
         /// </summary>
-        ContractExecutionError = 414
+        ContractExecutionError = 414,
+        /// <summary>
+        /// <para>Not described yet..</para>
+        /// </summary>
+        AccountIsSuspended = 415
     }
 }

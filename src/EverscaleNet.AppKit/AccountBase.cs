@@ -183,16 +183,16 @@ public abstract class AccountBase {
 			InitialData = _initialData
 		}, cancellationToken);
 
-		ResultOfDecodeTvc resultOfDecodeTvc = await _client.Boc.DecodeTvc(new ParamsOfDecodeTvc {
-			Tvc = await GetTvc(cancellationToken)
+		ResultOfDecodeStateInit resultOfDecodeStateInit = await _client.Boc.DecodeStateInit(new ParamsOfDecodeStateInit {
+			StateInit = await GetTvc(cancellationToken)
 		}, cancellationToken);
 
-		ResultOfEncodeTvc resultOfEncodeTvc = await _client.Boc.EncodeTvc(new ParamsOfEncodeTvc {
-			Code = resultOfDecodeTvc.Code,
+		ResultOfEncodeStateInit? resultOfEncodeTvc = await _client.Boc.EncodeStateInit(new ParamsOfEncodeStateInit {
+			Code = resultOfDecodeStateInit.Code,
 			Data = resultOfEncodeInitialData.Data
 		}, cancellationToken);
 
-		string stateInit = resultOfEncodeTvc.Tvc;
+		string stateInit = resultOfEncodeTvc.StateInit;
 
 		ResultOfEncodeMessageBody resultOfEncodeMessageBody = await _client.Abi.EncodeMessageBody(new ParamsOfEncodeMessageBody {
 			Abi = await GetAbi(cancellationToken),

@@ -11,10 +11,22 @@ namespace EverscaleNet.Client.Models
     public class DeploySet
     {
         /// <summary>
-        /// <para>Content of TVC file encoded in `base64`.</para>
+        /// <para>Content of TVC file encoded in `base64`. For compatibility reason this field can contain an encoded  `StateInit`.</para>
         /// </summary>
         [JsonPropertyName("tvc")]
         public string Tvc { get; set; }
+
+        /// <summary>
+        /// <para>Contract code BOC encoded with base64.</para>
+        /// </summary>
+        [JsonPropertyName("code")]
+        public string Code { get; set; }
+
+        /// <summary>
+        /// <para>State init BOC encoded with base64.</para>
+        /// </summary>
+        [JsonPropertyName("state_init")]
+        public string StateInit { get; set; }
 
         /// <summary>
         /// <para>Target workchain for destination address.</para>

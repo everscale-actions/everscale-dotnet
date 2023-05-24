@@ -77,50 +77,26 @@ internal class ModelsClassHelpers {
 		string typeElementSummary = typeElement.Summary +
 		                            (typeElement.Description != null ? $"\n{typeElement.Description}" : null);
 
-		MemberDeclarationSyntax[] enumTypes = typeElement
-		                                      .EnumTypes
-		                                      .SelectMany(subClass => {
-			                                      string subClassSummary = subClass.Summary +
-			                                                               (subClass.Description != null ? $"\n{subClass.Description}" : null);
+		MemberDeclarationSyntax[] enumTypes =
+			typeElement
+				.EnumTypes
+				.Select(subClass => {
+					string subClassSummary = subClass.Summary +
+					                         (subClass.Description != null ? $"\n{subClass.Description}" : null);
 
-			                                      switch (subClass.Type) {
-				                                      case Type.Ref:
-					                                      return new[] { CreatePropertyForRef(subClass.RefName, subClass.Name, subClassSummary) };
+					return subClass.Type switch {
+						Type.Ref => CreatePropertyForRef(subClass.RefName, subClass.Name, subClassSummary),
+						Type.Struct => CreateClassForStruct(typeElement.Name, subClass.Name, subClass.StructFields, subClassSummary),
+						_ => throw new ArgumentOutOfRangeException(nameof(subClass.Type), subClass.Type, "EnumOfTypes doesn't support this type")
+					};
+				})
+				.ToArray();
 
-				                                      case Type.Struct:
-					                                      var properties = new List<MemberDeclarationSyntax>();
-					                                      properties.AddRange(subClass.StructFields.Select(sf => {
-						                                      bool addPostfix = NamingConventions.Normalize(sf.Name) ==
-						                                                        NamingConventions.Normalize(subClass.Name);
-						                                      return CreatePropertyGenericArgs(sf.Type, sf.Name, sf.RefName, sf.OptionalInner,
-						                                                                       subClassSummary, sf.NumberType,
-						                                                                       sf.NumberSize, addPostfix: addPostfix, arrayItem: sf.ArrayItem);
-					                                      }));
-					                                      return new[] {
-						                                      ClassDeclaration(NamingConventions.Normalize(subClass.Name))
-							                                      .AddModifiers(Token(SyntaxKind.PublicKeyword))
-							                                      .AddBaseListTypes(
-								                                      SimpleBaseType(IdentifierName(NamingConventions.Normalize(typeElement.Name))))
-							                                      .AddMembers(properties.ToArray())
-							                                      .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(subClassSummary)
-							                                                                        .Add(DisabledText("#if !NET6_0_OR_GREATER"))
-							                                                                        .Add(ElasticCarriageReturnLineFeed)
-							                                                                        .Add(DisabledText($"        [Dahomey.Json.Attributes.JsonDiscriminator(\"{subClass.Name}\")]"))
-							                                                                        .Add(ElasticCarriageReturnLineFeed)
-							                                                                        .Add(DisabledText("#endif"))
-							                                                                        .Add(ElasticCarriageReturnLineFeed))
-					                                      };
-
-				                                      default:
-					                                      throw new ArgumentOutOfRangeException(nameof(subClass.Type), subClass.Type,
-					                                                                            "EnumOfTypes doesn't support this type");
-			                                      }
-		                                      })
-		                                      .ToArray();
-
-		IEnumerable<SyntaxTrivia> polymAttributes = typeElement.EnumTypes
-		                                                       .Where(e => e.Type == Type.Struct)
-		                                                       .SelectMany(e => new[] { DisabledText($"    [JsonDerivedType(typeof({e.Name}), nameof({e.Name}))]"), ElasticCarriageReturnLineFeed });
+		IEnumerable<SyntaxTrivia> polymorphicAttributes = typeElement.EnumTypes
+		                                                             .Where(e => e.Type == Type.Struct)
+		                                                             .SelectMany(e => new[] {
+			                                                             DisabledText($"    [JsonDerivedType(typeof({e.Name}), nameof({e.Name}))]"), ElasticCarriageReturnLineFeed
+		                                                             });
 
 		return ClassDeclaration(NamingConventions.Normalize(typeElement.Name))
 		       .AddModifiers(Token(SyntaxKind.PublicKeyword), Token(SyntaxKind.AbstractKeyword))
@@ -128,8 +104,41 @@ internal class ModelsClassHelpers {
 		       .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(typeElementSummary)
 		                                         .Add(DisabledText("#if NET6_0_OR_GREATER")).Add(ElasticCarriageReturnLineFeed)
 		                                         .Add(DisabledText("    [JsonPolymorphic(TypeDiscriminatorPropertyName = \"type\")]")).Add(ElasticCarriageReturnLineFeed)
-		                                         .AddRange(polymAttributes)
+		                                         .AddRange(polymorphicAttributes)
 		                                         .Add(DisabledText("#endif")).Add(ElasticCarriageReturnLineFeed));
+	}
+
+	private MemberDeclarationSyntax CreateClassForStruct(string baseName, string name, EnumType[] structFields, string subClassSummary) {
+		var members = new List<MemberDeclarationSyntax>();
+		baseName = NamingConventions.Normalize(baseName);
+		name = NamingConventions.Normalize(name);
+		members.AddRange(structFields
+			                 .SelectMany(sf => {
+				                 //useless value Struct
+				                 if (sf.Type is Type.Struct && sf.Name == "value") {
+					                 return sf.StructFields
+					                          .Select(sfVal => CreatePropertyGenericArgs(sfVal.Type, sfVal.Name, sfVal.RefName, sfVal.OptionalInner,
+					                                                                     sfVal.Summary, sfVal.NumberType,
+					                                                                     sfVal.NumberSize, addPostfix: NamingConventions.Normalize(sfVal.Name) == name, arrayItem: sfVal.ArrayItem));
+				                 }
+				                 return new[] {
+					                 CreatePropertyGenericArgs(sf.Type, sf.Name, sf.RefName, sf.OptionalInner,
+					                                           sf.Summary, sf.NumberType,
+					                                           sf.NumberSize, addPostfix: NamingConventions.Normalize(sf.Name) == name, arrayItem: sf.ArrayItem)
+				                 };
+			                 }));
+		return ClassDeclaration(name)
+		       .AddModifiers(Token(SyntaxKind.PublicKeyword))
+		       .AddBaseListTypes(
+			       SimpleBaseType(IdentifierName(baseName)))
+		       .AddMembers(members.ToArray())
+		       .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(subClassSummary)
+		                                         .Add(DisabledText("#if !NET6_0_OR_GREATER"))
+		                                         .Add(ElasticCarriageReturnLineFeed)
+		                                         .Add(DisabledText($"        [Dahomey.Json.Attributes.JsonDiscriminator(\"{name}\")]"))
+		                                         .Add(ElasticCarriageReturnLineFeed)
+		                                         .Add(DisabledText("#endif"))
+		                                         .Add(ElasticCarriageReturnLineFeed));
 	}
 
 	private MemberDeclarationSyntax CreatePropertyForRef(string typeName, string name, string description,
@@ -157,10 +166,6 @@ internal class ModelsClassHelpers {
 	                                                          string description, NumberType? numberType = null, long? numberSize = null, bool optional = false,
 	                                                          bool addPostfix = false,
 	                                                          ArrayItem arrayItem = null) {
-		if (type == Type.Array && arrayItem == null) {
-			throw new ArgumentNullException(nameof(arrayItem));
-		}
-
 		return type switch {
 			Type.Boolean => CreatePropertyDeclaration("bool", name, description, optional, addPostfix),
 			Type.Ref => CreatePropertyForRef(refName, name, description, addPostfix),
@@ -169,8 +174,7 @@ internal class ModelsClassHelpers {
 			                                           null, description, optional: true,
 			                                           addPostfix: addPostfix),
 			Type.Number => CreatePropertyDeclaration(NumberUtils.ConvertToSharpNumeric(numberType, numberSize), name, description, optional, addPostfix),
-			// ReSharper disable once PossibleNullReferenceException
-			Type.Array => CreatePropertyForPurpleArrayItem(name, arrayItem.Type, arrayItem.RefName, null, description),
+			Type.Array when arrayItem is not null => CreatePropertyForPurpleArrayItem(name, arrayItem.Type, arrayItem.RefName, null, description),
 			Type.BigInt => CreatePropertyDeclaration("ulong", name, description, optional),
 			_ => throw new ArgumentOutOfRangeException(nameof(Type), $"Name: {name} RefName: {refName} Type: {type.ToString()}")
 		};
