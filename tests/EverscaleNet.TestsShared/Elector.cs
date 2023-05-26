@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
+using EverscaleNet.Serialization;
 
 namespace EverscaleNet.TestsShared;
 

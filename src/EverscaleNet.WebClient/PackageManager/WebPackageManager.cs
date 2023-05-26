@@ -1,10 +1,4 @@
-﻿using System.Net.Http.Json;
-using EverscaleNet.Abstract;
-using EverscaleNet.Client.Models;
-using EverscaleNet.Serialization;
-using Microsoft.Extensions.Options;
-
-namespace EverscaleNet.WebClient.PackageManager;
+﻿namespace EverscaleNet.WebClient.PackageManager;
 
 /// <inheritdoc />
 public class WebPackageManager : IEverPackageManager {
@@ -49,6 +43,12 @@ public class WebPackageManager : IEverPackageManager {
 	/// <inheritdoc />
 	public async Task<string?> LoadCode(string name, CancellationToken cancellationToken = default) {
 		string fileUrl = Combine(_options.PackagesPath, string.Format(_options.CodeFileTemplate, name));
+		return await _httpClient.GetStringAsync(fileUrl, cancellationToken);
+	}
+
+	/// <inheritdoc />
+	public async Task<string?> LoadBase64(string name, CancellationToken cancellationToken) {
+		string fileUrl = Combine(_options.PackagesPath, string.Format(_options.Base64FileTemplate, name));
 		return await _httpClient.GetStringAsync(fileUrl, cancellationToken);
 	}
 

@@ -1,11 +1,4 @@
-﻿using System.Collections;
-using EverscaleNet.Client.Tests.Utils;
-using EverscaleNet.TestsShared;
-using FluentAssertions;
-using Xunit;
-using Xunit.Abstractions;
-
-namespace EverscaleNet.Client.Tests.Modules;
+﻿namespace EverscaleNet.Client.Tests.Modules;
 
 public class AbiModuleTests : IClassFixture<EverClientTestsFixture> {
 	private const uint Expire = 1599458404;
@@ -87,7 +80,7 @@ public class AbiModuleTests : IClassFixture<EverClientTestsFixture> {
 		result.Value.Should().NotBeNull();
 		result.Value.Get<string>("id").Should().Be("0x0000000000000000000000000000000000000000000000000000000000000000");
 		result.Header.Expire.Should().Be(Expire);
-		result.Header.Time.Should().Be(Time);
+		result.Header.Time!.Value.Should().Be(Time);
 		result.Header.Pubkey.Should().Be("4c7c408ff1ddebb8d6405ee979c716a14fdd6cc08124107a61d3c25597099499");
 	}
 
@@ -119,7 +112,7 @@ public class AbiModuleTests : IClassFixture<EverClientTestsFixture> {
 		result.Value.Should().NotBeNull();
 		result.Value.Get<string>("id").Should().Be("0x0000000000000000000000000000000000000000000000000000000000000000");
 		result.Header.Expire.Should().Be(Expire);
-		result.Header.Time.Should().Be(Time);
+		result.Header.Time!.Value.Should().Be(Time);
 		result.Header.Pubkey.Should().Be("4c7c408ff1ddebb8d6405ee979c716a14fdd6cc08124107a61d3c25597099499");
 	}
 

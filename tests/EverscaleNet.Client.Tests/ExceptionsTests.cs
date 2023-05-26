@@ -1,7 +1,5 @@
-﻿using FluentAssertions;
+﻿using EverscaleNet.Models;
 using FluentAssertions.Specialized;
-using Xunit;
-using Xunit.Abstractions;
 
 namespace EverscaleNet.Client.Tests;
 

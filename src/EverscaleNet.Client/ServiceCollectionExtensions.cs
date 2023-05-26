@@ -1,12 +1,5 @@
-﻿using EverscaleNet;
-using EverscaleNet.Abstract;
-using EverscaleNet.Adapter.Rust;
-using EverscaleNet.Client;
-using EverscaleNet.Client.PackageManager;
-using EverscaleNet.Models;
-using Microsoft.Extensions.Options;
+﻿// ReSharper disable once CheckNamespace
 
-// ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>

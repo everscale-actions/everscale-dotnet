@@ -27,7 +27,7 @@ namespace EverscaleNet.Client.Models
         /// <para>If not specified, `now` is used (if ABI includes `time` header).</para>
         /// </summary>
         [JsonPropertyName("time")]
-        public ulong? Time { get; set; }
+        public BigInteger? Time { get; set; }
 
         /// <summary>
         /// <para>Public key is used by the contract to check the signature.</para>

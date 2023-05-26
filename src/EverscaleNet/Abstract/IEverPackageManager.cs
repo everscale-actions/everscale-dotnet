@@ -1,7 +1,4 @@
-﻿using EverscaleNet.Client.Models;
-using EverscaleNet.Models;
-
-namespace EverscaleNet.Abstract;
+﻿namespace EverscaleNet.Abstract;
 
 /// <summary>
 ///     Load package from abi and tvm files. Default path is _contracts/abi_v{AbiVersion}/
@@ -18,7 +15,8 @@ public interface IEverPackageManager {
 			await LoadAbi(name, cancellationToken),
 			await LoadTvc(name, cancellationToken),
 			await LoadKeyPair(name, cancellationToken),
-			await LoadCode(name, cancellationToken)
+			await LoadCode(name, cancellationToken),
+			await LoadBase64(name, cancellationToken)
 		);
 	}
 
@@ -44,12 +42,12 @@ public interface IEverPackageManager {
 	public Task<string?> LoadTvc(string name, CancellationToken cancellationToken = default);
 
 	/// <summary>
-	///     Load Tvc from tvc file. Default path is _contracts/{PackageName}.keys
+	///     Load KeyPair from json keys file. Default path is _contracts/{PackageName}.keys
 	/// </summary>
 	/// <param name="name">Package name</param>
 	/// <param name="cancellationToken"></param>
 	/// <returns>
-	///     The compiled smart contract data. Used only when generating contract address and deploying contract code to the blockchain.
+	///     The KeyPair
 	/// </returns>
 	public Task<KeyPair?> LoadKeyPair(string name, CancellationToken cancellationToken = default);
 
@@ -62,4 +60,14 @@ public interface IEverPackageManager {
 	///     The compiled smart contract data. Used only when generating contract address and deploying contract code to the blockchain.
 	/// </returns>
 	public Task<string?> LoadCode(string name, CancellationToken cancellationToken = default);
+
+	/// <summary>
+	///     Load Code in base64 from base64 file. Default path is _contracts/{PackageName}.base64
+	/// </summary>
+	/// <param name="name">Package name</param>
+	/// <param name="cancellationToken"></param>
+	/// <returns>
+	///     The base64 code of contract. Used only when injecting code to another contracts.
+	/// </returns>
+	Task<string?> LoadBase64(string name, CancellationToken cancellationToken);
 }

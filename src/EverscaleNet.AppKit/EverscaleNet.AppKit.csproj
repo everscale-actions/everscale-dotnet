@@ -1,20 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<RootNamespace>EverscaleNet</RootNamespace>
-	</PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>EverscaleNet</RootNamespace>
+  </PropertyGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\EverscaleNet.Serialization\EverscaleNet.Serialization.csproj" />
-		<ProjectReference Include="..\EverscaleNet.Utils\EverscaleNet.Utils.csproj" />
-		<ProjectReference Include="..\EverscaleNet\EverscaleNet.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EverscaleNet.Serialization\EverscaleNet.Serialization.csproj" />
+    <ProjectReference Include="..\EverscaleNet.Utils\EverscaleNet.Utils.csproj" />
+    <ProjectReference Include="..\EverscaleNet\EverscaleNet.csproj" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<Content Include="build\EverscaleNet.AppKit.targets">
-			<Pack>true</Pack>
-			<PackagePath>build</PackagePath>
-		</Content>
-	</ItemGroup>
+  <ItemGroup Label="FilesToCopy">
+    <Content Include="_build\EverscaleNet.AppKit.targets" PackagePath="build" />
+
+    <Content Include="_contracts\**" Pack="true" PackagePath="contentFiles\_contracts">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+  </ItemGroup>
 
 </Project>

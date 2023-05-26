@@ -1,13 +1,10 @@
-using System.Text.Json;
-using EverscaleNet.TestSuite;
-
 namespace TestingExample;
 
 public class CalculatorExternalTests : IAsyncLifetime {
 	private readonly IEverClient _everClient;
 	private readonly IEverGiver _giver;
 	private readonly IEverPackageManager _packageManager;
-	private CalculatorExternalAccount _calculator;
+	private CalculatorExternal _calculator;
 	private KeyPair _keyPair;
 
 	public CalculatorExternalTests(IEverClient everClient, IEverPackageManager packageManager, IEverGiver giver) {
@@ -18,7 +15,7 @@ public class CalculatorExternalTests : IAsyncLifetime {
 
 	public async Task InitializeAsync() {
 		_keyPair = await _everClient.Crypto.GenerateRandomSignKeys();
-		_calculator = new CalculatorExternalAccount(_everClient, _packageManager);
+		_calculator = new CalculatorExternal(_everClient, _packageManager);
 		await _calculator.Init(_keyPair);
 		await _giver.SendTransaction(_calculator.Address, 10m);
 		await _calculator.Deploy();
@@ -70,7 +67,7 @@ public class CalculatorExternalTests : IAsyncLifetime {
 	[Fact]
 	public async Task AnotherPubkeyHasNoAccess() {
 		KeyPair keyPair = await _everClient.Crypto.GenerateRandomSignKeys();
-		var calculatorAccount = new CalculatorExternalAccount(_everClient, _packageManager);
+		var calculatorAccount = new CalculatorExternal(_everClient, _packageManager);
 		await calculatorAccount.Init(_keyPair.Public);
 		await calculatorAccount.Init(keyPair); // Reinit with another signer
 

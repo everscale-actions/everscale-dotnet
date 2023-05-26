@@ -28,4 +28,9 @@ public abstract class PackageManagerOptions {
 	///     Code file name template
 	/// </summary>
 	public string CodeFileTemplate { get; set; } = "{0}.code";
+
+	/// <summary>
+	///     Base64 code file name template
+	/// </summary>
+	public string Base64FileTemplate { get; set; } = "{0}.base64";
 }

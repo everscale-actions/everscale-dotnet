@@ -26,13 +26,13 @@ namespace EverscaleNet.Client.Models
         /// <para>block logical time</para>
         /// </summary>
         [JsonPropertyName("block_lt")]
-        public ulong? BlockLt { get; set; }
+        public BigInteger? BlockLt { get; set; }
 
         /// <summary>
         /// <para>transaction logical time</para>
         /// </summary>
         [JsonPropertyName("transaction_lt")]
-        public ulong? TransactionLt { get; set; }
+        public BigInteger? TransactionLt { get; set; }
 
         /// <summary>
         /// <para>Overrides standard TVM behaviour. If set to `true` then CHKSIG always will return `true`.</para>

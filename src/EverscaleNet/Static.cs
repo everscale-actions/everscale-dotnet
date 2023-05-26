@@ -1,5 +1,3 @@
-using System.Reflection;
-
 namespace EverscaleNet;
 
 internal static class Static {

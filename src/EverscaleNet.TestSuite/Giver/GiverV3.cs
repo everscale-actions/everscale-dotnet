@@ -1,13 +1,7 @@
-using EverscaleNet.Abstract;
-using EverscaleNet.Client.PackageManager;
-using EverscaleNet.Serialization;
-using EverscaleNet.Utils;
-using Microsoft.Extensions.Options;
-
-namespace EverscaleNet.TestSuite;
+namespace EverscaleNet.TestSuite.Giver;
 
 /// <inheritdoc cref="IEverGiver" />
-public class EverGiverV3 : AccountBase, IEverGiver {
+public class GiverV3 : AccountBase, IEverGiver {
 	private const string SeGiverAddress = "0:96137b99dcd65afce5a54a48dac83c0fd276432abbe3ba7f1bfb0fb795e69025";
 
 	/// <summary>
@@ -15,7 +9,7 @@ public class EverGiverV3 : AccountBase, IEverGiver {
 	/// </summary>
 	/// <param name="everClient"></param>
 	/// <param name="optionsAccessor"></param>
-	public EverGiverV3(IEverClient everClient, IOptions<GiverOptions> optionsAccessor) : base(
+	public GiverV3(IEverClient everClient, IOptions<GiverOptions> optionsAccessor) : base(
 		everClient,
 		new FilePackageManager(new OptionsWrapper<FilePackageManagerOptions>(new FilePackageManagerOptions {
 			KeyPairFileTemplate = "seGiver.keys.json"
@@ -24,14 +18,11 @@ public class EverGiverV3 : AccountBase, IEverGiver {
 	) { }
 
 	/// <inheritdoc />
-	protected override string Name => "GiverV3";
-
-	/// <inheritdoc />
 	public async Task<ResultOfProcessMessage> SendTransaction(string dest, decimal coins, bool bounce = false, CancellationToken cancellationToken = default) {
-		var value = $"{coins.CoinsToNano():0}";
-		return await Run(new CallSet {
-			FunctionName = "sendTransaction",
-			Input = new { dest, value, bounce }.ToJsonElement()
+		return await Run("sendTransaction", new {
+			dest,
+			value = coins.CoinsToNano(),
+			bounce
 		}, cancellationToken);
 	}
 }

@@ -1,4 +1,7 @@
-﻿using EverscaleNet.Client.PackageManager;
+﻿using EverscaleNet.Abstract;
+using EverscaleNet.Client.Models;
+using EverscaleNet.Client.PackageManager;
+using EverscaleNet.Models;
 using EverscaleNet.Utils;
 using Microsoft.Extensions.Options;
 

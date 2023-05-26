@@ -27,6 +27,6 @@
     <ProjectReference Include="..\..\src\EverscaleNet.TestSuite\EverscaleNet.TestSuite.csproj" />
   </ItemGroup>
 
-  <Import Project="..\..\src\EverscaleNet.AppKit\build\EverscaleNet.AppKit.targets" />
+  <Import Project="..\..\src\EverscaleNet.AppKit\_build\EverscaleNet.AppKit.targets" />
 
 </Project>

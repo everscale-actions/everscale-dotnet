@@ -1,6 +1,4 @@
-using EverscaleNet.Abstract;
-
-namespace EverscaleNet.TestSuite;
+namespace EverscaleNet.TestSuite.Accounts;
 
 /// <summary>
 /// </summary>

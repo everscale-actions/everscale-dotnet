@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace EverscaleNet.Client.Tests.Utils;
+﻿namespace EverscaleNet.Client.Tests.Utils;
 
 internal static class StringExtensions {
 	public static string ToBase64(this string input) {

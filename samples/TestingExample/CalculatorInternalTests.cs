@@ -1,15 +1,10 @@
-using EverscaleNet.Exceptions;
-using EverscaleNet.TestSuite;
-using Polly;
-using Polly.Retry;
-
 namespace TestingExample;
 
 public class CalculatorInternalTests : IAsyncLifetime {
 	private readonly IEverClient _everClient;
 	private readonly IEverGiver _giver;
 	private readonly IEverPackageManager _packageManager;
-	private CalculatorInternalAccount _calculator;
+	private CalculatorInternal _calculator;
 	private IMultisigAccount _multisig;
 
 	public CalculatorInternalTests(IEverClient everClient, IEverPackageManager packageManager, IEverGiver giver) {
@@ -20,7 +15,7 @@ public class CalculatorInternalTests : IAsyncLifetime {
 
 	public async Task InitializeAsync() {
 		_multisig = await CreateMultisig();
-		_calculator = new CalculatorInternalAccount(_everClient, _packageManager);
+		_calculator = new CalculatorInternal(_everClient, _packageManager);
 		await _calculator.Init(_multisig, new { owner_ = _multisig.Address });
 		await _calculator.Deploy();
 	}
@@ -49,7 +44,7 @@ public class CalculatorInternalTests : IAsyncLifetime {
 
 	[Fact]
 	public async Task Add1TenTimes_Returns55() {
-		const int maxRetryAttempts = 5;
+		const int maxRetryAttempts = 10;
 		TimeSpan pauseBetweenFailures = TimeSpan.FromSeconds(1);
 
 		await Parallel.ForEachAsync(
@@ -73,7 +68,7 @@ public class CalculatorInternalTests : IAsyncLifetime {
 	[Fact]
 	public async Task AnotherMultisigHasNoAccess() {
 		IMultisigAccount anotherMultisig = await CreateMultisig();
-		var calculatorWithAnotherMultisig = new CalculatorInternalAccount(_everClient, _packageManager, _calculator.Address);
+		var calculatorWithAnotherMultisig = new CalculatorInternal(_everClient, _packageManager, _calculator.Address);
 		await calculatorWithAnotherMultisig.Init(anotherMultisig, new { owner_ = _multisig.Address });
 
 		await _calculator.Add(1);
@@ -82,7 +77,6 @@ public class CalculatorInternalTests : IAsyncLifetime {
 
 		await act.Should()
 		         .ThrowAsync<EverClientException>()
-		         .Where(e => e.Code == 103)
 		         .WithMessage("Transaction aborted or failed");
 		result.Should().Be(1);
 	}

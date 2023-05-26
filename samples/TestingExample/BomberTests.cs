@@ -1,5 +1,3 @@
-using EverscaleNet.TestSuite;
-
 namespace TestingExample;
 
 public class BomberTests : IAsyncLifetime {
@@ -8,9 +6,9 @@ public class BomberTests : IAsyncLifetime {
 	private readonly IEverClient _everClient;
 	private readonly IEverGiver _giver;
 	private readonly IEverPackageManager _packageManager;
-	private BomberAccount _bomberAccount;
+	private Bomber _bomber;
 	private decimal _bomberDeployFees;
-	private SinkAccount _sinkAccount;
+	private Sink _sink;
 	private decimal _sinkDeployFees;
 
 	public BomberTests(IEverClient everClient, IEverPackageManager packageManager, IEverGiver giver) {
@@ -21,18 +19,18 @@ public class BomberTests : IAsyncLifetime {
 
 	public async Task InitializeAsync() {
 		KeyPair keyPair = await _everClient.Crypto.GenerateRandomSignKeys();
-		_bomberAccount = new BomberAccount(_everClient, _packageManager);
-		_sinkAccount = new SinkAccount(_everClient, _packageManager);
+		_bomber = new Bomber(_everClient, _packageManager);
+		_sink = new Sink(_everClient, _packageManager);
 		await Task.WhenAll(
-			_bomberAccount.Init(keyPair),
-			_sinkAccount.Init(keyPair)
+			_bomber.Init(keyPair),
+			_sink.Init(keyPair)
 		);
 		await Task.WhenAll(
-			_giver.SendTransaction(_bomberAccount.Address, TopUpCoins),
-			_giver.SendTransaction(_sinkAccount.Address, TopUpCoins)
+			_giver.SendTransaction(_bomber.Address, TopUpCoins),
+			_giver.SendTransaction(_sink.Address, TopUpCoins)
 		);
-		Task<ResultOfProcessMessage> bomberDeployTask = _bomberAccount.Deploy();
-		Task<ResultOfProcessMessage> sinkDeployTask = _sinkAccount.Deploy();
+		Task<ResultOfProcessMessage> bomberDeployTask = _bomber.Deploy();
+		Task<ResultOfProcessMessage> sinkDeployTask = _sink.Deploy();
 		await Task.WhenAll(bomberDeployTask, sinkDeployTask);
 		_bomberDeployFees = bomberDeployTask.Result!.Fees.TotalAccountFees.NanoToCoins();
 		_sinkDeployFees = sinkDeployTask.Result!.Fees.TotalAccountFees.NanoToCoins();
@@ -52,10 +50,10 @@ public class BomberTests : IAsyncLifetime {
 
 	[Fact]
 	public async Task TestSend0Test() {
-		decimal sinkBalanceBefore = await _sinkAccount.GetBalance();
+		decimal sinkBalanceBefore = await _sink.GetBalance();
 
-		ResultOfProcessMessage result = await _bomberAccount.TestSend0(_sinkAccount.Address);
-		decimal sinkBalanceAfter = await _sinkAccount.GetBalance();
+		ResultOfProcessMessage result = await _bomber.TestSend0(_sink.Address);
+		decimal sinkBalanceAfter = await _sink.GetBalance();
 		decimal sinkBalanceDiff = sinkBalanceAfter - sinkBalanceBefore;
 
 		result.Fees.TotalAccountFees.NanoToCoins().Should().BeLessThan(0.011M);
@@ -64,10 +62,10 @@ public class BomberTests : IAsyncLifetime {
 
 	[Fact]
 	public async Task TestSend1Test() {
-		decimal sinkBalanceBefore = await _sinkAccount.GetBalance();
+		decimal sinkBalanceBefore = await _sink.GetBalance();
 
-		ResultOfProcessMessage result = await _bomberAccount.TestSend1(_sinkAccount.Address);
-		decimal sinkBalanceAfter = await _sinkAccount.GetBalance();
+		ResultOfProcessMessage result = await _bomber.TestSend1(_sink.Address);
+		decimal sinkBalanceAfter = await _sink.GetBalance();
 		decimal sinkBalanceDiff = sinkBalanceAfter - sinkBalanceBefore;
 
 		result.Fees.TotalAccountFees.NanoToCoins().Should().BeLessThan(0.01M);
@@ -76,9 +74,9 @@ public class BomberTests : IAsyncLifetime {
 
 	[Fact]
 	public async Task TestSend128Test() {
-		decimal sinkBalanceBefore = await _sinkAccount.GetBalance();
+		decimal sinkBalanceBefore = await _sink.GetBalance();
 
-		await _bomberAccount.TestSend128(_sinkAccount.Address);
+		await _bomber.TestSend128(_sink.Address);
 
 		(decimal bomberBalanceAfter, decimal sinkBalanceAfter) = await GetBalances();
 		decimal sinkBalanceDiff = sinkBalanceAfter - sinkBalanceBefore;
@@ -89,11 +87,11 @@ public class BomberTests : IAsyncLifetime {
 
 	[Fact]
 	public async Task TestSend160Test() {
-		decimal sinkBalanceBefore = await _sinkAccount.GetBalance();
+		decimal sinkBalanceBefore = await _sink.GetBalance();
 
-		await _bomberAccount.TestSend160(_sinkAccount.Address);
-		Task<AccountType?> bomberAccountTypeTask = _bomberAccount.GetAccountType();
-		Task<decimal> sinkBalanceAfterTask = _sinkAccount.GetBalance();
+		await _bomber.TestSend160(_sink.Address);
+		Task<AccountType> bomberAccountTypeTask = _bomber.GetAccountType();
+		Task<decimal> sinkBalanceAfterTask = _sink.GetBalance();
 		await Task.WhenAll(bomberAccountTypeTask, sinkBalanceAfterTask);
 
 		bomberAccountTypeTask.Result.Should().Be(AccountType.NonExist);
@@ -101,8 +99,8 @@ public class BomberTests : IAsyncLifetime {
 	}
 
 	private async Task<(decimal bomber, decimal sink)> GetBalances() {
-		Task<decimal> bomberBalanceTask = _bomberAccount.GetBalance();
-		Task<decimal> sinkBalanceTask = _sinkAccount.GetBalance();
+		Task<decimal> bomberBalanceTask = _bomber.GetBalance();
+		Task<decimal> sinkBalanceTask = _sink.GetBalance();
 
 		await Task.WhenAll(bomberBalanceTask, sinkBalanceTask);
 

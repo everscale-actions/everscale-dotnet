@@ -1,10 +1,4 @@
-﻿using System.Text.Json;
-using EverscaleNet.Abstract;
-using EverscaleNet.Client.Models;
-using EverscaleNet.Serialization;
-using Microsoft.Extensions.Options;
-
-namespace EverscaleNet.Client.PackageManager;
+﻿namespace EverscaleNet.Client.PackageManager;
 
 /// <inheritdoc />
 public class FilePackageManager : IEverPackageManager {
@@ -56,6 +50,17 @@ public class FilePackageManager : IEverPackageManager {
 	/// <inheritdoc />
 	public async Task<string?> LoadCode(string name, CancellationToken cancellationToken = default) {
 		string filePath = Path.Join(_options.PackagesPath, string.Format(_options.CodeFileTemplate, name));
+		var fileInfo = new FileInfo(filePath);
+		if (!fileInfo.Exists) {
+			return null;
+		}
+		using StreamReader fs = fileInfo.OpenText();
+		return await fs.ReadToEndAsync();
+	}
+
+	/// <inheritdoc />
+	public async Task<string?> LoadBase64(string name, CancellationToken cancellationToken) {
+		string filePath = Path.Join(_options.PackagesPath, string.Format(_options.Base64FileTemplate, name));
 		var fileInfo = new FileInfo(filePath);
 		if (!fileInfo.Exists) {
 			return null;

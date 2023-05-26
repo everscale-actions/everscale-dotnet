@@ -1,7 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Formatting;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+﻿using Microsoft.CodeAnalysis.CSharp.Formatting;
 using Microsoft.CodeAnalysis.Formatting;
 
 namespace EverscaleNet.ClientGenerator.Helpers;
@@ -11,9 +8,9 @@ internal static class UnitHelpers {
 	                              params string[] usings) {
 		unitName = NamingConventions.Normalize(unitName);
 
-		CompilationUnitSyntax cu = SyntaxFactory.CompilationUnit();
+		CompilationUnitSyntax cu = CompilationUnit();
 		cu = cu.AddUsings(usings.OrderBy(s => s)
-		                        .Select(u => SyntaxFactory.UsingDirective(SyntaxFactory.ParseName(u)))
+		                        .Select(u => UsingDirective(ParseName(u)))
 		                        .ToArray());
 
 		var cw = new AdhocWorkspace();

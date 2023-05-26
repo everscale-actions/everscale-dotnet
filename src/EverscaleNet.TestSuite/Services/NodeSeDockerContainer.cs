@@ -1,13 +1,8 @@
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Containers;
-using EverscaleNet.Adapter.Rust;
-using EverscaleNet.Client;
-using EverscaleNet.Models;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
-namespace EverscaleNet.TestSuite;
+namespace EverscaleNet.TestSuite.Services;
 
 /// <summary>
 /// </summary>

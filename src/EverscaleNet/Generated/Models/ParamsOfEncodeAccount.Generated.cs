@@ -20,13 +20,13 @@ namespace EverscaleNet.Client.Models
         /// <para>Initial balance.</para>
         /// </summary>
         [JsonPropertyName("balance")]
-        public ulong? Balance { get; set; }
+        public BigInteger? Balance { get; set; }
 
         /// <summary>
         /// <para>Initial value for the `last_trans_lt`.</para>
         /// </summary>
         [JsonPropertyName("last_trans_lt")]
-        public ulong? LastTransLt { get; set; }
+        public BigInteger? LastTransLt { get; set; }
 
         /// <summary>
         /// <para>Initial value for the `last_paid`.</para>

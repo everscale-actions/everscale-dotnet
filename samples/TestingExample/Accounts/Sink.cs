@@ -1,7 +1,7 @@
-namespace TestingExample.Contracts;
+namespace TestingExample.Accounts;
 
-internal class SinkAccount : AccountBase {
-	public SinkAccount(IEverClient client, IEverPackageManager packageManager) : base(client, packageManager) { }
+internal class Sink : AccountBase {
+	public Sink(IEverClient client, IEverPackageManager packageManager) : base(client, packageManager) { }
 
 	protected override string Name => "20_sink";
 

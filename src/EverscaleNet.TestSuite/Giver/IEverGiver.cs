@@ -1,4 +1,4 @@
-namespace EverscaleNet.TestSuite;
+namespace EverscaleNet.TestSuite.Giver;
 
 /// <summary>
 ///     The giver is used to send coins to some address

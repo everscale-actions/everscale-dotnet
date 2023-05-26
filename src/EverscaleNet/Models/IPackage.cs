@@ -1,5 +1,3 @@
-using EverscaleNet.Client.Models;
-
 namespace EverscaleNet.Models;
 
 /// <summary>

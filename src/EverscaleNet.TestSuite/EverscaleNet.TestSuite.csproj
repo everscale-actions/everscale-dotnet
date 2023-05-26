@@ -19,9 +19,7 @@
   </ItemGroup>
 
   <ItemGroup Label="FilesToCopy">
-    <Content Include="build\EverscaleNet.TestSuite.targets">
-      <PackagePath>build</PackagePath>
-    </Content>
+    <Content Include="_build\EverscaleNet.TestSuite.targets" PackagePath="build" />
 
     <Content Include="_contracts\**" Pack="true" PackagePath="contentFiles\_contracts">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

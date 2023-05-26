@@ -1,13 +1,13 @@
-namespace TestingExample.Contracts;
+namespace TestingExample.Accounts;
 
-internal class CalculatorInternalAccount : AccountBase {
+internal class CalculatorInternal : AccountBase {
 	private readonly IEverClient _client;
 
-	public CalculatorInternalAccount(IEverClient client, IEverPackageManager packageManager) : base(client, packageManager) {
+	public CalculatorInternal(IEverClient client, IEverPackageManager packageManager) : base(client, packageManager) {
 		_client = client;
 	}
 
-	public CalculatorInternalAccount(IEverClient client, IEverPackageManager packageManager, string address) :
+	public CalculatorInternal(IEverClient client, IEverPackageManager packageManager, string address) :
 		base(client, packageManager, address) {
 		_client = client;
 	}
@@ -15,17 +15,15 @@ internal class CalculatorInternalAccount : AccountBase {
 	protected override string Name => "CalculatorInternal";
 
 	public async Task<ResultOfProcessMessage> Add(int value, CancellationToken cancellationToken = default) {
-		return await Run(new CallSet {
-			FunctionName = "add",
-			Input = new { value }.ToJsonElement()
-		}, cancellationToken);
+		ResultOfProcessMessage result = await Run("add", new { value }, cancellationToken);
+		await _client.EnsureThatTransactionsIsOk(result, cancellationToken);
+		return result;
 	}
 
 	public async Task<ResultOfProcessMessage> Subtract(int value, CancellationToken cancellationToken = default) {
-		return await Run(new CallSet {
-			FunctionName = "subtract",
-			Input = new { value }.ToJsonElement()
-		}, cancellationToken);
+		ResultOfProcessMessage result = await Run("subtract", new { value }, cancellationToken);
+		await _client.EnsureThatTransactionsIsOk(result, cancellationToken);
+		return result;
 	}
 
 	public async Task<long> GetSum(CancellationToken cancellationToken = default) {

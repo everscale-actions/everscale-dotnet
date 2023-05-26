@@ -14,7 +14,7 @@ namespace EverscaleNet.Client.Models
         /// <para>Amount of nanotokens that will be sent to `dst` address.</para>
         /// </summary>
         [JsonPropertyName("amount")]
-        public ulong Amount { get; set; }
+        public BigInteger Amount { get; set; }
 
         /// <summary>
         /// <para>Destination address of recipient of funds.</para>

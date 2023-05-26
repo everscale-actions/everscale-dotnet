@@ -1,8 +1,4 @@
-﻿using FluentAssertions;
-using Xunit;
-using Xunit.Abstractions;
-
-namespace EverscaleNet.Client.Tests;
+﻿namespace EverscaleNet.Client.Tests;
 
 [CollectionDefinition(nameof(SystemTestCollectionDefinition), DisableParallelization = true)]
 public class SystemTestCollectionDefinition { }

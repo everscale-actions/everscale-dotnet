@@ -1,7 +1,4 @@
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-
-namespace EverscaleNet.TestSuite;
+namespace EverscaleNet.TestSuite.Services;
 
 /// <summary>
 ///     Class can be used for start Node SE docker container through DI with `services.AddHostedService&lt;InitNodeSeService&gt;();`

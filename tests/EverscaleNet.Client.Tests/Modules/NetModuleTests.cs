@@ -1,8 +1,4 @@
-﻿using EverscaleNet.Client.Tests.Utils;
-using EverscaleNet.TestsShared;
-using FluentAssertions;
-using Xunit;
-using Xunit.Abstractions;
+﻿using EverscaleNet.Models;
 
 namespace EverscaleNet.Client.Tests.Modules;
 

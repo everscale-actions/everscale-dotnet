@@ -1,6 +1,3 @@
-using System.Text.Json.Serialization;
-using EverscaleNet.Client.Models;
-
 namespace EverscaleNet.Models;
 
 /// <summary>

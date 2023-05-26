@@ -13,8 +13,6 @@ public class SafeMultisigWallet : AccountBase {
 		_everPackageManager = everPackageManager;
 	}
 
-	protected override string Name => "SafeMultisigWallet";
-
 	public async Task SendMessage(string phrase, string recipient, string message) {
 		Package contract = await _everPackageManager.LoadPackage(Name);
 		Abi transferAbi = await _everPackageManager.LoadAbi(Transfer);

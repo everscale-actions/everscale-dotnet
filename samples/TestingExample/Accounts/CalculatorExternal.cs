@@ -1,28 +1,21 @@
-using EverscaleNet;
+namespace TestingExample.Accounts;
 
-namespace BlazorApp.Contracts;
-
-internal class CalculatorAccount : AccountBase {
+internal class CalculatorExternal : AccountBase {
 	private readonly IEverClient _client;
 
-	public CalculatorAccount(IEverClient client, IEverPackageManager packageManager) : base(client, packageManager) {
+	public CalculatorExternal(IEverClient client, IEverPackageManager packageManager) : base(
+		client, packageManager) {
 		_client = client;
 	}
 
-	protected override string Name => "Calculator";
+	protected override string Name => "CalculatorExternal";
 
 	public async Task<ResultOfProcessMessage> Add(int value, CancellationToken cancellationToken = default) {
-		return await Run(new CallSet {
-			FunctionName = "add",
-			Input = new { value }.ToJsonElement()
-		}, cancellationToken);
+		return await Run("add", new { value }, cancellationToken);
 	}
 
 	public async Task<ResultOfProcessMessage> Subtract(int value, CancellationToken cancellationToken = default) {
-		return await Run(new CallSet {
-			FunctionName = "subtract",
-			Input = new { value }.ToJsonElement()
-		}, cancellationToken);
+		return await Run("subtract", new { value }, cancellationToken);
 	}
 
 	public async Task<long> GetSum(CancellationToken cancellationToken = default) {

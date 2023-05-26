@@ -15,56 +15,56 @@ namespace EverscaleNet.Client.Models
         /// <para>Contains the same data as ext_in_msg_fee field</para>
         /// </summary>
         [JsonPropertyName("in_msg_fwd_fee")]
-        public ulong InMsgFwdFee { get; set; }
+        public BigInteger InMsgFwdFee { get; set; }
 
         /// <summary>
         /// <para>Fee for account storage</para>
         /// </summary>
         [JsonPropertyName("storage_fee")]
-        public ulong StorageFee { get; set; }
+        public BigInteger StorageFee { get; set; }
 
         /// <summary>
         /// <para>Fee for processing</para>
         /// </summary>
         [JsonPropertyName("gas_fee")]
-        public ulong GasFee { get; set; }
+        public BigInteger GasFee { get; set; }
 
         /// <summary>
         /// <para>Deprecated.</para>
         /// <para>Contains the same data as total_fwd_fees field. Deprecated because of its confusing name, that is not the same with GraphQL API Transaction type's field.</para>
         /// </summary>
         [JsonPropertyName("out_msgs_fwd_fee")]
-        public ulong OutMsgsFwdFee { get; set; }
+        public BigInteger OutMsgsFwdFee { get; set; }
 
         /// <summary>
         /// <para>Deprecated.</para>
         /// <para>Contains the same data as account_fees field</para>
         /// </summary>
         [JsonPropertyName("total_account_fees")]
-        public ulong TotalAccountFees { get; set; }
+        public BigInteger TotalAccountFees { get; set; }
 
         /// <summary>
         /// <para>Deprecated because it means total value sent in the transaction, which does not relate to any fees.</para>
         /// </summary>
         [JsonPropertyName("total_output")]
-        public ulong TotalOutput { get; set; }
+        public BigInteger TotalOutput { get; set; }
 
         /// <summary>
         /// <para>Fee for inbound external message import.</para>
         /// </summary>
         [JsonPropertyName("ext_in_msg_fee")]
-        public ulong ExtInMsgFee { get; set; }
+        public BigInteger ExtInMsgFee { get; set; }
 
         /// <summary>
         /// <para>Total fees the account pays for message forwarding</para>
         /// </summary>
         [JsonPropertyName("total_fwd_fees")]
-        public ulong TotalFwdFees { get; set; }
+        public BigInteger TotalFwdFees { get; set; }
 
         /// <summary>
         /// <para>Total account fees for the transaction execution. Compounds of storage_fee + gas_fee + ext_in_msg_fee + total_fwd_fees</para>
         /// </summary>
         [JsonPropertyName("account_fees")]
-        public ulong AccountFees { get; set; }
+        public BigInteger AccountFees { get; set; }
     }
 }

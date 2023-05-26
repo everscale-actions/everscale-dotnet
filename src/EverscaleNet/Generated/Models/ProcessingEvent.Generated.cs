@@ -336,7 +336,7 @@ namespace EverscaleNet.Client.Models
             /// <para>Not described yet..</para>
             /// </summary>
             [JsonPropertyName("timestamp")]
-            public ulong Timestamp { get; set; }
+            public BigInteger Timestamp { get; set; }
 
             /// <summary>
             /// <para>Not described yet..</para>
@@ -369,7 +369,7 @@ namespace EverscaleNet.Client.Models
             /// <para>Not described yet..</para>
             /// </summary>
             [JsonPropertyName("timestamp")]
-            public ulong Timestamp { get; set; }
+            public BigInteger Timestamp { get; set; }
 
             /// <summary>
             /// <para>Not described yet..</para>
@@ -402,7 +402,7 @@ namespace EverscaleNet.Client.Models
             /// <para>Not described yet..</para>
             /// </summary>
             [JsonPropertyName("timestamp")]
-            public ulong Timestamp { get; set; }
+            public BigInteger Timestamp { get; set; }
 
             /// <summary>
             /// <para>Not described yet..</para>
@@ -435,7 +435,7 @@ namespace EverscaleNet.Client.Models
             /// <para>Not described yet..</para>
             /// </summary>
             [JsonPropertyName("timestamp")]
-            public ulong Timestamp { get; set; }
+            public BigInteger Timestamp { get; set; }
 
             /// <summary>
             /// <para>Not described yet..</para>

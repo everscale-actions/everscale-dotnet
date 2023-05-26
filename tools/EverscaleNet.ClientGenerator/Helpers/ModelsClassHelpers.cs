@@ -1,10 +1,4 @@
-﻿using EverscaleNet.ClientGenerator.Models;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
-using static EverscaleNet.ClientGenerator.Helpers.PropertyHelpers;
-using Type = EverscaleNet.ClientGenerator.Models.Type;
+﻿using Type = EverscaleNet.ClientGenerator.Models.Type;
 
 namespace EverscaleNet.ClientGenerator.Helpers;
 
@@ -53,7 +47,7 @@ internal class ModelsClassHelpers {
 	                                                                           OptionalInnerOptionalInner optionalInner,
 	                                                                           string description) {
 		return optionalInner.Type switch {
-			Type.BigInt => CreatePropertyDeclaration("ulong", name, description, true),
+			Type.BigInt => CreatePropertyDeclaration("BigInteger", name, description, true),
 			Type.Boolean => CreatePropertyDeclaration("bool", name, description, true),
 			Type.Number => CreatePropertyDeclaration(NumberUtils.ConvertToSharpNumeric(optionalInner.NumberType, optionalInner.NumberSize), name, description, true),
 			Type.String => CreatePropertyDeclaration("string", name, description),
@@ -175,7 +169,7 @@ internal class ModelsClassHelpers {
 			                                           addPostfix: addPostfix),
 			Type.Number => CreatePropertyDeclaration(NumberUtils.ConvertToSharpNumeric(numberType, numberSize), name, description, optional, addPostfix),
 			Type.Array when arrayItem is not null => CreatePropertyForPurpleArrayItem(name, arrayItem.Type, arrayItem.RefName, null, description),
-			Type.BigInt => CreatePropertyDeclaration("ulong", name, description, optional),
+			Type.BigInt => CreatePropertyDeclaration("BigInteger", name, description, optional),
 			_ => throw new ArgumentOutOfRangeException(nameof(Type), $"Name: {name} RefName: {refName} Type: {type.ToString()}")
 		};
 	}
@@ -200,7 +194,7 @@ internal class ModelsClassHelpers {
 			Type.Array => CreatePropertyForPurpleArrayItem(sf.Name, sf.ArrayItem.Type, sf.ArrayItem.RefName,
 			                                               sf.ArrayItem.OptionalInner,
 			                                               sfSummary),
-			Type.BigInt => CreatePropertyDeclaration("ulong", sf.Name, sfSummary),
+			Type.BigInt => CreatePropertyDeclaration("BigInteger", sf.Name, sfSummary),
 			Type.Boolean => CreatePropertyDeclaration("bool", sf.Name, sfSummary),
 			Type.Number => CreatePropertyDeclaration(
 				NumberUtils.ConvertToSharpNumeric(sf.NumberType, sf.NumberSize), sf.Name, sfSummary),
@@ -216,7 +210,7 @@ internal class ModelsClassHelpers {
 		return optionalInner.Type switch {
 			Type.Array => CreatePropertyForPurpleArrayItem(name, optionalInner.ArrayItem.Type,
 			                                               optionalInner.ArrayItem.RefName, null, description),
-			Type.BigInt => CreatePropertyDeclaration("ulong", name, description, true),
+			Type.BigInt => CreatePropertyDeclaration("BigInteger", name, description, true),
 			Type.Boolean => CreatePropertyDeclaration("bool", name, description, true),
 			Type.Number => CreatePropertyDeclaration(
 				NumberUtils.ConvertToSharpNumeric(optionalInner.NumberType, optionalInner.NumberSize), name,

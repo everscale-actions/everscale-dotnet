@@ -9,11 +9,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Using Include="EverscaleNet.Abstract" />
-		<Using Include="EverscaleNet.Adapter.Rust" />
-		<Using Include="EverscaleNet.Client.Models" />
-		<Using Include="EverscaleNet.Models" />
-		<Using Include="EverscaleNet.Serialization" />
 		<Using Include="System.Text.Json" />
 	</ItemGroup>
 </Project>

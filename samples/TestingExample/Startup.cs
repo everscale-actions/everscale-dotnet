@@ -1,16 +1,3 @@
-using EverscaleNet.Adapter.Rust;
-using EverscaleNet.Client;
-using EverscaleNet.Client.PackageManager;
-using EverscaleNet.TestSuite;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Serilog;
-using Serilog.Extensions.Logging;
-using Xunit.DependencyInjection;
-using Xunit.DependencyInjection.Logging;
-
 namespace TestingExample;
 
 public class Startup {
@@ -36,7 +23,7 @@ public class Startup {
 
 				AddEverClientWithSerilog(services);
 
-				services.AddSingleton<IEverGiver, EverGiverV3>();
+				services.AddSingleton<IEverGiver, GiverV3>();
 			});
 	}
 

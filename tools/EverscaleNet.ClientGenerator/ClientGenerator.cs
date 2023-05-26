@@ -1,7 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using EverscaleNet.ClientGenerator.Helpers;
-using EverscaleNet.ClientGenerator.Models;
 using Type = EverscaleNet.ClientGenerator.Models.Type;
 
 namespace EverscaleNet.ClientGenerator;

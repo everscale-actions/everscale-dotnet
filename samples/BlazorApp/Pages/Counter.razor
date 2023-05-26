@@ -38,7 +38,7 @@
 
 @code {
 
-	CalculatorAccount Calculator { get; set; }
+	Calculator Calculator { get; set; }
 
 	[Inject]
 	IEverClient EverClient { get; set; }
@@ -100,18 +100,17 @@
 		Phrase = obj.Value!.ToString();
 		try {
 			_keyPair = await EverClient.Crypto.MnemonicDeriveSignKeys(new ParamsOfMnemonicDeriveSignKeys { Phrase = Phrase });
-			Calculator = new CalculatorAccount(EverClient, PackageManager);
+			Calculator = new Calculator(EverClient, PackageManager);
 			await Calculator.Init(_keyPair);
 			Address = Calculator.Address;
 			await LocalStorageService.SetItemAsStringAsync("Calculator_Phrase", Phrase);
-			AccountType? accountType = await Calculator.GetAccountType();
+			AccountType accountType = await Calculator.GetAccountType();
 			switch (accountType) {
 				case AccountType.Frozen:
 					throw new Exception("Calculator contract has been frozen");
 				case AccountType.NonExist when await Calculator.GetBalance() < 1M:
 				case AccountType.Active when await Calculator.GetBalance() < 1M:
 				case AccountType.Uninit when await Calculator.GetBalance() < 1M:
-				case null:
 					throw new Exception("Balance to low, send 1 or more Evers to address");
 				case AccountType.Uninit:
 				case AccountType.NonExist:

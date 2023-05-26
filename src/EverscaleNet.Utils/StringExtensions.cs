@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Numerics;
 using System.Text;
 
 namespace EverscaleNet.Utils;
@@ -30,7 +31,7 @@ public static class StringExtensions {
 	/// <param name="nano"></param>
 	/// <returns></returns>
 	public static decimal NanoToCoins(this string nano) {
-		decimal nanoDecimal = decimal.Parse(nano, NumberStyles.Number);
+		BigInteger nanoDecimal = BigInteger.Parse(nano, NumberStyles.Integer);
 		return nanoDecimal.NanoToCoins();
 	}
 }

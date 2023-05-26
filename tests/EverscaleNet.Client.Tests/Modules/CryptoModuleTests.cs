@@ -1,10 +1,4 @@
-﻿using System.Collections;
-using EverscaleNet.Client.Tests.Utils;
-using FluentAssertions;
-using Xunit;
-using Xunit.Abstractions;
-
-namespace EverscaleNet.Client.Tests.Modules;
+﻿namespace EverscaleNet.Client.Tests.Modules;
 
 public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 	private readonly IEverClient _everClient;

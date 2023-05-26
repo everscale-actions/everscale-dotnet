@@ -1,7 +1,4 @@
 ﻿#if !NET6_0_OR_GREATER
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using Dahomey.Json;
 using Dahomey.Json.Serialization.Conventions;
 

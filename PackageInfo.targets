@@ -23,7 +23,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<PackageVersion Condition=" $(PackageVersion) == '' ">$(SDKVersion)</PackageVersion>
+		<PackageVersion Condition=" $(PackageVersion) == '' ">$(SDKVersion)$(PackageVersionPostfix)</PackageVersion>
 		<AssemblyVersion Condition=" $(AssemblyVersion) == '' ">$(SDKVersion)</AssemblyVersion>
 		<RunNumber Condition=" $(RunNumber) == '' ">0</RunNumber>
 		<FileVersion Condition=" $(FileVersion) == '' ">$(SDKVersion).$(RunNumber)</FileVersion>

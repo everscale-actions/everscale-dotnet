@@ -44,7 +44,7 @@ namespace EverscaleNet.Client.Models
             /// <para>Transaction total fee.</para>
             /// </summary>
             [JsonPropertyName("fee")]
-            public ulong Fee { get; set; }
+            public BigInteger Fee { get; set; }
 
             /// <summary>
             /// <para>Indicates if target smart contract updates its code.</para>

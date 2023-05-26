@@ -1,8 +1,4 @@
-﻿using FluentAssertions;
-using Xunit;
-using Xunit.Abstractions;
-
-namespace EverscaleNet.Client.Tests.Modules;
+﻿namespace EverscaleNet.Client.Tests.Modules;
 
 public class ClientModuleTests : IClassFixture<EverClientTestsFixture> {
 	private readonly IEverClient _everClient;

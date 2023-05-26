@@ -1,4 +1,4 @@
-namespace EverscaleNet.TestSuite;
+namespace EverscaleNet.TestSuite.Giver;
 
 /// <summary>
 /// </summary>

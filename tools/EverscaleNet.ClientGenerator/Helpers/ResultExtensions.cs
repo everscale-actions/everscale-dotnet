@@ -1,5 +1,4 @@
-﻿using EverscaleNet.ClientGenerator.Models;
-using Type = EverscaleNet.ClientGenerator.Models.Type;
+﻿using Type = EverscaleNet.ClientGenerator.Models.Type;
 
 namespace EverscaleNet.ClientGenerator.Helpers;
 

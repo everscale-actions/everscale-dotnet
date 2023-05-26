@@ -1,6 +1,4 @@
-﻿using EverscaleNet.TestsShared;
-
-namespace EverscaleNet.Client.Tests.Utils;
+﻿namespace EverscaleNet.Client.Tests.Utils;
 
 public static class EverClientExtensions {
 	public static async Task<string> SignDetached(this IEverClient everClient, KeyPair pair, string data) {

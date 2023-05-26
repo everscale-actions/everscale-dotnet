@@ -1,6 +1,3 @@
-using EverscaleNet.Client.Models;
-using EverscaleNet.Models;
-
 namespace EverscaleNet.Abstract;
 
 /// <inheritdoc cref="IEverPackageManager" />

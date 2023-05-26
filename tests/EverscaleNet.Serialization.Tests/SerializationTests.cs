@@ -1,4 +1,6 @@
-﻿using EverscaleNet.TestsShared;
+﻿using EverscaleNet.Client.Models;
+using EverscaleNet.Models;
+using EverscaleNet.TestsShared;
 using FluentAssertions;
 using Xunit;
 using BindingConfig = EverscaleNet.Models.BindingConfig;

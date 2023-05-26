@@ -1,7 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using EverscaleNet.Client.Models;
-
-// ReSharper disable UnusedMember.Global
+﻿// ReSharper disable UnusedMember.Global
 
 namespace EverscaleNet.Models;
 

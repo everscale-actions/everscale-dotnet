@@ -1,8 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
-
-namespace EverscaleNet.ClientGenerator.Helpers;
+﻿namespace EverscaleNet.ClientGenerator.Helpers;
 
 internal static class CommentsHelpers {
 	private static readonly SyntaxToken XmlNewline = XmlTextNewLine(Environment.NewLine);

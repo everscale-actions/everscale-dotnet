@@ -1,7 +1,4 @@
-using EverscaleNet.Abstract;
-using Microsoft.Extensions.Hosting;
-
-namespace EverscaleNet.TestSuite;
+namespace EverscaleNet.TestSuite.Services;
 
 /// <summary>
 /// </summary>

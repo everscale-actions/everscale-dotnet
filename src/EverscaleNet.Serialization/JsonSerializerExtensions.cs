@@ -1,8 +1,4 @@
-﻿using System.Buffers;
-using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
-
-namespace EverscaleNet.Serialization;
+﻿namespace EverscaleNet.Serialization;
 
 /// <summary>
 /// </summary>

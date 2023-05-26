@@ -1,9 +1,9 @@
-﻿using EverscaleNet.TestsShared;
+﻿using EverscaleNet.Adapter.Rust;
+using EverscaleNet.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Serilog;
 using Serilog.Extensions.Logging;
-using Xunit.Abstractions;
 
 namespace EverscaleNet.Client.Tests;
 

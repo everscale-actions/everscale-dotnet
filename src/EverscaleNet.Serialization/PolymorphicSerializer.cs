@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-
-namespace EverscaleNet.Serialization;
+﻿namespace EverscaleNet.Serialization;
 
 /// <summary>
 /// </summary>

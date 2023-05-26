@@ -1,9 +1,4 @@
-﻿using EverscaleNet.ClientGenerator.Models;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
-using Type = EverscaleNet.ClientGenerator.Models.Type;
+﻿using Type = EverscaleNet.ClientGenerator.Models.Type;
 
 namespace EverscaleNet.ClientGenerator.Helpers;
 

@@ -1,8 +1,4 @@
-﻿using EverscaleNet.Client.Tests.Utils;
-using EverscaleNet.TestsShared;
-using FluentAssertions;
-using Xunit;
-using Xunit.Abstractions;
+﻿using EverscaleNet.Models;
 
 namespace EverscaleNet.Client.Tests.Modules;
 
@@ -178,7 +174,7 @@ public class TvmModuleTests : IClassFixture<EverClientTestsFixture> {
 			});
 
 			resultOfRun.Transaction.Get<string>("in_msg").Should().Be(message.MessageId);
-			resultOfRun.Fees.TotalAccountFees.Should().BePositive();
+			resultOfRun.Fees.TotalAccountFees.Should().BeGreaterThan(0);
 
 			return resultOfRun.Account;
 		}
