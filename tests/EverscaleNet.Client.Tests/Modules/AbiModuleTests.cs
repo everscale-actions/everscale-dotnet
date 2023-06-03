@@ -118,11 +118,13 @@ public class AbiModuleTests : IClassFixture<EverClientTestsFixture> {
 
 	private class EncodeMessageTestsData : IEnumerable<object[]> {
 		// ReSharper disable once RedundantEmptyObjectCreationArgumentList
-		private readonly List<object[]> _data = new() {
+		private readonly Collection<object[]> _data = new() {
 			new object[] {
 				new ParamsOfEncodeMessage {
 					Abi = TestsEnv.Packages.Events.Abi,
-					DeploySet = new DeploySet { Tvc = TestsEnv.Packages.Events.Tvc },
+					DeploySet = new DeploySet {
+						Tvc = TestsEnv.Packages.Events.Tvc
+					},
 					CallSet = new CallSet {
 						FunctionName = "constructor",
 						Header = new FunctionHeader { Time = Time, Expire = Expire }

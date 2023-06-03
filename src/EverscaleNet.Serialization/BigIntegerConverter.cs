@@ -13,6 +13,6 @@ public class BigIntegerConverter : JsonConverter<BigInteger> {
 
 	/// <inheritdoc />
 	public override void Write(Utf8JsonWriter writer, BigInteger value, JsonSerializerOptions options) {
-		writer.WriteStringValue(value.ToString(NumberFormatInfo.InvariantInfo));
+		writer.WriteRawValue(value.ToString(NumberFormatInfo.InvariantInfo));
 	}
 }

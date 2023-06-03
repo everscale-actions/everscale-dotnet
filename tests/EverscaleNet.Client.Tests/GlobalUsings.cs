@@ -1,6 +1,7 @@
 // Global using directives
 
 global using System.Collections;
+global using System.Collections.ObjectModel;
 global using System.Text;
 global using EverscaleNet.Abstract;
 global using EverscaleNet.Adapter.Rust;
