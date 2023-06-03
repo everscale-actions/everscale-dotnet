@@ -12,7 +12,7 @@ namespace EverscaleNet.Abstract.Modules
     public interface IBocModule : IEverModule
     {
         /// <summary>
-        /// <para>Decodes tvc into code, data, libraries and special options.</para>
+        /// <para>Decodes tvc according to the tvc spec. Read more about tvc structure here https://github.com/tonlabs/ever-struct/blob/main/src/scheme/mod.rs#L30</para>
         /// </summary>
         public Task<ResultOfDecodeTvc> DecodeTvc(ParamsOfDecodeTvc @params, CancellationToken cancellationToken = default);
 
@@ -98,12 +98,12 @@ namespace EverscaleNet.Abstract.Modules
         public Task<ResultOfSetCodeSalt> SetCodeSalt(ParamsOfSetCodeSalt @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// <para>Decodes tvc into code, data, libraries and special options.</para>
+        /// <para>Decodes contract's initial state into code, data, libraries and special options.</para>
         /// </summary>
         public Task<ResultOfDecodeStateInit> DecodeStateInit(ParamsOfDecodeStateInit @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// <para>Encodes tvc from code, data, libraries ans special options (see input params)</para>
+        /// <para>Encodes initial contract state from code, data, libraries ans special options (see input params)</para>
         /// </summary>
         public Task<ResultOfEncodeStateInit> EncodeStateInit(ParamsOfEncodeStateInit @params, CancellationToken cancellationToken = default);
 
