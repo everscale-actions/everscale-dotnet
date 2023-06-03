@@ -1,6 +1,3 @@
-using System.Numerics;
-using FluentAssertions;
-
 namespace EverscaleNet.Utils.Tests;
 
 public class NanoCoinsTests {

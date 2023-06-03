@@ -1,8 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Text.Json.Serialization;
-using EverscaleNet.Serialization;
-
-namespace EverscaleNet.TestsShared;
+﻿namespace EverscaleNet.TestsShared;
 
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]

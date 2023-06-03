@@ -1,6 +1,4 @@
-﻿using EverscaleNet.Models;
-
-namespace EverscaleNet.Client.Tests.Modules;
+﻿namespace EverscaleNet.Client.Tests.Modules;
 
 public class TvmModuleTests : IClassFixture<EverClientTestsFixture> {
 	private const string SubscribeParamsPubkey =

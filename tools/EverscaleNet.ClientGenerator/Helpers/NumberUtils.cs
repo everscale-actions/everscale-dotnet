@@ -1,10 +1,8 @@
-﻿using Type = EverscaleNet.ClientGenerator.Models.Type;
-
-namespace EverscaleNet.ClientGenerator.Helpers;
+﻿namespace EverscaleNet.ClientGenerator.Helpers;
 
 internal static class NumberUtils {
 	public static Dictionary<string, string> MapNumericTypes(IEnumerable<Module> module) {
-		return module.SelectMany(m => m.Types).Where(t => t.Type == Type.Number)
+		return module.SelectMany(m => m.Types).Where(t => t.Type == ApiType.Number)
 		             .Select(t => new {
 			             typeName = NamingConventions.Normalize(t.Name),
 			             sharpType = ConvertToSharpNumeric(t.NumberType, t.NumberSize)

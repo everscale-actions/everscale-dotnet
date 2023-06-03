@@ -1,12 +1,10 @@
-﻿using System.Text.Json.Serialization;
-
-namespace EverscaleNet.ClientGenerator.Models;
+﻿namespace EverscaleNet.ClientGenerator.Models;
 
 public class Param {
 	[JsonPropertyName("name")]
 	public Name Name { get; set; }
 	[JsonPropertyName("type")]
-	public Type Type { get; set; }
+	public ApiType Type { get; set; }
 
 	[JsonPropertyName("generic_name")]
 	public ParamGenericName? GenericName { get; set; }

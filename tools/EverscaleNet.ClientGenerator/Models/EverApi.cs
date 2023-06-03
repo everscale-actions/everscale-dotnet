@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace EverscaleNet.ClientGenerator.Models;
+﻿namespace EverscaleNet.ClientGenerator.Models;
 
 public class EverApi {
 	[JsonPropertyName("version")]

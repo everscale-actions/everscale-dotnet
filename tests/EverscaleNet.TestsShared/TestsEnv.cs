@@ -1,11 +1,4 @@
-﻿using EverscaleNet.Abstract;
-using EverscaleNet.Client.Models;
-using EverscaleNet.Client.PackageManager;
-using EverscaleNet.Models;
-using EverscaleNet.Utils;
-using Microsoft.Extensions.Options;
-
-namespace EverscaleNet.TestsShared;
+﻿namespace EverscaleNet.TestsShared;
 
 public static class TestsEnv {
 	private const int DefaultAbiVersion = 2;

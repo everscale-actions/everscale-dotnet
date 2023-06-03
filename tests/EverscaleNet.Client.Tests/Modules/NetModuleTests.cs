@@ -1,6 +1,4 @@
-﻿using EverscaleNet.Models;
-
-namespace EverscaleNet.Client.Tests.Modules;
+﻿namespace EverscaleNet.Client.Tests.Modules;
 
 public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 	private readonly IEverClient _everClient;

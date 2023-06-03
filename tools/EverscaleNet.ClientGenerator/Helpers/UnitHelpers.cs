@@ -1,5 +1,4 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Formatting;
-using Microsoft.CodeAnalysis.Formatting;
+﻿using Formatter = Microsoft.CodeAnalysis.Formatting.Formatter;
 
 namespace EverscaleNet.ClientGenerator.Helpers;
 

@@ -1,6 +1,6 @@
 ﻿namespace EverscaleNet.ClientGenerator.Models;
 
-public enum Type {
+public enum ApiType {
 	None,
 	Boolean,
 	Optional,

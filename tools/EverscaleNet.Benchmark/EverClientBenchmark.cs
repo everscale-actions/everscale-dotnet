@@ -1,12 +1,3 @@
-using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Engines;
-using EverscaleNet.Adapter.Rust;
-using EverscaleNet.Client;
-using EverscaleNet.Client.Models;
-using EverscaleNet.Models;
-using Microsoft.Extensions.Options;
-using Perfolizer.Mathematics.OutlierDetection;
-
 namespace EverscaleNet.Benchmark;
 
 [SimpleJob(RunStrategy.ColdStart, iterationCount: 1000)]

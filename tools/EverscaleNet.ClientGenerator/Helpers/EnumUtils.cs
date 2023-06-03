@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace EverscaleNet.ClientGenerator.Helpers;
+﻿namespace EverscaleNet.ClientGenerator.Helpers;
 
 internal static class EnumUtils {
 	public static string GetEnumMemberValueOrString<T>(this T enumValue) where T : Enum {

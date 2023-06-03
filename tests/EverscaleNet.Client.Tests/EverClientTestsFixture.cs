@@ -1,11 +1,4 @@
-﻿using EverscaleNet.Adapter.Rust;
-using EverscaleNet.Models;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Serilog;
-using Serilog.Extensions.Logging;
-
-namespace EverscaleNet.Client.Tests;
+﻿namespace EverscaleNet.Client.Tests;
 
 // ReSharper disable once ClassNeverInstantiated.Global
 public class EverClientTestsFixture : IDisposable, IAsyncDisposable {

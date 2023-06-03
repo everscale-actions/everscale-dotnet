@@ -1,6 +1,4 @@
-﻿using Type = EverscaleNet.ClientGenerator.Models.Type;
-
-namespace EverscaleNet.ClientGenerator.Helpers;
+﻿namespace EverscaleNet.ClientGenerator.Helpers;
 
 internal static class ModulesClassHelpers {
 	public static NamespaceDeclarationSyntax CreateModuleClass(string unitName, Module module) {
@@ -62,9 +60,9 @@ internal static class ModulesClassHelpers {
 		var callbackParam = new { name = default(string), nameWithNull = default(string), type = default(string) };
 
 		foreach (Param param in function.Params) {
-			if (param.Type == Type.Generic && param.GenericName == ParamGenericName.Arc) {
+			if (param.Type == ApiType.Generic && param.GenericName == ParamGenericName.Arc) {
 				GenericArg arcArg = param.GenericArgs[0];
-				if (arcArg.Type == Type.Ref && arcArg.RefName == "Request") {
+				if (arcArg.Type == ApiType.Ref && arcArg.RefName == "Request") {
 					string name = StringUtils.EscapeReserved(function.Params[2].Name.GetEnumMemberValueOrString());
 					callbackParam = new {
 						name,
@@ -76,7 +74,7 @@ internal static class ModulesClassHelpers {
 				}
 			}
 
-			if (param.Type == Type.Generic && param.GenericName == ParamGenericName.AppObject) {
+			if (param.Type == ApiType.Generic && param.GenericName == ParamGenericName.AppObject) {
 				callbackParam = new {
 					name = "appObject",
 					nameWithNull = "appObject = null",

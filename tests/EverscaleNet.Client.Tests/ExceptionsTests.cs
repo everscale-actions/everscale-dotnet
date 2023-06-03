@@ -1,7 +1,4 @@
-﻿using EverscaleNet.Models;
-using FluentAssertions.Specialized;
-
-namespace EverscaleNet.Client.Tests;
+﻿namespace EverscaleNet.Client.Tests;
 
 public class ExceptionsTests : IClassFixture<EverClientTestsFixture> {
 	private readonly IEverClient _everClient;

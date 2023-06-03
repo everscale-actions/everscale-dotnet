@@ -1,10 +1,8 @@
-﻿using System.Text.Json.Serialization;
-
-namespace EverscaleNet.ClientGenerator.Models;
+﻿namespace EverscaleNet.ClientGenerator.Models;
 
 public class OptionalInnerOptionalInner {
 	[JsonPropertyName("type")]
-	public Type Type { get; set; }
+	public ApiType Type { get; set; }
 	[JsonPropertyName("number_type")]
 	public NumberType NumberType { get; set; }
 	[JsonPropertyName("number_size")]
