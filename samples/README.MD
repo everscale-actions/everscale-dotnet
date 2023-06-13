@@ -18,6 +18,14 @@ Download and install latest .NET SDK https://dotnet.microsoft.com/download
 npx -y everdev se start
 ```
 
+## ConsoleApp
+
+A simple console app that just generates a random seed phrase
+
+```shell
+dotnet run --project ConsoleApp
+```
+
 ## Blockchain message sending and receiving
 
 ### MessageReceiverService
