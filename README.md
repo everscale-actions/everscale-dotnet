@@ -102,7 +102,7 @@ builder.Services.AddEverClient(client => {
 
 ```csharp
 builder.Services
-       .AddEverWebClient(
+       .AddEverClient(
 	       client => {
 		       client.Network.Endpoints = new[] { "http://mainnet.evercloud.dev/your-project-id-here/graphql" };
 		       ..
