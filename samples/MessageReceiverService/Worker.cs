@@ -1,3 +1,9 @@
+using EverscaleNet.Abstract;
+using EverscaleNet.Client.Models;
+using EverscaleNet.Models;
+using EverscaleNet.Serialization;
+using EverscaleNet.Utils;
+
 namespace MessageReceiverService;
 
 public class Worker : BackgroundService {

@@ -1,3 +1,7 @@
+using EverscaleNet.Abstract;
+using EverscaleNet.Client.Models;
+using EverscaleNet.Models;
+
 namespace TestingExample;
 
 public class CalculatorInternalTests : IAsyncLifetime {

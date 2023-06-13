@@ -1,3 +1,6 @@
+using EverscaleNet.Abstract;
+using EverscaleNet.Models;
+
 namespace TestingExample;
 
 public class Startup {

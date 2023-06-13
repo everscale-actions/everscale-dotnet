@@ -1,3 +1,8 @@
+using EverscaleNet.Abstract;
+using EverscaleNet.Client.Models;
+using EverscaleNet.Models;
+using EverscaleNet.Utils;
+
 namespace TestingExample;
 
 public class BomberTests : IAsyncLifetime {

@@ -1,4 +1,7 @@
 using EverscaleNet;
+using EverscaleNet.Abstract;
+using EverscaleNet.Client.Models;
+using EverscaleNet.Serialization;
 
 namespace BlazorApp.Contracts;
 

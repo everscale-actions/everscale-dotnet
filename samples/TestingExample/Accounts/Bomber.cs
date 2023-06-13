@@ -1,3 +1,6 @@
+using EverscaleNet.Abstract;
+using EverscaleNet.Client.Models;
+
 namespace TestingExample.Accounts;
 
 internal class Bomber : AccountBase {

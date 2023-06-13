@@ -1,6 +1,7 @@
 using BlazorApp;
 using BlazorApp.Contracts;
 using Blazored.LocalStorage;
+using EverscaleNet.Client.Models;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 

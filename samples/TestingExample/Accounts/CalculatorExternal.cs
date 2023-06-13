@@ -1,3 +1,7 @@
+using EverscaleNet.Abstract;
+using EverscaleNet.Client.Models;
+using EverscaleNet.Serialization;
+
 namespace TestingExample.Accounts;
 
 internal class CalculatorExternal : AccountBase {
