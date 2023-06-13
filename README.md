@@ -36,7 +36,7 @@ dotnet add package EverscaleNet.WebClient
 ```
 
 ```csharp
-builder.Services.AddEverClient();
+builder.Services.AddEverWebClient();
 ```
 
 ## Ready to use everywhere
@@ -85,7 +85,8 @@ See configuration client parameters:
 ### Example configuration for typical client
 
 ```csharp
-builder.Services.AddEverClient(client => {
+builder.Services
+  .AddEverClient(client => {
         client.Network.Endpoints = new[] { "http://mainnet.evercloud.dev/your-project-id-here/graphql" };
         client.Network.NetworkRetriesCount = 5;
     }, packageManager =>
@@ -102,20 +103,19 @@ builder.Services.AddEverClient(client => {
 
 ```csharp
 builder.Services
-       .AddEverClient(
-	       client => {
-		       client.Network.Endpoints = new[] { "http://mainnet.evercloud.dev/your-project-id-here/graphql" };
-		       ..
-	       }, packageManager => {
-		       packageManager.BasePath = "http://your_site.com"; // can be builder.HostEnvironment.BaseAddress
-		       packageManager.PackagesPath = "_my_contracts"; // path relative to `wwwroot`
-		       ..
-	       }, libWeb => { 
-		       // configuring js wasm wrapper
-		       // see https://github.com/tonlabs/ever-sdk-js#setup-library
-		       libWeb.DisableSeparateWorker = false;
-		       libWeb.BinaryUrl = "/_content/EverscaleNet.Adapter.Wasm/eversdk.wasm";
-	       })
+  .AddEverWebClient(client => {
+         client.Network.Endpoints = new[] { "http://mainnet.evercloud.dev/your-project-id-here/graphql" };
+         ..
+     }, packageManager => {
+         packageManager.BasePath = "http://your_site.com"; // can be builder.HostEnvironment.BaseAddress
+         packageManager.PackagesPath = "_my_contracts"; // path relative to `wwwroot`
+         ..
+     }, libWeb => { 
+         // configuring js wasm wrapper
+         // see https://github.com/tonlabs/ever-sdk-js#setup-library
+         libWeb.DisableSeparateWorker = false;
+         libWeb.BinaryUrl = "/_content/EverscaleNet.Adapter.Wasm/eversdk.wasm";
+     });
 ```
 
 Blazor WASM [sample](https://github.com/everscale-actions/everscale-dotnet/tree/main/samples/BlazorApp)
@@ -141,9 +141,10 @@ https://docs.microsoft.com/en-us/dotnet/core/extensions/configuration-providers
 ```
 
 ```csharp
-builder.Services.AddEverClient()        
-        .Configure<EverClientOptions>(Configuration.GetSection("EverClient"))
-        .Configure<PackageManagerOptions>(Configuration.GetSection("PackageManager"));
+builder.Services
+    .AddEverClient()        
+    .Configure<EverClientOptions>(Configuration.GetSection("EverClient"))
+    .Configure<PackageManagerOptions>(Configuration.GetSection("PackageManager"));
 ```
 
 ## Logging

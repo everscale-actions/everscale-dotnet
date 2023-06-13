@@ -15,9 +15,6 @@
 		<Content Update="appsettings.Development.json">
 			<DependentUpon>appsettings.json</DependentUpon>
 		</Content>
-		<Content Include="..\README.MD">
-			<Link>README.MD</Link>
-		</Content>
 	</ItemGroup>
 
 	<ItemGroup>

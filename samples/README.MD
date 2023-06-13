@@ -14,7 +14,7 @@ Download and install latest .NET SDK https://dotnet.microsoft.com/download
 
 ### Start local Node SE
 
-```
+```shell
 npx -y everdev se start
 ```
 

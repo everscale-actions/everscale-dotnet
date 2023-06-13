@@ -24,10 +24,10 @@ public static class ServiceCollectionExtensions {
 	/// </param>
 	/// <returns></returns>
 	// ReSharper enable CommentTypo
-	public static IServiceCollection AddEverClient(this IServiceCollection services,
-	                                               Action<EverClientOptions>? configureEverClientOptions = null,
-	                                               Action<WebPackageManagerOptions>? configurePackageManagerOptions = null,
-	                                               Action<LibWebOptions>? configureLibWebOptions = null
+	public static IServiceCollection AddEverWebClient(this IServiceCollection services,
+	                                                  Action<EverClientOptions>? configureEverClientOptions = null,
+	                                                  Action<WebPackageManagerOptions>? configurePackageManagerOptions = null,
+	                                                  Action<LibWebOptions>? configureLibWebOptions = null
 	) {
 		if (configureEverClientOptions != null) {
 			services.Configure(configureEverClientOptions);
@@ -64,10 +64,10 @@ public static class ServiceCollectionExtensions {
 	/// </param>
 	/// <returns></returns>
 	// ReSharper enable CommentTypo
-	public static IServiceCollection AddEverClient(this IServiceCollection services,
-	                                               Action<IServiceProvider, EverClientOptions>? configureEverClientOptions = null,
-	                                               Action<IServiceProvider, WebPackageManagerOptions>? configurePackageManagerOptions = null,
-	                                               Action<IServiceProvider, LibWebOptions>? configureLibWebOptions = null) {
+	public static IServiceCollection AddEverWebClient(this IServiceCollection services,
+	                                                  Action<IServiceProvider, EverClientOptions>? configureEverClientOptions = null,
+	                                                  Action<IServiceProvider, WebPackageManagerOptions>? configurePackageManagerOptions = null,
+	                                                  Action<IServiceProvider, LibWebOptions>? configureLibWebOptions = null) {
 		if (configureEverClientOptions != null) {
 			services.AddOptions();
 			services.AddSingleton<IConfigureOptions<EverClientOptions>>(

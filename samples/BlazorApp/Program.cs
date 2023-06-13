@@ -11,7 +11,7 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services
-       .AddEverClient((provider, options) => {
+       .AddEverWebClient((provider, options) => {
 	       using IServiceScope scope = provider.CreateScope();
 	       var localStorage = scope.ServiceProvider.GetRequiredService<ISyncLocalStorageService>();
 	       options.Network.Endpoints = localStorage.GetItem<string[]>(Static.EndpointsStorageKey);
