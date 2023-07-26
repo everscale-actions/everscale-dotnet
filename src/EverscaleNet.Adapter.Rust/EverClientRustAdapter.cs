@@ -37,7 +37,7 @@ public class EverClientRustAdapter : EverClientAdapterBase {
 	/// <inheritdoc />
 	protected override async ValueTask DisposeAsyncCore() {
 		await base.DisposeAsyncCore();
-		RustInteropInterface.tc_destroy_context(ContextId);
+		RustInteropInterface.DestroyContext(ContextId);
 	}
 
 	/// <inheritdoc />
@@ -46,12 +46,12 @@ public class EverClientRustAdapter : EverClientAdapterBase {
 			JsonSerializer.Serialize(_optionsAccessor.Value, JsonOptionsProvider.JsonSerializerOptions);
 		_logger.LogTrace("Creating context with options: {Config}", configJson);
 		using var optionsInteropJson = configJson.ToInteropStringDisposable();
-		IntPtr resultPtr = RustInteropInterface.tc_create_context(optionsInteropJson);
+		IntPtr resultPtr = RustInteropInterface.CreateContext(optionsInteropJson);
 
 		_logger.LogTrace("Reading context creation result");
-		InteropString resultInterop = RustInteropInterface.tc_read_string(resultPtr);
+		InteropString resultInterop = RustInteropInterface.ReadString(resultPtr);
 		var resultJson = resultInterop.ToString();
-		RustInteropInterface.tc_destroy_string(resultPtr);
+		RustInteropInterface.DestroyString(resultPtr);
 		_logger.LogTrace("Got context creation result: {Result}", resultJson);
 
 		uint contextId = GetContextIdByCreatedContextJson(resultJson);
@@ -68,8 +68,8 @@ public class EverClientRustAdapter : EverClientAdapterBase {
 
 		using var methodInteropString = method.ToInteropStringDisposable();
 		using var paramsJsonInteropString = requestJson.ToInteropStringDisposable();
-		RustInteropInterface.tc_request(ContextId, methodInteropString, paramsJsonInteropString, requestId,
-		                                callbackDelegate);
+		RustInteropInterface.Request(ContextId, methodInteropString, paramsJsonInteropString, requestId,
+		                             callbackDelegate);
 		return Task.CompletedTask;
 	}
 
