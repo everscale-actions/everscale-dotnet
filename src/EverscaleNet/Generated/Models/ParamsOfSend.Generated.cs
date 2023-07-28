@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// <para>[UNSTABLE](UNSTABLE.md) Parameters of `send` function.</para>
+    /// <para>[UNSTABLE](UNSTABLE.md) [DEPRECATED](DEPRECATED.md) Parameters of `send` function.</para>
     /// </summary>
     public class ParamsOfSend
     {

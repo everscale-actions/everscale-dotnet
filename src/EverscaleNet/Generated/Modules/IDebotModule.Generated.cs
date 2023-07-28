@@ -12,7 +12,7 @@ namespace EverscaleNet.Abstract.Modules
     public interface IDebotModule : IEverModule
     {
         /// <summary>
-        /// <para>[UNSTABLE](UNSTABLE.md) Creates and instance of DeBot.</para>
+        /// <para>[UNSTABLE](UNSTABLE.md) [DEPRECATED](DEPRECATED.md) Creates and instance of DeBot.</para>
         /// <para>Downloads debot smart contract (code and data) from blockchain and creates</para>
         /// <para>an instance of Debot Engine for it.</para>
         /// <para># Remarks</para>
@@ -21,7 +21,7 @@ namespace EverscaleNet.Abstract.Modules
         public Task<RegisteredDebot> Init(ParamsOfInit @params, Func<JsonElement, uint, CancellationToken, Task> appObject = null, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// <para>[UNSTABLE](UNSTABLE.md) Starts the DeBot.</para>
+        /// <para>[UNSTABLE](UNSTABLE.md) [DEPRECATED](DEPRECATED.md) Starts the DeBot.</para>
         /// <para>Downloads debot smart contract from blockchain and switches it to</para>
         /// <para>context zero.</para>
         /// <para>This function must be used by Debot Browser to start a dialog with debot.</para>
@@ -34,13 +34,13 @@ namespace EverscaleNet.Abstract.Modules
         public Task Start(ParamsOfStart @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// <para>[UNSTABLE](UNSTABLE.md) Fetches DeBot metadata from blockchain.</para>
+        /// <para>[UNSTABLE](UNSTABLE.md) [DEPRECATED](DEPRECATED.md) Fetches DeBot metadata from blockchain.</para>
         /// <para>Downloads DeBot from blockchain and creates and fetches its metadata.</para>
         /// </summary>
         public Task<ResultOfFetch> Fetch(ParamsOfFetch @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// <para>[UNSTABLE](UNSTABLE.md) Executes debot action.</para>
+        /// <para>[UNSTABLE](UNSTABLE.md) [DEPRECATED](DEPRECATED.md) Executes debot action.</para>
         /// <para>Calls debot engine referenced by debot handle to execute input action.</para>
         /// <para>Calls Debot Browser Callbacks if needed.</para>
         /// <para># Remarks</para>
@@ -49,13 +49,13 @@ namespace EverscaleNet.Abstract.Modules
         public Task Execute(ParamsOfExecute @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// <para>[UNSTABLE](UNSTABLE.md) Sends message to Debot.</para>
+        /// <para>[UNSTABLE](UNSTABLE.md) [DEPRECATED](DEPRECATED.md) Sends message to Debot.</para>
         /// <para>Used by Debot Browser to send response on Dinterface call or from other Debots.</para>
         /// </summary>
         public Task Send(ParamsOfSend @params, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// <para>[UNSTABLE](UNSTABLE.md) Destroys debot handle.</para>
+        /// <para>[UNSTABLE](UNSTABLE.md) [DEPRECATED](DEPRECATED.md) Destroys debot handle.</para>
         /// <para>Removes handle from Client Context and drops debot engine referenced by that handle.</para>
         /// </summary>
         public Task Remove(ParamsOfRemove @params, CancellationToken cancellationToken = default);

@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 namespace EverscaleNet.Client.Models
 {
     /// <summary>
-    /// <para>[UNSTABLE](UNSTABLE.md) Debot Browser callbacks</para>
+    /// <para>[UNSTABLE](UNSTABLE.md) [DEPRECATED](DEPRECATED.md) Debot Browser callbacks</para>
     /// <para>Called by debot engine to communicate with debot browser.</para>
     /// </summary>
 #if NET6_0_OR_GREATER

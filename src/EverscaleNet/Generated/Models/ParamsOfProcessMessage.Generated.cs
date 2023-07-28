@@ -17,9 +17,9 @@ namespace EverscaleNet.Client.Models
         public ParamsOfEncodeMessage MessageEncodeParams { get; set; }
 
         /// <summary>
-        /// <para>Flag for requesting events sending</para>
+        /// <para>Flag for requesting events sending. Default is `false`.</para>
         /// </summary>
         [JsonPropertyName("send_events")]
-        public bool SendEvents { get; set; }
+        public bool? SendEvents { get; set; }
     }
 }

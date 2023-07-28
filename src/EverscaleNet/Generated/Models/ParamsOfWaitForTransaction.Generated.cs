@@ -34,10 +34,10 @@ namespace EverscaleNet.Client.Models
         public string ShardBlockId { get; set; }
 
         /// <summary>
-        /// <para>Flag that enables/disables intermediate events</para>
+        /// <para>Flag that enables/disables intermediate events. Default is `false`.</para>
         /// </summary>
         [JsonPropertyName("send_events")]
-        public bool SendEvents { get; set; }
+        public bool? SendEvents { get; set; }
 
         /// <summary>
         /// <para>The list of endpoints to which the message was sent.</para>

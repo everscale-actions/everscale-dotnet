@@ -70,12 +70,12 @@ namespace EverscaleNet.Client
         public INetModule Net { get; }
 
         /// <summary>
-        /// <para>[UNSTABLE](UNSTABLE.md) Module for working with debot.</para>
+        /// <para>[UNSTABLE](UNSTABLE.md) [DEPRECATED](DEPRECATED.md) Module for working with debot.</para>
         /// </summary>
         public IDebotModule Debot { get; }
 
         /// <summary>
-        /// <para>[UNSTABLE](UNSTABLE.md) Module for proving data, retrieved from TONOS API.</para>
+        /// <para>[UNSTABLE](UNSTABLE.md) [DEPRECATED](DEPRECATED.md) Module for proving data, retrieved from TONOS API.</para>
         /// </summary>
         public IProofsModule Proofs { get; }
     }
