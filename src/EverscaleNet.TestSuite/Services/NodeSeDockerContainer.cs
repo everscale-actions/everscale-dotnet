@@ -1,6 +1,7 @@
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Containers;
+using DotNet.Testcontainers.Images;
 
 namespace EverscaleNet.TestSuite.Services;
 
@@ -16,6 +17,7 @@ public class NodeSeDockerContainer : IAsyncDisposable {
 		_everNodeSeContainer =
 			new ContainerBuilder()
 				.WithImage("tonlabs/local-node:latest")
+				.WithImagePullPolicy(PullPolicy.Always)
 				.WithEnvironment("USER_AGREEMENT", "yes")
 				.WithPortBinding(80, true)
 				.WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(80))
