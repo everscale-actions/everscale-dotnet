@@ -70,7 +70,7 @@ public class Worker : BackgroundService {
 			Message = getCountEncodedMessage.Message
 		}, cancellationToken);
 
-		return result.Decoded.Output.Get<string>("c").HexToDec();
+		return result.Decoded.Output!.Get<string>("c").HexToDec();
 	}
 
 	private async Task<string> CheckBalanceAndDeploy(IPackage package, KeyPair keys,
