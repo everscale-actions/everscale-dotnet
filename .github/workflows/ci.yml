@@ -15,6 +15,7 @@ on:
 env:
   DOTNET_NOLOGO: true
   NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+  SolCompilerVersion: 0.71.0
 
 jobs:
   labels:
