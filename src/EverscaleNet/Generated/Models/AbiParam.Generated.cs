@@ -27,5 +27,11 @@ namespace EverscaleNet.Client.Models
         /// </summary>
         [JsonPropertyName("components")]
         public AbiParam[] Components { get; set; }
+
+        /// <summary>
+        /// <para>Not described yet..</para>
+        /// </summary>
+        [JsonPropertyName("init")]
+        public bool? Init { get; set; }
     }
 }
