@@ -98,9 +98,11 @@ public class BomberTests : IAsyncLifetime {
 		Task<AccountType> bomberAccountTypeTask = _bomber.GetAccountType();
 		Task<decimal> sinkBalanceAfterTask = _sink.GetBalance();
 		await Task.WhenAll(bomberAccountTypeTask, sinkBalanceAfterTask);
+		AccountType bomberAccountType = await bomberAccountTypeTask;
+		decimal sinkBalanceAfter = await sinkBalanceAfterTask;
 
-		bomberAccountTypeTask.Result.Should().Be(AccountType.NonExist);
-		(sinkBalanceAfterTask.Result - sinkBalanceBefore).Should().BeInRange(TopUpCoins - 0.04M, TopUpCoins);
+		bomberAccountType.Should().Be(AccountType.NonExist);
+		(sinkBalanceAfter - sinkBalanceBefore).Should().BeInRange(TopUpCoins - 0.04M, TopUpCoins);
 	}
 
 	private async Task<(decimal bomber, decimal sink)> GetBalances() {
