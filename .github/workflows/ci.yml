@@ -42,19 +42,25 @@ jobs:
     steps:
       - name: Run Node SE
         run: docker run -d --name tonlab-node -e USER_AGREEMENT=yes -p5555:80 tonlabs/local-node
-
+      
       - name: Checkout
         uses: actions/checkout@v3
         with:
           submodules: true
-
+      
+      - name: Get Cache Month
+        id: cache-month
+        run: |
+          echo "date=$(/bin/date -u "+%Y%m")" >> $GITHUB_OUTPUT
+        shell: bash
+      
       - uses: actions/cache@v3
         with:
           path: ~/.nuget/packages
-          key: nuget-${{ hashFiles('Directory.Packages.props') }}
+          key: nuget-${{ steps.cache-month.outputs.date }}-${{ hashFiles('src/Directory.Packages.props') }}
           restore-keys: |
-            nuget-
-
+            nuget-${{ steps.cache-month.outputs.date }}-
+      
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v3
         with:
@@ -62,13 +68,13 @@ jobs:
             6.x
             7.x
             8.x
-
+      
       - name: Restore
         run: dotnet restore -v normal
-
+      
       - name: Build
         run: dotnet build -c Release --no-restore -v normal -ds -m
-
+      
       - name: Wait for first block of Node SE
         timeout-minutes: 5
         run: |
@@ -79,21 +85,21 @@ jobs:
             fi
             sleep 1
           done
-
+      
       - name: Test
         timeout-minutes: 10
         env:
           EVERSCALE_NETWORK_ENDPOINTS: http://localhost:5555
         run: |
           dotnet test --no-build -c Release --logger "console;verbosity=normal" --logger "trx;LogFilePrefix=results" -m
-
+      
       - name: Upload test results trx files
         uses: actions/upload-artifact@v3
         if: success() || failure()
         with:
           name: test-results
           path: '**/*.trx'
-
+      
       - name: Pack and publish Release package
         if: github.event_name == 'release'
         run: |
@@ -103,7 +109,7 @@ jobs:
           dotnet pack -v normal -c Release --include-symbols --include-source -p:PackageVersion=$VERSION -p:RunNumber=${{ github.run_number }}
           dotnet nuget push "src/**/bin/Release/*.nupkg" --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json --api-key ${{ github.token }} --skip-duplicate
           dotnet nuget push "src/**/bin/Release/*.nupkg" --source https://api.nuget.org/v3/index.json --api-key $NUGET_KEY --skip-duplicate
-
+      
       - name: Pack and publish PR package
         if: github.event.label.name == 'publish'
         run: |
