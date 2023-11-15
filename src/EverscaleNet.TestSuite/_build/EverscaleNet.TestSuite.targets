@@ -1,11 +1,11 @@
 <Project>
 
-  <ItemGroup Label="PackageContentFiles">
-    <ContentContractFiles Include="$(MSBuildThisFileDirectory)\..\contentFiles\_contracts\**\*.*" />
-  </ItemGroup>
+	<ItemGroup Label="PackageContentFiles">
+		<ContentContractFiles Include="$(MSBuildThisFileDirectory)\..\contentFiles\_contracts\**\*.*" />
+	</ItemGroup>
 
-  <Target Name="CopyFiles" AfterTargets="Build">
-    <Copy SourceFiles="@(ContentContractFiles)" DestinationFolder="$(TargetDir)\_contracts\%(RecursiveDir)" />
-  </Target>
+	<Target Name="CopyFiles" AfterTargets="Build">
+		<Copy SourceFiles="@(ContentContractFiles)" DestinationFolder="$(TargetDir)\_contracts\%(RecursiveDir)" />
+	</Target>
 
 </Project>

@@ -14,7 +14,7 @@ public class GiverV3 : AccountBase, IEverGiver {
 		new FilePackageManager(new OptionsWrapper<FilePackageManagerOptions>(new FilePackageManagerOptions {
 			KeyPairFileTemplate = "seGiver.keys.json"
 		})),
-		address: optionsAccessor.Value.Address ?? SeGiverAddress
+		optionsAccessor.Value.Address ?? SeGiverAddress
 	) { }
 
 	/// <inheritdoc />

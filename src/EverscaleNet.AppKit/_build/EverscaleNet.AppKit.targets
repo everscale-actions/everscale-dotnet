@@ -1,55 +1,55 @@
 <Project>
 
-  <PropertyGroup>
-    <EverDevTool Condition=" $(EverDevTool) == '' ">npx everdev@latest</EverDevTool>
-    <SolCompilerVersion Condition=" $(SolCompilerVersion) == '' ">latest</SolCompilerVersion>
-    <TVMLinkerVersion Condition=" $(TVMLinkerVersion) == '' ">latest</TVMLinkerVersion>
-    <ContractsBasePath Condition=" $(ContractsBasePath) == '' ">_contracts</ContractsBasePath>
-  </PropertyGroup>
+	<PropertyGroup>
+		<EverDevTool Condition=" $(EverDevTool) == '' ">npx everdev@latest</EverDevTool>
+		<SolCompilerVersion Condition=" $(SolCompilerVersion) == '' ">latest</SolCompilerVersion>
+		<TVMLinkerVersion Condition=" $(TVMLinkerVersion) == '' ">latest</TVMLinkerVersion>
+		<ContractsBasePath Condition=" $(ContractsBasePath) == '' ">_contracts</ContractsBasePath>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Content Include="$(ContractsBasePath)\**\*.sol;$(ContractsBasePath)\**\*.tsol" />
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="$(ContractsBasePath)\**\*.sol;$(ContractsBasePath)\**\*.tsol" />
+	</ItemGroup>
 
-  <Target Name="IncludeSolidityFiles" BeforeTargets="CompileSolidityContracts;GetCopyToOutputDirectoryItems">
-    <ItemGroup>
-      <SolAllFiles Include="$(ContractsBasePath)\**\*.sol;$(ContractsBasePath)\**\*.tsol" />
-      <SolCompileFiles Include="$(ContractsBasePath)\**\*.sol;**\*.tsol" Exclude="$(ContractsBasePath)\**\interfaces\**;$(ContractsBasePath)\**\include\**;$(ContractsBasePath)\**\import\**;$(ContractsBasePath)\**\abstract\**;$(ContractsBasePath)\**\.solc_imports\**" />
-    </ItemGroup>
-  </Target>
+	<Target Name="IncludeSolidityFiles" BeforeTargets="CompileSolidityContracts;GetCopyToOutputDirectoryItems">
+		<ItemGroup>
+			<SolAllFiles Include="$(ContractsBasePath)\**\*.sol;$(ContractsBasePath)\**\*.tsol" />
+			<SolCompileFiles Include="$(ContractsBasePath)\**\*.sol;**\*.tsol" Exclude="$(ContractsBasePath)\**\interfaces\**;$(ContractsBasePath)\**\include\**;$(ContractsBasePath)\**\import\**;$(ContractsBasePath)\**\abstract\**;$(ContractsBasePath)\**\.solc_imports\**" />
+		</ItemGroup>
+	</Target>
 
-  <Target Name="CompileSolidityContracts" Condition=" $(DoNotBuildContracts) == '' " Inputs="@(SolAllFiles)" Outputs="@(SolCompileFiles->'$(OutputPath)%(RelativeDir)%(Filename).tvc');@(SolCompileFiles->'$(OutputPath)%(RelativeDir)%(Filename).abi.json')" AfterTargets="Build">
-    <Exec Command="$(EverDevTool) --version" />
-    <Exec Command="$(EverDevTool) sol set -c $(SolCompilerVersion) -l $(TVMLinkerVersion)" />
-    <Exec Command="$(EverDevTool) sol version" />
-    <Message Text="Building @(SolCompileFiles).. @(SolCompileFiles->'$(OutputPath)%(RelativeDir)%(Filename).tvc');@(SolCompileFiles->'$(OutputPath)%(RelativeDir)%(Filename).abi.json')" />
-    <Exec Command="$(EverDevTool) sol compile %(Identity) -o @(SolCompileFiles->'$(OutputPath)%(RelativeDir)') -b $(ContractsBasePath)" />
-  </Target>
+	<Target Name="CompileSolidityContracts" Condition=" $(DoNotBuildContracts) == '' " Inputs="@(SolAllFiles)" Outputs="@(SolCompileFiles->'$(OutputPath)%(RelativeDir)%(Filename).tvc');@(SolCompileFiles->'$(OutputPath)%(RelativeDir)%(Filename).abi.json')" AfterTargets="Build">
+		<Exec Command="$(EverDevTool) --version" />
+		<Exec Command="$(EverDevTool) sol set -c $(SolCompilerVersion) -l $(TVMLinkerVersion)" />
+		<Exec Command="$(EverDevTool) sol version" />
+		<Message Text="Building @(SolCompileFiles).. @(SolCompileFiles->'$(OutputPath)%(RelativeDir)%(Filename).tvc');@(SolCompileFiles->'$(OutputPath)%(RelativeDir)%(Filename).abi.json')" />
+		<Exec Command="$(EverDevTool) sol compile %(Identity) -o @(SolCompileFiles->'$(OutputPath)%(RelativeDir)') -b $(ContractsBasePath)" />
+	</Target>
 
-  <Target Name="GetCopyToOutputDirectoryTvcItems" BeforeTargets="GetCopyToOutputDirectoryItems">
-    <ItemGroup>
-      <CompiledTvcFiles Include="@(SolCompileFiles->'$(OutputPath)%(RelativeDir)%(Filename).tvc')">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        <TargetPath>%(RelativeDir)%(Filename).tvc</TargetPath>
-      </CompiledTvcFiles>
+	<Target Name="GetCopyToOutputDirectoryTvcItems" BeforeTargets="GetCopyToOutputDirectoryItems">
+		<ItemGroup>
+			<CompiledTvcFiles Include="@(SolCompileFiles->'$(OutputPath)%(RelativeDir)%(Filename).tvc')">
+				<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+				<TargetPath>%(RelativeDir)%(Filename).tvc</TargetPath>
+			</CompiledTvcFiles>
 
-      <CompiledAbiFiles Include="@(SolCompileFiles->'$(OutputPath)%(RelativeDir)%(Filename).abi.json')">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        <TargetPath>%(RelativeDir)%(Filename).abi.json</TargetPath>
-      </CompiledAbiFiles>
+			<CompiledAbiFiles Include="@(SolCompileFiles->'$(OutputPath)%(RelativeDir)%(Filename).abi.json')">
+				<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+				<TargetPath>%(RelativeDir)%(Filename).abi.json</TargetPath>
+			</CompiledAbiFiles>
 
-      <FileWrites Include="@(CompiledTvcFiles->'%(FullPath)');@(CompiledAbiFiles->'%(FullPath)')" />
+			<FileWrites Include="@(CompiledTvcFiles->'%(FullPath)');@(CompiledAbiFiles->'%(FullPath)')" />
 
-      <AllItemsFullPathWithTargetPath Include="@(CompiledTvcFiles->'%(FullPath)');@(CompiledAbiFiles->'%(FullPath)')" />
-    </ItemGroup>
-  </Target>
+			<AllItemsFullPathWithTargetPath Include="@(CompiledTvcFiles->'%(FullPath)');@(CompiledAbiFiles->'%(FullPath)')" />
+		</ItemGroup>
+	</Target>
 
-  <ItemGroup Label="PackageContentFiles">
-    <ContentContractFiles Include="$(MSBuildThisFileDirectory)\..\contentFiles\_contracts\**\*.*" />
-  </ItemGroup>
+	<ItemGroup Label="PackageContentFiles">
+		<ContentContractFiles Include="$(MSBuildThisFileDirectory)\..\contentFiles\_contracts\**\*.*" />
+	</ItemGroup>
 
-  <Target Name="CopyFiles" AfterTargets="Build">
-    <Copy SourceFiles="@(ContentContractFiles)" DestinationFolder="$(TargetDir)\_contracts\%(RecursiveDir)" />
-  </Target>
+	<Target Name="CopyFiles" AfterTargets="Build">
+		<Copy SourceFiles="@(ContentContractFiles)" DestinationFolder="$(TargetDir)\_contracts\%(RecursiveDir)" />
+	</Target>
 
 </Project>

@@ -72,7 +72,7 @@ Welcome to your new everscale app.
 		string[] endpoints = _changeEndpointModel.Endpoints.Split(',').Select(e => e.Trim()).ToArray();
 		await LocalStorageService.SetItemAsync(Static.EndpointsStorageKey, endpoints);
 
-	//Reload app to apply new endpoints
+		//Reload app to apply new endpoints
 		NavigationManager.NavigateTo(NavigationManager.Uri, true);
 	}
 
