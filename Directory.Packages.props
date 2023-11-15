@@ -2,6 +2,10 @@
     <PropertyGroup>
         <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     </PropertyGroup>
+    <PropertyGroup>
+        <RuntimeVersion Condition="'$(TargetFramework)' == 'net6.0'">6.0.25</RuntimeVersion>
+        <RuntimeVersion Condition="'$(TargetFramework)' == 'net7.0'">7.0.14</RuntimeVersion>
+    </PropertyGroup>
     <ItemGroup>
         <PackageVersion Include="BenchmarkDotNet" Version="0.13.5" />
         <PackageVersion Include="Blazored.LocalStorage" Version="4.3.0" />
@@ -22,6 +26,7 @@
         <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
         <PackageVersion Include="Microsoft.Extensions.Options" Version="7.0.0" />
         <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
+        <PackageVersion Include="Microsoft.JSInterop" Version="$(RuntimeVersion)" />
         <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
         <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="1.1.1" />
         <PackageVersion Include="Polly" Version="7.2.3" />
@@ -38,11 +43,5 @@
         <PackageVersion Include="xunit" Version="2.4.2" />
         <PackageVersion Include="xunit.abstractions" Version="2.0.3" />
         <PackageVersion Include="xunit.runner.visualstudio" Version="2.4.5" />
-    </ItemGroup>
-    <ItemGroup Condition=" '$(NET7)' ">
-        <PackageVersion Include="Microsoft.JSInterop" Version="7.0.0" />
-    </ItemGroup>
-    <ItemGroup Condition=" '$(NET6)' ">
-        <PackageVersion Include="Microsoft.JSInterop" Version="6.0.0" />
     </ItemGroup>
 </Project>

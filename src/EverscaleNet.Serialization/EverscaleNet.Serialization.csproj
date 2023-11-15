@@ -1,9 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <ItemGroup Condition=" '$(NET6)' ">
-    <PackageReference Include="System.Text.Json" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\EverscaleNet\EverscaleNet.csproj" />
   </ItemGroup>

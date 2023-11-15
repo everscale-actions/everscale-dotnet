@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <ItemGroup Condition=" '$(NET6)' ">
+    <ItemGroup>
         <PackageReference Include="System.Text.Json" />
     </ItemGroup>
 
