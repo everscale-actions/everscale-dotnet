@@ -8,20 +8,15 @@ namespace EverscaleNet.Client.Models
     /// <summary>
     /// <para>Not described yet..</para>
     /// </summary>
-#if NET6_0_OR_GREATER
     [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
     [JsonDerivedType(typeof(Message), nameof(Message))]
     [JsonDerivedType(typeof(StateInit), nameof(StateInit))]
     [JsonDerivedType(typeof(Tvc), nameof(Tvc))]
-#endif
     public abstract class StateInitSource
     {
         /// <summary>
         /// <para>Deploy message.</para>
         /// </summary>
-#if !NET6_0_OR_GREATER
-        [Dahomey.Json.Attributes.JsonDiscriminator("Message")]
-#endif
         public class Message : StateInitSource
         {
             /// <summary>
@@ -34,9 +29,6 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>State init data.</para>
         /// </summary>
-#if !NET6_0_OR_GREATER
-        [Dahomey.Json.Attributes.JsonDiscriminator("StateInit")]
-#endif
         public class StateInit : StateInitSource
         {
             /// <summary>
@@ -62,9 +54,6 @@ namespace EverscaleNet.Client.Models
         /// <para>Content of the TVC file.</para>
         /// <para>Encoded in `base64`.</para>
         /// </summary>
-#if !NET6_0_OR_GREATER
-        [Dahomey.Json.Attributes.JsonDiscriminator("Tvc")]
-#endif
         public class Tvc : StateInitSource
         {
             /// <summary>

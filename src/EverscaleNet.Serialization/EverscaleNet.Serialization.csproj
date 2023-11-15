@@ -1,9 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <ItemGroup Condition="!$(NET6_OR_NET7)">
-    <PackageReference Include="Dahomey.Json" />
-  </ItemGroup>
-
   <ItemGroup Condition=" '$(NET6)' ">
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>

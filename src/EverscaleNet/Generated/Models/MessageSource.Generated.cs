@@ -8,18 +8,13 @@ namespace EverscaleNet.Client.Models
     /// <summary>
     /// <para>Not described yet..</para>
     /// </summary>
-#if NET6_0_OR_GREATER
     [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
     [JsonDerivedType(typeof(Encoded), nameof(Encoded))]
-#endif
     public abstract class MessageSource
     {
         /// <summary>
         /// <para>Not described yet..</para>
         /// </summary>
-#if !NET6_0_OR_GREATER
-        [Dahomey.Json.Attributes.JsonDiscriminator("Encoded")]
-#endif
         public class Encoded : MessageSource
         {
             /// <summary>

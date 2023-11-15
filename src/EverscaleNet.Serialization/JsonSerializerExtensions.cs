@@ -137,16 +137,9 @@ public static class JsonSerializerExtensions {
 			discriminatorType = element.GetType().BaseType;
 		}
 
-#if NET6_0_OR_GREATER
 		return discriminatorType == null
 			       ? JsonSerializer.SerializeToElement(element, JsonOptionsProvider.JsonSerializerOptions)
 			       : JsonSerializer.SerializeToElement(element, discriminatorType, JsonOptionsProvider.JsonSerializerOptions);
-#else
-		string json = discriminatorType == null
-			              ? JsonSerializer.Serialize(element, JsonOptionsProvider.JsonSerializerOptions)
-			              : JsonSerializer.Serialize(element, discriminatorType, JsonOptionsProvider.JsonSerializerOptions);
-		return JsonDocument.Parse(json).RootElement;
-#endif
 	}
 
 	/// <summary>

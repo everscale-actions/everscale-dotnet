@@ -8,18 +8,13 @@ namespace EverscaleNet.Client.Models
     /// <summary>
     /// <para>Not described yet..</para>
     /// </summary>
-#if NET6_0_OR_GREATER
     [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
     [JsonDerivedType(typeof(GetPassword), nameof(GetPassword))]
-#endif
     public abstract class ResultOfAppPasswordProvider
     {
         /// <summary>
         /// <para>Not described yet..</para>
         /// </summary>
-#if !NET6_0_OR_GREATER
-        [Dahomey.Json.Attributes.JsonDiscriminator("GetPassword")]
-#endif
         public class GetPassword : ResultOfAppPasswordProvider
         {
             /// <summary>

@@ -8,22 +8,17 @@ namespace EverscaleNet.Client.Models
     /// <summary>
     /// <para>Cell builder operation.</para>
     /// </summary>
-#if NET6_0_OR_GREATER
     [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
     [JsonDerivedType(typeof(Integer), nameof(Integer))]
     [JsonDerivedType(typeof(BitString), nameof(BitString))]
     [JsonDerivedType(typeof(Cell), nameof(Cell))]
     [JsonDerivedType(typeof(CellBoc), nameof(CellBoc))]
     [JsonDerivedType(typeof(Address), nameof(Address))]
-#endif
     public abstract class BuilderOp
     {
         /// <summary>
         /// <para>Append integer to cell data.</para>
         /// </summary>
-#if !NET6_0_OR_GREATER
-        [Dahomey.Json.Attributes.JsonDiscriminator("Integer")]
-#endif
         public class Integer : BuilderOp
         {
             /// <summary>
@@ -42,9 +37,6 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Append bit string to cell data.</para>
         /// </summary>
-#if !NET6_0_OR_GREATER
-        [Dahomey.Json.Attributes.JsonDiscriminator("BitString")]
-#endif
         public class BitString : BuilderOp
         {
             /// <summary>
@@ -57,9 +49,6 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Append ref to nested cells.</para>
         /// </summary>
-#if !NET6_0_OR_GREATER
-        [Dahomey.Json.Attributes.JsonDiscriminator("Cell")]
-#endif
         public class Cell : BuilderOp
         {
             /// <summary>
@@ -72,9 +61,6 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Append ref to nested cell.</para>
         /// </summary>
-#if !NET6_0_OR_GREATER
-        [Dahomey.Json.Attributes.JsonDiscriminator("CellBoc")]
-#endif
         public class CellBoc : BuilderOp
         {
             /// <summary>
@@ -87,9 +73,6 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Address.</para>
         /// </summary>
-#if !NET6_0_OR_GREATER
-        [Dahomey.Json.Attributes.JsonDiscriminator("Address")]
-#endif
         public class Address : BuilderOp
         {
             /// <summary>

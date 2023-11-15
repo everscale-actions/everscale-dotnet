@@ -1,10 +1,4 @@
-﻿#if !NET6_0_OR_GREATER
-using Dahomey.Json;
-using Dahomey.Json.Attributes;
-using Dahomey.Json.Serialization.Conventions;
-#endif
-
-namespace EverscaleNet.Serialization;
+﻿namespace EverscaleNet.Serialization;
 
 /// <summary>
 ///     Register discriminator and converters
@@ -18,28 +12,10 @@ public static class JsonOptionsProvider {
 	private static JsonSerializerOptions CreateJsonSerializerOptions() {
 		var options = new JsonSerializerOptions {
 			MaxDepth = int.MaxValue,
-#if NETSTANDARD2_1 || NET5_0_OR_GREATER
 			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
-#else
-			IgnoreNullValues = true
-#endif
 		};
 
 		options.Converters.Add(new BigIntegerConverter());
-
-#if !NET6_0_OR_GREATER
-		IEnumerable<Type> nestedTypes = typeof(Abi.Contract).Assembly.GetTypes().Where(t => t.IsNestedPublic);
-		options.SetupExtensions();
-		DiscriminatorConventionRegistry registry = options.GetDiscriminatorConventionRegistry();
-		registry.ClearConventions();
-		registry.RegisterConvention(new EverClientDiscriminatorConvention(options));
-		registry.DiscriminatorPolicy = DiscriminatorPolicy.Always;
-
-		// register all nested types from models
-		foreach (Type type in nestedTypes) {
-			registry.RegisterType(type);
-		}
-#endif
 
 		return options;
 	}

@@ -94,10 +94,8 @@ internal class ModelsClassHelpers {
 		       .AddModifiers(Token(SyntaxKind.PublicKeyword), Token(SyntaxKind.AbstractKeyword))
 		       .AddMembers(enumTypes)
 		       .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(typeElementSummary)
-		                                         .Add(DisabledText("#if NET6_0_OR_GREATER")).Add(ElasticCarriageReturnLineFeed)
 		                                         .Add(DisabledText("    [JsonPolymorphic(TypeDiscriminatorPropertyName = \"type\")]")).Add(ElasticCarriageReturnLineFeed)
-		                                         .AddRange(polymorphicAttributes)
-		                                         .Add(DisabledText("#endif")).Add(ElasticCarriageReturnLineFeed));
+		                                         .AddRange(polymorphicAttributes));
 	}
 
 	private MemberDeclarationSyntax CreateClassForStruct(string baseName, string name, EnumType[] structFields, string subClassSummary) {
@@ -124,13 +122,7 @@ internal class ModelsClassHelpers {
 		       .AddBaseListTypes(
 			       SimpleBaseType(IdentifierName(baseName)))
 		       .AddMembers(members.ToArray())
-		       .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(subClassSummary)
-		                                         .Add(DisabledText("#if !NET6_0_OR_GREATER"))
-		                                         .Add(ElasticCarriageReturnLineFeed)
-		                                         .Add(DisabledText($"        [Dahomey.Json.Attributes.JsonDiscriminator(\"{name}\")]"))
-		                                         .Add(ElasticCarriageReturnLineFeed)
-		                                         .Add(DisabledText("#endif"))
-		                                         .Add(ElasticCarriageReturnLineFeed));
+		       .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(subClassSummary));
 	}
 
 	private MemberDeclarationSyntax CreatePropertyForRef(string typeName, string name, string description,

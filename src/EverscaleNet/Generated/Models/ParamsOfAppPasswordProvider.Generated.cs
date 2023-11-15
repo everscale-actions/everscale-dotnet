@@ -15,18 +15,13 @@ namespace EverscaleNet.Client.Models
     /// <para>and encrypt the password with naclbox function using nacl_box_keypair.secret</para>
     /// <para>and encryption_public_key keys + nonce = 24-byte prefix of encryption_public_key.</para>
     /// </summary>
-#if NET6_0_OR_GREATER
     [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
     [JsonDerivedType(typeof(GetPassword), nameof(GetPassword))]
-#endif
     public abstract class ParamsOfAppPasswordProvider
     {
         /// <summary>
         /// <para>Not described yet..</para>
         /// </summary>
-#if !NET6_0_OR_GREATER
-        [Dahomey.Json.Attributes.JsonDiscriminator("GetPassword")]
-#endif
         public class GetPassword : ParamsOfAppPasswordProvider
         {
             /// <summary>
