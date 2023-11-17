@@ -6,7 +6,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="FluentAssertions" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" />

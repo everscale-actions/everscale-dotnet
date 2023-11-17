@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
-        <PackageReference Include="System.Text.Json" />
+	    <PackageReference Include="System.Text.Json" VersionOverride="7.0.0" />
     </ItemGroup>
 
     <ItemGroup>
