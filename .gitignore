@@ -368,3 +368,6 @@ FodyWeavers.xsd
 /src/downloads/*
 /src/runtimes/*
 /src/EverscaleNet.Adapter.Wasm/package.json
+
+#mac os
+.DS_Store
