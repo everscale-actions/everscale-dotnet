@@ -1,7 +1,7 @@
 ﻿namespace EverscaleNet.Client.Tests;
 
 [CollectionDefinition(nameof(SystemTestCollectionDefinition), DisableParallelization = true)]
-public class SystemTestCollectionDefinition { }
+public class SystemTestCollectionDefinition;
 
 [Collection(nameof(SystemTestCollectionDefinition))]
 public class ParallelRequestsTests : IClassFixture<EverClientTestsFixture> {
