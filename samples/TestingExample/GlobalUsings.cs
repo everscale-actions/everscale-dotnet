@@ -14,8 +14,6 @@ global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Hosting;
 global using Microsoft.Extensions.Logging;
 global using Microsoft.Extensions.Options;
-global using Polly;
-global using Polly.Retry;
 global using Serilog;
 global using Serilog.Extensions.Logging;
 global using TestingExample.Accounts;

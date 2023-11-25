@@ -1,6 +1,8 @@
 using EverscaleNet.Abstract;
 using EverscaleNet.Client.Models;
 using EverscaleNet.Models;
+using Polly;
+using Polly.Retry;
 
 namespace TestingExample;
 

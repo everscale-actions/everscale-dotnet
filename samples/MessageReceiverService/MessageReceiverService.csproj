@@ -17,10 +17,4 @@
 		</Content>
 	</ItemGroup>
 
-	<ItemGroup>
-		<None Include="_contracts\GiverV2.abi.json">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-	</ItemGroup>
-
 </Project>

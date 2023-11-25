@@ -38,10 +38,10 @@ internal class CalculatorExternal : AccountBase {
 
 		ResultOfDecodeAccountData data = await _client.Abi.DecodeAccountData(new ParamsOfDecodeAccountData {
 			Abi = await GetAbi(cancellationToken),
-			Data = parse.Parsed.Get<string>("data")
+			Data = parse.Parsed!.Get<string>("data")
 		}, cancellationToken);
 
-		return long.Parse(data.Data.Get<string>("sum"));
+		return long.Parse(data.Data!.Get<string>("sum"));
 	}
 
 	public async Task<ResultOfProcessMessage> Deploy(CancellationToken cancellationToken = default) {
