@@ -1,9 +1,9 @@
 <Project>
-    <Import Project="SDKVersion.targets" />
+	<Import Project="SDKVersion.targets" />
 
-    <PropertyGroup>
-        <LangVersion>latest</LangVersion>
-        <ImplicitUsings>true</ImplicitUsings>
-    </PropertyGroup>
+	<PropertyGroup>
+		<LangVersion>latest</LangVersion>
+		<ImplicitUsings>true</ImplicitUsings>
+	</PropertyGroup>
 
 </Project>

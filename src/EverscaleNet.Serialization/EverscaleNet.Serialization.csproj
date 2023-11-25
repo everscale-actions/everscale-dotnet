@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <ItemGroup>
-        <ProjectReference Include="..\EverscaleNet\EverscaleNet.csproj" />
-    </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\EverscaleNet\EverscaleNet.csproj" />
+	</ItemGroup>
 
 </Project>

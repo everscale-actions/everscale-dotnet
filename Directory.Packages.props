@@ -1,53 +1,53 @@
 <Project>
-    <PropertyGroup>
-        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-    </PropertyGroup>
-    <PropertyGroup>
-        <RuntimeVersion Condition="'$(TargetFramework)' == 'net6.0'">6.0.25</RuntimeVersion>
-        <RuntimeVersion Condition="'$(TargetFramework)' == 'net7.0'">7.0.14</RuntimeVersion>
-        <RuntimeVersion Condition="'$(TargetFramework)' == 'net8.0'">8.0.0</RuntimeVersion>
-    </PropertyGroup>
-    <ItemGroup>
-        <PackageVersion Include="BenchmarkDotNet" Version="0.13.10" />
-        <PackageVersion Include="Blazored.LocalStorage" Version="4.4.0" />
-        <PackageVersion Include="EnumExtensions.System.Text.Json" Version="1.1.0" />
-        <PackageVersion Include="FluentAssertions" Version="6.12.0" />
-	    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.0" />
-	    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.0" />
-        <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.7.0" />
-	    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
-	    <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
-	    <PackageVersion Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.0" />
-	    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
-	    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
-	    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
-	    <PackageVersion Include="Microsoft.Extensions.Http" Version="6.0.0" />
-	    <PackageVersion Include="Microsoft.Extensions.Logging" Version="6.0.0" />
-	    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
-	    <PackageVersion Include="Microsoft.Extensions.Options" Version="6.0.0" />
-	    <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
-        <PackageVersion Include="Microsoft.JSInterop" Version="$(RuntimeVersion)" />
-        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-        <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
-        <PackageVersion Include="Polly" Version="8.2.0" />
-        <PackageVersion Include="Serilog.Extensions.Hosting" Version="8.0.0" />
-        <PackageVersion Include="Serilog.Extensions.Logging" Version="8.0.0" />
-        <PackageVersion Include="Serilog.Sinks.Console" Version="5.0.0" />
-        <PackageVersion Include="Serilog.Sinks.XUnit" Version="3.0.5" />
-	    <PackageVersion Include="System.Text.Json" Version="7.0.0" />
-        <PackageVersion Include="Testcontainers" Version="3.6.0" />
-        <PackageVersion Include="Xunit.DependencyInjection" Version="8.7.1" />
-        <PackageVersion Include="Xunit.DependencyInjection.Logging" Version="8.1.0" />
-        <PackageVersion Include="ch1seL.MSBuildGzTool" Version="1.2.0" />
-        <PackageVersion Include="coverlet.collector" Version="6.0.0">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageVersion>
-        <PackageVersion Include="xunit" Version="2.6.1" />
-        <PackageVersion Include="xunit.abstractions" Version="2.0.3" />
-        <PackageVersion Include="xunit.runner.visualstudio" Version="2.5.3">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageVersion>
-    </ItemGroup>
+	<PropertyGroup>
+		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+	</PropertyGroup>
+	<PropertyGroup>
+		<RuntimeVersion Condition="'$(TargetFramework)' == 'net6.0'">6.0.25</RuntimeVersion>
+		<RuntimeVersion Condition="'$(TargetFramework)' == 'net7.0'">7.0.14</RuntimeVersion>
+		<RuntimeVersion Condition="'$(TargetFramework)' == 'net8.0'">8.0.0</RuntimeVersion>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageVersion Include="BenchmarkDotNet" Version="0.13.10" />
+		<PackageVersion Include="Blazored.LocalStorage" Version="4.4.0" />
+		<PackageVersion Include="EnumExtensions.System.Text.Json" Version="1.1.0" />
+		<PackageVersion Include="FluentAssertions" Version="6.12.0" />
+		<PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.0" />
+		<PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.0" />
+		<PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.7.0" />
+		<PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+		<PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
+		<PackageVersion Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.0" />
+		<PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+		<PackageVersion Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
+		<PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
+		<PackageVersion Include="Microsoft.Extensions.Http" Version="6.0.0" />
+		<PackageVersion Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+		<PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+		<PackageVersion Include="Microsoft.Extensions.Options" Version="6.0.0" />
+		<PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
+		<PackageVersion Include="Microsoft.JSInterop" Version="$(RuntimeVersion)" />
+		<PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+		<PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
+		<PackageVersion Include="Polly" Version="8.2.0" />
+		<PackageVersion Include="Serilog.Extensions.Hosting" Version="8.0.0" />
+		<PackageVersion Include="Serilog.Extensions.Logging" Version="8.0.0" />
+		<PackageVersion Include="Serilog.Sinks.Console" Version="5.0.0" />
+		<PackageVersion Include="Serilog.Sinks.XUnit" Version="3.0.5" />
+		<PackageVersion Include="System.Text.Json" Version="7.0.0" />
+		<PackageVersion Include="Testcontainers" Version="3.6.0" />
+		<PackageVersion Include="Xunit.DependencyInjection" Version="8.7.1" />
+		<PackageVersion Include="Xunit.DependencyInjection.Logging" Version="8.1.0" />
+		<PackageVersion Include="ch1seL.MSBuildGzTool" Version="1.2.0" />
+		<PackageVersion Include="coverlet.collector" Version="6.0.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageVersion>
+		<PackageVersion Include="xunit" Version="2.6.1" />
+		<PackageVersion Include="xunit.abstractions" Version="2.0.3" />
+		<PackageVersion Include="xunit.runner.visualstudio" Version="2.5.3">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageVersion>
+	</ItemGroup>
 </Project>

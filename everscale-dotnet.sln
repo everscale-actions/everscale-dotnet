@@ -14,12 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{6187
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageSenderService", "samples\MessageSenderService\MessageSenderService.csproj", "{3ECAD1EB-3AA6-4035-AB31-18F9F74479C3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_targets", "_targets", "{DD278D8B-D9EC-4CF6-8D3A-DC34992DBB72}"
-ProjectSection(SolutionItems) = preProject
-	PackageInfo.targets = PackageInfo.targets
-	SDKVersion.targets = SDKVersion.targets
-EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverscaleNet.Serialization", "src\EverscaleNet.Serialization\EverscaleNet.Serialization.csproj", "{5D76F927-6D5D-4B4A-9DF3-CFFC0D4B585A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{D2AD0D49-D487-4214-AF76-5AB6D64C8E3F}"
@@ -74,6 +68,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverscaleNet.Utils.Tests", "tests\EverscaleNet.Utils.Tests\EverscaleNet.Utils.Tests.csproj", "{EA320D0A-AF79-491B-86FA-D9E80051027B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "samples\ConsoleApp\ConsoleApp.csproj", "{CD573024-ED3B-4E99-8402-7860E40C13A8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_root", "_root", "{F81E4E32-21DD-4F26-8CBA-320384FBEE38}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Packages.props = Directory.Packages.props
+		Directory.Build.props = Directory.Build.props
+		SDKVersion.targets = SDKVersion.targets
+		PackageInfo.targets = PackageInfo.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

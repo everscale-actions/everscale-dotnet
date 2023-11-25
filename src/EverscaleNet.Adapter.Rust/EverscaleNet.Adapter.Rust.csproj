@@ -1,49 +1,49 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-	<Import Project="DownloadLib.targets" />
+  <Import Project="DownloadLib.targets" />
 
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
-		<PackageReference Include="Microsoft.Extensions.Options" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.Options" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\EverscaleNet\EverscaleNet.csproj" />
-		<ProjectReference Include="..\EverscaleNet.Adapter.Base\EverscaleNet.Adapter.Base.csproj" />
-		<ProjectReference Include="..\EverscaleNet.Serialization\EverscaleNet.Serialization.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EverscaleNet\EverscaleNet.csproj" />
+    <ProjectReference Include="..\EverscaleNet.Adapter.Base\EverscaleNet.Adapter.Base.csproj" />
+    <ProjectReference Include="..\EverscaleNet.Serialization\EverscaleNet.Serialization.csproj" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-			<_Parameter1>EverscaleNet.Client</_Parameter1>
-		</AssemblyAttribute>
-		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-			<_Parameter1>EverscaleNet.RustAdapter.Tests</_Parameter1>
-		</AssemblyAttribute>
-	</ItemGroup>
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>EverscaleNet.Client</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>EverscaleNet.RustAdapter.Tests</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
 
-	<ItemGroup>
-		<None Include="..\runtimes\win-x64\native\tonclient.dll">
-			<Pack>true</Pack>
-			<PackagePath>runtimes\win-x64\native</PackagePath>
-			<Link>runtimes\win-x64\native\tonclient.dll</Link>
-		</None>
-		<None Include="..\runtimes\linux-x64\native\libtonclient.so">
-			<Pack>true</Pack>
-			<PackagePath>runtimes\linux-x64\native</PackagePath>
-			<Link>runtimes\linux-x64\native\libtonclient.so</Link>
-		</None>
-		<None Include="..\runtimes\osx-x64\native\libtonclient.dylib">
-			<Pack>true</Pack>
-			<PackagePath>runtimes\osx-x64\native</PackagePath>
-			<Link>runtimes\osx-x64\native\libtonclient.dylib</Link>
-		</None>
-		<None Include="..\runtimes\osx-arm64\native\libtonclient.dylib">
-			<Pack>true</Pack>
-			<PackagePath>runtimes\osx-arm64\native</PackagePath>
-			<Link>runtimes\osx-arm64\native\libtonclient.dylib</Link>
-		</None>
-	</ItemGroup>
+  <ItemGroup>
+    <None Include="..\runtimes\win-x64\native\tonclient.dll">
+      <Pack>true</Pack>
+      <PackagePath>runtimes\win-x64\native</PackagePath>
+      <Link>runtimes\win-x64\native\tonclient.dll</Link>
+    </None>
+    <None Include="..\runtimes\linux-x64\native\libtonclient.so">
+      <Pack>true</Pack>
+      <PackagePath>runtimes\linux-x64\native</PackagePath>
+      <Link>runtimes\linux-x64\native\libtonclient.so</Link>
+    </None>
+    <None Include="..\runtimes\osx-x64\native\libtonclient.dylib">
+      <Pack>true</Pack>
+      <PackagePath>runtimes\osx-x64\native</PackagePath>
+      <Link>runtimes\osx-x64\native\libtonclient.dylib</Link>
+    </None>
+    <None Include="..\runtimes\osx-arm64\native\libtonclient.dylib">
+      <Pack>true</Pack>
+      <PackagePath>runtimes\osx-arm64\native</PackagePath>
+      <Link>runtimes\osx-arm64\native\libtonclient.dylib</Link>
+    </None>
+  </ItemGroup>
 
 </Project>
