@@ -13,11 +13,11 @@ internal class Calculator : AccountBase {
 	}
 
 	public async Task<ResultOfProcessMessage> Add(int value, CancellationToken cancellationToken = default) {
-		return await Run("add", value, cancellationToken);
+		return await Run("add", new { value }, cancellationToken);
 	}
 
 	public async Task<ResultOfProcessMessage> Subtract(int value, CancellationToken cancellationToken = default) {
-		return await Run("subtract", value, cancellationToken);
+		return await Run("subtract", new { value }, cancellationToken);
 	}
 
 	public async Task<long> GetSum(CancellationToken cancellationToken = default) {
@@ -36,10 +36,10 @@ internal class Calculator : AccountBase {
 
 		ResultOfDecodeAccountData data = await _client.Abi.DecodeAccountData(new ParamsOfDecodeAccountData {
 			Abi = await GetAbi(cancellationToken),
-			Data = parse.Parsed.Get<string>("data")
+			Data = parse.Parsed!.Get<string>("data")
 		}, cancellationToken);
 
-		return long.Parse(data.Data.Get<string>("sum"));
+		return long.Parse(data.Data!.Get<string>("sum"));
 	}
 
 	public async Task<ResultOfProcessMessage> Deploy(CancellationToken cancellationToken = default) {

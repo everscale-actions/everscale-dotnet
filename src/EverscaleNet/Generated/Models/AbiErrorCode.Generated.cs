@@ -69,6 +69,10 @@ namespace EverscaleNet.Client.Models
         /// <summary>
         /// <para>Not described yet..</para>
         /// </summary>
-        InvalidFunctionName = 315
+        InvalidFunctionName = 315,
+        /// <summary>
+        /// <para>Not described yet..</para>
+        /// </summary>
+        PubKeyNotSupported = 316
     }
 }

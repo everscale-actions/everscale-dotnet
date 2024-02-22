@@ -1,16 +1,16 @@
 ﻿namespace EverscaleNet.Client.Tests.Modules;
 
 public class TvmModuleTests : IClassFixture<EverClientTestsFixture> {
+	public TvmModuleTests(EverClientTestsFixture fixture, ITestOutputHelper outputHelper) {
+		_everClient = fixture.CreateClient(outputHelper, true);
+		_electorEncodedLazy = new Lazy<Task<string>>(GetElectorEncodedAccount());
+	}
+
 	private const string SubscribeParamsPubkey =
 		"0x2222222222222222222222222222222222222222222222222222222222222222";
 
 	private readonly Lazy<Task<string>> _electorEncodedLazy;
 	private readonly IEverClient _everClient;
-
-	public TvmModuleTests(EverClientTestsFixture fixture, ITestOutputHelper outputHelper) {
-		_everClient = fixture.CreateClient(outputHelper, true);
-		_electorEncodedLazy = new Lazy<Task<string>>(GetElectorEncodedAccount());
-	}
 
 	private async Task<string> TestRunMessage(Func<ResultOfEncodeMessage, Abi, string, Task<string>> run) {
 		KeyPair keys = await _everClient.Crypto.GenerateRandomSignKeys();
@@ -28,7 +28,7 @@ public class TvmModuleTests : IClassFixture<EverClientTestsFixture> {
 
 		string address = await _everClient.DeployWithGiver(encodeMessageParams);
 		JsonElement? fetchAccount = await FetchAccount(address);
-		var account = fetchAccount.Get<string>("boc");
+		var account = fetchAccount?.Get<string>("boc");
 
 		var subscribeParams = new {
 			subscriptionId = "0x1111111111111111111111111111111111111111111111111111111111111111",
@@ -53,7 +53,7 @@ public class TvmModuleTests : IClassFixture<EverClientTestsFixture> {
 			Message = getSubscriptionMessage
 		});
 
-		return result.Decoded.Output.Get<JsonElement>("value0").Get<string>("pubkey");
+		return result.Decoded.Output!.Get<JsonElement>("value0").Get<string>("pubkey");
 	}
 
 	private async Task<ResultOfEncodeMessage> GetSubscribeMessage(string address, JsonElement subscribeParams,
@@ -101,11 +101,13 @@ public class TvmModuleTests : IClassFixture<EverClientTestsFixture> {
 
 	private Func<Task<string>> GetElectorEncodedAccount() {
 		return async () => {
+			ResultOfEncodeStateInit stateInit = await _everClient.Boc.EncodeStateInit(new ParamsOfEncodeStateInit {
+				Code = Elector.Instance.Code,
+				Data = Elector.Instance.Data
+			});
+
 			var paramsOfEncodeAccount = new ParamsOfEncodeAccount {
-				StateInit = new StateInitSource.StateInit {
-					Code = Elector.Instance.Code,
-					Data = Elector.Instance.Data
-				}
+				StateInit = stateInit.StateInit
 			};
 
 			ResultOfEncodeAccount resultOfEncodeAccount = await _everClient.Abi.EncodeAccount(paramsOfEncodeAccount);
@@ -129,7 +131,7 @@ public class TvmModuleTests : IClassFixture<EverClientTestsFixture> {
 			Boc = result.Account
 		});
 
-		parsed.Parsed.Get<string>("id").Should()
+		parsed.Parsed!.Get<string>("id").Should()
 		      .Be("0:f18d106c11586689b11e946269ec1550b69654a8d5964de668149c28877fb65a");
 		parsed.Parsed.Get<string>("acc_type_name").Should().Be("Uninit");
 	}
@@ -154,7 +156,7 @@ public class TvmModuleTests : IClassFixture<EverClientTestsFixture> {
 			Boc = result.Account
 		});
 
-		parsed.Parsed.Get<string>("id").Should().Be(message.Address);
+		parsed.Parsed!.Get<string>("id").Should().Be(message.Address);
 		parsed.Parsed.Get<string>("acc_type_name").Should().Be("Active");
 	}
 
@@ -171,7 +173,7 @@ public class TvmModuleTests : IClassFixture<EverClientTestsFixture> {
 				ReturnUpdatedAccount = true
 			});
 
-			resultOfRun.Transaction.Get<string>("in_msg").Should().Be(message.MessageId);
+			resultOfRun.Transaction!.Get<string>("in_msg").Should().Be(message.MessageId);
 			resultOfRun.Fees.TotalAccountFees.Should().BeGreaterThan(0);
 
 			return resultOfRun.Account;
@@ -202,7 +204,7 @@ public class TvmModuleTests : IClassFixture<EverClientTestsFixture> {
 			Input = $"0x{Elector.Instance.Id.Split(":")[1]}".ToJsonElement()
 		});
 
-		result.Output.ToObject<string[]>().Length.Should().Be(1);
+		result.Output!.ToObject<string[]>().Length.Should().Be(1);
 		result.Output.ToObject<string[]>().Should().BeEquivalentTo("0");
 	}
 

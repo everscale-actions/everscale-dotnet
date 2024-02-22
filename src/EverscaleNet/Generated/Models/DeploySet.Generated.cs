@@ -47,6 +47,8 @@ namespace EverscaleNet.Client.Models
         /// <para>1. Public key from deploy set.</para>
         /// <para>2. Public key, specified in TVM file.</para>
         /// <para>3. Public key, provided by Signer.</para>
+        /// <para>Applicable only for contracts with ABI version &lt; 2.4. Contract initial public key should be</para>
+        /// <para>explicitly provided inside `initial_data` since ABI 2.4</para>
         /// </summary>
         [JsonPropertyName("initial_pubkey")]
         public string InitialPubkey { get; set; }

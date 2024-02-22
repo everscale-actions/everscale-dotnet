@@ -114,9 +114,6 @@ namespace EverscaleNet.Client.Modules
 
         /// <summary>
         /// <para>Creates account state BOC</para>
-        /// <para>Creates account state provided with one of these sets of data :</para>
-        /// <para>1. BOC of code, BOC of data, BOC of library</para>
-        /// <para>2. TVC (string in `base64`), keys, init params</para>
         /// </summary>
         public async Task<ResultOfEncodeAccount> EncodeAccount(ParamsOfEncodeAccount @params, CancellationToken cancellationToken = default)
         {
@@ -134,6 +131,7 @@ namespace EverscaleNet.Client.Modules
 
         /// <summary>
         /// <para>Updates initial account data with initial values for the contract's static variables and owner's public key. This operation is applicable only for initial account data (before deploy). If the contract is already deployed, its data doesn't contain this data section any more.</para>
+        /// <para>Doesn't support ABI version &gt;= 2.4. Use `encode_initial_data` instead</para>
         /// </summary>
         public async Task<ResultOfUpdateInitialData> UpdateInitialData(ParamsOfUpdateInitialData @params, CancellationToken cancellationToken = default)
         {
@@ -151,6 +149,7 @@ namespace EverscaleNet.Client.Modules
 
         /// <summary>
         /// <para>Decodes initial values of a contract's static variables and owner's public key from account initial data This operation is applicable only for initial account data (before deploy). If the contract is already deployed, its data doesn't contain this data section any more.</para>
+        /// <para>Doesn't support ABI version &gt;= 2.4. Use `decode_account_data` instead</para>
         /// </summary>
         public async Task<ResultOfDecodeInitialData> DecodeInitialData(ParamsOfDecodeInitialData @params, CancellationToken cancellationToken = default)
         {

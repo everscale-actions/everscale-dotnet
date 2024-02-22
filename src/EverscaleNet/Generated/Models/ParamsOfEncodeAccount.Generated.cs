@@ -11,10 +11,10 @@ namespace EverscaleNet.Client.Models
     public class ParamsOfEncodeAccount
     {
         /// <summary>
-        /// <para>Source of the account state init.</para>
+        /// <para>Account state init.</para>
         /// </summary>
         [JsonPropertyName("state_init")]
-        public StateInitSource StateInit { get; set; }
+        public string StateInit { get; set; }
 
         /// <summary>
         /// <para>Initial balance.</para>
