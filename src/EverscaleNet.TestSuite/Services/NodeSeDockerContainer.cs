@@ -13,7 +13,6 @@ public class NodeSeDockerContainer : IAsyncDisposable {
 	/// <summary>
 	/// </summary>
 	public NodeSeDockerContainer(ILoggerFactory loggerFactory) {
-		TestcontainersSettings.Logger = loggerFactory.CreateLogger<NodeSeDockerContainer>();
 		_everNodeSeContainer =
 			new ContainerBuilder()
 				.WithImage("tonlabs/local-node:latest")
@@ -22,6 +21,7 @@ public class NodeSeDockerContainer : IAsyncDisposable {
 				.WithPortBinding(80, true)
 				.WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(80))
 				.WithWaitStrategy(Wait.ForUnixContainer().AddCustomWaitStrategy(new WaitNodeSeFirstBlockStrategy(loggerFactory)))
+				.WithLogger(loggerFactory.CreateLogger<NodeSeDockerContainer>())
 				.Build();
 	}
 
