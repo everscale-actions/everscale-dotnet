@@ -110,7 +110,7 @@ namespace EverscaleNet.Abstract.Modules
 
         /// <summary>
         /// <para>Decodes BOC into JSON as a set of provided parameters.</para>
-        /// <para>Solidity functions use ABI types for [builder encoding](https://github.com/tonlabs/TON-Solidity-Compiler/blob/master/API.md#tvmbuilderstore).</para>
+        /// <para>Solidity functions use ABI types for [builder encoding](https://github.com/everx-labs/TON-Solidity-Compiler/blob/master/API.md#tvmbuilderstore).</para>
         /// <para>The simplest way to decode such a BOC is to use ABI decoding.</para>
         /// <para>ABI has it own rules for fields layout in cells so manually encoded</para>
         /// <para>BOC can not be described in terms of ABI rules.</para>
