@@ -12,7 +12,7 @@ namespace EverscaleNet.Abstract.Modules
     public interface IBocModule : IEverModule
     {
         /// <summary>
-        /// <para>Decodes tvc according to the tvc spec. Read more about tvc structure here https://github.com/tonlabs/ever-struct/blob/main/src/scheme/mod.rs#L30</para>
+        /// <para>Decodes tvc according to the tvc spec. Read more about tvc structure here https://github.com/everx-labs/ever-struct/blob/main/src/scheme/mod.rs#L30</para>
         /// </summary>
         public Task<ResultOfDecodeTvc> DecodeTvc(ParamsOfDecodeTvc @params, CancellationToken cancellationToken = default);
 
