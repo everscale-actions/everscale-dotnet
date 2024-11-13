@@ -23,10 +23,10 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<PackageVersion Condition=" $(PackageVersion) == '' ">$(SDKVersion)$(PackageVersionPostfix)</PackageVersion>
-		<AssemblyVersion Condition=" $(AssemblyVersion) == '' ">$(SDKVersion)</AssemblyVersion>
+		<PackageVersion Condition=" $(PackageVersion) == '' ">$(SDK_Version)$(PackageVersionPostfix)</PackageVersion>
+		<AssemblyVersion Condition=" $(AssemblyVersion) == '' ">$(SDK_Version)</AssemblyVersion>
 		<RunNumber Condition=" $(RunNumber) == '' ">0</RunNumber>
-		<FileVersion Condition=" $(FileVersion) == '' ">$(SDKVersion).$(RunNumber)</FileVersion>
+		<FileVersion Condition=" $(FileVersion) == '' ">$(SDK_Version).$(RunNumber)</FileVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">

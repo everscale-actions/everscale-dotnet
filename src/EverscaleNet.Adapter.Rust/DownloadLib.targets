@@ -6,9 +6,9 @@
 	</ItemGroup>
 
 	<PropertyGroup>
-		<_SDKVersionDenormalized>$([System.String]::Copy('$(SDKVersion)').Replace('.', '_'))</_SDKVersionDenormalized>
+		<_SDKVersionDenormalized>$([System.String]::Copy('$(SDK_Version)').Replace('.', '_'))</_SDKVersionDenormalized>
 
-		<_GitHubReleaseUrl>https://github.com/tonlabs/ever-sdk/releases/download/$(SDKVersion)</_GitHubReleaseUrl>
+		<_GitHubReleaseUrl>https://github.com/tonlabs/ever-sdk/releases/download/$(SDK_Version)</_GitHubReleaseUrl>
 		<_TonLibDownloadUrlWin>$(_GitHubReleaseUrl)/tonclient_$(_SDKVersionDenormalized)_win32_dll.gz</_TonLibDownloadUrlWin>
 		<_TonLibDownloadUrlLinux>$(_GitHubReleaseUrl)/tonclient_$(_SDKVersionDenormalized)_linux.gz</_TonLibDownloadUrlLinux>
 		<_TonLibDownloadUrlMacOS>$(_GitHubReleaseUrl)/tonclient_$(_SDKVersionDenormalized)_darwin.gz</_TonLibDownloadUrlMacOS>
@@ -35,7 +35,7 @@
 	</ItemGroup>
 
 	<Target Name="DownloadContentFiles" BeforeTargets="DispatchToInnerBuilds" Inputs="..\..\SDKVersion.targets" Outputs="@(LibFiles)">
-		<Message Importance="high" Text="SDKVersion: $(SDKVersion)" />
+		<Message Importance="high" Text="SDK_Version: $(SDK_Version)" />
 		<MakeDir Directories="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\" />
 		<DownloadFile SourceUrl="$(_TonLibDownloadUrlWin)" DestinationFolder="$(MSBuildThisFileDirectory)..\downloads\" DestinationFileName="tonclient_win32_dll.gz">
 			<Output TaskParameter="DownloadedFile" ItemName="None" />

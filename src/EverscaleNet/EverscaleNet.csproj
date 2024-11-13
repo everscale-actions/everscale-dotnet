@@ -15,7 +15,7 @@
 
 	<ItemGroup>
 		<AssemblyAttribute Include="EverscaleNet.SdkVersionAttribute">
-			<_Parameter1>$(SDKVersion)</_Parameter1>
+			<_Parameter1>$(SDK_Version)</_Parameter1>
 		</AssemblyAttribute>
 	</ItemGroup>
 

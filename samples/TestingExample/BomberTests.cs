@@ -5,22 +5,17 @@ using EverscaleNet.Utils;
 
 namespace TestingExample;
 
-public class BomberTests : IAsyncLifetime {
+public class BomberTests(IEverClient everClient, IEverPackageManager packageManager, IEverGiver giver) : IAsyncLifetime {
 	private const decimal TopUpCoins = 2M;
 	private const decimal SendEverCoins = 1M;
-	private readonly IEverClient _everClient;
-	private readonly IEverGiver _giver;
-	private readonly IEverPackageManager _packageManager;
+
+	private readonly IEverClient _everClient = everClient;
+	private readonly IEverGiver _giver = giver;
+	private readonly IEverPackageManager _packageManager = packageManager;
 	private Bomber _bomber;
 	private decimal _bomberDeployFees;
 	private Sink _sink;
 	private decimal _sinkDeployFees;
-
-	public BomberTests(IEverClient everClient, IEverPackageManager packageManager, IEverGiver giver) {
-		_everClient = everClient;
-		_packageManager = packageManager;
-		_giver = giver;
-	}
 
 	public async Task InitializeAsync() {
 		KeyPair keyPair = await _everClient.Crypto.GenerateRandomSignKeys();
