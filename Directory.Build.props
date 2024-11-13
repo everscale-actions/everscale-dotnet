@@ -4,6 +4,7 @@
 	<PropertyGroup>
 		<LangVersion>latest</LangVersion>
 		<ImplicitUsings>true</ImplicitUsings>
+		<NoWarn>xUnit1041</NoWarn>
 	</PropertyGroup>
 
 </Project>

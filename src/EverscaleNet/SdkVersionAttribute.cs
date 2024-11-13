@@ -3,8 +3,8 @@ namespace EverscaleNet;
 [AttributeUsage(AttributeTargets.Assembly)]
 internal sealed class SdkVersionAttribute : Attribute {
 	public SdkVersionAttribute(string sdkVersion) {
-		SdkVersion = sdkVersion;
+		SDK_Version = sdkVersion;
 	}
 
-	internal string SdkVersion { get; }
+	internal string SDK_Version { get; }
 }

@@ -5,7 +5,8 @@
 		<!--    used by tools\ClientGenerator (tools/api.json) -->
 		<!--    used by src\EverscaleNet.Adapter.Rust (runtime binaries) see DownloadLib.targets -->
 		<!--    used by src\EverscaleNet.Adapter.Wasm (runtime binaries) see DownloadLib.targets -->
-		<SDKVersion>1.48.0</SDKVersion>
+		<SDK_Version>1.48.1</SDK_Version>
+		<SDK_JS_Version>1.48.0</SDK_JS_Version>
 	</PropertyGroup>
 
 </Project>

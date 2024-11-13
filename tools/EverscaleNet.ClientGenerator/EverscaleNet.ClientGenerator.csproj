@@ -10,7 +10,7 @@
 	</ItemGroup>
 
 	<PropertyGroup>
-		<_TonSdkApiJson>https://raw.githubusercontent.com/tonlabs/ever-sdk/$(SDKVersion)/tools/api.json</_TonSdkApiJson>
+		<_TonSdkApiJson>https://raw.githubusercontent.com/tonlabs/ever-sdk/$(SDK_Version)/tools/api.json</_TonSdkApiJson>
 	</PropertyGroup>
 
 	<Target Name="DownloadContentFiles" BeforeTargets="CoreCompile">
