@@ -258,6 +258,10 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 			return await tcs.Task;
 		}
 
-		throw new EverClientException("Execution timeout expired or cancellation requested");
+		if (cancellationToken.IsCancellationRequested) {
+			throw new TaskCanceledException();
+		}
+
+		throw new TimeoutException();
 	}
 }
