@@ -35,7 +35,7 @@ public class CalculatorInternalTests : IAsyncLifetime {
 		KeyPair keyPair = await _everClient.Crypto.GenerateRandomSignKeys();
 		await multisig.Init(keyPair);
 		await _giver.SendTransaction(multisig.Address, coins);
-		await multisig.Deploy(new[] { keyPair.Public }, 1, TimeSpan.FromHours(1));
+		await multisig.Deploy([keyPair.Public], 1, TimeSpan.FromHours(1));
 		return multisig;
 	}
 

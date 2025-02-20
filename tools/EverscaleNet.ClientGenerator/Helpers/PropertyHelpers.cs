@@ -2,7 +2,7 @@
 
 internal static class PropertyHelpers {
 	private static readonly AccessorListSyntax GetSetAccessorListSyntax = AccessorList(
-		List(new[] {
+		List([
 			AccessorDeclaration(
 					SyntaxKind.GetAccessorDeclaration)
 				.WithSemicolonToken(
@@ -11,10 +11,10 @@ internal static class PropertyHelpers {
 					SyntaxKind.SetAccessorDeclaration)
 				.WithSemicolonToken(
 					Token(SyntaxKind.SemicolonToken))
-		}));
+		]));
 
 	private static readonly AccessorListSyntax GetInitAccessorListSyntax = AccessorList(
-		List(new[] {
+		List([
 			AccessorDeclaration(
 					SyntaxKind.GetAccessorDeclaration)
 				.WithSemicolonToken(
@@ -23,7 +23,7 @@ internal static class PropertyHelpers {
 					SyntaxKind.SetAccessorDeclaration)
 				.WithSemicolonToken(
 					Token(SyntaxKind.SemicolonToken))
-		}));
+		]));
 
 	public static PropertyDeclarationSyntax CreatePropertyDeclaration(string typeName, string name,
 	                                                                  string description, bool optional = false,

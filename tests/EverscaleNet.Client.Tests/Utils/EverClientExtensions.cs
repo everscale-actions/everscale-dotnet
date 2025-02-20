@@ -43,8 +43,8 @@ public static class EverClientExtensions {
 			ResultOfParse parseResult = await everClient.Boc.ParseMessage(new ParamsOfParse {
 				Boc = outMessage
 			});
-			var parsedPrototype = new { type = default(int), id = default(string) };
-			var parsedMessage = parseResult.Parsed.ToPrototype(parsedPrototype);
+			var parsedPrototype = new { type = 0, id = string.Empty };
+			var parsedMessage = parseResult.Parsed!.ToPrototype(parsedPrototype);
 
 			if (parsedMessage.type == 0) {
 				await everClient.Net.WaitForCollection(new ParamsOfWaitForCollection {

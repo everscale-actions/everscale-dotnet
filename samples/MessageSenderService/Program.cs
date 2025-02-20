@@ -5,7 +5,7 @@ IHostBuilder builder = Host.CreateDefaultBuilder(args);
 builder.ConfigureServices((_, services) => {
 	services.AddHostedService<Worker>();
 	services.AddEverClient(config => {
-		config.Network.Endpoints = new[] { "http://localhost" };
+		config.Network.Endpoints = ["http://localhost"];
 		config.Network.WaitForTimeout = 5000;
 	});
 });

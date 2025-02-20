@@ -22,4 +22,12 @@ internal static class StringExtensions {
 
 		return Convert.ToBase64String(bytes);
 	}
+
+	public static string ToAddress(this string input) {
+		BigInteger bigInteger = BigInteger.Parse(input);
+
+		var hexString = bigInteger.ToString("X");
+
+		return $"0x{hexString.PadLeft(64, '0')}";
+	}
 }

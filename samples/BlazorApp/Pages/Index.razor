@@ -1,9 +1,9 @@
 ﻿@page "/"
+@using System.ComponentModel.DataAnnotations
+@using Blazored.LocalStorage
 @using EverscaleNet.Abstract
 @using EverscaleNet.Client.Models
 @using EverscaleNet.Models
-@using Blazored.LocalStorage
-@using System.ComponentModel.DataAnnotations
 
 <PageTitle>Index</PageTitle>
 
@@ -59,7 +59,7 @@ Welcome to your new everscale app.
 			ResultOfGetEndpoints result = await EverClient.Net.GetEndpoints();
 			Endpoints = result.Endpoints;
 		} catch (EverClientException e) when (e.Code == 14) {
-			Endpoints = new[] { e.Message };
+			Endpoints = [e.Message];
 		}
 	}
 

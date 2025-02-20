@@ -55,7 +55,7 @@ public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 			Query = "query{info{version}}"
 		});
 
-		var resultParsed = result.Result.ToPrototype(new { data = new { info = new { version = default(string) } } });
+		var resultParsed = result.Result!.ToPrototype(new { data = new { info = new { version = default(string) } } });
 		resultParsed!.data.info.version.Split('.').Length.Should().Be(3);
 	}
 
@@ -241,7 +241,7 @@ public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 		await _everClient.SendGramsFromLocalGiver();
 
 		ResultOfWaitForCollection result = await request;
-		result.Result.Get<long>("now").Should().BeGreaterThan(now);
+		result.Result!.Get<long>("now").Should().BeGreaterThan(now);
 	}
 
 	// todo: not working yet https://t.me/ton_sdk/7063?thread=7032

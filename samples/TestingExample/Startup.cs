@@ -32,20 +32,19 @@ public class Startup {
 
 	private static void AddEverClientWithSerilog(IServiceCollection services) {
 		services.AddOptions();
-		services.AddSingleton<IConfigureOptions<EverClientOptions>>(
-			        provider => new ConfigureOptions<EverClientOptions>(options => {
-				        string endpoint = provider.GetRequiredService<NodeSeDockerContainer>().Endpoint;
-				        options.Network.Endpoints = new[] { endpoint };
-			        }))
+		services.AddSingleton<IConfigureOptions<EverClientOptions>>(provider => new ConfigureOptions<EverClientOptions>(options => {
+			        string endpoint = provider.GetRequiredService<NodeSeDockerContainer>().Endpoint;
+			        options.Network.Endpoints = [endpoint];
+		        }))
 		        .AddSingleton<IEverClientAdapter>(provider => {
 			        var optionsAccessor = provider.GetRequiredService<IOptions<EverClientOptions>>();
 			        var output = provider.GetRequiredService<ITestOutputHelperAccessor>();
-			        var loggerFactory = new LoggerFactory(new[] {
+			        var loggerFactory = new LoggerFactory([
 				        new SerilogLoggerProvider(new LoggerConfiguration()
 				                                  .MinimumLevel.Verbose()
 				                                  .WriteTo.TestOutput(output.Output)
 				                                  .CreateLogger(), true)
-			        });
+			        ]);
 			        return new EverClientRustAdapter(optionsAccessor, loggerFactory.CreateLogger<EverClientRustAdapter>());
 		        })
 		        .AddTransient<IEverClient, EverClient>()

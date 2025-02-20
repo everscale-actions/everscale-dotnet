@@ -111,11 +111,11 @@ internal class ModelsClassHelpers {
 					                                                                     sfVal.Summary, sfVal.NumberType,
 					                                                                     sfVal.NumberSize, addPostfix: NamingConventions.Normalize(sfVal.Name) == name, arrayItem: sfVal.ArrayItem));
 				                 }
-				                 return new[] {
+				                 return [
 					                 CreatePropertyGenericArgs(sf.Type, sf.Name, sf.RefName, sf.OptionalInner,
 					                                           sf.Summary, sf.NumberType,
 					                                           sf.NumberSize, addPostfix: NamingConventions.Normalize(sf.Name) == name, arrayItem: sf.ArrayItem)
-				                 };
+				                 ];
 			                 }));
 		return ClassDeclaration(name)
 		       .AddModifiers(Token(SyntaxKind.PublicKeyword))

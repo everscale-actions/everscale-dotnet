@@ -28,6 +28,6 @@ internal static class CommentsHelpers {
 			throw new ArgumentNullException(nameof(comment));
 		}
 
-		return comment.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+		return comment.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries);
 	}
 }

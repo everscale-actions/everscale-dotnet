@@ -19,12 +19,12 @@ public class EverClientTestsFixture : IDisposable, IAsyncDisposable {
 	}
 
 	protected internal IEverClient CreateClient(ITestOutputHelper output, bool useNodeSe = false) {
-		_loggerFactory ??= new LoggerFactory(new[] {
+		_loggerFactory ??= new LoggerFactory([
 			new SerilogLoggerProvider(new LoggerConfiguration()
 			                          .MinimumLevel.Verbose()
 			                          .WriteTo.TestOutput(output)
 			                          .CreateLogger())
-		});
+		]);
 
 		var options = new EverClientOptions {
 			Network = new NetworkConfig {

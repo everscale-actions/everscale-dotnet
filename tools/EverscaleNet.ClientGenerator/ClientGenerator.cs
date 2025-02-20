@@ -8,10 +8,10 @@ internal static class ClientGenerator {
 	public const string NamespaceModels = "EverscaleNet.Client.Models";
 
 	private static readonly string[] ModulesNamespaces =
-		{ "System", "System.Text.Json", "System.Threading", "System.Threading.Tasks", "EverscaleNet.Client.Models" };
+		["System", "System.Text.Json", "System.Threading", "System.Threading.Tasks", "EverscaleNet.Client.Models"];
 
 	private static readonly string[] ModelsNamespaces =
-		{ "System", "System.Numerics", "System.Text.Json", "System.Text.Json.Serialization" };
+		["System", "System.Numerics", "System.Text.Json", "System.Text.Json.Serialization"];
 
 	private static readonly JsonSerializerOptions Options = new() { Converters = { new JsonStringEnumConverterWithAttributeSupport() } };
 
@@ -49,7 +49,7 @@ internal static class ClientGenerator {
 			//Create Modules
 			UnitHelpers.CreateUnit(module.Name, unitName => ModulesClassHelpers.CreateModuleClass(unitName, module),
 			                       Path.Combine(output, nameof(EverApi.Modules), $"{NamingConventions.Normalize(module.Name)}Module.Generated.cs"),
-			                       ModulesNamespaces.Union(new[] { "EverscaleNet.Abstract", "EverscaleNet.Abstract.Modules" }).ToArray());
+			                       ModulesNamespaces.Union(["EverscaleNet.Abstract", "EverscaleNet.Abstract.Modules"]).ToArray());
 
 			//Create Models
 			var modelClassBuilder = new ModelsClassHelpers(numberTypesMapping, allTypes);

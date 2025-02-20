@@ -7,8 +7,8 @@ namespace EverscaleNet.Benchmark;
 [MedianColumn]
 [Outliers(OutlierMode.DontRemove)]
 public class EverClientBenchmark {
-	private readonly List<string> _englishPhrases = new();
-	private readonly List<string> _tonPhrases = new();
+	private readonly List<string> _englishPhrases = [];
+	private readonly List<string> _tonPhrases = [];
 
 	private EverClientRustAdapter _adapter = null!;
 	private EverClient _everClient = null!;

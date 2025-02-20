@@ -53,12 +53,12 @@ internal static class ClientClassHelpers {
 				                                              .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(summary))))
 			                     .WithAccessorList(
 				                     AccessorList(
-					                     List(new[] {
+					                     List([
 						                     AccessorDeclaration(
 								                     SyntaxKind.GetAccessorDeclaration)
 							                     .WithSemicolonToken(
 								                     Token(SyntaxKind.SemicolonToken))
-					                     })));
+					                     ])));
 		              })
 		              .Cast<MemberDeclarationSyntax>()
 		              .ToArray();

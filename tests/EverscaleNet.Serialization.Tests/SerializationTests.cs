@@ -161,13 +161,13 @@ public class SerializationTests {
 	[Fact]
 	public void NestedStructureTest() {
 		var paramsOfMonitorMessages = new ParamsOfMonitorMessages {
-			Messages = new MessageMonitoringParams[] {
-				new() {
+			Messages = [
+				new MessageMonitoringParams {
 					Message = new MonitoredMessage.Boc {
 						BocAccessor = "test"
 					}
 				}
-			}
+			]
 		};
 
 		string json = JsonSerializer.Serialize(paramsOfMonitorMessages, JsonOptionsProvider.JsonSerializerOptions);

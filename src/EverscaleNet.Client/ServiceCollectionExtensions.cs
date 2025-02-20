@@ -52,13 +52,12 @@ public static class ServiceCollectionExtensions {
 	                                               Action<IServiceProvider, FilePackageManagerOptions>? configurePackageManagerOptions = null) {
 		if (configureEverClientOptions != null) {
 			services.AddOptions();
-			services.AddSingleton<IConfigureOptions<EverClientOptions>>(
-				provider => new ConfigureOptions<EverClientOptions>(options => configureEverClientOptions(provider, options)));
+			services.AddSingleton<IConfigureOptions<EverClientOptions>>(provider => new ConfigureOptions<EverClientOptions>(options => configureEverClientOptions(provider, options)));
 		}
 		if (configurePackageManagerOptions != null) {
 			services.AddOptions();
-			services.AddSingleton<IConfigureOptions<FilePackageManagerOptions>>(
-				provider => new ConfigureOptions<FilePackageManagerOptions>(options => configurePackageManagerOptions(provider, options)));
+			services.AddSingleton<IConfigureOptions<FilePackageManagerOptions>>(provider =>
+				                                                                    new ConfigureOptions<FilePackageManagerOptions>(options => configurePackageManagerOptions(provider, options)));
 		}
 
 		return services

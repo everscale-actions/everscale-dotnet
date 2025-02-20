@@ -1,16 +1,16 @@
 ﻿namespace EverscaleNet.Client.Tests.Modules;
 
 public class TvmModuleTests : IClassFixture<EverClientTestsFixture> {
-	public TvmModuleTests(EverClientTestsFixture fixture, ITestOutputHelper outputHelper) {
-		_everClient = fixture.CreateClient(outputHelper, true);
-		_electorEncodedLazy = new Lazy<Task<string>>(GetElectorEncodedAccount());
-	}
-
 	private const string SubscribeParamsPubkey =
 		"0x2222222222222222222222222222222222222222222222222222222222222222";
 
 	private readonly Lazy<Task<string>> _electorEncodedLazy;
 	private readonly IEverClient _everClient;
+
+	public TvmModuleTests(EverClientTestsFixture fixture, ITestOutputHelper outputHelper) {
+		_everClient = fixture.CreateClient(outputHelper, true);
+		_electorEncodedLazy = new Lazy<Task<string>>(GetElectorEncodedAccount());
+	}
 
 	private async Task<string> TestRunMessage(Func<ResultOfEncodeMessage, Abi, string, Task<string>> run) {
 		KeyPair keys = await _everClient.Crypto.GenerateRandomSignKeys();
@@ -181,7 +181,7 @@ public class TvmModuleTests : IClassFixture<EverClientTestsFixture> {
 
 		string result = await TestRunMessage(Run);
 
-		result.Should().Be(SubscribeParamsPubkey);
+		result.ToAddress().Should().Be(SubscribeParamsPubkey);
 	}
 
 	[Fact]
@@ -233,6 +233,6 @@ public class TvmModuleTests : IClassFixture<EverClientTestsFixture> {
 
 		string result = await TestRunMessage(Run);
 
-		result.Should().Be(SubscribeParamsPubkey);
+		result.ToAddress().Should().Be(SubscribeParamsPubkey);
 	}
 }

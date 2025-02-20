@@ -70,18 +70,16 @@ public static class ServiceCollectionExtensions {
 	                                                  Action<IServiceProvider, LibWebOptions>? configureLibWebOptions = null) {
 		if (configureEverClientOptions != null) {
 			services.AddOptions();
-			services.AddSingleton<IConfigureOptions<EverClientOptions>>(
-				provider => new ConfigureOptions<EverClientOptions>(options => configureEverClientOptions(provider, options)));
+			services.AddSingleton<IConfigureOptions<EverClientOptions>>(provider => new ConfigureOptions<EverClientOptions>(options => configureEverClientOptions(provider, options)));
 		}
 		if (configureLibWebOptions != null) {
 			services.AddOptions();
-			services.AddSingleton<IConfigureOptions<LibWebOptions>>(
-				provider => new ConfigureOptions<LibWebOptions>(options => configureLibWebOptions(provider, options)));
+			services.AddSingleton<IConfigureOptions<LibWebOptions>>(provider => new ConfigureOptions<LibWebOptions>(options => configureLibWebOptions(provider, options)));
 		}
 		if (configurePackageManagerOptions != null) {
 			services.AddOptions();
-			services.AddSingleton<IConfigureOptions<WebPackageManagerOptions>>(
-				provider => new ConfigureOptions<WebPackageManagerOptions>(options => configurePackageManagerOptions(provider, options)));
+			services.AddSingleton<IConfigureOptions<WebPackageManagerOptions>>(provider =>
+				                                                                   new ConfigureOptions<WebPackageManagerOptions>(options => configurePackageManagerOptions(provider, options)));
 		}
 
 		services

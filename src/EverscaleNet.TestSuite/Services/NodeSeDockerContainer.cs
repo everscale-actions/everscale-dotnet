@@ -65,7 +65,7 @@ public class NodeSeDockerContainer : IAsyncDisposable {
 			try {
 				await using var adapter = new EverClientRustAdapter(new OptionsWrapper<EverClientOptions>(new EverClientOptions {
 					Network = new NetworkConfig {
-						Endpoints = new[] { $"http://localhost:{container.GetMappedPublicPort(80)}" }
+						Endpoints = [$"http://localhost:{container.GetMappedPublicPort(80)}"]
 					}
 				}), _loggerFactory.CreateLogger<EverClientRustAdapter>());
 				var everClient = new EverClient(adapter);

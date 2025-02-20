@@ -574,7 +574,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 
 		private static List<object[]> GetData() {
 			MnemonicDictionary?[] dict = Enum.GetValues(typeof(MnemonicDictionary)).Cast<MnemonicDictionary?>().Append(null).ToArray();
-			byte?[] words = { null, 12, 15, 18, 21, 24 };
+			byte?[] words = [null, 12, 15, 18, 21, 24];
 
 			return (from d in dict
 			        from w in words

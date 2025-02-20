@@ -24,7 +24,7 @@ public class InitMultisigAccountService : IHostedService {
 	public async Task StartAsync(CancellationToken cancellationToken) {
 		await _multisig.Init(_keyPair.Public, cancellationToken: cancellationToken);
 		await _giver.SendTransaction(_multisig.Address, 20m, false, cancellationToken);
-		await _multisig.Deploy(new[] { _keyPair.Public }, 1, TimeSpan.FromHours(1), cancellationToken);
+		await _multisig.Deploy([_keyPair.Public], 1, TimeSpan.FromHours(1), cancellationToken);
 	}
 
 	/// <summary>

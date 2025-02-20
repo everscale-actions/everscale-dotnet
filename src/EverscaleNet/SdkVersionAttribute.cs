@@ -6,5 +6,6 @@ internal sealed class SdkVersionAttribute : Attribute {
 		SDK_Version = sdkVersion;
 	}
 
+	// ReSharper disable once InconsistentNaming
 	internal string SDK_Version { get; }
 }
