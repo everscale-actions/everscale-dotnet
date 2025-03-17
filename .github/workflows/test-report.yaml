@@ -8,7 +8,7 @@ jobs:
   report:
     runs-on: ubuntu-latest
     steps:
-      - uses: dorny/test-reporter@v1
+      - uses: dorny/test-reporter@v2
         id: test-report
         with:
           artifact: test-results
