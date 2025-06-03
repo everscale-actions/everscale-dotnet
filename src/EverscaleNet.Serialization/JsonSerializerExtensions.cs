@@ -11,10 +11,9 @@ public static class JsonSerializerExtensions {
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
 	public static T Get<T>([DisallowNull] this JsonElement? element, string property) {
-		if (element == null) {
-			throw new ArgumentNullException(nameof(element));
-		}
-		return element.Value.GetProperty(property).ToObject<T>();
+		return element == null
+			       ? throw new ArgumentNullException(nameof(element))
+			       : element.Value.GetProperty(property).ToObject<T>();
 	}
 
 	/// <summary>

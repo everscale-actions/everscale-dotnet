@@ -5,12 +5,8 @@ using EverscaleNet.Serialization;
 
 namespace BlazorApp.Contracts;
 
-internal class Calculator : AccountBase {
-	private readonly IEverClient _client;
-
-	public Calculator(IEverClient client, IEverPackageManager packageManager) : base(client, packageManager) {
-		_client = client;
-	}
+internal class Calculator(IEverClient client, IEverPackageManager packageManager) : AccountBase(client, packageManager) {
+	private readonly IEverClient _client = client;
 
 	public async Task<ResultOfProcessMessage> Add(int value, CancellationToken cancellationToken = default) {
 		return await Run("add", new { value }, cancellationToken);

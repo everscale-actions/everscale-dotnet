@@ -12,7 +12,11 @@ namespace EverscaleNet.Adapter.Base;
 public abstract class EverClientAdapterBase : IEverClientAdapter {
 	private const string EmptyJson = "{}";
 	private static readonly TimeSpan CoreExecutionTimeOut = TimeSpan.FromMinutes(5);
+#if NET9_0_OR_GREATER
+	private readonly Lock _lock = new();
+#else
 	private readonly object _lock = new();
+#endif
 	private readonly ILogger _logger;
 
 	private readonly ConcurrentDictionary<uint, (TaskCompletionSource<string> tsc, Func<string, uint, CancellationToken, Task>? callback)>
@@ -106,7 +110,7 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 	///     Deserialize CreateContextResponse from json and return context id
 	/// </summary>
 	/// <param name="json">CreateContextResponse json string</param>
-	/// <returns>Context Id</returns>
+	/// <returns>Context ID</returns>
 	/// <exception cref="EverClientException"></exception>
 	protected static uint GetContextIdByCreatedContextJson(string json) {
 		var createContextResult = JsonSerializer.Deserialize<CreateContextResponse>(json, JsonOptionsProvider.JsonSerializerOptions);
@@ -132,7 +136,7 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 	///     Create context method
 	/// </summary>
 	/// <param name="cancellationToken"></param>
-	/// <returns>Created context Id</returns>
+	/// <returns>Created context ID</returns>
 	protected abstract Task<uint> CreateContext(CancellationToken cancellationToken);
 
 	/// <summary>

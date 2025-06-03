@@ -1,11 +1,7 @@
 namespace EverscaleNet;
 
 [AttributeUsage(AttributeTargets.Assembly)]
-internal sealed class SdkVersionAttribute : Attribute {
-	public SdkVersionAttribute(string sdkVersion) {
-		SDK_Version = sdkVersion;
-	}
-
+internal sealed class SdkVersionAttribute(string sdkVersion) : Attribute {
 	// ReSharper disable once InconsistentNaming
-	internal string SDK_Version { get; }
+	internal string SDK_Version { get; } = sdkVersion;
 }

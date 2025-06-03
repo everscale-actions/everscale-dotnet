@@ -6,29 +6,21 @@ using EverscaleNet.Utils;
 
 namespace MessageReceiverService;
 
-public class Worker : BackgroundService {
+public class Worker(ILogger<Worker> logger, IEverClient everClient, IEverPackageManager packageManager)
+	: BackgroundService {
 	private const string Mnemonic = "spin tilt boss upper random exit spice ankle leave grief short clever";
 	private const string ReceiverContractName = "15_MessageReceiver";
-	private readonly IEverClient _everClient;
-	private readonly ILogger<Worker> _logger;
-	private readonly IEverPackageManager _packageManager;
-
-	public Worker(ILogger<Worker> logger, IEverClient everClient, IEverPackageManager packageManager) {
-		_logger = logger;
-		_everClient = everClient;
-		_packageManager = packageManager;
-	}
 
 	protected override async Task ExecuteAsync(CancellationToken stoppingToken) {
 		while (!stoppingToken.IsCancellationRequested)
 			try {
 				// load contracts from abi.json and tvc files 
 				// Package senderContract = await _packageManager.LoadPackage(SenderContractName);
-				IPackage receiverContract = await _packageManager.LoadPackage(ReceiverContractName, stoppingToken);
+				IPackage receiverContract = await packageManager.LoadPackage(ReceiverContractName, stoppingToken);
 
 				// get keys by mnemonic
 				KeyPair keys =
-					await _everClient.Crypto.MnemonicDeriveSignKeys(
+					await everClient.Crypto.MnemonicDeriveSignKeys(
 						new ParamsOfMnemonicDeriveSignKeys { Phrase = Mnemonic }, stoppingToken);
 
 				// ensure that balance of receiver address is good and contract has been already deployed
@@ -37,10 +29,10 @@ public class Worker : BackgroundService {
 				// get received messages count
 				ulong count = await GetReceivedMessagesCount(receiverContract, keys, receiverAddress, stoppingToken);
 
-				_logger.LogInformation("Total received messages: {Count} Repeat again in 10 sec...", count);
+				logger.LogInformation("Total received messages: {Count} Repeat again in 10 sec...", count);
 			}
 			catch (Exception e) {
-				_logger.LogError(e, "Something went wrong. Will try again in 10 sec...");
+				logger.LogError(e, "Something went wrong. Will try again in 10 sec...");
 			}
 			finally {
 				await Task.Delay(10000, stoppingToken);
@@ -49,7 +41,7 @@ public class Worker : BackgroundService {
 
 	private async Task<ulong> GetReceivedMessagesCount(IPackage contract, KeyPair keys, string address,
 		CancellationToken cancellationToken) {
-		ResultOfQueryCollection accountBocResult = await _everClient.Net.QueryCollection(new ParamsOfQueryCollection {
+		ResultOfQueryCollection accountBocResult = await everClient.Net.QueryCollection(new ParamsOfQueryCollection {
 			Collection = "accounts",
 			Filter = new { id = new { eq = address } }.ToJsonElement(),
 			Result = "boc",
@@ -58,14 +50,14 @@ public class Worker : BackgroundService {
 
 		string accountBoc = accountBocResult.Result[0].Get<string>("boc");
 
-		ResultOfEncodeMessage getCountEncodedMessage = await _everClient.Abi.EncodeMessage(new ParamsOfEncodeMessage {
+		ResultOfEncodeMessage getCountEncodedMessage = await everClient.Abi.EncodeMessage(new ParamsOfEncodeMessage {
 			Address = address,
 			Abi = contract.Abi,
 			CallSet = new CallSet { FunctionName = "getCounter" },
 			Signer = new Signer.Keys { KeysAccessor = keys }
 		}, cancellationToken);
 
-		ResultOfRunTvm result = await _everClient.Tvm.RunTvm(new ParamsOfRunTvm {
+		ResultOfRunTvm result = await everClient.Tvm.RunTvm(new ParamsOfRunTvm {
 			Abi = contract.Abi,
 			Account = accountBoc,
 			Message = getCountEncodedMessage.Message
@@ -83,8 +75,8 @@ public class Worker : BackgroundService {
 			CallSet = new CallSet { FunctionName = "constructor" }
 		};
 
-		ResultOfEncodeMessage encoded = await _everClient.Abi.EncodeMessage(deployParams, cancellationToken);
-		ResultOfQueryCollection result = await _everClient.Net.QueryCollection(new ParamsOfQueryCollection {
+		ResultOfEncodeMessage encoded = await everClient.Abi.EncodeMessage(deployParams, cancellationToken);
+		ResultOfQueryCollection result = await everClient.Net.QueryCollection(new ParamsOfQueryCollection {
 			Collection = "accounts",
 			Filter = new { id = new { eq = encoded.Address } }.ToJsonElement(),
 			Result = "balance(format: DEC)",
@@ -96,10 +88,10 @@ public class Worker : BackgroundService {
 		}
 
 		try {
-			await _everClient.ProcessAndWaitInternalMessages(deployParams, cancellationToken);
+			await everClient.ProcessAndWaitInternalMessages(deployParams, cancellationToken);
 		}
 		catch (EverClientException e) when (e.Code == 414) {
-			_logger.LogInformation("Contract already has been deployed");
+			logger.LogInformation("Contract already has been deployed");
 		}
 
 		return encoded.Address;
@@ -108,7 +100,7 @@ public class Worker : BackgroundService {
 	private async Task SendGramsFromGiver(string account, CancellationToken cancellationToken) {
 		var sendGramsEncodedMessage = new ParamsOfEncodeMessage {
 			Address = SeGiver.Address,
-			Abi = await _packageManager.LoadAbi("GiverV2", cancellationToken),
+			Abi = await packageManager.LoadAbi("GiverV2", cancellationToken),
 			CallSet = new CallSet {
 				FunctionName = "sendTransaction",
 				Input = new {
@@ -119,7 +111,7 @@ public class Worker : BackgroundService {
 			},
 			Signer = SeGiver.Signer
 		};
-		await _everClient.ProcessAndWaitInternalMessages(sendGramsEncodedMessage, cancellationToken);
+		await everClient.ProcessAndWaitInternalMessages(sendGramsEncodedMessage, cancellationToken);
 	}
 
 	private static class SeGiver {

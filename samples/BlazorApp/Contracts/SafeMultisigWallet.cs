@@ -7,16 +7,11 @@ using EverscaleNet.Utils;
 
 namespace BlazorApp.Contracts;
 
-public class SafeMultisigWallet : AccountBase {
+public class SafeMultisigWallet(IEverClient everClient, IEverPackageManager everPackageManager) : AccountBase(everClient, everPackageManager) {
 	private const string Transfer = "transfer";
 
-	private readonly IEverClient _everClient;
-	private readonly IEverPackageManager _everPackageManager;
-
-	public SafeMultisigWallet(IEverClient everClient, IEverPackageManager everPackageManager) : base(everClient, everPackageManager) {
-		_everClient = everClient;
-		_everPackageManager = everPackageManager;
-	}
+	private readonly IEverClient _everClient = everClient;
+	private readonly IEverPackageManager _everPackageManager = everPackageManager;
 
 	public async Task SendMessage(string phrase, string recipient, string message) {
 		Package contract = await _everPackageManager.LoadPackage(Name);
