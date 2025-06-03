@@ -11,8 +11,6 @@ global using EverscaleNet.Client.Tests.Utils;
 global using EverscaleNet.Models;
 global using EverscaleNet.Serialization;
 global using EverscaleNet.TestsShared;
-global using FluentAssertions;
-global using FluentAssertions.Specialized;
 global using Microsoft.Extensions.Logging;
 global using Microsoft.Extensions.Options;
 global using Serilog;

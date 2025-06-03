@@ -4,7 +4,6 @@ global using EverscaleNet.Abstract;
 global using EverscaleNet.Adapter.Rust;
 global using EverscaleNet.Models;
 global using EverscaleNet.Serialization;
-global using FluentAssertions;
 global using Microsoft.Extensions.Logging;
 global using Microsoft.Extensions.Options;
 global using Serilog;

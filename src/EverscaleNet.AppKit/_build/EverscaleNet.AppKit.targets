@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <EverDevTool Condition=" $(EverDevTool) == '' ">npx everdev@latest</EverDevTool>
-    <SolCompilerVersion Condition=" $(SolCompilerVersion) == '' ">latest</SolCompilerVersion>
-    <TVMLinkerVersion Condition=" $(TVMLinkerVersion) == '' ">latest</TVMLinkerVersion>
+    <SolCompilerVersion Condition=" $(SolCompilerVersion) == '' ">0.71.0</SolCompilerVersion>
+    <TVMLinkerVersion Condition=" $(TVMLinkerVersion) == '' ">0.20.6</TVMLinkerVersion>
     <ContractsBasePath Condition=" $(ContractsBasePath) == '' ">_contracts</ContractsBasePath>
   </PropertyGroup>
 

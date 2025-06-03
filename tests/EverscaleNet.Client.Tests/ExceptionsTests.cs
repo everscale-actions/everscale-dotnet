@@ -1,23 +1,30 @@
-﻿namespace EverscaleNet.Client.Tests;
+﻿using Shouldly;
 
-public class ExceptionsTests : IClassFixture<EverClientTestsFixture> {
-	private readonly IEverClient _everClient;
+namespace EverscaleNet.Client.Tests;
 
-	public ExceptionsTests(EverClientTestsFixture fixture, ITestOutputHelper outputHelper) {
-		_everClient = fixture.CreateClient(outputHelper);
-	}
+public class ExceptionsTests : IClassFixture<EverClientTestsFixture>
+{
+    private readonly IEverClient _everClient;
 
-	[Fact(Timeout = 5000)]
-	public async Task ThrowEverClientException() {
-		Func<Task> act = async () => {
-			await _everClient.Crypto.MnemonicDeriveSignKeys(new ParamsOfMnemonicDeriveSignKeys {
-				Phrase = "abandon math mimic master filter design carbon crystal rookie group knife young",
-				Dictionary = MnemonicDictionary.Ton
-			});
-		};
+    public ExceptionsTests(EverClientTestsFixture fixture, ITestOutputHelper outputHelper)
+    {
+        _everClient = fixture.CreateClient(outputHelper);
+    }
 
-		ExceptionAssertions<EverClientException> exceptionAssertions = await act.Should().ThrowAsync<EverClientException>();
-		exceptionAssertions.Which.Code.Should().Be((uint)CryptoErrorCode.Bip39InvalidPhrase);
-		exceptionAssertions.Which.Message.Should().StartWith("Invalid bip39 phrase:");
-	}
+    [Fact(Timeout = 5000)]
+    public async Task ThrowEverClientException()
+    {
+        Func<Task> act = async () =>
+        {
+            await _everClient.Crypto.MnemonicDeriveSignKeys(new ParamsOfMnemonicDeriveSignKeys
+            {
+                Phrase = "abandon math mimic master filter design carbon crystal rookie group knife young",
+                Dictionary = MnemonicDictionary.Ton
+            });
+        };
+
+        var ex = await act.ShouldThrowAsync<EverClientException>();
+        ex.Code.ShouldBe((uint)CryptoErrorCode.Bip39InvalidPhrase);
+        ex.Message.ShouldStartWith("Invalid bip39 phrase:");
+    }
 }

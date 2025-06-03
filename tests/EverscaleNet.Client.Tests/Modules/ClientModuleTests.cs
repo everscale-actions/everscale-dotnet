@@ -1,43 +1,51 @@
-﻿namespace EverscaleNet.Client.Tests.Modules;
+﻿using Shouldly;
 
-public class ClientModuleTests : IClassFixture<EverClientTestsFixture> {
-	private readonly IEverClient _everClient;
+namespace EverscaleNet.Client.Tests.Modules;
 
-	public ClientModuleTests(EverClientTestsFixture fixture, ITestOutputHelper outputHelper) {
-		_everClient = fixture.CreateClient(outputHelper);
-	}
+public class ClientModuleTests : IClassFixture<EverClientTestsFixture>
+{
+    private readonly IEverClient _everClient;
 
-	[Fact]
-	public async Task ReturnsApiReference() {
-		ResultOfGetApiReference result = await _everClient.Client.GetApiReference();
+    public ClientModuleTests(EverClientTestsFixture fixture, ITestOutputHelper outputHelper)
+    {
+        _everClient = fixture.CreateClient(outputHelper);
+    }
 
-		result.Api.Should().NotBeNull();
-	}
+    [Fact]
+    public async Task ReturnsApiReference()
+    {
+        ResultOfGetApiReference result = await _everClient.Client.GetApiReference();
 
-	[Fact]
-	public async Task ReturnsBuildInfo() {
-		ResultOfBuildInfo result = await _everClient.Client.BuildInfo();
+        result.Api.ShouldNotBeNull();
+    }
 
-		result.Dependencies.Should().NotBeNull();
-		// todo: 1.1.2+ returns  build_number = 0
-		// result.BuildNumber.Should().BePositive();
-	}
+    [Fact]
+    public async Task ReturnsBuildInfo()
+    {
+        ResultOfBuildInfo result = await _everClient.Client.BuildInfo();
 
-	[Fact]
-	public async Task ReturnsMatchedVersion() {
-		ResultOfVersion result = await _everClient.Client.Version();
+        result.Dependencies.ShouldNotBeNull();
+        // todo: 1.1.2+ returns  build_number = 0
+        // result.BuildNumber.ShouldBePositive();
+    }
 
-		result.Version.Should().Be(Static.SdkVersion);
-	}
+    [Fact]
+    public async Task ReturnsMatchedVersion()
+    {
+        ResultOfVersion result = await _everClient.Client.Version();
 
-	[Fact]
-	public async Task CheckDefaultClientConfig() {
-		ClientConfig result = await _everClient.Client.Config();
+        result.Version.ShouldBe(Static.SdkVersion);
+    }
 
-		result.Binding.Library.Should().Be(Static.BindingName);
-		result.Binding.Version.Should().Be(Static.SdkVersion);
-		result.Crypto.MnemonicDictionary.Should().Be(MnemonicDictionary.English);
-		result.Crypto.MnemonicWordCount.Should().Be(12);
-		result.Proofs.CacheInLocalStorage.Should().BeTrue();
-	}
+    [Fact]
+    public async Task CheckDefaultClientConfig()
+    {
+        ClientConfig result = await _everClient.Client.Config();
+
+        result.Binding.Library.ShouldBe(Static.BindingName);
+        result.Binding.Version.ShouldBe(Static.SdkVersion);
+        result.Crypto.MnemonicDictionary.ShouldBe(MnemonicDictionary.English);
+        result.Crypto.MnemonicWordCount.ShouldBe((byte)12);
+        result.Proofs.CacheInLocalStorage.ShouldBe(true);
+    }
 }

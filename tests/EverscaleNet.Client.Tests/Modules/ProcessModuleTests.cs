@@ -1,65 +1,80 @@
-﻿namespace EverscaleNet.Client.Tests.Modules;
+﻿using Shouldly;
 
-public class ProcessModuleTests : IClassFixture<EverClientTestsFixture> {
-	private readonly IEverClient _everClient;
+namespace EverscaleNet.Client.Tests.Modules;
 
-	public ProcessModuleTests(EverClientTestsFixture fixture, ITestOutputHelper outputHelper) {
-		_everClient = fixture.CreateClient(outputHelper, true);
-	}
+public class ProcessModuleTests : IClassFixture<EverClientTestsFixture>
+{
+    private readonly IEverClient _everClient;
 
-	[Fact]
-	public async Task WaitMessage() {
-		//arrange
-		KeyPair keys = await _everClient.Crypto.GenerateRandomSignKeys();
-		ResultOfEncodeMessage encoded = await _everClient.Abi.EncodeMessage(new ParamsOfEncodeMessage {
-			Abi = TestsEnv.Packages.Events.Abi, DeploySet = new DeploySet {
-				Tvc = TestsEnv.Packages.Events.Tvc
-			},
-			CallSet = new CallSet {
-				FunctionName = "constructor",
-				Header = new FunctionHeader {
-					Pubkey = keys.Public
-				}
-			},
-			Signer = new Signer.Keys {
-				KeysAccessor = keys
-			}
-		});
+    public ProcessModuleTests(EverClientTestsFixture fixture, ITestOutputHelper outputHelper)
+    {
+        _everClient = fixture.CreateClient(outputHelper, true);
+    }
 
-		await _everClient.SendGramsFromLocalGiver(encoded.Address);
+    [Fact]
+    public async Task WaitMessage()
+    {
+        //arrange
+        KeyPair keys = await _everClient.Crypto.GenerateRandomSignKeys();
+        ResultOfEncodeMessage encoded = await _everClient.Abi.EncodeMessage(new ParamsOfEncodeMessage
+        {
+            Abi = TestsEnv.Packages.Events.Abi, DeploySet = new DeploySet
+            {
+                Tvc = TestsEnv.Packages.Events.Tvc
+            },
+            CallSet = new CallSet
+            {
+                FunctionName = "constructor",
+                Header = new FunctionHeader
+                {
+                    Pubkey = keys.Public
+                }
+            },
+            Signer = new Signer.Keys
+            {
+                KeysAccessor = keys
+            }
+        });
 
-		var events = new List<ProcessingEvent>();
+        await _everClient.SendGramsFromLocalGiver(encoded.Address);
 
-		Task ProcessingCallback(ProcessingEvent @event, uint code, CancellationToken cancellationToken) {
-			code.Should().Be(100);
-			@event.Should().NotBeNull();
-			events.Add(@event);
-			return Task.CompletedTask;
-		}
+        var events = new List<ProcessingEvent>();
 
-		ResultOfSendMessage sendMessageResult = await _everClient.Processing.SendMessage(new ParamsOfSendMessage {
-			Message = encoded.Message,
-			Abi = TestsEnv.Packages.Events.Abi,
-			SendEvents = true
-		}, ProcessingCallback);
+        Task ProcessingCallback(ProcessingEvent @event, uint code, CancellationToken cancellationToken)
+        {
+            code.ShouldBe((uint)100);
+            @event.ShouldNotBeNull();
+            events.Add(@event);
+            return Task.CompletedTask;
+        }
 
-		//act
-		ResultOfProcessMessage waitForTransactionResult = await _everClient.Processing.WaitForTransaction(new ParamsOfWaitForTransaction {
-			Message = encoded.Message,
-			ShardBlockId = sendMessageResult.ShardBlockId,
-			SendEvents = true,
-			Abi = TestsEnv.Packages.Events.Abi
-		}, ProcessingCallback);
+        ResultOfSendMessage sendMessageResult = await _everClient.Processing.SendMessage(new ParamsOfSendMessage
+        {
+            Message = encoded.Message,
+            Abi = TestsEnv.Packages.Events.Abi,
+            SendEvents = true
+        }, ProcessingCallback);
 
-		//assert
-		waitForTransactionResult.OutMessages.Should().BeEmpty();
-		waitForTransactionResult.Decoded.OutMessages.Should().BeEmpty();
-		waitForTransactionResult.Decoded.Output.Should().BeNull();
+        //act
+        ResultOfProcessMessage waitForTransactionResult = await _everClient.Processing.WaitForTransaction(
+            new ParamsOfWaitForTransaction
+            {
+                Message = encoded.Message,
+                ShardBlockId = sendMessageResult.ShardBlockId,
+                SendEvents = true,
+                Abi = TestsEnv.Packages.Events.Abi
+            }, ProcessingCallback);
 
-		events.Count.Should().BeGreaterOrEqualTo(4);
-		events[0].Should().BeOfType<ProcessingEvent.WillFetchFirstBlock>();
-		events[1].Should().BeOfType<ProcessingEvent.WillSend>();
-		events[2].Should().BeOfType<ProcessingEvent.DidSend>();
-		events.GetRange(3, events.Count - 3).Should().AllBeOfType<ProcessingEvent.WillFetchNextBlock>();
-	}
+        //assert
+        waitForTransactionResult.OutMessages.ShouldBeEmpty();
+        waitForTransactionResult.Decoded.OutMessages.ShouldBeEmpty();
+        waitForTransactionResult.Decoded.Output.ShouldBeNull();
+
+        events.Count.ShouldBeGreaterThanOrEqualTo(4);
+        events[0].ShouldBeOfType<ProcessingEvent.WillFetchFirstBlock>();
+        events[1].ShouldBeOfType<ProcessingEvent.WillSend>();
+        events[2].ShouldBeOfType<ProcessingEvent.DidSend>();
+        events.GetRange(3, events.Count - 3)
+            .ShouldAllBe(@event => @event.GetType() == typeof(ProcessingEvent.WillFetchNextBlock));
+    }
 }

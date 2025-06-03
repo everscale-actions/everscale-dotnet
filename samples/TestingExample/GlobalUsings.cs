@@ -9,7 +9,6 @@ global using EverscaleNet.Exceptions;
 global using EverscaleNet.TestSuite.Accounts;
 global using EverscaleNet.TestSuite.Giver;
 global using EverscaleNet.TestSuite.Services;
-global using FluentAssertions;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Hosting;
 global using Microsoft.Extensions.Logging;
