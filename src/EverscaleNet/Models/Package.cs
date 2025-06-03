@@ -8,6 +8,7 @@ public record Package(Abi? Abi = null, string? Tvc = null, KeyPair? KeyPair = nu
 	///     Code in base64
 	/// </summary>
 	public string? Base64 { get; } = Base64;
+
 	/// <summary>
 	///     Abi
 	/// </summary>

@@ -11,7 +11,8 @@ public enum SendTransactionFlags {
 	SenderWantsToPayTransferFeesSeparately = 1,
 
 	/// <summary>
-	///     if there are some errors during the action phase it should be ignored (don't fail transaction e.g. if message balance is greater than remaining balance, or
+	///     if there are some errors during the action phase it should be ignored (don't fail transaction e.g. if message
+	///     balance is greater than remaining balance, or
 	///     it has invalid address)
 	/// </summary>
 	IgnoreSomeErrors = 2,
@@ -22,7 +23,8 @@ public enum SendTransactionFlags {
 	DestroyedIfZero = 32,
 
 	/// <summary>
-	///     used for messages that carry all the remaining value of the inbound message in addition to the value initially indicated in the new message
+	///     used for messages that carry all the remaining value of the inbound message in addition to the value initially
+	///     indicated in the new message
 	/// </summary>
 	CarryAllRemainingValue = 64,
 

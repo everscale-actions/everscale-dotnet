@@ -4,7 +4,8 @@ using EverscaleNet.Client.Models;
 namespace TestingExample.Accounts;
 
 internal class Sink : AccountBase {
-	public Sink(IEverClient client, IEverPackageManager packageManager) : base(client, packageManager) { }
+	public Sink(IEverClient client, IEverPackageManager packageManager) : base(client, packageManager) {
+	}
 
 	protected override string Name => "20_sink";
 

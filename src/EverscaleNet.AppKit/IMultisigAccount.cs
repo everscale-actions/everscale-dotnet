@@ -17,7 +17,8 @@ public interface IMultisigAccount : IInternalSender {
 	/// <param name="stateInit"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<ResultOfProcessMessage> SubmitTransaction(string dest, decimal coins, bool bounce, bool allBalance, string payload, string? stateInit = null, CancellationToken cancellationToken = default);
+	Task<ResultOfProcessMessage> SubmitTransaction(string dest, decimal coins, bool bounce, bool allBalance, string payload,
+		string? stateInit = null, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// </summary>
@@ -28,7 +29,8 @@ public interface IMultisigAccount : IInternalSender {
 	/// <param name="payload"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<ResultOfProcessMessage> SendTransaction(string dest, decimal coins, bool bounce, SendTransactionFlags flags, string payload, CancellationToken cancellationToken = default);
+	Task<ResultOfProcessMessage> SendTransaction(string dest, decimal coins, bool bounce, SendTransactionFlags flags, string payload,
+		CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// </summary>
@@ -37,7 +39,8 @@ public interface IMultisigAccount : IInternalSender {
 	/// <param name="lifetime"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<ResultOfProcessMessage> Deploy(IEnumerable<string> owners, short reqConfirms, TimeSpan lifetime, CancellationToken cancellationToken = default);
+	Task<ResultOfProcessMessage> Deploy(IEnumerable<string> owners, short reqConfirms, TimeSpan lifetime,
+		CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// </summary>

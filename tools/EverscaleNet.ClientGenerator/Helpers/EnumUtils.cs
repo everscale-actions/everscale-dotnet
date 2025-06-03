@@ -7,9 +7,9 @@ internal static class EnumUtils {
 
 	private static T FindAttributeOfType<T>(this Enum enumValue, Func<T, bool> filter = null) {
 		return enumValue.GetType()
-		                .GetField(enumValue.ToString())!
-		                .GetCustomAttributes(false)
-		                .OfType<T>()
-		                .SingleOrDefault(a => filter?.Invoke(a) ?? true);
+			.GetField(enumValue.ToString())!
+			.GetCustomAttributes(false)
+			.OfType<T>()
+			.SingleOrDefault(a => filter?.Invoke(a) ?? true);
 	}
 }

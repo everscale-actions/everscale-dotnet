@@ -17,8 +17,9 @@ public class EverClientWasmAdapter : EverClientAdapterBase {
 	private IJSObjectReference? _libWeb;
 
 	/// <inheritdoc />
-	public EverClientWasmAdapter(IJSRuntime jsRuntime, IOptions<EverClientOptions> everOptionsAccessor, IOptions<LibWebOptions> libWebOptionsAccessor,
-	                             ILogger<EverClientWasmAdapter> logger) : base(logger) {
+	public EverClientWasmAdapter(IJSRuntime jsRuntime, IOptions<EverClientOptions> everOptionsAccessor,
+		IOptions<LibWebOptions> libWebOptionsAccessor,
+		ILogger<EverClientWasmAdapter> logger) : base(logger) {
 		_jsRuntime = jsRuntime;
 		_everOptionsAccessor = everOptionsAccessor;
 		_libWebOptionsAccessor = libWebOptionsAccessor;
@@ -49,25 +50,26 @@ public class EverClientWasmAdapter : EverClientAdapterBase {
 
 	/// <inheritdoc />
 	protected override async Task RequestImpl(uint requestId, string requestJson,
-	                                          string method,
-	                                          CancellationToken cancellationToken = default) {
+		string method,
+		CancellationToken cancellationToken = default) {
 		await (_libWeb ?? throw new InvalidOperationException()).InvokeVoidAsync("sendRequest", cancellationToken,
-		                                                                         ContextId,
-		                                                                         requestId,
-		                                                                         method,
-		                                                                         requestJson);
+			ContextId,
+			requestId,
+			method,
+			requestJson);
 	}
 
 	/// <inheritdoc />
 	protected override async Task<uint> CreateContext(CancellationToken cancellationToken) {
 		var module = await _jsRuntime.InvokeAsync<IJSObjectReference>("import", cancellationToken,
-		                                                              "/_content/EverscaleNet.Adapter.Wasm/js/eversdk-adapter.js");
-		_libWeb = await module.InvokeAsync<IJSObjectReference>("init", cancellationToken, DotNetObjectReference.Create(this), _libWebOptionsAccessor.Value);
+			             "/_content/EverscaleNet.Adapter.Wasm/js/eversdk-adapter.js");
+		_libWeb = await module.InvokeAsync<IJSObjectReference>("init", cancellationToken, DotNetObjectReference.Create(this),
+			          _libWebOptionsAccessor.Value);
 
 		string configJson =
 			JsonSerializer.Serialize(_everOptionsAccessor.Value, JsonOptionsProvider.JsonSerializerOptions);
 		_logger.LogTrace("Creating context with options: {Config}", configJson);
-		var resultJson =
+		string resultJson =
 			await _libWeb.InvokeAsync<string>("createContext", cancellationToken, configJson);
 
 		return GetContextIdByCreatedContextJson(resultJson);

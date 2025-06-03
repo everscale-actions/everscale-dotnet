@@ -8,14 +8,17 @@ public enum AccountType {
 	///     Account has balance but no code
 	/// </summary>
 	Uninit = 0,
+
 	/// <summary>
 	///     Account has balance and code
 	/// </summary>
 	Active = 1,
+
 	/// <summary>
 	///     Account has been frozen for some reasons
 	/// </summary>
 	Frozen = 2,
+
 	/// <summary>
 	///     Account has been deleted
 	/// </summary>

@@ -3,7 +3,8 @@
 namespace EverscaleNet.Models;
 
 /// <summary>
-///     Everscale client options. See details https://docs.everos.dev/ever-sdk/reference/types-and-methods/mod_client#config
+///     Everscale client options. See details
+///     https://docs.everos.dev/ever-sdk/reference/types-and-methods/mod_client#config
 /// </summary>
 public class EverClientOptions : ClientConfig {
 	/// <inheritdoc />

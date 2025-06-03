@@ -1,7 +1,8 @@
 namespace EverscaleNet.TestSuite.Services;
 
 /// <summary>
-///     Class can be used for start Node SE docker container through DI with `services.AddHostedService&lt;InitNodeSeService&gt;();`
+///     Class can be used for start Node SE docker container through DI with `services.AddHostedService&lt;
+///     InitNodeSeService&gt;();`
 /// </summary>
 public class InitNodeSeService : IHostedService {
 	private readonly ILogger<InitNodeSeService> _logger;

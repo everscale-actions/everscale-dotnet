@@ -39,27 +39,25 @@
 	private readonly SendMessageModel _sendMessageModel = new();
 
 	public class SendMessageModel {
-		[Required]
-		public string Phrase { get; set; }
+		[Required] public string Phrase { get; set; }
 
-		[Required]
-		public string Recipient { get; set; }
+		[Required] public string Recipient { get; set; }
 
-		[Required]
-		public string Message { get; set; }
+		[Required] public string Message { get; set; }
 	}
 
-	[Inject]
-	SafeMultisigWallet SafeMultisigWallet { get; set; }
+	[Inject] SafeMultisigWallet SafeMultisigWallet { get; set; }
 
 	private async Task Submit() {
 		Sending = true;
 		try {
 			await SafeMultisigWallet.SendMessage(_sendMessageModel.Phrase, _sendMessageModel.Recipient, _sendMessageModel.Message);
 			Error = null;
-		} catch (Exception e) {
+        }
+        catch (Exception e) {
 			Error = e.Message;
-		} finally {
+        }
+        finally {
 			Sending = false;
 		}
 	}

@@ -26,37 +26,38 @@ internal static class ClientGenerator {
 
 		//Create IEverClient
 		UnitHelpers.CreateUnit("IEverClient", unitName =>
-			                       ClientClassHelpers.CreateClientInterface(unitName, everApi), Path.Combine(output, "IEverClient.Generated.cs"), "EverscaleNet.Abstract.Modules");
+				ClientClassHelpers.CreateClientInterface(unitName, everApi), Path.Combine(output, "IEverClient.Generated.cs"),
+			"EverscaleNet.Abstract.Modules");
 
 		//Create EverClient
 		UnitHelpers.CreateUnit("EverClient", unitName =>
-			                       ClientClassHelpers.CreateClientClass(unitName, everApi), Path.Combine(output, "EverClient.Generated.cs"),
-		                       "System", "EverscaleNet.Abstract", "EverscaleNet.Abstract.Modules", "EverscaleNet.Client.Modules");
+				ClientClassHelpers.CreateClientClass(unitName, everApi), Path.Combine(output, "EverClient.Generated.cs"),
+			"System", "EverscaleNet.Abstract", "EverscaleNet.Abstract.Modules", "EverscaleNet.Client.Modules");
 
 		//Save all used types
-		Dictionary<string, ApiType> allTypes = everApi!.Modules
-		                                               .SelectMany(m => m.Types)
-		                                               .Select(t => new { name = NamingConventions.Normalize(t.Name), type = t.Type })
-		                                               .ToDictionary(t => t.name, t => t.type);
+		var allTypes = everApi!.Modules
+			.SelectMany(m => m.Types)
+			.Select(t => new { name = NamingConventions.Normalize(t.Name), type = t.Type })
+			.ToDictionary(t => t.name, t => t.type);
 
 		IReadOnlyDictionary<string, string> numberTypesMapping = NumberUtils.MapNumericTypes(everApi!.Modules);
 
 		foreach (Module module in everApi!.Modules) {
 			//Create Interface for Modules
 			UnitHelpers.CreateUnit(module.Name, unitName => ModulesClassHelpers.CreateModuleInterface(unitName, module),
-			                       Path.Combine(output, nameof(EverApi.Modules), $"I{NamingConventions.Normalize(module.Name)}Module.Generated.cs"), ModulesNamespaces);
+				Path.Combine(output, nameof(EverApi.Modules), $"I{NamingConventions.Normalize(module.Name)}Module.Generated.cs"),
+				ModulesNamespaces);
 
 			//Create Modules
 			UnitHelpers.CreateUnit(module.Name, unitName => ModulesClassHelpers.CreateModuleClass(unitName, module),
-			                       Path.Combine(output, nameof(EverApi.Modules), $"{NamingConventions.Normalize(module.Name)}Module.Generated.cs"),
-			                       ModulesNamespaces.Union(["EverscaleNet.Abstract", "EverscaleNet.Abstract.Modules"]).ToArray());
+				Path.Combine(output, nameof(EverApi.Modules), $"{NamingConventions.Normalize(module.Name)}Module.Generated.cs"),
+				ModulesNamespaces.Union(["EverscaleNet.Abstract", "EverscaleNet.Abstract.Modules"]).ToArray());
 
 			//Create Models
 			var modelClassBuilder = new ModelsClassHelpers(numberTypesMapping, allTypes);
-			foreach (TypeElement typeElement in module.Types.Where(t => t.Type != ApiType.None && t.Type != ApiType.Number)) {
+			foreach (TypeElement typeElement in module.Types.Where(t => t.Type != ApiType.None && t.Type != ApiType.Number))
 				UnitHelpers.CreateUnit(module.Name, _ => modelClassBuilder.CreateModelClass(typeElement),
-				                       Path.Combine(output, "Models", $"{NamingConventions.Normalize(typeElement.Name)}.Generated.cs"), ModelsNamespaces);
-			}
+					Path.Combine(output, "Models", $"{NamingConventions.Normalize(typeElement.Name)}.Generated.cs"), ModelsNamespaces);
 		}
 	}
 

@@ -2,7 +2,7 @@
 
 internal static class ModulesClassHelpers {
 	public static NamespaceDeclarationSyntax CreateModuleClass(string unitName, Module module) {
-		var moduleName = $"{unitName}Module";
+		string moduleName = $"{unitName}Module";
 
 		StatementSyntax statementSyntax = ParseStatement("_everClientAdapter = everClientAdapter;");
 
@@ -12,42 +12,42 @@ internal static class ModulesClassHelpers {
 			.AddModifiers(Token(SyntaxKind.PrivateKeyword), Token(SyntaxKind.ReadOnlyKeyword));
 
 		ConstructorDeclarationSyntax constructorDeclaration = ConstructorDeclaration(moduleName)
-		                                                      .AddParameterListParameters(
-			                                                      Parameter(Identifier("everClientAdapter")).WithType(IdentifierName("IEverClientAdapter")))
-		                                                      .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
-		                                                      .WithBody(Block(statementSyntax))
-		                                                      .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(".ctor"));
+			.AddParameterListParameters(
+				Parameter(Identifier("everClientAdapter")).WithType(IdentifierName("IEverClientAdapter")))
+			.WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
+			.WithBody(Block(statementSyntax))
+			.WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(".ctor"));
 
-		MemberDeclarationSyntax[] methods = module
-		                                    .Functions
-		                                    .Select(f => GetMethodDeclaration(module, f, true))
-		                                    .ToArray();
+		var methods = module
+			.Functions
+			.Select(f => GetMethodDeclaration(module, f, true))
+			.ToArray();
 
 		ClassDeclarationSyntax item = ClassDeclaration(moduleName)
-		                              .AddModifiers(Token(SyntaxKind.PublicKeyword))
-		                              .AddBaseListTypes(SimpleBaseType(IdentifierName(NamingConventions.ToInterfaceName(moduleName))))
-		                              .AddMembers(fieldDeclaration)
-		                              .AddMembers(constructorDeclaration)
-		                              .AddMembers(methods)
-		                              .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia($"{unitName} Module"));
+			.AddModifiers(Token(SyntaxKind.PublicKeyword))
+			.AddBaseListTypes(SimpleBaseType(IdentifierName(NamingConventions.ToInterfaceName(moduleName))))
+			.AddMembers(fieldDeclaration)
+			.AddMembers(constructorDeclaration)
+			.AddMembers(methods)
+			.WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia($"{unitName} Module"));
 
 		return NamespaceDeclaration(IdentifierName(ClientGenerator.NamespaceModules))
 			.AddMembers(item);
 	}
 
 	public static NamespaceDeclarationSyntax CreateModuleInterface(string unitName, Module module) {
-		var moduleName = $"{unitName}Module";
+		string moduleName = $"{unitName}Module";
 
-		MemberDeclarationSyntax[] methods = module
-		                                    .Functions
-		                                    .Select(function => GetMethodDeclaration(module, function, false))
-		                                    .ToArray();
+		var methods = module
+			.Functions
+			.Select(function => GetMethodDeclaration(module, function, false))
+			.ToArray();
 
 		InterfaceDeclarationSyntax item = InterfaceDeclaration($"I{moduleName}")
-		                                  .AddModifiers(Token(SyntaxKind.PublicKeyword))
-		                                  .AddBaseListTypes(SimpleBaseType(IdentifierName("IEverModule")))
-		                                  .AddMembers(methods)
-		                                  .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia($"{unitName} Module"));
+			.AddModifiers(Token(SyntaxKind.PublicKeyword))
+			.AddBaseListTypes(SimpleBaseType(IdentifierName("IEverModule")))
+			.AddMembers(methods)
+			.WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia($"{unitName} Module"));
 
 		return NamespaceDeclaration(IdentifierName(ClientGenerator.NamespaceAbstractModules))
 			.AddMembers(item);
@@ -110,17 +110,17 @@ internal static class ModulesClassHelpers {
 
 		if (callbackParam.name != default) {
 			methodDeclarationParams.Add(Parameter(Identifier(callbackParam.nameWithNull))
-				                            .WithType(IdentifierName($"Func<{callbackParam.type}, uint, CancellationToken, Task>")));
+				.WithType(IdentifierName($"Func<{callbackParam.type}, uint, CancellationToken, Task>")));
 			@params.Add(Parameter(Identifier(callbackParam.name))
-				            .WithType(IdentifierName($"Func<{callbackParam.type}, uint, CancellationToken, Task>")));
+				.WithType(IdentifierName($"Func<{callbackParam.type}, uint, CancellationToken, Task>")));
 		}
 
 		MethodDeclarationSyntax method =
 			MethodDeclaration(ParseTypeName(responseDeclaration), NamingConventions.Normalize(function.Name))
 				.AddParameterListParameters(methodDeclarationParams.ToArray())
 				.AddParameterListParameters(Parameter(Identifier("cancellationToken"))
-				                            .WithType(IdentifierName(nameof(CancellationToken)))
-				                            .WithDefault(EqualsValueClause(IdentifierName("default"))))
+					.WithType(IdentifierName(nameof(CancellationToken)))
+					.WithDefault(EqualsValueClause(IdentifierName("default"))))
 				.AddModifiers(modifiers.ToArray());
 
 		if (withBody) {

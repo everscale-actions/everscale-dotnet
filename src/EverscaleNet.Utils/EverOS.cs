@@ -18,6 +18,7 @@ public static class EverOS {
 			///     SE Giver address
 			/// </summary>
 			public static string Address = "0:78fbd6980c10cf41401b32e9b51810415e7578b52403af80dae68ddf99714498";
+
 			/// <summary>
 			///     SE Giver public and secret key pair
 			/// </summary>

@@ -37,7 +37,8 @@ public interface IEverPackageManager {
 	/// <param name="name">Package name</param>
 	/// <param name="cancellationToken"></param>
 	/// <returns>
-	///     The compiled smart contract data. Used only when generating contract address and deploying contract code to the blockchain.
+	///     The compiled smart contract data. Used only when generating contract address and deploying contract code to the
+	///     blockchain.
 	/// </returns>
 	public Task<string?> LoadTvc(string name, CancellationToken cancellationToken = default);
 
@@ -57,7 +58,8 @@ public interface IEverPackageManager {
 	/// <param name="name">Package name</param>
 	/// <param name="cancellationToken"></param>
 	/// <returns>
-	///     The compiled smart contract data. Used only when generating contract address and deploying contract code to the blockchain.
+	///     The compiled smart contract data. Used only when generating contract address and deploying contract code to the
+	///     blockchain.
 	/// </returns>
 	public Task<string?> LoadCode(string name, CancellationToken cancellationToken = default);
 

@@ -75,7 +75,8 @@ public class NodeSeDockerContainer : IAsyncDisposable {
 					Result = "id"
 				});
 				return resultOfQueryCollection.Result.Length > 0;
-			} catch (EverClientException) {
+			}
+			catch (EverClientException) {
 				_logger.LogInformation("Waiting for Node SE will be ready..");
 				return false;
 			}

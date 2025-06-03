@@ -15,11 +15,13 @@ public static class EverClientExtensions {
 	/// <param name="encodedMessage"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns>Total account fees in coins</returns>
-	public static async Task<ProcessAndWaitInternalMessagesResult> ProcessAndWaitInternalMessages(this IEverClient everClient, ParamsOfEncodeMessage encodedMessage,
-	                                                                                              CancellationToken cancellationToken = default) {
+	public static async Task<ProcessAndWaitInternalMessagesResult> ProcessAndWaitInternalMessages(this IEverClient everClient,
+		ParamsOfEncodeMessage encodedMessage,
+		CancellationToken cancellationToken = default) {
 		ResultOfProcessMessage resultOfProcessMessage =
-			await everClient.Processing.ProcessMessage(new ParamsOfProcessMessage { MessageEncodeParams = encodedMessage, SendEvents = true }, cancellationToken: cancellationToken);
-		(string transctionId, decimal value, decimal fees)[] transactions = await WaitAndGetInternalMessageTransactions(everClient, resultOfProcessMessage.OutMessages, cancellationToken);
+			await everClient.Processing.ProcessMessage(new ParamsOfProcessMessage { MessageEncodeParams = encodedMessage, SendEvents = true },
+				cancellationToken: cancellationToken);
+		var transactions = await WaitAndGetInternalMessageTransactions(everClient, resultOfProcessMessage.OutMessages, cancellationToken);
 		return new ProcessAndWaitInternalMessagesResult {
 			ProcessingFees = resultOfProcessMessage.Fees,
 			ChildValue = transactions.Sum(r => r.value),
@@ -27,9 +29,11 @@ public static class EverClientExtensions {
 		};
 	}
 
-	private static async Task<(string transctionId, decimal value, decimal fees)[]> WaitAndGetInternalMessageTransactions(IEverClient everClient, IEnumerable<string> messages,
-	                                                                                                                      CancellationToken cancellationToken) {
-		var parsedMessages = await Task.WhenAll(messages.Select(async message => {
+	private static async Task<(string transctionId, decimal value, decimal fees)[]> WaitAndGetInternalMessageTransactions(IEverClient everClient,
+		IEnumerable<string> messages,
+		CancellationToken cancellationToken) {
+		var parsedMessages = await Task.WhenAll(messages.Select(async message =>
+		{
 			ResultOfParse parseResult = await everClient.Boc.ParseMessage(new ParamsOfParse {
 				Boc = message
 			}, cancellationToken);
@@ -39,23 +43,24 @@ public static class EverClientExtensions {
 		}));
 
 		return await Task.WhenAll(parsedMessages
-		                          .Where(message => message.messageType == MessageType.Internal)
-		                          .Select(async parsedMessage => {
-			                          ResultOfWaitForCollection result = await everClient.Net.WaitForCollection(new ParamsOfWaitForCollection {
-				                          Collection = "transactions",
-				                          Filter = new { in_msg = new { eq = parsedMessage.messageId } }.ToJsonElement(),
-				                          Result = "id in_message{value(format:DEC)} total_fees(format: DEC)"
-			                          }, cancellationToken);
-			                          var proto = new {
-				                          id = default(string),
-				                          in_message = new { value = default(string) },
-				                          total_fees = default(string)
-			                          };
-			                          var res = result.Result!.ToPrototype(proto);
-			                          decimal value = decimal.Parse(res.in_message.value!);
-			                          decimal childFees = decimal.Parse(res.total_fees!);
-			                          return (res.id!, value, childFees);
-		                          }));
+			       .Where(message => message.messageType == MessageType.Internal)
+			       .Select(async parsedMessage =>
+			       {
+				       ResultOfWaitForCollection result = await everClient.Net.WaitForCollection(new ParamsOfWaitForCollection {
+					       Collection = "transactions",
+					       Filter = new { in_msg = new { eq = parsedMessage.messageId } }.ToJsonElement(),
+					       Result = "id in_message{value(format:DEC)} total_fees(format: DEC)"
+				       }, cancellationToken);
+				       var proto = new {
+					       id = default(string),
+					       in_message = new { value = default(string) },
+					       total_fees = default(string)
+				       };
+				       var res = result.Result!.ToPrototype(proto);
+				       decimal value = decimal.Parse(res.in_message.value!);
+				       decimal childFees = decimal.Parse(res.total_fees!);
+				       return (res.id!, value, childFees);
+			       }));
 	}
 }
 
@@ -66,9 +71,11 @@ public class ProcessAndWaitInternalMessagesResult {
 	/// <summary>
 	/// </summary>
 	public TransactionFees? ProcessingFees { get; set; }
+
 	/// <summary>
 	/// </summary>
 	public decimal ChildValue { get; set; }
+
 	/// <summary>
 	/// </summary>
 	public decimal ChildTransactionFees { get; set; }

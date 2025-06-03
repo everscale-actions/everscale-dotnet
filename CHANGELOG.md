@@ -13,7 +13,8 @@ All notable changes to this project will be documented in this file.
 
 ### Blazor WASM Client
 
-Just use package `EverscaleNet.WebClient` instead of `EverscaleNet.Client` and put your contracts to `wwwroot/_contracts`.
+Just use package `EverscaleNet.WebClient` instead of `EverscaleNet.Client` and put your contracts to
+`wwwroot/_contracts`.
 
 ```shell
 dotnet add package EverscaleNet.WebClient

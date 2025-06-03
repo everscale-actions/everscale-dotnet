@@ -2,14 +2,17 @@ using MessageSenderService;
 using Serilog;
 
 IHostBuilder builder = Host.CreateDefaultBuilder(args);
-builder.ConfigureServices((_, services) => {
+builder.ConfigureServices((_, services) =>
+{
 	services.AddHostedService<Worker>();
-	services.AddEverClient(config => {
+	services.AddEverClient(config =>
+	{
 		config.Network.Endpoints = ["http://localhost"];
 		config.Network.WaitForTimeout = 5000;
 	});
 });
-builder.UseSerilog((_, configuration) => {
+builder.UseSerilog((_, configuration) =>
+{
 	configuration
 		.MinimumLevel.Verbose()
 		.Enrich.FromLogContext()

@@ -20,7 +20,7 @@ public class Worker : BackgroundService {
 	}
 
 	protected override async Task ExecuteAsync(CancellationToken stoppingToken) {
-		while (!stoppingToken.IsCancellationRequested) {
+		while (!stoppingToken.IsCancellationRequested)
 			try {
 				// load contracts from abi.json and tvc files 
 				// Package senderContract = await _packageManager.LoadPackage(SenderContractName);
@@ -38,16 +38,17 @@ public class Worker : BackgroundService {
 				ulong count = await GetReceivedMessagesCount(receiverContract, keys, receiverAddress, stoppingToken);
 
 				_logger.LogInformation("Total received messages: {Count} Repeat again in 10 sec...", count);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				_logger.LogError(e, "Something went wrong. Will try again in 10 sec...");
-			} finally {
+			}
+			finally {
 				await Task.Delay(10000, stoppingToken);
 			}
-		}
 	}
 
 	private async Task<ulong> GetReceivedMessagesCount(IPackage contract, KeyPair keys, string address,
-	                                                   CancellationToken cancellationToken) {
+		CancellationToken cancellationToken) {
 		ResultOfQueryCollection accountBocResult = await _everClient.Net.QueryCollection(new ParamsOfQueryCollection {
 			Collection = "accounts",
 			Filter = new { id = new { eq = address } }.ToJsonElement(),
@@ -55,7 +56,7 @@ public class Worker : BackgroundService {
 			Limit = 1
 		}, cancellationToken);
 
-		var accountBoc = accountBocResult.Result[0].Get<string>("boc");
+		string accountBoc = accountBocResult.Result[0].Get<string>("boc");
 
 		ResultOfEncodeMessage getCountEncodedMessage = await _everClient.Abi.EncodeMessage(new ParamsOfEncodeMessage {
 			Address = address,
@@ -74,7 +75,7 @@ public class Worker : BackgroundService {
 	}
 
 	private async Task<string> CheckBalanceAndDeploy(IPackage package, KeyPair keys,
-	                                                 CancellationToken cancellationToken) {
+		CancellationToken cancellationToken) {
 		var deployParams = new ParamsOfEncodeMessage {
 			Abi = package.Abi,
 			DeploySet = new DeploySet { Tvc = package.Tvc },
@@ -96,7 +97,8 @@ public class Worker : BackgroundService {
 
 		try {
 			await _everClient.ProcessAndWaitInternalMessages(deployParams, cancellationToken);
-		} catch (EverClientException e) when (e.Code == 414) {
+		}
+		catch (EverClientException e) when (e.Code == 414) {
 			_logger.LogInformation("Contract already has been deployed");
 		}
 
@@ -122,6 +124,7 @@ public class Worker : BackgroundService {
 
 	private static class SeGiver {
 		public const string Address = "0:ece57bcc6c530283becbbd8a3b24d3c5987cdddc3c8b7b33be6e4a6312490415";
+
 		public static readonly Signer Signer = new Signer.Keys {
 			KeysAccessor = new KeyPair {
 				Public = "2ada2e65ab8eeab09490e3521415f45b6e42df9c760a639bcf53957550b25a16",

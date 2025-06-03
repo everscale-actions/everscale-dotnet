@@ -4,7 +4,8 @@ using EverscaleNet.Client.Models;
 namespace TestingExample.Accounts;
 
 internal class Bomber : AccountBase {
-	public Bomber(IEverClient client, IEverPackageManager packageManager) : base(client, packageManager) { }
+	public Bomber(IEverClient client, IEverPackageManager packageManager) : base(client, packageManager) {
+	}
 
 	protected override string Name => "20_bomber";
 

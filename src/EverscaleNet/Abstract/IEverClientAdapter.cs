@@ -40,7 +40,7 @@ public interface IEverClientAdapter : IAsyncDisposable {
 	/// <typeparam name="TResponse">Response type</typeparam>
 	/// <returns></returns>
 	Task<TResponse> Request<TRequest, TResponse>(string method, TRequest request,
-	                                             CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken = default)
 		where TRequest : new()
 		where TResponse : new();
 
@@ -53,7 +53,7 @@ public interface IEverClientAdapter : IAsyncDisposable {
 	/// <typeparam name="TEvent"></typeparam>
 	/// <returns></returns>
 	Task<TResponse> Request<TResponse, TEvent>(string method, Func<TEvent, uint, CancellationToken, Task>? callback,
-	                                           CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken = default)
 		where TResponse : new();
 
 	/// <summary>
@@ -67,8 +67,8 @@ public interface IEverClientAdapter : IAsyncDisposable {
 	/// <typeparam name="TEvent"></typeparam>
 	/// <returns></returns>
 	Task<TResponse> Request<TRequest, TResponse, TEvent>(string method, TRequest request,
-	                                                     Func<TEvent, uint, CancellationToken, Task>? callback,
-	                                                     CancellationToken cancellationToken = default)
+		Func<TEvent, uint, CancellationToken, Task>? callback,
+		CancellationToken cancellationToken = default)
 		where TRequest : new()
 		where TResponse : new();
 }

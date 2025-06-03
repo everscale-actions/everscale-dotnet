@@ -8,14 +8,14 @@ internal static class CommentsHelpers {
 			comment = "Not described yet..";
 		}
 
-		XmlNodeSyntax[] commentNodes = GetLines(comment)
-		                               .SelectMany(l => new XmlNodeSyntax[] {
-			                               XmlParaElement(XmlText(l)),
-			                               XmlText(XmlNewline)
-		                               }).ToArray();
+		var commentNodes = GetLines(comment)
+			.SelectMany(l => new XmlNodeSyntax[] {
+				XmlParaElement(XmlText(l)),
+				XmlText(XmlNewline)
+			}).ToArray();
 
 		// add a newline after the summary element
-		XmlNodeSyntax[] formattedCommentNodes = new XmlNodeSyntax[] { XmlText(XmlNewline) }.Concat(commentNodes).ToArray();
+		var formattedCommentNodes = new XmlNodeSyntax[] { XmlText(XmlNewline) }.Concat(commentNodes).ToArray();
 
 		return TriviaList(
 			Trivia(DocumentationComment(XmlSummaryElement(formattedCommentNodes))),

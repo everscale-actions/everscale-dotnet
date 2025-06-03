@@ -26,8 +26,8 @@ internal static class PropertyHelpers {
 		]));
 
 	public static PropertyDeclarationSyntax CreatePropertyDeclaration(string typeName, string name,
-	                                                                  string description, bool optional = false,
-	                                                                  bool addPostfix = false, bool onlyInit = false) {
+		string description, bool optional = false,
+		bool addPostfix = false, bool onlyInit = false) {
 		AccessorListSyntax accessors = onlyInit ? GetInitAccessorListSyntax : GetSetAccessorListSyntax;
 
 		var attributes = new List<AttributeSyntax> {
@@ -35,10 +35,10 @@ internal static class PropertyHelpers {
 		};
 
 		return PropertyDeclaration(IdentifierName($"{typeName}{(optional ? "?" : null)}"),
-		                           NamingConventions.Normalize($"{name}{(addPostfix ? "Accessor" : null)}"))
-		       .AddAttributeLists(AttributeList(SeparatedList(attributes))
-			                          .WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(description)))
-		       .WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
-		       .WithAccessorList(accessors);
+				NamingConventions.Normalize($"{name}{(addPostfix ? "Accessor" : null)}"))
+			.AddAttributeLists(AttributeList(SeparatedList(attributes))
+				.WithLeadingTrivia(CommentsHelpers.BuildCommentTrivia(description)))
+			.WithModifiers(TokenList(Token(SyntaxKind.PublicKeyword)))
+			.WithAccessorList(accessors);
 	}
 }

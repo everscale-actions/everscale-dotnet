@@ -15,7 +15,9 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 	private readonly object _lock = new();
 	private readonly ILogger _logger;
 
-	private readonly ConcurrentDictionary<uint, (TaskCompletionSource<string> tsc, Func<string, uint, CancellationToken, Task>? callback)> _requestsDict = new();
+	private readonly ConcurrentDictionary<uint, (TaskCompletionSource<string> tsc, Func<string, uint, CancellationToken, Task>? callback)>
+		_requestsDict = new();
+
 	private readonly SemaphoreSlim _semaphore = new(1, 1);
 
 	private uint _requestId;
@@ -54,7 +56,7 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 
 	/// <inheritdoc />
 	public async Task<TResponse> Request<TResponse, TEvent>(string method, Func<TEvent, uint, CancellationToken, Task>? callback,
-	                                                        CancellationToken cancellationToken = default) where TResponse : new() {
+		CancellationToken cancellationToken = default) where TResponse : new() {
 		string responseJson = await Request(method, EmptyJson, callback is null ? null : DeserializeCallback(callback), cancellationToken);
 
 		return JsonSerializer.Deserialize<TResponse>(responseJson, JsonOptionsProvider.JsonSerializerOptions)!;
@@ -62,8 +64,8 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 
 	/// <inheritdoc />
 	public async Task<TResponse> Request<TRequest, TResponse, TEvent>(string method, TRequest request,
-	                                                                  Func<TEvent, uint, CancellationToken, Task>? callback,
-	                                                                  CancellationToken cancellationToken = default) where TRequest : new() where TResponse : new() {
+		Func<TEvent, uint, CancellationToken, Task>? callback,
+		CancellationToken cancellationToken = default) where TRequest : new() where TResponse : new() {
 		string requestJson = JsonSerializer.Serialize(request, JsonOptionsProvider.JsonSerializerOptions);
 
 		string responseJson = await Request(method, requestJson, callback is null ? null : DeserializeCallback(callback), cancellationToken);
@@ -73,7 +75,7 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 
 	/// <inheritdoc />
 	public async Task Request<TRequest>(string method, TRequest request,
-	                                    CancellationToken cancellationToken = default) where TRequest : new() {
+		CancellationToken cancellationToken = default) where TRequest : new() {
 		string requestJson = JsonSerializer.Serialize(request, JsonOptionsProvider.JsonSerializerOptions);
 
 		await Request(method, requestJson, null, cancellationToken);
@@ -81,7 +83,7 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 
 	/// <inheritdoc />
 	public async Task<TResponse> Request<TRequest, TResponse>(string method, TRequest request,
-	                                                          CancellationToken cancellationToken = default) where TRequest : new() where TResponse : new() {
+		CancellationToken cancellationToken = default) where TRequest : new() where TResponse : new() {
 		string requestJson = JsonSerializer.Serialize(request, JsonOptionsProvider.JsonSerializerOptions);
 
 		string responseJson = await Request(method, requestJson, null, cancellationToken);
@@ -111,17 +113,19 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 		ClientError? error = createContextResult?.Error;
 		if (error != null) {
 			throw EverClientException.CreateExceptionWithCodeWithData(error.Code,
-			                                                          error.Data?.ToObject<Dictionary<string, object>>(),
-			                                                          error.Message);
+				error.Data?.ToObject<Dictionary<string, object>>(),
+				error.Message);
 		}
 		if (createContextResult?.ContextId == null) {
-			throw new EverClientException($"Raw result: {json}", new NullReferenceException("Result of context creation or context number is null"));
+			throw new EverClientException($"Raw result: {json}",
+				new NullReferenceException("Result of context creation or context number is null"));
 		}
 		return (uint)createContextResult.ContextId;
 	}
 
 	private static Func<string, uint, CancellationToken, Task> DeserializeCallback<TEvent>(Func<TEvent, uint, CancellationToken, Task> callback) {
-		return (json, responseType, cancellationToken) => callback.Invoke(PolymorphicSerializer.Deserialize<TEvent>(JsonDocument.Parse(json).RootElement), responseType, cancellationToken);
+		return (json, responseType, cancellationToken) =>
+			callback.Invoke(PolymorphicSerializer.Deserialize<TEvent>(JsonDocument.Parse(json).RootElement), responseType, cancellationToken);
 	}
 
 	/// <summary>
@@ -140,7 +144,7 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	protected abstract Task RequestImpl(uint requestId, string requestJson, string method,
-	                                    CancellationToken cancellationToken = default);
+		CancellationToken cancellationToken = default);
 
 	/// <summary>
 	///     Raw response handler implementation
@@ -151,7 +155,8 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 	/// <param name="finished"></param>
 	/// <param name="cancellationToken"></param>
 	/// <exception cref="EverClientException"></exception>
-	protected async Task ResponseHandlerBase(uint requestId, string responseJson, uint responseType, bool finished, CancellationToken cancellationToken) {
+	protected async Task ResponseHandlerBase(uint requestId, string responseJson, uint responseType, bool finished,
+		CancellationToken cancellationToken) {
 		_logger.LogTrace(
 			"Got request response context:{Context} request:{Request} type:{ResponseType} finished:{Finished} body:{Body}",
 			ContextId,
@@ -159,12 +164,12 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 		{
 			if (!_requestsDict.ContainsKey(requestId)) {
 				_logger.LogWarning("Request {Request} was not found in this context {Context}", requestId,
-				                   ContextId);
+					ContextId);
 				return;
 			}
 		}
 
-		if (!_requestsDict.TryGetValue(requestId, out (TaskCompletionSource<string> tsc, Func<string, uint, CancellationToken, Task>? callback) request)) {
+		if (!_requestsDict.TryGetValue(requestId, out var request)) {
 			throw new EverClientException("Request not found") {
 				Data = {
 					{ "ContextId", ContextId },
@@ -194,12 +199,12 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 			default:
 				// it is callback if responseType>=3 
 				_logger.LogTrace("Sending callback context:{Context} request:{Request} body:{Body}", ContextId,
-				                 requestId, responseJson);
+					requestId, responseJson);
 				if (request.callback is not null) {
 					await request.callback(responseJson, responseType, cancellationToken);
 				} else {
 					_logger.LogError("Callback is null:{Context} request:{Request} body:{Body}", ContextId,
-					                 requestId, responseJson);
+						requestId, responseJson);
 				}
 				return;
 		}
@@ -218,21 +223,23 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 
 			try {
 				await Task.Delay(TimeSpan.FromSeconds(1), cts.Token).ConfigureAwait(false);
-			} catch (TaskCanceledException) {
+			}
+			catch (TaskCanceledException) {
 				return false;
 			}
 		}
 	}
 
 	private async Task<string> Request(string method, string requestJson,
-	                                   Func<string, uint, CancellationToken, Task>? callback = null,
-	                                   CancellationToken cancellationToken = default) {
+		Func<string, uint, CancellationToken, Task>? callback = null,
+		CancellationToken cancellationToken = default) {
 		await _semaphore.WaitAsync(cancellationToken);
 		try {
 			if (ContextId == 0) {
 				ContextId = await CreateContext(cancellationToken);
 			}
-		} finally {
+		}
+		finally {
 			_semaphore.Release();
 		}
 
@@ -245,11 +252,12 @@ public abstract class EverClientAdapterBase : IEverClientAdapter {
 		}
 
 		_logger.LogTrace("Sending request context:{Context} request:{Request} method:{Method} body:{Body}",
-		                 ContextId, requestId, method, requestJson);
+			ContextId, requestId, method, requestJson);
 
 		try {
 			await RequestImpl(requestId, requestJson, method, cancellationToken);
-		} catch (Exception? e) {
+		}
+		catch (Exception? e) {
 			throw new EverClientException("Sending request error", e);
 		}
 

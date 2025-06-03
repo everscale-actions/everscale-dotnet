@@ -13,7 +13,9 @@ public class WebPackageManager : IEverPackageManager {
 		_httpClient = httpClient;
 		_options = optionsAccessor.Value;
 
-		string basePath = _options.BasePath ?? throw new InvalidOperationException($"Provide {nameof(WebPackageManagerOptions)}.{nameof(WebPackageManagerOptions.BasePath)} to use WebPackageManager");
+		string basePath = _options.BasePath
+		                  ?? throw new InvalidOperationException(
+			                  $"Provide {nameof(WebPackageManagerOptions)}.{nameof(WebPackageManagerOptions.BasePath)} to use WebPackageManager");
 		_httpClient.BaseAddress = new Uri(basePath);
 	}
 

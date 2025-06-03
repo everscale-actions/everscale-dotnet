@@ -7,7 +7,8 @@ public class SafeMultisigAccount : MultisigAccountBase {
 	/// </summary>
 	/// <param name="client"></param>
 	/// <param name="packageManager"></param>
-	public SafeMultisigAccount(IEverClient client, IEverPackageManager packageManager) : base(client, packageManager) { }
+	public SafeMultisigAccount(IEverClient client, IEverPackageManager packageManager) : base(client, packageManager) {
+	}
 
 	/// <summary>
 	/// </summary>

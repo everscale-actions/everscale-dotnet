@@ -14,13 +14,13 @@ public static class PolymorphicSerializer {
 			return (TEvent)(object)jsonElement;
 		}
 
-		Type[] nestedTypes = typeof(TEvent).GetNestedTypes();
+		var nestedTypes = typeof(TEvent).GetNestedTypes();
 
 		if (nestedTypes.Length == 0) {
 			return jsonElement.ToObject<TEvent>();
 		}
 
-		var nestedTypeName = jsonElement.Get<string>("type");
+		string nestedTypeName = jsonElement.Get<string>("type");
 		Type type = nestedTypes.Single(t => t.Name == nestedTypeName);
 		return jsonElement.ToObject<TEvent>(type);
 	}

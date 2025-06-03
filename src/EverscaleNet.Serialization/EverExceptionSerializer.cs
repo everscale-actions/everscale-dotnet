@@ -14,15 +14,16 @@ public static class EverExceptionSerializer {
 		Exception? innerException = null;
 		try {
 			clientError = JsonSerializer.Deserialize<ClientError>(responseJson, JsonOptionsProvider.JsonSerializerOptions);
-		} catch (Exception? e) {
+		}
+		catch (Exception? e) {
 			innerException = e;
 		}
 
 		return clientError != null
 			       ? EverClientException.CreateExceptionWithCodeWithData(clientError.Code,
-			                                                             clientError.Data?.ToObject<Dictionary<string, object>>(),
-			                                                             clientError.Message)
+				       clientError.Data?.ToObject<Dictionary<string, object>>(),
+				       clientError.Message)
 			       : new EverClientException($"Raw result: {responseJson}",
-			                                 innerException ?? new NullReferenceException("Result of error response is null or not valid"));
+				       innerException ?? new NullReferenceException("Result of error response is null or not valid"));
 	}
 }

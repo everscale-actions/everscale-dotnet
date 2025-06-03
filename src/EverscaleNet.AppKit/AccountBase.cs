@@ -131,7 +131,8 @@ public abstract class AccountBase : IAccount {
 	}
 
 	/// <summary>
-	///     Process message on network and returns detailed information about results including produced transaction and messages.
+	///     Process message on network and returns detailed information about results including produced transaction and
+	///     messages.
 	/// </summary>
 	/// <param name="functionName"></param>
 	/// <param name="parameters"></param>

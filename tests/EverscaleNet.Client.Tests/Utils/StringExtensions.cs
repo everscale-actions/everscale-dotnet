@@ -16,9 +16,9 @@ internal static class StringExtensions {
 
 	public static string HexToBase64(this string input) {
 		byte[] bytes = Enumerable.Range(0, input.Length)
-		                         .Where(x => x % 2 == 0)
-		                         .Select(x => Convert.ToByte(input.Substring(x, 2), 16))
-		                         .ToArray();
+			.Where(x => x % 2 == 0)
+			.Select(x => Convert.ToByte(input.Substring(x, 2), 16))
+			.ToArray();
 
 		return Convert.ToBase64String(bytes);
 	}
@@ -26,7 +26,7 @@ internal static class StringExtensions {
 	public static string ToAddress(this string input) {
 		BigInteger bigInteger = BigInteger.Parse(input);
 
-		var hexString = bigInteger.ToString("X");
+		string hexString = bigInteger.ToString("X");
 
 		return $"0x{hexString.PadLeft(64, '0')}";
 	}

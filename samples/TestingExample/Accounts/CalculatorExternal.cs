@@ -30,7 +30,7 @@ internal class CalculatorExternal : AccountBase {
 			Limit = 1
 		}, cancellationToken);
 
-		var boc = accountBocResult.Result[0].Get<string>("boc");
+		string boc = accountBocResult.Result[0].Get<string>("boc");
 
 		ResultOfParse parse = await _client.Boc.ParseAccount(new ParamsOfParse {
 			Boc = boc

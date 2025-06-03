@@ -15,10 +15,12 @@ public class GiverV3 : AccountBase, IEverGiver {
 			KeyPairFileTemplate = "seGiver.keys.json"
 		})),
 		optionsAccessor.Value.Address ?? SeGiverAddress
-	) { }
+	) {
+	}
 
 	/// <inheritdoc />
-	public async Task<ResultOfProcessMessage> SendTransaction(string dest, decimal coins, bool bounce = false, CancellationToken cancellationToken = default) {
+	public async Task<ResultOfProcessMessage> SendTransaction(string dest, decimal coins, bool bounce = false,
+		CancellationToken cancellationToken = default) {
 		return await Run("sendTransaction", new {
 			dest,
 			value = coins.CoinsToNano(),

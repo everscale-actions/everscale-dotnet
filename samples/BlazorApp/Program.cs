@@ -11,13 +11,14 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services
-       .AddEverWebClient((provider, options) => {
-	       using IServiceScope scope = provider.CreateScope();
-	       var localStorage = scope.ServiceProvider.GetRequiredService<ISyncLocalStorageService>();
-	       options.Network.Endpoints = localStorage.GetItem<string[]>(Static.EndpointsStorageKey);
-	       options.Network.QueriesProtocol = NetworkQueriesProtocol.WS;
-       }, (_, options) => { options.BasePath = builder.HostEnvironment.BaseAddress; })
-       .AddTransient<SafeMultisigWallet>()
-       .AddBlazoredLocalStorage();
+	.AddEverWebClient((provider, options) =>
+	{
+		using IServiceScope scope = provider.CreateScope();
+		var localStorage = scope.ServiceProvider.GetRequiredService<ISyncLocalStorageService>();
+		options.Network.Endpoints = localStorage.GetItem<string[]>(Static.EndpointsStorageKey);
+		options.Network.QueriesProtocol = NetworkQueriesProtocol.WS;
+	}, (_, options) => { options.BasePath = builder.HostEnvironment.BaseAddress; })
+	.AddTransient<SafeMultisigWallet>()
+	.AddBlazoredLocalStorage();
 
 await builder.Build().RunAsync();

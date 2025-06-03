@@ -27,7 +27,8 @@ Welcome to your new everscale app.
 	<p>
 		<label>
 			Endpoints:
-			<InputText placeholder="Register you endpoint on https://dashboard.evercloud.dev/" @bind-Value="_changeEndpointModel.Endpoints" size="80"/>
+			<InputText placeholder="Register you endpoint on https://dashboard.evercloud.dev/"
+			           @bind-Value="_changeEndpointModel.Endpoints" size="80"/>
 		</label>
 	</p>
 	<button type="submit">Apply</button>
@@ -42,14 +43,14 @@ Welcome to your new everscale app.
 	private readonly ChangeEndpointModel _changeEndpointModel = new();
 
 	public class ChangeEndpointModel {
-		[Required]
-		public string Endpoints { get; set; }
+		[Required] public string Endpoints { get; set; }
 	}
 
 	protected override async Task OnInitializedAsync() {
 		try {
 			await Task.WhenAll(FillVersion(), FillEndpoints());
-		} catch (EverClientException e) {
+		}
+		catch (EverClientException e) {
 			Error = e.Message;
 		}
 	}
@@ -58,7 +59,8 @@ Welcome to your new everscale app.
 		try {
 			ResultOfGetEndpoints result = await EverClient.Net.GetEndpoints();
 			Endpoints = result.Endpoints;
-		} catch (EverClientException e) when (e.Code == 14) {
+		}
+		catch (EverClientException e) when (e.Code == 14) {
 			Endpoints = [e.Message];
 		}
 	}
@@ -76,13 +78,10 @@ Welcome to your new everscale app.
 		NavigationManager.NavigateTo(NavigationManager.Uri, true);
 	}
 
-	[Inject]
-	private IEverClient EverClient { get; set; }
+	[Inject] private IEverClient EverClient { get; set; }
 
-	[Inject]
-	private ILocalStorageService LocalStorageService { get; set; }
+	[Inject] private ILocalStorageService LocalStorageService { get; set; }
 
-	[Inject]
-	private NavigationManager NavigationManager { get; set; }
+	[Inject] private NavigationManager NavigationManager { get; set; }
 
 }

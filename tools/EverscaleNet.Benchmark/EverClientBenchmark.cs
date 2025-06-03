@@ -36,9 +36,8 @@ public class EverClientBenchmark {
 
 	[Benchmark(OperationsPerInvoke = 1)]
 	public async Task Crypto_MnemonicVerify_Ton() {
-		foreach (string phrase in _tonPhrases) {
+		foreach (string phrase in _tonPhrases)
 			await _everClient.Crypto.MnemonicVerify(new ParamsOfMnemonicVerify { Phrase = phrase, Dictionary = MnemonicDictionary.Ton });
-		}
 	}
 
 	[Benchmark(OperationsPerInvoke = 1000)]
@@ -49,8 +48,7 @@ public class EverClientBenchmark {
 
 	[Benchmark(OperationsPerInvoke = 1)]
 	public async Task Crypto_MnemonicVerify_English() {
-		foreach (string phrase in _englishPhrases) {
+		foreach (string phrase in _englishPhrases)
 			await _everClient.Crypto.MnemonicVerify(new ParamsOfMnemonicVerify { Phrase = phrase, Dictionary = MnemonicDictionary.English });
-		}
 	}
 }

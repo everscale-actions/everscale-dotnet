@@ -21,9 +21,9 @@ public class EverClientTestsFixture : IDisposable, IAsyncDisposable {
 	protected internal IEverClient CreateClient(ITestOutputHelper output, bool useNodeSe = false) {
 		_loggerFactory ??= new LoggerFactory([
 			new SerilogLoggerProvider(new LoggerConfiguration()
-			                          .MinimumLevel.Verbose()
-			                          .WriteTo.TestOutput(output)
-			                          .CreateLogger())
+				.MinimumLevel.Verbose()
+				.WriteTo.TestOutput(output)
+				.CreateLogger())
 		]);
 
 		var options = new EverClientOptions {
@@ -33,7 +33,8 @@ public class EverClientTestsFixture : IDisposable, IAsyncDisposable {
 			}
 		};
 
-		var adapter = new EverClientRustAdapter(new OptionsWrapper<EverClientOptions>(options), _loggerFactory.CreateLogger<EverClientRustAdapter>());
+		var adapter = new EverClientRustAdapter(new OptionsWrapper<EverClientOptions>(options),
+			_loggerFactory.CreateLogger<EverClientRustAdapter>());
 		_adapters.Add(adapter);
 		return new EverClient(adapter);
 	}
@@ -47,9 +48,7 @@ public class EverClientTestsFixture : IDisposable, IAsyncDisposable {
 
 	private async Task DisposeAsyncCore() {
 		_loggerFactory?.Dispose();
-		foreach (IEverClientAdapter adapter in _adapters) {
-			await adapter.DisposeAsync();
-		}
+		foreach (IEverClientAdapter adapter in _adapters) await adapter.DisposeAsync();
 
 		_loggerFactory = null;
 		_adapters = null;

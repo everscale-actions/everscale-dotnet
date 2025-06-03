@@ -22,8 +22,9 @@ public abstract class MultisigAccountBase : AccountBase, IMultisigAccount {
 	/// <param name="stateInit"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public async Task<ResultOfProcessMessage> SubmitTransaction(string dest, decimal coins, bool bounce, bool allBalance, string payload, string? stateInit = null,
-	                                                            CancellationToken cancellationToken = default) {
+	public async Task<ResultOfProcessMessage> SubmitTransaction(string dest, decimal coins, bool bounce, bool allBalance, string payload,
+		string? stateInit = null,
+		CancellationToken cancellationToken = default) {
 		ResultOfProcessMessage result = await Run("submitTransaction", new {
 			dest,
 			value = coins.CoinsToNano(),
@@ -44,7 +45,8 @@ public abstract class MultisigAccountBase : AccountBase, IMultisigAccount {
 	/// <param name="payload"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public async Task<ResultOfProcessMessage> SendTransaction(string dest, decimal coins, bool bounce, SendTransactionFlags flags, string payload, CancellationToken cancellationToken = default) {
+	public async Task<ResultOfProcessMessage> SendTransaction(string dest, decimal coins, bool bounce, SendTransactionFlags flags, string payload,
+		CancellationToken cancellationToken = default) {
 		ResultOfProcessMessage result = await Run("sendTransaction", new {
 			dest,
 			value = coins.CoinsToNano(),
@@ -62,7 +64,8 @@ public abstract class MultisigAccountBase : AccountBase, IMultisigAccount {
 	/// <param name="lifetime"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public async Task<ResultOfProcessMessage> Deploy(IEnumerable<string> owners, short reqConfirms, TimeSpan lifetime, CancellationToken cancellationToken = default) {
+	public async Task<ResultOfProcessMessage> Deploy(IEnumerable<string> owners, short reqConfirms, TimeSpan lifetime,
+		CancellationToken cancellationToken = default) {
 		return await base.Deploy(new {
 			owners = owners.Select(key => $"0x{key}").ToArray(),
 			reqConfirms,
@@ -81,8 +84,9 @@ public abstract class MultisigAccountBase : AccountBase, IMultisigAccount {
 	/// <param name="stateInit"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public async Task<ResultOfProcessMessage> Send(string dest, decimal coins, bool bounce, bool allBalance, Abi abi, CallSet callSet, string? stateInit = null,
-	                                               CancellationToken cancellationToken = default) {
+	public async Task<ResultOfProcessMessage> Send(string dest, decimal coins, bool bounce, bool allBalance, Abi abi, CallSet callSet,
+		string? stateInit = null,
+		CancellationToken cancellationToken = default) {
 		ResultOfEncodeMessageBody resultOfEncodeMessageBody = await _client.Abi.EncodeMessageBody(new ParamsOfEncodeMessageBody {
 			Abi = abi,
 			CallSet = callSet,

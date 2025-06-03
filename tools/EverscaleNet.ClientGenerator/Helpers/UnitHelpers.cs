@@ -4,13 +4,13 @@ namespace EverscaleNet.ClientGenerator.Helpers;
 
 internal static class UnitHelpers {
 	public static void CreateUnit(string unitName, Func<string, NamespaceDeclarationSyntax> nsFactory, string filePathFactory,
-	                              params string[] usings) {
+		params string[] usings) {
 		unitName = NamingConventions.Normalize(unitName);
 
 		CompilationUnitSyntax cu = CompilationUnit();
 		cu = cu.AddUsings(usings.OrderBy(s => s)
-		                        .Select(u => UsingDirective(ParseName(u)))
-		                        .ToArray());
+			.Select(u => UsingDirective(ParseName(u)))
+			.ToArray());
 
 		var cw = new AdhocWorkspace();
 		cw.Options.WithChangedOption(CSharpFormattingOptions.IndentBlock, true);

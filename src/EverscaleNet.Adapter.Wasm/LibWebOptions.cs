@@ -9,7 +9,8 @@ namespace EverscaleNet.Adapter.Wasm;
 public class LibWebOptions {
 	/// <summary>
 	///     By default, lib web starts a separate worker that will utilize core (wasm).
-	///     So main thread never freezes – it is fine for UI. But in some cases (e.g. when worker already exists in application or extension) separate worker is a bad
+	///     So main thread never freezes – it is fine for UI. But in some cases (e.g. when worker already exists in application
+	///     or extension) separate worker is a bad
 	///     approach.
 	/// </summary>
 	[JsonPropertyName("disableSeparateWorker")]

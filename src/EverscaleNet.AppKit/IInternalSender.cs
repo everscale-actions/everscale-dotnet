@@ -14,5 +14,6 @@ public interface IInternalSender {
 	/// <param name="stateInit"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	Task<ResultOfProcessMessage> Send(string dest, decimal coins, bool bounce, bool allBalance, Abi abi, CallSet callSet, string? stateInit = null, CancellationToken cancellationToken = default);
+	Task<ResultOfProcessMessage> Send(string dest, decimal coins, bool bounce, bool allBalance, Abi abi, CallSet callSet,
+		string? stateInit = null, CancellationToken cancellationToken = default);
 }

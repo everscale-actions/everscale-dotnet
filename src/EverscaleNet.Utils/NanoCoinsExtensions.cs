@@ -13,7 +13,7 @@ public static class NanoCoinsExtensions {
 	/// <param name="decimals"></param>
 	/// <returns></returns>
 	public static BigInteger CoinsToNano(this decimal coins, byte decimals = 9) {
-		var str = coins.ToString($"F{decimals}", CultureInfo.InvariantCulture);
+		string str = coins.ToString($"F{decimals}", CultureInfo.InvariantCulture);
 		int pointIndex = str.IndexOf('.');
 		return pointIndex >= 0
 			       ? BigInteger.Parse(str.Remove(pointIndex, 1), CultureInfo.InvariantCulture)
@@ -27,7 +27,7 @@ public static class NanoCoinsExtensions {
 	/// <param name="decimals"></param>
 	/// <returns></returns>
 	public static decimal NanoToCoins(this BigInteger nano, byte decimals = 9) {
-		var str = nano.ToString($"D{decimals}");
+		string str = nano.ToString($"D{decimals}");
 		int pointIndex = str.Length - decimals;
 		string shiftedString = (pointIndex is 0 ? "0" : null) + str.Insert(pointIndex, ".");
 		return decimal.Parse(shiftedString, CultureInfo.InvariantCulture);

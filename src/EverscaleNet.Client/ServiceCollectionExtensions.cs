@@ -19,8 +19,8 @@ public static class ServiceCollectionExtensions {
 	/// </param>
 	/// <returns></returns>
 	public static IServiceCollection AddEverClient(this IServiceCollection services,
-	                                               Action<EverClientOptions>? configureEverClientOptions = null,
-	                                               Action<PackageManagerOptions>? configurePackageManagerOptions = null) {
+		Action<EverClientOptions>? configureEverClientOptions = null,
+		Action<PackageManagerOptions>? configurePackageManagerOptions = null) {
 		if (configureEverClientOptions != null) {
 			services.Configure(configureEverClientOptions);
 		}
@@ -29,9 +29,9 @@ public static class ServiceCollectionExtensions {
 		}
 
 		return services
-		       .AddTransient<IEverClientAdapter, EverClientRustAdapter>()
-		       .AddTransient<IEverClient, EverClient>()
-		       .AddTransient<IEverPackageManager, FilePackageManager>();
+			.AddTransient<IEverClientAdapter, EverClientRustAdapter>()
+			.AddTransient<IEverClient, EverClient>()
+			.AddTransient<IEverPackageManager, FilePackageManager>();
 	}
 
 	/// <summary>
@@ -48,21 +48,22 @@ public static class ServiceCollectionExtensions {
 	/// </param>
 	/// <returns></returns>
 	public static IServiceCollection AddEverClient(this IServiceCollection services,
-	                                               Action<IServiceProvider, EverClientOptions>? configureEverClientOptions,
-	                                               Action<IServiceProvider, FilePackageManagerOptions>? configurePackageManagerOptions = null) {
+		Action<IServiceProvider, EverClientOptions>? configureEverClientOptions,
+		Action<IServiceProvider, FilePackageManagerOptions>? configurePackageManagerOptions = null) {
 		if (configureEverClientOptions != null) {
 			services.AddOptions();
-			services.AddSingleton<IConfigureOptions<EverClientOptions>>(provider => new ConfigureOptions<EverClientOptions>(options => configureEverClientOptions(provider, options)));
+			services.AddSingleton<IConfigureOptions<EverClientOptions>>(provider =>
+				new ConfigureOptions<EverClientOptions>(options => configureEverClientOptions(provider, options)));
 		}
 		if (configurePackageManagerOptions != null) {
 			services.AddOptions();
 			services.AddSingleton<IConfigureOptions<FilePackageManagerOptions>>(provider =>
-				                                                                    new ConfigureOptions<FilePackageManagerOptions>(options => configurePackageManagerOptions(provider, options)));
+				new ConfigureOptions<FilePackageManagerOptions>(options => configurePackageManagerOptions(provider, options)));
 		}
 
 		return services
-		       .AddTransient<IEverClientAdapter, EverClientRustAdapter>()
-		       .AddTransient<IEverClient, EverClient>()
-		       .AddTransient<IEverPackageManager, FilePackageManager>();
+			.AddTransient<IEverClientAdapter, EverClientRustAdapter>()
+			.AddTransient<IEverClient, EverClient>()
+			.AddTransient<IEverPackageManager, FilePackageManager>();
 	}
 }

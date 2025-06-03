@@ -20,6 +20,6 @@ internal static class RustInteropInterface {
 
 	[DllImport(EverClientLib, EntryPoint = "tc_request", CallingConvention = CallingConvention.Cdecl)]
 	public static extern void Request(uint context, InteropStringDisposable function,
-	                                  InteropStringDisposable parameters, uint requestId,
-	                                  CallbackDelegate callbackPointer);
+		InteropStringDisposable parameters, uint requestId,
+		CallbackDelegate callbackPointer);
 }

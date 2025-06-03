@@ -1,8 +1,8 @@
 @page "/counter"
+@using Blazored.LocalStorage
 @using EverscaleNet.Abstract
 @using EverscaleNet.Client.Models
 @using EverscaleNet.Models
-@using Blazored.LocalStorage
 
 <h1>Counter</h1>
 
@@ -43,14 +43,11 @@
 
 	Calculator Calculator { get; set; }
 
-	[Inject]
-	IEverClient EverClient { get; set; }
+	[Inject] IEverClient EverClient { get; set; }
 
-	[Inject]
-	IEverPackageManager PackageManager { get; set; }
+	[Inject] IEverPackageManager PackageManager { get; set; }
 
-	[Inject]
-	ILocalStorageService LocalStorageService { get; set; }
+	[Inject] ILocalStorageService LocalStorageService { get; set; }
 
 	protected override async Task OnInitializedAsync() {
 		Phrase = await LocalStorageService.GetItemAsStringAsync("Calculator_Phrase");
@@ -66,9 +63,11 @@
 			await Calculator.Add(1);
 			await UpdateCountAndBalance();
 			Error = null;
-		} catch (Exception e) {
+        }
+        catch (Exception e) {
 			Error = e.Message;
-		} finally {
+        }
+        finally {
 			Counting = false;
 		}
 	}
@@ -79,9 +78,11 @@
 			await Calculator.Subtract(1);
 			await UpdateCountAndBalance();
 			Error = null;
-		} catch (Exception e) {
+        }
+        catch (Exception e) {
 			Error = e.Message;
-		} finally {
+        }
+        finally {
 			Counting = false;
 		}
 	}
@@ -127,7 +128,8 @@
 			await UpdateCountAndBalance();
 			Checking = false;
 			Error = null;
-		} catch (Exception e) {
+        }
+        catch (Exception e) {
 			Count = 0;
 			Balance = null;
 			Error = e.Message;

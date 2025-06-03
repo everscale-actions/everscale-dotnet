@@ -50,7 +50,7 @@ public class EverClientRustAdapter : EverClientAdapterBase {
 
 		_logger.LogTrace("Reading context creation result");
 		InteropString resultInterop = RustInteropInterface.ReadString(resultPtr);
-		var resultJson = resultInterop.ToString();
+		string resultJson = resultInterop.ToString();
 		RustInteropInterface.DestroyString(resultPtr);
 		_logger.LogTrace("Got context creation result: {Result}", resultJson);
 
@@ -60,7 +60,7 @@ public class EverClientRustAdapter : EverClientAdapterBase {
 
 	/// <inheritdoc />
 	protected override Task RequestImpl(uint requestId, string requestJson, string method,
-	                                    CancellationToken cancellationToken = default) {
+		CancellationToken cancellationToken = default) {
 		var callbackDelegate =
 			new CallbackDelegate((id, json, type, finished) => ResponseHandler(id, json.ToString(), type, finished));
 
@@ -69,7 +69,7 @@ public class EverClientRustAdapter : EverClientAdapterBase {
 		using var methodInteropString = method.ToInteropStringDisposable();
 		using var paramsJsonInteropString = requestJson.ToInteropStringDisposable();
 		RustInteropInterface.Request(ContextId, methodInteropString, paramsJsonInteropString, requestId,
-		                             callbackDelegate);
+			callbackDelegate);
 		return Task.CompletedTask;
 	}
 

@@ -5,7 +5,6 @@ namespace Microsoft.Extensions.DependencyInjection;
 /// <summary>
 /// </summary>
 public static class ServiceCollectionExtensions {
-	// ReSharper disable CommentTypo
 	/// <summary>
 	///     Provide IEverClient and IEverPackageManager in DI
 	/// </summary>
@@ -25,9 +24,9 @@ public static class ServiceCollectionExtensions {
 	/// <returns></returns>
 	// ReSharper enable CommentTypo
 	public static IServiceCollection AddEverWebClient(this IServiceCollection services,
-	                                                  Action<EverClientOptions>? configureEverClientOptions = null,
-	                                                  Action<WebPackageManagerOptions>? configurePackageManagerOptions = null,
-	                                                  Action<LibWebOptions>? configureLibWebOptions = null
+		Action<EverClientOptions>? configureEverClientOptions = null,
+		Action<WebPackageManagerOptions>? configurePackageManagerOptions = null,
+		Action<LibWebOptions>? configureLibWebOptions = null
 	) {
 		if (configureEverClientOptions != null) {
 			services.Configure(configureEverClientOptions);
@@ -40,10 +39,10 @@ public static class ServiceCollectionExtensions {
 		}
 
 		return services
-		       .AddTransient<IEverClientAdapter, EverClientWasmAdapter>()
-		       .AddTransient<IEverClient, EverClient>()
-		       .AddTransient<IEverPackageManager, WebPackageManager>();
-	}
+			.AddTransient<IEverClientAdapter, EverClientWasmAdapter>()
+			.AddTransient<IEverClient, EverClient>()
+			.AddTransient<IEverPackageManager, WebPackageManager>();
+	} // ReSharper disable CommentTypo
 
 	// ReSharper disable CommentTypo
 	/// <summary>
@@ -65,21 +64,23 @@ public static class ServiceCollectionExtensions {
 	/// <returns></returns>
 	// ReSharper enable CommentTypo
 	public static IServiceCollection AddEverWebClient(this IServiceCollection services,
-	                                                  Action<IServiceProvider, EverClientOptions>? configureEverClientOptions = null,
-	                                                  Action<IServiceProvider, WebPackageManagerOptions>? configurePackageManagerOptions = null,
-	                                                  Action<IServiceProvider, LibWebOptions>? configureLibWebOptions = null) {
+		Action<IServiceProvider, EverClientOptions>? configureEverClientOptions = null,
+		Action<IServiceProvider, WebPackageManagerOptions>? configurePackageManagerOptions = null,
+		Action<IServiceProvider, LibWebOptions>? configureLibWebOptions = null) {
 		if (configureEverClientOptions != null) {
 			services.AddOptions();
-			services.AddSingleton<IConfigureOptions<EverClientOptions>>(provider => new ConfigureOptions<EverClientOptions>(options => configureEverClientOptions(provider, options)));
+			services.AddSingleton<IConfigureOptions<EverClientOptions>>(provider =>
+				new ConfigureOptions<EverClientOptions>(options => configureEverClientOptions(provider, options)));
 		}
 		if (configureLibWebOptions != null) {
 			services.AddOptions();
-			services.AddSingleton<IConfigureOptions<LibWebOptions>>(provider => new ConfigureOptions<LibWebOptions>(options => configureLibWebOptions(provider, options)));
+			services.AddSingleton<IConfigureOptions<LibWebOptions>>(provider =>
+				new ConfigureOptions<LibWebOptions>(options => configureLibWebOptions(provider, options)));
 		}
 		if (configurePackageManagerOptions != null) {
 			services.AddOptions();
 			services.AddSingleton<IConfigureOptions<WebPackageManagerOptions>>(provider =>
-				                                                                   new ConfigureOptions<WebPackageManagerOptions>(options => configurePackageManagerOptions(provider, options)));
+				new ConfigureOptions<WebPackageManagerOptions>(options => configurePackageManagerOptions(provider, options)));
 		}
 
 		services
