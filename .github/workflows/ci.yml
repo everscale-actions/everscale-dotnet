@@ -45,7 +45,7 @@ jobs:
         run: docker run -d --name tonlab-node -e USER_AGREEMENT=yes -p5555:80 tonlabs/local-node
       
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           submodules: true
       
