@@ -7,35 +7,27 @@ using Shouldly;
 
 namespace TestingExample;
 
-public class CalculatorInternalTests : IAsyncLifetime {
-	private readonly IEverClient _everClient;
-	private readonly IEverGiver _giver;
-	private readonly IEverPackageManager _packageManager;
+public class CalculatorInternalTests(IEverClient everClient, IEverPackageManager packageManager, IEverGiver giver)
+	: IAsyncLifetime {
 	private CalculatorInternal _calculator;
 	private IMultisigAccount _multisig;
 
-	public CalculatorInternalTests(IEverClient everClient, IEverPackageManager packageManager, IEverGiver giver) {
-		_everClient = everClient;
-		_packageManager = packageManager;
-		_giver = giver;
-	}
-
 	public async Task InitializeAsync() {
 		_multisig = await CreateMultisig();
-		_calculator = new CalculatorInternal(_everClient, _packageManager);
+		_calculator = new CalculatorInternal(everClient, packageManager);
 		await _calculator.Init(_multisig, new { owner_ = _multisig.Address });
 		await _calculator.Deploy();
 	}
 
 	public async Task DisposeAsync() {
-		await _multisig.SubmitTransaction(_giver.Address, 0, false, true, string.Empty);
+		await _multisig.SubmitTransaction(giver.Address, 0, false, true, string.Empty);
 	}
 
 	private async Task<IMultisigAccount> CreateMultisig(decimal coins = 20m) {
-		var multisig = new SafeMultisigAccount(_everClient, _packageManager);
-		KeyPair keyPair = await _everClient.Crypto.GenerateRandomSignKeys();
+		var multisig = new SafeMultisigAccount(everClient, packageManager);
+		KeyPair keyPair = await everClient.Crypto.GenerateRandomSignKeys();
 		await multisig.Init(keyPair);
-		await _giver.SendTransaction(multisig.Address, coins);
+		await giver.SendTransaction(multisig.Address, coins);
 		await multisig.Deploy([keyPair.Public], 1, TimeSpan.FromHours(1));
 		return multisig;
 	}
@@ -76,7 +68,7 @@ public class CalculatorInternalTests : IAsyncLifetime {
 	[Fact]
 	public async Task AnotherMultisigHasNoAccess() {
 		IMultisigAccount anotherMultisig = await CreateMultisig();
-		var calculatorWithAnotherMultisig = new CalculatorInternal(_everClient, _packageManager, _calculator.Address);
+		var calculatorWithAnotherMultisig = new CalculatorInternal(everClient, packageManager, _calculator.Address);
 		await calculatorWithAnotherMultisig.Init(anotherMultisig, new { owner_ = _multisig.Address });
 
 		await _calculator.Add(1);

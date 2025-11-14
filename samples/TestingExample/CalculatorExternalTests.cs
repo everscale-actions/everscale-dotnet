@@ -5,24 +5,16 @@ using Shouldly;
 
 namespace TestingExample;
 
-public class CalculatorExternalTests : IAsyncLifetime {
-	private readonly IEverClient _everClient;
-	private readonly IEverGiver _giver;
-	private readonly IEverPackageManager _packageManager;
+public class CalculatorExternalTests(IEverClient everClient, IEverPackageManager packageManager, IEverGiver giver)
+	: IAsyncLifetime {
 	private CalculatorExternal _calculator;
 	private KeyPair _keyPair;
 
-	public CalculatorExternalTests(IEverClient everClient, IEverPackageManager packageManager, IEverGiver giver) {
-		_everClient = everClient;
-		_packageManager = packageManager;
-		_giver = giver;
-	}
-
 	public async Task InitializeAsync() {
-		_keyPair = await _everClient.Crypto.GenerateRandomSignKeys();
-		_calculator = new CalculatorExternal(_everClient, _packageManager);
+		_keyPair = await everClient.Crypto.GenerateRandomSignKeys();
+		_calculator = new CalculatorExternal(everClient, packageManager);
 		await _calculator.Init(_keyPair);
-		await _giver.SendTransaction(_calculator.Address, 10m);
+		await giver.SendTransaction(_calculator.Address, 10m);
 		await _calculator.Deploy();
 	}
 
@@ -71,8 +63,8 @@ public class CalculatorExternalTests : IAsyncLifetime {
 
 	[Fact]
 	public async Task AnotherPubkeyHasNoAccess() {
-		KeyPair keyPair = await _everClient.Crypto.GenerateRandomSignKeys();
-		var calculatorAccount = new CalculatorExternal(_everClient, _packageManager);
+		KeyPair keyPair = await everClient.Crypto.GenerateRandomSignKeys();
+		var calculatorAccount = new CalculatorExternal(everClient, packageManager);
 		await calculatorAccount.Init(_keyPair.Public);
 		await calculatorAccount.Init(keyPair); // Reinit with another signer
 
