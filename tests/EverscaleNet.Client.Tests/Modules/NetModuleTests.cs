@@ -69,8 +69,8 @@ public class NetModuleTests : IClassFixture<EverClientTestsFixture> {
 			Result = "body created_at"
 		});
 
-		Assert.NotEmpty(result.Result);
-		Assert.True(result.Result?[0].Get<ulong>("created_at") > 1562342740);
+		result.Result.ShouldNotBeEmpty();
+		result.Result?[0].Get<ulong>("created_at").ShouldBeGreaterThan((ulong)1562342740);
 	}
 
 	[Fact]

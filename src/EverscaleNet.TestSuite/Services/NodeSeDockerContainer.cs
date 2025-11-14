@@ -19,7 +19,7 @@ public class NodeSeDockerContainer : IAsyncDisposable {
 				.WithImagePullPolicy(PullPolicy.Always)
 				.WithEnvironment("USER_AGREEMENT", "yes")
 				.WithPortBinding(80, true)
-				.WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(80))
+				.WithWaitStrategy(Wait.ForUnixContainer().UntilInternalTcpPortIsAvailable(80))
 				.WithWaitStrategy(Wait.ForUnixContainer().AddCustomWaitStrategy(new WaitNodeSeFirstBlockStrategy(loggerFactory)))
 				.WithLogger(loggerFactory.CreateLogger<NodeSeDockerContainer>())
 				.Build();
