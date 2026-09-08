@@ -14,8 +14,7 @@ public class NodeSeDockerContainer : IAsyncDisposable {
 	/// </summary>
 	public NodeSeDockerContainer(ILoggerFactory loggerFactory) {
 		_everNodeSeContainer =
-			new ContainerBuilder()
-				.WithImage("tonlabs/local-node:latest")
+			new ContainerBuilder("tonlabs/local-node:latest")
 				.WithImagePullPolicy(PullPolicy.Always)
 				.WithEnvironment("USER_AGREEMENT", "yes")
 				.WithPortBinding(80, true)

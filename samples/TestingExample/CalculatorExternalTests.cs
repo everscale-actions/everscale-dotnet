@@ -65,8 +65,8 @@ public class CalculatorExternalTests(IEverClient everClient, IEverPackageManager
 	public async Task AnotherPubkeyHasNoAccess() {
 		KeyPair keyPair = await everClient.Crypto.GenerateRandomSignKeys(TestContext.Current.CancellationToken);
 		var calculatorAccount = new CalculatorExternal(everClient, packageManager);
-		await calculatorAccount.Init(_keyPair.Public, TestContext.Current.CancellationToken);
-		await calculatorAccount.Init(keyPair, TestContext.Current.CancellationToken); // Reinit with another signer
+		await calculatorAccount.Init(_keyPair.Public, cancellationToken: TestContext.Current.CancellationToken);
+		await calculatorAccount.Init(keyPair, cancellationToken: TestContext.Current.CancellationToken); // Reinit with another signer
 
 		Func<Task> act = () => calculatorAccount.Add(1);
 

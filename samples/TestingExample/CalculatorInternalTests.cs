@@ -69,7 +69,7 @@ public class CalculatorInternalTests(IEverClient everClient, IEverPackageManager
 	public async Task AnotherMultisigHasNoAccess() {
 		IMultisigAccount anotherMultisig = await CreateMultisig();
 		var calculatorWithAnotherMultisig = new CalculatorInternal(everClient, packageManager, _calculator.Address);
-		await calculatorWithAnotherMultisig.Init(anotherMultisig, new { owner_ = _multisig.Address });
+		await calculatorWithAnotherMultisig.Init(anotherMultisig, new { owner_ = _multisig.Address }, TestContext.Current.CancellationToken);
 
 		await _calculator.Add(1, TestContext.Current.CancellationToken);
 		Func<Task> act = () => calculatorWithAnotherMultisig.Add(2, TestContext.Current.CancellationToken);
