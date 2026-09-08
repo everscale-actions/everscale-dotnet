@@ -2,12 +2,8 @@
 
 namespace EverscaleNet.Client.Tests;
 
-public class ExceptionsTests : IClassFixture<EverClientTestsFixture> {
-	private readonly IEverClient _everClient;
-
-	public ExceptionsTests(EverClientTestsFixture fixture, ITestOutputHelper outputHelper) {
-		_everClient = fixture.CreateClient(outputHelper);
-	}
+public class ExceptionsTests(EverClientTestsFixture fixture, ITestOutputHelper outputHelper) : IClassFixture<EverClientTestsFixture> {
+	private readonly IEverClient _everClient = fixture.CreateClient(outputHelper);
 
 	[Fact(Timeout = 5000)]
 	public async Task ThrowEverClientException() {
@@ -16,7 +12,7 @@ public class ExceptionsTests : IClassFixture<EverClientTestsFixture> {
 			await _everClient.Crypto.MnemonicDeriveSignKeys(new ParamsOfMnemonicDeriveSignKeys {
 				Phrase = "abandon math mimic master filter design carbon crystal rookie group knife young",
 				Dictionary = MnemonicDictionary.Ton
-			});
+			}, TestContext.Current.CancellationToken);
 		};
 
 		var ex = await act.ShouldThrowAsync<EverClientException>();

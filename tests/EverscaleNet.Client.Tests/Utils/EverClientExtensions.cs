@@ -1,15 +1,15 @@
 ﻿namespace EverscaleNet.Client.Tests.Utils;
 
 public static class EverClientExtensions {
-	public static async Task<string> SignDetached(this IEverClient everClient, KeyPair pair, string data) {
+	public static async Task<string> SignDetached(this IEverClient everClient, KeyPair pair, string data, CancellationToken cancellationToken = default) {
 		KeyPair keys = await everClient.Crypto.NaclSignKeypairFromSecretKey(new ParamsOfNaclSignKeyPairFromSecret {
 			Secret = pair.Secret
-		});
+		}, cancellationToken);
 
 		ResultOfNaclSignDetached result = await everClient.Crypto.NaclSignDetached(new ParamsOfNaclSign {
 			Secret = keys.Secret,
 			Unsigned = data
-		});
+		}, cancellationToken);
 
 		return result.Signature;
 	}
@@ -19,7 +19,7 @@ public static class EverClientExtensions {
 	/// </summary>
 	/// <param name="everClient"></param>
 	/// <param name="account">the giver sends money to himself by default</param>
-	public static async Task SendGramsFromLocalGiver(this IEverClient everClient, string account = null) {
+	public static async Task SendGramsFromLocalGiver(this IEverClient everClient, string account = null, CancellationToken cancellationToken = default) {
 		var processMessageParams = new ParamsOfProcessMessage {
 			MessageEncodeParams = new ParamsOfEncodeMessage {
 				Address = TestsEnv.SeGiver.Address,
@@ -37,12 +37,12 @@ public static class EverClientExtensions {
 			SendEvents = false
 		};
 
-		ResultOfProcessMessage resultOfProcessMessage = await everClient.Processing.ProcessMessage(processMessageParams);
+		ResultOfProcessMessage resultOfProcessMessage = await everClient.Processing.ProcessMessage(processMessageParams, cancellationToken: cancellationToken);
 
 		foreach (string outMessage in resultOfProcessMessage.OutMessages) {
 			ResultOfParse parseResult = await everClient.Boc.ParseMessage(new ParamsOfParse {
 				Boc = outMessage
-			});
+			}, cancellationToken);
 			var parsedPrototype = new { type = 0, id = string.Empty };
 			var parsedMessage = parseResult.Parsed!.ToPrototype(parsedPrototype);
 
@@ -51,15 +51,15 @@ public static class EverClientExtensions {
 					Collection = "transactions",
 					Filter = new { in_msg = new { eq = parsedMessage.id } }.ToJsonElement(),
 					Result = "id"
-				});
+				}, cancellationToken);
 			}
 		}
 	}
 
-	public static async Task<string> DeployWithGiver(this IEverClient everClient, ParamsOfEncodeMessage encodeMessageParams) {
-		ResultOfEncodeMessage address = await everClient.Abi.EncodeMessage(encodeMessageParams);
-		await everClient.SendGramsFromLocalGiver(address.Address);
-		await everClient.Processing.ProcessMessage(new ParamsOfProcessMessage { MessageEncodeParams = encodeMessageParams });
+	public static async Task<string> DeployWithGiver(this IEverClient everClient, ParamsOfEncodeMessage encodeMessageParams, CancellationToken cancellationToken = default) {
+		ResultOfEncodeMessage address = await everClient.Abi.EncodeMessage(encodeMessageParams, cancellationToken);
+		await everClient.SendGramsFromLocalGiver(address.Address, cancellationToken: cancellationToken);
+		await everClient.Processing.ProcessMessage(new ParamsOfProcessMessage { MessageEncodeParams = encodeMessageParams }, cancellationToken: cancellationToken);
 		return address.Address;
 	}
 }
