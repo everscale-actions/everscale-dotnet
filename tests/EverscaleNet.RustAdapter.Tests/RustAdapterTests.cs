@@ -1,3 +1,4 @@
+using Serilog.Sinks.XUnit3;
 using Shouldly;
 
 namespace EverscaleNet.RustAdapter.Tests;
@@ -8,7 +9,7 @@ public class RustAdapterTests {
 	public RustAdapterTests(ITestOutputHelper output) {
 		ILoggerFactory loggerFactory = LoggerFactory.Create(builder => builder.AddSerilog(new LoggerConfiguration()
 			.MinimumLevel.Verbose()
-			.WriteTo.TestOutput(output)
+			.WriteTo.XUnit3TestOutput(new XUnit3TestOutputSink { TestOutputHelper = output })
 			.CreateLogger()));
 		_logger = loggerFactory.CreateLogger<EverClientRustAdapter>();
 	}
@@ -20,7 +21,7 @@ public class RustAdapterTests {
 			await using IEverClientAdapter rustAdapter = TestsHelpers.CreateRustAdapter(_logger);
 			await Task.WhenAll(Enumerable.Repeat(0, 100)
 				// ReSharper disable once AccessToDisposedClosure
-				.Select(_ => rustAdapter.Request("client.get_api_reference")));
+				.Select(_ => rustAdapter.Request("client.get_api_reference", cancellationToken: TestContext.Current.CancellationToken)));
 		};
 
 		await act.ShouldNotThrowAsync();
@@ -35,7 +36,7 @@ public class RustAdapterTests {
 			composite = "17ED48941A08F981"
 		};
 		JsonElement response =
-			await rustAdapter.Request<JsonElement, JsonElement>(method, parameters.ToJsonElement());
+			await rustAdapter.Request<JsonElement, JsonElement>(method, parameters.ToJsonElement(), TestContext.Current.CancellationToken);
 
 		response.ToString().ShouldBe("{\"factors\":[\"494C553B\",\"53911073\"]}");
 	}
@@ -66,7 +67,7 @@ public class RustAdapterTests {
 	public async Task VersionRequestResponseWithVersionRegexTest() {
 		await using IEverClientAdapter rustAdapter = TestsHelpers.CreateRustAdapter(_logger);
 
-		var response = await rustAdapter.Request<JsonElement>("client.version");
+		var response = await rustAdapter.Request<JsonElement>("client.version", cancellationToken: TestContext.Current.CancellationToken);
 
 		response.ToString().ShouldMatch("""{"version":"\d+\.\d+\.\d+"}""");
 	}

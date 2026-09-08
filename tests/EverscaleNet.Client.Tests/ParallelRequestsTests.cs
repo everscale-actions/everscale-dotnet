@@ -6,12 +6,8 @@ namespace EverscaleNet.Client.Tests;
 public class SystemTestCollectionDefinition;
 
 [Collection(nameof(SystemTestCollectionDefinition))]
-public class ParallelRequestsTests : IClassFixture<EverClientTestsFixture> {
-	private readonly IEverClient _everClient;
-
-	public ParallelRequestsTests(EverClientTestsFixture fixture, ITestOutputHelper outputHelper) {
-		_everClient = fixture.CreateClient(outputHelper);
-	}
+public class ParallelRequestsTests(EverClientTestsFixture fixture, ITestOutputHelper outputHelper) : IClassFixture<EverClientTestsFixture> {
+	private readonly IEverClient _everClient = fixture.CreateClient(outputHelper);
 
 	[Fact(Timeout = 30000)]
 	public async Task ParallelRunNotThrowExceptions() {
@@ -20,7 +16,7 @@ public class ParallelRequestsTests : IClassFixture<EverClientTestsFixture> {
 		var tasks = Enumerable
 			.Repeat((object)null, parallelTasks)
 			.AsParallel()
-			.Select(_ => _everClient.Crypto.GenerateRandomSignKeys());
+			.Select(_ => _everClient.Crypto.GenerateRandomSignKeys(TestContext.Current.CancellationToken));
 
 		Func<Task> act = () => Task.WhenAll(tasks);
 

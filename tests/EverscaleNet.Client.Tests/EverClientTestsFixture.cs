@@ -1,4 +1,6 @@
-﻿namespace EverscaleNet.Client.Tests;
+﻿using Serilog.Sinks.XUnit3;
+
+namespace EverscaleNet.Client.Tests;
 
 // ReSharper disable once ClassNeverInstantiated.Global
 public class EverClientTestsFixture : IDisposable, IAsyncDisposable {
@@ -22,7 +24,7 @@ public class EverClientTestsFixture : IDisposable, IAsyncDisposable {
 		_loggerFactory ??= new LoggerFactory([
 			new SerilogLoggerProvider(new LoggerConfiguration()
 				.MinimumLevel.Verbose()
-				.WriteTo.TestOutput(output)
+				.WriteTo.XUnit3TestOutput(new XUnit3TestOutputSink { TestOutputHelper = output })
 				.CreateLogger())
 		]);
 

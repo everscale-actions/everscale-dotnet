@@ -12,7 +12,7 @@ public class ProcessModuleTests : IClassFixture<EverClientTestsFixture> {
 	[Fact]
 	public async Task WaitMessage() {
 		//arrange
-		KeyPair keys = await _everClient.Crypto.GenerateRandomSignKeys();
+		KeyPair keys = await _everClient.Crypto.GenerateRandomSignKeys(TestContext.Current.CancellationToken);
 		ResultOfEncodeMessage encoded = await _everClient.Abi.EncodeMessage(new ParamsOfEncodeMessage {
 			Abi = TestsEnv.Packages.Events.Abi, DeploySet = new DeploySet {
 				Tvc = TestsEnv.Packages.Events.Tvc
@@ -26,9 +26,9 @@ public class ProcessModuleTests : IClassFixture<EverClientTestsFixture> {
 			Signer = new Signer.Keys {
 				KeysAccessor = keys
 			}
-		});
+		}, TestContext.Current.CancellationToken);
 
-		await _everClient.SendGramsFromLocalGiver(encoded.Address);
+		await _everClient.SendGramsFromLocalGiver(encoded.Address, TestContext.Current.CancellationToken);
 
 		var events = new List<ProcessingEvent>();
 
@@ -43,7 +43,7 @@ public class ProcessModuleTests : IClassFixture<EverClientTestsFixture> {
 			Message = encoded.Message,
 			Abi = TestsEnv.Packages.Events.Abi,
 			SendEvents = true
-		}, ProcessingCallback);
+		}, ProcessingCallback, TestContext.Current.CancellationToken);
 
 		//act
 		ResultOfProcessMessage waitForTransactionResult = await _everClient.Processing.WaitForTransaction(
@@ -52,7 +52,7 @@ public class ProcessModuleTests : IClassFixture<EverClientTestsFixture> {
 				                                                  ShardBlockId = sendMessageResult.ShardBlockId,
 				                                                  SendEvents = true,
 				                                                  Abi = TestsEnv.Packages.Events.Abi
-			                                                  }, ProcessingCallback);
+			                                                  }, ProcessingCallback, TestContext.Current.CancellationToken);
 
 		//assert
 		waitForTransactionResult.OutMessages.ShouldBeEmpty();

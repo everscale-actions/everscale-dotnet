@@ -14,7 +14,7 @@ public class UtilsModuleTests : IClassFixture<EverClientTestsFixture> {
 		ResultOfConvertAddress result = await _everClient.Utils.ConvertAddress(new ParamsOfConvertAddress {
 			Address = "fcb91a3a3816d0f7b8c2c76108b8a9bc5a6b7a55bd79f8ab101c52db29232260",
 			OutputFormat = new AddressStringFormat.Hex()
-		});
+		}, TestContext.Current.CancellationToken);
 
 		result.Address.ShouldBe("0:fcb91a3a3816d0f7b8c2c76108b8a9bc5a6b7a55bd79f8ab101c52db29232260");
 	}
@@ -28,7 +28,7 @@ public class UtilsModuleTests : IClassFixture<EverClientTestsFixture> {
 				Test = false,
 				Url = false
 			}
-		});
+		}, TestContext.Current.CancellationToken);
 
 		result.Address.ShouldBe("Uf/8uRo6OBbQ97jCx2EIuKm8Wmt6Vb15+KsQHFLbKSMiYG+9");
 	}
@@ -42,7 +42,7 @@ public class UtilsModuleTests : IClassFixture<EverClientTestsFixture> {
 				Test = true,
 				Url = true
 			}
-		});
+		}, TestContext.Current.CancellationToken);
 
 		result.Address.ShouldBe("kf_8uRo6OBbQ97jCx2EIuKm8Wmt6Vb15-KsQHFLbKSMiYIny");
 	}
@@ -52,7 +52,7 @@ public class UtilsModuleTests : IClassFixture<EverClientTestsFixture> {
 		ResultOfConvertAddress result = await _everClient.Utils.ConvertAddress(new ParamsOfConvertAddress {
 			Address = "fcb91a3a3816d0f7b8c2c76108b8a9bc5a6b7a55bd79f8ab101c52db29232260",
 			OutputFormat = new AddressStringFormat.AccountId()
-		});
+		}, TestContext.Current.CancellationToken);
 
 		result.Address.ShouldBe("fcb91a3a3816d0f7b8c2c76108b8a9bc5a6b7a55bd79f8ab101c52db29232260");
 	}
@@ -62,7 +62,7 @@ public class UtilsModuleTests : IClassFixture<EverClientTestsFixture> {
 		ResultOfConvertAddress result = await _everClient.Utils.ConvertAddress(new ParamsOfConvertAddress {
 			Address = "kf_8uRo6OBbQ97jCx2EIuKm8Wmt6Vb15-KsQHFLbKSMiYIny",
 			OutputFormat = new AddressStringFormat.Hex()
-		});
+		}, TestContext.Current.CancellationToken);
 
 		result.Address.ShouldBe("-1:fcb91a3a3816d0f7b8c2c76108b8a9bc5a6b7a55bd79f8ab101c52db29232260");
 	}

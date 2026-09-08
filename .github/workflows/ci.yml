@@ -92,7 +92,7 @@ jobs:
         env:
           EVERSCALE_NETWORK_ENDPOINTS: http://localhost:5555
         run: |
-          dotnet test --no-build -c Release --logger "console;verbosity=normal" --logger "trx;LogFilePrefix=results" -m
+          dotnet test -c Release -- --report-trx
       
       - name: Upload test results trx files
         uses: actions/upload-artifact@v6
