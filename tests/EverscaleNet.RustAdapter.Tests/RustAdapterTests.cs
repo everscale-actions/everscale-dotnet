@@ -1,3 +1,4 @@
+using Serilog.Sinks.XUnit3;
 using Shouldly;
 
 namespace EverscaleNet.RustAdapter.Tests;
@@ -8,7 +9,7 @@ public class RustAdapterTests {
 	public RustAdapterTests(ITestOutputHelper output) {
 		ILoggerFactory loggerFactory = LoggerFactory.Create(builder => builder.AddSerilog(new LoggerConfiguration()
 			.MinimumLevel.Verbose()
-			.WriteTo.TestOutput(output)
+			.WriteTo.XUnit3TestOutput(new XUnit3TestOutputSink { TestOutputHelper = output })
 			.CreateLogger()));
 		_logger = loggerFactory.CreateLogger<EverClientRustAdapter>();
 	}

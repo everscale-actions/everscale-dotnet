@@ -10,7 +10,7 @@ public class CalculatorExternalTests(IEverClient everClient, IEverPackageManager
 	private CalculatorExternal _calculator;
 	private KeyPair _keyPair;
 
-	public async Task InitializeAsync() {
+	public async ValueTask InitializeAsync() {
 		_keyPair = await everClient.Crypto.GenerateRandomSignKeys();
 		_calculator = new CalculatorExternal(everClient, packageManager);
 		await _calculator.Init(_keyPair);
@@ -18,25 +18,25 @@ public class CalculatorExternalTests(IEverClient everClient, IEverPackageManager
 		await _calculator.Deploy();
 	}
 
-	public Task DisposeAsync() {
-		return Task.CompletedTask;
+	public ValueTask DisposeAsync() {
+		return ValueTask.CompletedTask;
 	}
 
 	[Fact]
 	public async Task Add1_Returns1() {
-		await _calculator.Add(1);
+		await _calculator.Add(1, TestContext.Current.CancellationToken);
 
-		long result = await _calculator.GetSum();
+		long result = await _calculator.GetSum(TestContext.Current.CancellationToken);
 
 		result.ShouldBe(1);
 	}
 
 	[Fact]
 	public async Task Add1Then2_Returns3() {
-		await _calculator.Add(100);
-		await _calculator.Add(200);
+		await _calculator.Add(100, TestContext.Current.CancellationToken);
+		await _calculator.Add(200, TestContext.Current.CancellationToken);
 
-		long result = await _calculator.GetSum();
+		long result = await _calculator.GetSum(TestContext.Current.CancellationToken);
 
 		result.ShouldBe(300);
 	}
@@ -47,26 +47,26 @@ public class CalculatorExternalTests(IEverClient everClient, IEverPackageManager
 			Enumerable.Range(1, 10),
 			async (i, token) => await _calculator.Add(i, token));
 
-		long result = await _calculator.GetSum();
+		long result = await _calculator.GetSum(TestContext.Current.CancellationToken);
 
 		result.ShouldBe(55);
 	}
 
 	[Fact]
 	public async Task Subtract100_ReturnsMinus100() {
-		await _calculator.Subtract(100);
+		await _calculator.Subtract(100, TestContext.Current.CancellationToken);
 
-		long result = await _calculator.GetSum();
+		long result = await _calculator.GetSum(TestContext.Current.CancellationToken);
 
 		result.ShouldBe(-100);
 	}
 
 	[Fact]
 	public async Task AnotherPubkeyHasNoAccess() {
-		KeyPair keyPair = await everClient.Crypto.GenerateRandomSignKeys();
+		KeyPair keyPair = await everClient.Crypto.GenerateRandomSignKeys(TestContext.Current.CancellationToken);
 		var calculatorAccount = new CalculatorExternal(everClient, packageManager);
-		await calculatorAccount.Init(_keyPair.Public);
-		await calculatorAccount.Init(keyPair); // Reinit with another signer
+		await calculatorAccount.Init(_keyPair.Public, TestContext.Current.CancellationToken);
+		await calculatorAccount.Init(keyPair, TestContext.Current.CancellationToken); // Reinit with another signer
 
 		Func<Task> act = () => calculatorAccount.Add(1);
 

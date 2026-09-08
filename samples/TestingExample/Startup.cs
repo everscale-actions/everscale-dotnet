@@ -1,5 +1,6 @@
 using EverscaleNet.Abstract;
 using EverscaleNet.Models;
+using Serilog.Sinks.XUnit3;
 
 namespace TestingExample;
 
@@ -46,7 +47,7 @@ public class Startup {
 				var loggerFactory = new LoggerFactory([
 					new SerilogLoggerProvider(new LoggerConfiguration()
 						.MinimumLevel.Verbose()
-						.WriteTo.TestOutput(output.Output)
+						.WriteTo.XUnit3TestOutput(new XUnit3TestOutputSink { TestOutputHelper = output.Output })
 						.CreateLogger(), true)
 				]);
 				return new EverClientRustAdapter(optionsAccessor, loggerFactory.CreateLogger<EverClientRustAdapter>());
