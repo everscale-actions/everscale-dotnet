@@ -2,12 +2,8 @@
 
 namespace EverscaleNet.Client.Tests.Modules;
 
-public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
-	private readonly IEverClient _everClient;
-
-	public CryptoModuleTests(EverClientTestsFixture fixture, ITestOutputHelper outputHelper) {
-		_everClient = fixture.CreateClient(outputHelper);
-	}
+public class CryptoModuleTests(EverClientTestsFixture fixture, ITestOutputHelper outputHelper) : IClassFixture<EverClientTestsFixture> {
+	private readonly IEverClient _everClient = fixture.CreateClient(outputHelper);
 
 	[Theory]
 	[InlineData("Test Message", true)]
@@ -22,7 +18,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 				                                        Signature = signature,
 				                                        Public = @public,
 				                                        Unsigned = message.ToBase64()
-			                                        });
+			                                        }, TestContext.Current.CancellationToken);
 
 		result.Succeeded.ShouldBe(success);
 	}
@@ -34,7 +30,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 			                                    new ParamsOfMnemonicFromRandom {
 				                                    Dictionary = dictionary,
 				                                    WordCount = wordCount
-			                                    });
+			                                    }, TestContext.Current.CancellationToken);
 
 		result.Phrase.Split(" ").Length.ShouldBe(wordCount ?? 12);
 	}
@@ -46,13 +42,13 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 			                                    new ParamsOfMnemonicFromRandom {
 				                                    Dictionary = dictionary,
 				                                    WordCount = wordCount
-			                                    });
+			                                    }, TestContext.Current.CancellationToken);
 
 		ResultOfMnemonicVerify verifyResult = await _everClient.Crypto.MnemonicVerify(new ParamsOfMnemonicVerify {
 			Phrase = result.Phrase,
 			Dictionary = dictionary,
 			WordCount = wordCount
-		});
+		}, TestContext.Current.CancellationToken);
 
 		verifyResult.Valid.ShouldBeTrue();
 	}
@@ -68,7 +64,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 			Data = "Message".ToBase64(),
 			Key = key,
 			Nonce = nonce
-		});
+		}, TestContext.Current.CancellationToken);
 
 		//assert
 		encrypted.Data.ShouldBe("w5QOGsJodQ==");
@@ -78,7 +74,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 			Data = encrypted.Data,
 			Key = key,
 			Nonce = nonce
-		});
+		}, TestContext.Current.CancellationToken);
 
 		//assert
 		decrypted.Data.ShouldBe("TWVzc2FnZQ==");
@@ -89,7 +85,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 		ResultOfConvertPublicKeyToTonSafeFormat result = await _everClient.Crypto.ConvertPublicKeyToTonSafeFormat(
 			                                                 new ParamsOfConvertPublicKeyToTonSafeFormat {
 				                                                 PublicKey = "06117f59ade83e097e0fb33e5d29e8735bda82b3bf78a015542aaa853bb69600"
-			                                                 });
+			                                                 }, TestContext.Current.CancellationToken);
 
 		result.TonPublicKey.ShouldBe("PuYGEX9Zreg-CX4Psz5dKehzW9qCs794oBVUKqqFO7aWAOTD");
 	}
@@ -101,9 +97,11 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 		const string text = "Text with \' and \" and : {}";
 
 		ResultOfNaclBox e = await _everClient.Crypto.NaclSecretBox(
-			                    new ParamsOfNaclSecretBox { Decrypted = text.ToBase64(), Nonce = nonce, Key = key });
+			                    new ParamsOfNaclSecretBox { Decrypted = text.ToBase64(), Nonce = nonce, Key = key },
+			                    TestContext.Current.CancellationToken);
 		ResultOfNaclBoxOpen d = await _everClient.Crypto.NaclSecretBoxOpen(
-			                        new ParamsOfNaclSecretBoxOpen { Encrypted = e.Encrypted, Nonce = nonce, Key = key });
+			                        new ParamsOfNaclSecretBoxOpen { Encrypted = e.Encrypted, Nonce = nonce, Key = key },
+			                        TestContext.Current.CancellationToken);
 
 		d.Decrypted.FromBase64().ShouldBe(text);
 	}
@@ -112,7 +110,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 	public async Task Factorize() {
 		ResultOfFactorize result = await _everClient.Crypto.Factorize(new ParamsOfFactorize {
 			Composite = "17ED48941A08F981"
-		});
+		}, TestContext.Current.CancellationToken);
 
 		result.Factors.Length.ShouldBe(2);
 		result.Factors[0].ShouldBe("494C553B");
@@ -124,14 +122,14 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 		ResultOfGenerateRandomBytes result = await _everClient.Crypto.GenerateRandomBytes(
 			                                     new ParamsOfGenerateRandomBytes {
 				                                     Length = 32
-			                                     });
+			                                     }, TestContext.Current.CancellationToken);
 
 		result.Bytes.Length.ShouldBe(44);
 	}
 
 	[Fact]
 	public async Task GenerateRandomSignKeys() {
-		KeyPair result = await _everClient.Crypto.GenerateRandomSignKeys();
+		KeyPair result = await _everClient.Crypto.GenerateRandomSignKeys(TestContext.Current.CancellationToken);
 
 		result.Public.Length.ShouldBe(64);
 		result.Secret.Length.ShouldBe(64);
@@ -145,7 +143,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 				                                         Xprv =
 					                                         "xprv9s21ZrQH143K25JhKqEwvJW7QAiVvkmi4WRenBZanA6kxHKtKAQQKwZG65kCyW5jWJ8NY9e3GkRoistUjjcpHNsGBUv94istDPXvqGNuWpC",
 				                                         Path = "m/44'/60'/0'/0'"
-			                                         });
+			                                         }, TestContext.Current.CancellationToken);
 
 		result.Xprv.ShouldBe(
 			"xprvA1KNMo63UcGjmDF1bX39Cw2BXGUwrwMjeD5qvQ3tA3qS3mZQkGtpf4DHq8FDLKAvAjXsYGLHDP2dVzLu9ycta8PXLuSYib2T3vzLf3brVgZ");
@@ -157,7 +155,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 			                                     new ParamsOfHDKeyPublicFromXPrv {
 				                                     Xprv =
 					                                     "xprv9uZwtSeoKf1swgAkVVCEUmC2at6t7MCJoHnBbn1MWJZyxQ4cySkVXPyNh7zjf9VjsP4vEHDDD2a6R35cHubg4WpzXRzniYiy8aJh1gNnBKv"
-			                                     });
+			                                     }, TestContext.Current.CancellationToken);
 
 		result.Public.ShouldBe("b45e1297a5e767341a6eaaac9e20f8ccd7556a0106298316f1272e461b6fbe98");
 	}
@@ -168,7 +166,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 			                                     new ParamsOfHDKeyPublicFromXPrv {
 				                                     Xprv =
 					                                     "xprvA1KNMo63UcGjmDF1bX39Cw2BXGUwrwMjeD5qvQ3tA3qS3mZQkGtpf4DHq8FDLKAvAjXsYGLHDP2dVzLu9ycta8PXLuSYib2T3vzLf3brVgZ"
-			                                     });
+			                                     }, TestContext.Current.CancellationToken);
 
 		result.Public.ShouldBe("302a832bad9e5c9906422a82c28b39ae465dcd60178480f7309e183ee34b5e83");
 	}
@@ -179,7 +177,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 			                                     new ParamsOfHDKeySecretFromXPrv {
 				                                     Xprv =
 					                                     "xprvA1KNMo63UcGjmDF1bX39Cw2BXGUwrwMjeD5qvQ3tA3qS3mZQkGtpf4DHq8FDLKAvAjXsYGLHDP2dVzLu9ycta8PXLuSYib2T3vzLf3brVgZ"
-			                                     });
+			                                     }, TestContext.Current.CancellationToken);
 
 		result.Secret.ShouldBe("1c566ade41169763b155761406d3cef08b29b31cf8014f51be08c0cb4e67c5e1");
 	}
@@ -189,13 +187,13 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 		KeyPair result = await _everClient.Crypto.MnemonicDeriveSignKeys(new ParamsOfMnemonicDeriveSignKeys {
 			Phrase = "foil despair dish fitness start seat hobby hood eight organ want wrong",
 			Dictionary = MnemonicDictionary.Ton
-		});
+		}, TestContext.Current.CancellationToken);
 
 		ResultOfConvertPublicKeyToTonSafeFormat anotherResult =
 			await _everClient.Crypto.ConvertPublicKeyToTonSafeFormat(
 				new ParamsOfConvertPublicKeyToTonSafeFormat {
 					PublicKey = result.Public
-				});
+				}, TestContext.Current.CancellationToken);
 
 		anotherResult.TonPublicKey.ShouldBe("PuYPI2kinsEy2cc8K42Ro4_tPlL1uFLyKLpCCqkEBFbw1XAH");
 	}
@@ -207,13 +205,13 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 				"unit follow zone decline glare flower crisp vocal adapt magic much mesh cherry teach mechanic rain float vicious solution assume hedgehog rail sort chuckle",
 			Dictionary = 0,
 			WordCount = 24
-		});
+		}, TestContext.Current.CancellationToken);
 
 		ResultOfConvertPublicKeyToTonSafeFormat anotherResult =
 			await _everClient.Crypto.ConvertPublicKeyToTonSafeFormat(
 				new ParamsOfConvertPublicKeyToTonSafeFormat {
 					PublicKey = result.Public
-				});
+				}, TestContext.Current.CancellationToken);
 
 		anotherResult.TonPublicKey.ShouldBe("PuYTvCuf__YXhp-4jv3TXTHL0iK65ImwxG0RGrYc1sP3H4KS");
 	}
@@ -226,13 +224,13 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 			Path = "m",
 			Dictionary = 0,
 			WordCount = 24
-		});
+		}, TestContext.Current.CancellationToken);
 
 		ResultOfConvertPublicKeyToTonSafeFormat anotherResult =
 			await _everClient.Crypto.ConvertPublicKeyToTonSafeFormat(
 				new ParamsOfConvertPublicKeyToTonSafeFormat {
 					PublicKey = result.Public
-				});
+				}, TestContext.Current.CancellationToken);
 
 		anotherResult.TonPublicKey.ShouldBe("PubDdJkMyss2qHywFuVP1vzww0TpsLxnRNnbifTCcu-XEgW0");
 	}
@@ -244,7 +242,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 				                                     Entropy = "00112233445566778899AABBCCDDEEFF",
 				                                     Dictionary = MnemonicDictionary.English,
 				                                     WordCount = 12
-			                                     });
+			                                     }, TestContext.Current.CancellationToken);
 
 		result.Phrase.ShouldBe("abandon math mimic master filter design carbon crystal rookie group knife young");
 	}
@@ -253,14 +251,14 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 	public async Task MnemonicVerifyInvalidPhrase() {
 		ResultOfMnemonicVerify result = await _everClient.Crypto.MnemonicVerify(new ParamsOfMnemonicVerify {
 			Phrase = "one two"
-		});
+		}, TestContext.Current.CancellationToken);
 
 		result.Valid.ShouldBeFalse();
 	}
 
 	[Fact]
 	public async Task MnemonicWords() {
-		ResultOfMnemonicWords result = await _everClient.Crypto.MnemonicWords(new ParamsOfMnemonicWords());
+		ResultOfMnemonicWords result = await _everClient.Crypto.MnemonicWords(new ParamsOfMnemonicWords(), TestContext.Current.CancellationToken);
 
 		result.Words.Split(" ").Length.ShouldBe(2048);
 	}
@@ -268,10 +266,11 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 	[Fact]
 	public async Task ClientReturnsEnglishMnemonicAsDefault() {
 		ResultOfMnemonicFromRandom mnemonicFromRandom =
-			await _everClient.Crypto.MnemonicFromRandom(new ParamsOfMnemonicFromRandom());
+			await _everClient.Crypto.MnemonicFromRandom(new ParamsOfMnemonicFromRandom(), TestContext.Current.CancellationToken);
 
 		ResultOfMnemonicVerify result = await _everClient.Crypto.MnemonicVerify(new ParamsOfMnemonicVerify
-			                                { Phrase = mnemonicFromRandom.Phrase, Dictionary = MnemonicDictionary.English });
+			                                { Phrase = mnemonicFromRandom.Phrase, Dictionary = MnemonicDictionary.English },
+			                                TestContext.Current.CancellationToken);
 
 		result.Valid.ShouldBeTrue();
 	}
@@ -282,7 +281,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 			Base = "0123456789ABCDEF",
 			Exponent = "0123",
 			Modulus = "01234567"
-		});
+		}, TestContext.Current.CancellationToken);
 
 		result.ModularPower.ShouldBe("63bfdf");
 	}
@@ -294,14 +293,14 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 			Nonce = "cd7f99924bf422544046e83595dd5803f17536f5c9a11746",
 			TheirPublic = "c4e2d9fe6a6baf8d1812b799856ef2a306291be7a7024837ad33a8530db79c6b",
 			Secret = "d9b9dc5033fb416134e5d2107fdbacab5aadb297cb82dbdcd137d663bac59f7f"
-		});
+		}, TestContext.Current.CancellationToken);
 
 		result.Encrypted.ShouldBe("li4XED4kx/pjQ2qdP0eR2d/K30uN94voNADxwA==");
 	}
 
 	[Fact]
 	public async Task NaclBoxKeypair() {
-		KeyPair result = await _everClient.Crypto.NaclBoxKeypair();
+		KeyPair result = await _everClient.Crypto.NaclBoxKeypair(TestContext.Current.CancellationToken);
 
 		result.Public.Length.ShouldBe(64);
 		result.Secret.Length.ShouldBe(64);
@@ -312,7 +311,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 	public async Task NaclBoxKeypairFromSecretKey() {
 		KeyPair result = await _everClient.Crypto.NaclBoxKeypairFromSecretKey(new ParamsOfNaclBoxKeyPairFromSecret {
 			Secret = "e207b5966fb2c5be1b71ed94ea813202706ab84253bdf4dc55232f82a1caf0d4"
-		});
+		}, TestContext.Current.CancellationToken);
 		result.Public.ShouldBe("a53b003d3ffc1e159355cb37332d67fc235a7feb6381e36c803274074dc3933a");
 	}
 
@@ -323,7 +322,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 			Nonce = "cd7f99924bf422544046e83595dd5803f17536f5c9a11746",
 			TheirPublic = "c4e2d9fe6a6baf8d1812b799856ef2a306291be7a7024837ad33a8530db79c6b",
 			Secret = "d9b9dc5033fb416134e5d2107fdbacab5aadb297cb82dbdcd137d663bac59f7f"
-		});
+		}, TestContext.Current.CancellationToken);
 
 		result.Decrypted.FromBase64().ShouldBe("Test Message");
 	}
@@ -334,7 +333,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 			Decrypted = "Test Message".ToBase64(),
 			Nonce = "2a33564717595ebe53d91a785b9e068aba625c8453a76e45",
 			Key = "8f68445b4e78c000fe4d6b7fc826879c1e63e3118379219a754ae66327764bd8"
-		});
+		}, TestContext.Current.CancellationToken);
 
 		result.Encrypted.ShouldBe("JL7ejKWe2KXmrsns41yfXoQF0t/C1Q8RGyzQ2A==");
 	}
@@ -345,7 +344,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 			Encrypted = "24bede8ca59ed8a5e6aec9ece35c9f5e8405d2dfc2d50f111b2cd0d8".HexToBase64(),
 			Nonce = "2a33564717595ebe53d91a785b9e068aba625c8453a76e45",
 			Key = "8f68445b4e78c000fe4d6b7fc826879c1e63e3118379219a754ae66327764bd8"
-		});
+		}, TestContext.Current.CancellationToken);
 
 		result.Decrypted.FromBase64().ShouldBe("Test Message");
 	}
@@ -356,7 +355,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 			Unsigned = "Test Message".ToBase64(),
 			Secret =
 				"56b6a77093d6fdf14e593f36275d872d75de5b341942376b2a08759f3cbae78f1869b7ef29d58026217e9cf163cbfbd0de889bdf1bf4daebf5433a312f5b8d6e"
-		});
+		}, TestContext.Current.CancellationToken);
 
 		result.Signed.ShouldBe(
 			"+wz+QO6l1slgZS5s65BNqKcu4vz24FCJz4NSAxef9lu0jFfs8x3PzSZRC+pn5k8+aJi3xYMA3BQzglQmjK3hA1Rlc3QgTWVzc2FnZQ==");
@@ -368,7 +367,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 			Unsigned = "Test Message".ToBase64(),
 			Secret =
 				"56b6a77093d6fdf14e593f36275d872d75de5b341942376b2a08759f3cbae78f1869b7ef29d58026217e9cf163cbfbd0de889bdf1bf4daebf5433a312f5b8d6e"
-		});
+		}, TestContext.Current.CancellationToken);
 
 		result.Signature.ShouldBe(
 			"fb0cfe40eea5d6c960652e6ceb904da8a72ee2fcf6e05089cf835203179ff65bb48c57ecf31dcfcd26510bea67e64f3e6898b7c58300dc14338254268cade103");
@@ -378,7 +377,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 	public async Task NaclSignKeypairFromSecretKey() {
 		KeyPair result = await _everClient.Crypto.NaclSignKeypairFromSecretKey(new ParamsOfNaclSignKeyPairFromSecret {
 			Secret = "8fb4f2d256e57138fb310b0a6dac5bbc4bee09eb4821223a720e5b8e1f3dd674"
-		});
+		}, TestContext.Current.CancellationToken);
 
 		result.Public.ShouldBe("aa5533618573860a7e1bf19f34bd292871710ed5b2eafa0dcdbb33405f2231c6");
 	}
@@ -390,7 +389,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 				"fb0cfe40eea5d6c960652e6ceb904da8a72ee2fcf6e05089cf835203179ff65bb48c57ecf31dcfcd26510bea67e64f3e6898b7c58300dc14338254268cade10354657374204d657373616765"
 					.HexToBase64(),
 			Public = "1869b7ef29d58026217e9cf163cbfbd0de889bdf1bf4daebf5433a312f5b8d6e"
-		});
+		}, TestContext.Current.CancellationToken);
 
 		result.Unsigned.FromBase64().ShouldBe("Test Message");
 	}
@@ -404,7 +403,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 			R = 8,
 			P = 16,
 			DkLen = 64
-		});
+		}, TestContext.Current.CancellationToken);
 
 		result.Key.ShouldBe(
 			"52e7fcf91356eca55fc5d52f16f5d777e3521f54e3c570c9bbb7df58fc15add73994e5db42be368de7ebed93c9d4f21f9be7cc453358d734b04a057d0ed3626d");
@@ -414,7 +413,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 	public async Task Sha256Encoded() {
 		ResultOfHash result = await _everClient.Crypto.Sha256(new ParamsOfHash {
 			Data = "Message to hash with sha 256".ToBase64()
-		});
+		}, TestContext.Current.CancellationToken);
 
 		result.Hash.ShouldBe("16fd057308dd358d5a9b3ba2de766b2dfd5e308478fc1f7ba5988db2493852f5");
 	}
@@ -423,7 +422,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 	public async Task Sha256Hex() {
 		ResultOfHash result = await _everClient.Crypto.Sha256(new ParamsOfHash {
 			Data = "4d65737361676520746f206861736820776974682073686120323536".HexToBase64()
-		});
+		}, TestContext.Current.CancellationToken);
 
 		result.Hash.ShouldBe("16fd057308dd358d5a9b3ba2de766b2dfd5e308478fc1f7ba5988db2493852f5");
 	}
@@ -432,7 +431,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 	public async Task Sha256Raw() {
 		ResultOfHash result = await _everClient.Crypto.Sha256(new ParamsOfHash {
 			Data = "TWVzc2FnZSB0byBoYXNoIHdpdGggc2hhIDI1Ng=="
-		});
+		}, TestContext.Current.CancellationToken);
 
 		result.Hash.ShouldBe("16fd057308dd358d5a9b3ba2de766b2dfd5e308478fc1f7ba5988db2493852f5");
 	}
@@ -441,7 +440,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 	public async Task Sha512() {
 		ResultOfHash result = await _everClient.Crypto.Sha512(new ParamsOfHash {
 			Data = "Message to hash with sha 512".ToBase64()
-		});
+		}, TestContext.Current.CancellationToken);
 
 		result.Hash.ShouldBe(
 			"2616a44e0da827f0244e93c2b0b914223737a6129bc938b8edf2780ac9482960baa9b7c7cdb11457c1cebd5ae77e295ed94577f32d4c963dc35482991442daa5");
@@ -455,7 +454,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 				Public = "1869b7ef29d58026217e9cf163cbfbd0de889bdf1bf4daebf5433a312f5b8d6e",
 				Secret = "56b6a77093d6fdf14e593f36275d872d75de5b341942376b2a08759f3cbae78f"
 			}
-		});
+		}, TestContext.Current.CancellationToken);
 
 		result.Signed.ShouldBe(
 			"+wz+QO6l1slgZS5s65BNqKcu4vz24FCJz4NSAxef9lu0jFfs8x3PzSZRC+pn5k8+aJi3xYMA3BQzglQmjK3hA1Rlc3QgTWVzc2FnZQ==");
@@ -465,8 +464,8 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 
 	[Fact]
 	public async Task TestSigningBox() {
-		KeyPair keys = await _everClient.Crypto.GenerateRandomSignKeys();
-		RegisteredSigningBox registeredSigningBox = await _everClient.Crypto.GetSigningBox(keys);
+		KeyPair keys = await _everClient.Crypto.GenerateRandomSignKeys(TestContext.Current.CancellationToken);
+		RegisteredSigningBox registeredSigningBox = await _everClient.Crypto.GetSigningBox(keys, TestContext.Current.CancellationToken);
 		uint keyBoxHandle = registeredSigningBox.Handle;
 
 		async Task Callback(JsonElement request, uint _, CancellationToken cancellationToken) {
@@ -477,7 +476,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 				{
 					ResultOfSigningBoxGetPublicKey resultOfSigningBoxGetPublicKey =
 						await _everClient.Crypto.SigningBoxGetPublicKey(new RegisteredSigningBox
-							{ Handle = keyBoxHandle });
+							{ Handle = keyBoxHandle }, TestContext.Current.CancellationToken);
 					await _everClient.Client.ResolveAppRequest(new ParamsOfResolveAppRequest {
 						AppRequestId = paramsOfAppRequest.AppRequestId,
 						Result = new AppRequestResult.Ok {
@@ -493,7 +492,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 					ResultOfSigningBoxSign resultOfSigningBoxSign =
 						await _everClient.Crypto.SigningBoxSign(
 							new ParamsOfSigningBoxSign { SigningBox = keyBoxHandle, Unsigned = sign.Unsigned },
-							cancellationToken);
+							TestContext.Current.CancellationToken);
 					await _everClient.Client.ResolveAppRequest(new ParamsOfResolveAppRequest {
 						AppRequestId = paramsOfAppRequest.AppRequestId,
 						Result = new AppRequestResult.Ok {
@@ -508,10 +507,10 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 		}
 
 		// act
-		RegisteredSigningBox externalBox = await _everClient.Crypto.RegisterSigningBox(Callback);
+		RegisteredSigningBox externalBox = await _everClient.Crypto.RegisterSigningBox(Callback, TestContext.Current.CancellationToken);
 		ResultOfSigningBoxGetPublicKey boxPubkey =
 			await _everClient.Crypto.SigningBoxGetPublicKey(new RegisteredSigningBox
-				{ Handle = externalBox.Handle });
+				{ Handle = externalBox.Handle }, TestContext.Current.CancellationToken);
 
 		// assert
 		boxPubkey.Pubkey.ShouldBe(keys.Public);
@@ -523,11 +522,11 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 		ResultOfSigningBoxSign boxSign = await _everClient.Crypto.SigningBoxSign(new ParamsOfSigningBoxSign {
 			SigningBox = externalBox.Handle,
 			Unsigned = unsigned
-		});
+		}, TestContext.Current.CancellationToken);
 		ResultOfSign keysSign = await _everClient.Crypto.Sign(new ParamsOfSign {
 			Keys = keys,
 			Unsigned = unsigned
-		});
+		}, TestContext.Current.CancellationToken);
 
 		// assert
 		boxSign.Signature.ShouldBe(keysSign.Signature);
@@ -535,17 +534,17 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 		// remove boxes 
 		await _everClient.Crypto.RemoveSigningBox(new RegisteredSigningBox {
 			Handle = externalBox.Handle
-		});
+		}, TestContext.Current.CancellationToken);
 		await _everClient.Crypto.RemoveSigningBox(new RegisteredSigningBox {
 			Handle = keyBoxHandle
-		});
+		}, TestContext.Current.CancellationToken);
 	}
 
 	[Fact]
 	public async Task TonCrc16() {
 		ResultOfTonCrc16 result = await _everClient.Crypto.TonCrc16(new ParamsOfTonCrc16 {
 			Data = "0123456789abcdef".HexToBase64()
-		});
+		}, TestContext.Current.CancellationToken);
 
 		result.Crc.ShouldBe((ushort)43349);
 	}
@@ -556,7 +555,7 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 			Public = "1869b7ef29d58026217e9cf163cbfbd0de889bdf1bf4daebf5433a312f5b8d6e",
 			Signed =
 				"+wz+QO6l1slgZS5s65BNqKcu4vz24FCJz4NSAxef9lu0jFfs8x3PzSZRC+pn5k8+aJi3xYMA3BQzglQmjK3hA1Rlc3QgTWVzc2FnZQ=="
-		});
+		}, TestContext.Current.CancellationToken);
 
 		verified.Unsigned.FromBase64().ShouldBe("Test Message");
 	}
@@ -578,11 +577,13 @@ public class CryptoModuleTests : IClassFixture<EverClientTestsFixture> {
 				.Append(null).ToArray();
 			byte?[] words = [null, 12, 15, 18, 21, 24];
 
-			return (from d in dict
-			        from w in words
-			        select new object[] {
-				        d, w
-			        }).ToList();
+			return [
+				.. from d in dict
+				   from w in words
+				   select new object[] {
+					   d, w
+				   }
+			];
 		}
 	}
 }

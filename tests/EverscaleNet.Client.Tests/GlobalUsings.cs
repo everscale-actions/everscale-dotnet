@@ -16,4 +16,3 @@ global using Microsoft.Extensions.Options;
 global using Serilog;
 global using Serilog.Extensions.Logging;
 global using Xunit;
-global using Xunit.Abstractions;

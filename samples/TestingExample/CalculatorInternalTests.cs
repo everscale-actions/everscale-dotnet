@@ -12,14 +12,14 @@ public class CalculatorInternalTests(IEverClient everClient, IEverPackageManager
 	private CalculatorInternal _calculator;
 	private IMultisigAccount _multisig;
 
-	public async Task InitializeAsync() {
+	public async ValueTask InitializeAsync() {
 		_multisig = await CreateMultisig();
 		_calculator = new CalculatorInternal(everClient, packageManager);
 		await _calculator.Init(_multisig, new { owner_ = _multisig.Address });
 		await _calculator.Deploy();
 	}
 
-	public async Task DisposeAsync() {
+	public async ValueTask DisposeAsync() {
 		await _multisig.SubmitTransaction(giver.Address, 0, false, true, string.Empty);
 	}
 
@@ -34,8 +34,8 @@ public class CalculatorInternalTests(IEverClient everClient, IEverPackageManager
 
 	[Fact]
 	public async Task BalancesIsGoodAfterDeployment() {
-		decimal multisigBalance = await _multisig.GetBalance();
-		decimal calculatorBalance = await _calculator.GetBalance();
+		decimal multisigBalance = await _multisig.GetBalance(TestContext.Current.CancellationToken);
+		decimal calculatorBalance = await _calculator.GetBalance(TestContext.Current.CancellationToken);
 
 		multisigBalance.ShouldBeGreaterThan(8.9M);
 		calculatorBalance.ShouldBeGreaterThan(0.99M);
@@ -56,9 +56,9 @@ public class CalculatorInternalTests(IEverClient everClient, IEverPackageManager
 				await retryPolicy.ExecuteAsync(async () => await _calculator.Add(i, token));
 			});
 
-		long result = await _calculator.GetSum();
-		decimal multisigBalance = await _multisig.GetBalance();
-		decimal calculatorBalance = await _calculator.GetBalance();
+		long result = await _calculator.GetSum(TestContext.Current.CancellationToken);
+		decimal multisigBalance = await _multisig.GetBalance(TestContext.Current.CancellationToken);
+		decimal calculatorBalance = await _calculator.GetBalance(TestContext.Current.CancellationToken);
 
 		result.ShouldBe(55);
 		calculatorBalance.ShouldBe(1M);
@@ -69,11 +69,11 @@ public class CalculatorInternalTests(IEverClient everClient, IEverPackageManager
 	public async Task AnotherMultisigHasNoAccess() {
 		IMultisigAccount anotherMultisig = await CreateMultisig();
 		var calculatorWithAnotherMultisig = new CalculatorInternal(everClient, packageManager, _calculator.Address);
-		await calculatorWithAnotherMultisig.Init(anotherMultisig, new { owner_ = _multisig.Address });
+		await calculatorWithAnotherMultisig.Init(anotherMultisig, new { owner_ = _multisig.Address }, TestContext.Current.CancellationToken);
 
-		await _calculator.Add(1);
-		Func<Task> act = () => calculatorWithAnotherMultisig.Add(2);
-		long result = await _calculator.GetSum();
+		await _calculator.Add(1, TestContext.Current.CancellationToken);
+		Func<Task> act = () => calculatorWithAnotherMultisig.Add(2, TestContext.Current.CancellationToken);
+		long result = await _calculator.GetSum(TestContext.Current.CancellationToken);
 
 		var ex = await act.ShouldThrowAsync<EverClientException>();
 		ex.Message.ShouldBe("Transaction aborted or failed");
